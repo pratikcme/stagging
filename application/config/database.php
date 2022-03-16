@@ -81,8 +81,12 @@ $query_builder = TRUE;
 
 
 $host = 'localhost';
-$userName = 'a1630btr_development_user';
-$password = 'Ra#Ch^1j.sLR';
+// $userName = 'a1630btr_development_user';
+// $password = 'Ra#Ch^1j.sLR';
+// $dbName = 'a1630btr_dev';
+
+$userName = 'root';
+$password = '';
 $dbName = 'a1630btr_dev';
 
 
