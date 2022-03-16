@@ -1,0 +1,264 @@
+[01-Oct-2020 12:47:00 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 6
+[01-Oct-2020 12:47:21 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 6
+[01-Oct-2020 12:54:25 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 6
+[01-Oct-2020 12:59:23 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 6
+[01-Oct-2020 13:05:25 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 6
+[01-Oct-2020 13:11:25 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[01-Oct-2020 13:11:56 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[01-Oct-2020 13:52:43 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[01-Oct-2020 13:53:12 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[01-Oct-2020 16:26:00 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[01-Oct-2020 16:46:55 Asia/Kolkata] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home/cmexpx2z/public_html/fishmart/fishmart/application/controllers/frontend/Order.php on line 12
+[05-Apr-2021 19:12:07 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[05-Apr-2021 19:12:39 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[05-Apr-2021 19:13:18 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[05-Apr-2021 19:18:14 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[05-Apr-2021 19:22:47 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[05-Apr-2021 19:27:08 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[05-Apr-2021 19:37:56 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[05-Apr-2021 19:54:11 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[05-Apr-2021 20:00:59 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[06-Apr-2021 10:59:32 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[06-Apr-2021 11:07:53 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[06-Apr-2021 11:12:22 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[06-Apr-2021 11:14:09 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/phpexcel/PHPExcel.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/fishmart/fishmart/application/libraries/Excel.php on line 5
+[06-Apr-2021 11:16:04 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[06-Apr-2021 19:25:58 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[08-Apr-2021 12:53:11 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[08-Apr-2021 13:01:13 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[13-Apr-2021 14:47:26 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[13-Apr-2021 18:18:48 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[14-Apr-2021 06:07:02 UTC] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home/cmexpx2z/public_html/fishmart/application/views/frontend/account/login.php on line 31
+[14-Apr-2021 06:07:36 UTC] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home/cmexpx2z/public_html/fishmart/application/views/frontend/account/login.php on line 31
+[14-Apr-2021 12:20:13 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[16-Apr-2021 06:17:38 UTC] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home/cmexpx2z/public_html/fishmart/application/views/frontend/account/login.php on line 31
+[21-Apr-2021 15:13:01 Asia/Kolkata] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home/cmexpx2z/public_html/fishmart/application/views/payment_report.php on line 132
+[21-Apr-2021 15:13:42 Asia/Kolkata] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home/cmexpx2z/public_html/fishmart/application/views/payment_report.php on line 132
+[22-Apr-2021 10:54:07 Asia/Kolkata] PHP Notice:  ob_clean(): failed to delete buffer. No buffer to delete in /home/cmexpx2z/public_html/fishmart/application/config/config.php on line 4
+[26-Apr-2021 19:47:37 Asia/Kolkata] PHP Fatal error:  Can't use method return value in write context in /home/cmexpx2z/public_html/fishmart/application/controllers/Login.php on line 83
+[26-Apr-2021 19:47:46 Asia/Kolkata] PHP Fatal error:  Can't use method return value in write context in /home/cmexpx2z/public_html/fishmart/application/controllers/Login.php on line 83
+[29-Apr-2021 20:00:09 Asia/Kolkata] PHP Fatal error:  Cannot redeclare vendor_model::userList() in /home/cmexpx2z/public_html/fishmart/application/models/Vendor_model.php on line 380
+[05-May-2021 19:47:36 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[06-May-2021 12:40:09 Asia/Kolkata] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home/cmexpx2z/public_html/fishmart/application/third_party/PHPExcel/Calculation/Functions.php on line 581
+[23-Jun-2021 13:08:13 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/shahid/grocery_final/application/libraries/razorpay/razorpay-php/Razorpay.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/shahid/grocery_final/application/controllers/frontend/Checkout.php on line 2
+[23-Jun-2021 13:08:49 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home/cmexpx2z/public_html/shahid/grocery_final/application/libraries/razorpay/razorpay-php/Razorpay.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/cmexpx2z/public_html/shahid/grocery_final/application/controllers/frontend/Checkout.php on line 2
+[17-Aug-2021 18:38:58 Asia/Kolkata] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/models/Delivery_api_model.php on line 2
+[17-Aug-2021 18:39:02 Asia/Kolkata] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/models/Delivery_api_model.php on line 2
+[17-Aug-2021 18:39:04 Asia/Kolkata] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/models/Delivery_api_model.php on line 2
+[18-Aug-2021 13:40:01 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/stripe/lib/stripe.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/models/Api_model.php on line 2049
+[18-Aug-2021 13:43:51 Asia/Kolkata] PHP Fatal error:  require(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/Stripe/lib/Stripe/Util/Set.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/libraries/Stripe/lib/Stripe.php on line 21
+[18-Aug-2021 13:45:07 Asia/Kolkata] PHP Fatal error:  require(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/Stripe/lib/Stripe/Util/Set.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/libraries/Stripe/lib/Stripe.php on line 21
+[18-Aug-2021 14:08:03 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/Stripe/lib/Stripe.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/models/Api_model.php on line 2049
+[18-Aug-2021 14:08:44 Asia/Kolkata] PHP Fatal error:  require_once(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/Stripe/init.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/models/Api_model.php on line 2030
+[18-Aug-2021 14:56:42 Asia/Kolkata] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/models/Delivery_api_model.php on line 2
+[18-Aug-2021 15:01:49 Asia/Kolkata] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/models/Delivery_api_model.php on line 2
+[18-Aug-2021 15:02:07 Asia/Kolkata] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/models/Delivery_api_model.php on line 2
+[27-Aug-2021 12:45:22 UTC] PHP Fatal error:  require(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/lib/RNCryptor/Autoloader.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/autoload.php on line 10
+[27-Aug-2021 12:46:26 UTC] PHP Fatal error:  require_once(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/controllerslibraries/RNCryptor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/controllers/Api.php on line 967
+[27-Aug-2021 12:46:49 UTC] PHP Fatal error:  require(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/lib/RNCryptor/Autoloader.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/autoload.php on line 10
+[27-Aug-2021 12:48:43 UTC] PHP Fatal error:  require(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/lib/RNCryptor/Autoloader.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/autoload.php on line 10
+[27-Aug-2021 12:54:16 UTC] PHP Fatal error:  require(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/lib/RNCryptor/Autoloader.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/autoload.php on line 10
+[27-Aug-2021 13:01:54 UTC] PHP Fatal error:  require(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/controllers/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/controllers/Api.php on line 967
+[27-Aug-2021 13:03:07 UTC] PHP Fatal error:  require(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/lib/RNCryptor/Autoloader.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/libraries/RNCryptor/autoload.php on line 10
+[31-Aug-2021 09:44:18 UTC] PHP Fatal error:  require_once(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/controllers/Api.php on line 20
+[31-Aug-2021 09:48:37 UTC] PHP Fatal error:  require_once(): Failed opening required '/home1/cmexpknw/public_html/grocery_pos/application/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home1/cmexpknw/public_html/grocery_pos/application/controllers/Api.php on line 20
+[02-Sep-2021 10:26:26 UTC] PHP Fatal error:  Cannot redeclare Api_model::getUserAddressDetails() in /home1/cmexpknw/public_html/grocery_pos/application/models/Api_model.php on line 2497
+[03-Sep-2021 13:47:27 UTC] PHP Fatal error:  Cannot redeclare Api_model::getProductGst() in /home1/cmexpknw/public_html/grocery_pos/application/models/Api_model.php on line 1248
+[03-Sep-2021 13:48:03 UTC] PHP Fatal error:  Cannot redeclare Api_model::getProductGst() in /home1/cmexpknw/public_html/grocery_pos/application/models/Api_model.php on line 1239
+[03-Sep-2021 13:48:48 UTC] PHP Fatal error:  Cannot redeclare Api_model::getProductGst() in /home1/cmexpknw/public_html/grocery_pos/application/models/Api_model.php on line 1239
+[03-Sep-2021 13:49:31 UTC] PHP Fatal error:  Cannot redeclare Api_model::getProductGst() in /home1/cmexpknw/public_html/grocery_pos/application/models/Api_model.php on line 1239
+[13-Sep-2021 11:00:01 UTC] PHP Fatal error:  Cannot redeclare Api_model::getVendorAddress() in /home1/a1630btr/public_html/manage/application/models/Api_model.php on line 2106
+[13-Sep-2021 11:00:02 UTC] PHP Fatal error:  Cannot redeclare Api_model::getVendorAddress() in /home1/a1630btr/public_html/manage/application/models/Api_model.php on line 2106
+[13-Sep-2021 11:00:03 UTC] PHP Fatal error:  Cannot redeclare Api_model::getVendorAddress() in /home1/a1630btr/public_html/manage/application/models/Api_model.php on line 2106
+[23-Sep-2021 05:28:52 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[27-Sep-2021 18:43:38 Asia/Kolkata] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[27-Sep-2021 18:43:41 Asia/Kolkata] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[27-Sep-2021 18:43:44 Asia/Kolkata] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[27-Sep-2021 18:43:48 Asia/Kolkata] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[28-Sep-2021 14:47:02 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Sep-2021 14:47:02 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[28-Sep-2021 14:56:23 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Sep-2021 14:56:23 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[29-Sep-2021 10:21:37 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[29-Sep-2021 10:21:37 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[29-Sep-2021 10:21:47 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[29-Sep-2021 10:21:47 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[29-Sep-2021 10:10:26 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:10:27 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:10:28 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:10:30 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:10:37 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:10:39 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:10:42 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:10:44 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:11:55 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:11:57 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:00 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:01 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:03 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:06 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:10 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:24 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:37 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:38 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:39 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:12:44 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:13:23 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:13:27 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:13:38 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:13:43 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:13:49 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:14:04 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:14:07 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:14:07 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:14:37 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:14:49 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:14:54 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:05 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:07 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:07 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:12 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:17 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:21 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:33 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:39 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:42 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:45 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:50 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:15:54 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:16:17 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:16:24 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:16:29 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:16:36 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:16:41 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:17:30 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:17:35 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:17:40 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:18:02 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:18:17 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:18:31 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:18:33 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:18:35 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:18:39 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:18:49 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:19:06 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:19:09 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:19:37 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:19:43 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:19:56 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:09 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:20 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:22 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:22 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:23 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:50 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:50 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:50 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:50 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:53 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:20:58 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:21:25 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:21:26 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:21:27 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:21:35 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:21:44 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:21:47 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:21:48 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:21:50 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:22:48 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:22:52 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:22:58 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:23:07 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:23:13 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:23:16 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:23:39 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:24:10 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:24:16 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:24:17 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:24:21 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:24:37 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:24:38 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:24:44 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:25:33 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:25:34 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:25:35 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:25:36 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:25:36 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:25:37 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:25:49 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:05 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:05 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:06 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:06 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:07 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:24 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:26 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:28 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:31 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:33 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:43 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:26:45 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:27:25 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:27:38 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[29-Sep-2021 10:27:39 UTC] PHP Parse error:  syntax error, unexpected '>' in /home1/a1630btr/public_html/manage/index.php on line 1
+[13-Oct-2021 16:27:09 Asia/Kolkata] PHP Fatal error:  'continue' not in the 'loop' or 'switch' context in /home1/a1630btr/public_html/manage/application/models/Api_model.php on line 390
+[13-Oct-2021 16:27:16 Asia/Kolkata] PHP Fatal error:  'continue' not in the 'loop' or 'switch' context in /home1/a1630btr/public_html/manage/application/models/Api_model.php on line 390
+[13-Oct-2021 16:27:16 Asia/Kolkata] PHP Fatal error:  'continue' not in the 'loop' or 'switch' context in /home1/a1630btr/public_html/manage/application/models/Api_model.php on line 390
+[13-Oct-2021 16:27:16 Asia/Kolkata] PHP Fatal error:  'continue' not in the 'loop' or 'switch' context in /home1/a1630btr/public_html/manage/application/models/Api_model.php on line 390
+[13-Oct-2021 16:27:21 Asia/Kolkata] PHP Fatal error:  'continue' not in the 'loop' or 'switch' context in /home1/a1630btr/public_html/manage/application/models/Api_model.php on line 390
+[15-Oct-2021 12:20:05 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/manage/application/models/Home_content_model.php on line 113
+[15-Oct-2021 12:38:33 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/manage/application/models/Home_content_model.php on line 119
+[27-Oct-2021 09:27:11 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[27-Oct-2021 09:31:57 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[28-Oct-2021 18:21:38 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 18:40:56 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 19:04:09 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 19:15:17 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 19:26:52 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 19:28:20 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 19:28:48 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 19:28:55 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 19:37:57 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 19:41:52 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[28-Oct-2021 19:59:39 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[29-Oct-2021 13:13:02 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[15-Nov-2021 10:34:00 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[15-Nov-2021 10:34:00 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[16-Nov-2021 12:55:27 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[16-Nov-2021 12:55:27 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[20-Nov-2021 10:23:53 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[20-Nov-2021 10:23:53 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[20-Nov-2021 10:32:15 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[20-Nov-2021 10:32:15 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[20-Nov-2021 10:44:10 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[20-Nov-2021 10:44:10 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[20-Nov-2021 12:10:14 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[20-Nov-2021 12:10:14 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[20-Nov-2021 12:22:26 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[20-Nov-2021 12:22:26 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[20-Nov-2021 12:48:14 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/application/third_party/PHPExcel/Worksheet.php on line 1218
+[20-Nov-2021 12:48:14 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 16777216 bytes) in /home1/a1630btr/public_html/manage/system/core/Common.php on line 196
+[26-Nov-2021 07:31:19 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[26-Nov-2021 07:37:39 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[26-Nov-2021 09:13:26 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[26-Nov-2021 09:13:37 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[19-Jan-2022 12:12:44 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[21-Jan-2022 11:14:40 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[25-Jan-2022 13:30:30 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[07-Mar-2022 16:24:24 Asia/Kolkata] PHP Fatal error:  Cannot redeclare Home_content_model::getWebBannerImage() in /home1/a1630btr/public_html/production/application/models/Home_content_model.php on line 291
+[11-Mar-2022 14:41:38 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/dev/application/models/Migration_database_new_model.php on line 49
+[11-Mar-2022 14:41:39 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/dev/application/models/Migration_database_new_model.php on line 49
+[11-Mar-2022 14:42:12 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/dev/application/models/Migration_database_new_model.php on line 49
+[11-Mar-2022 14:42:51 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/dev/application/models/Migration_database_new_model.php on line 49
+[11-Mar-2022 14:42:53 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/dev/application/models/Migration_database_new_model.php on line 49
+[11-Mar-2022 14:42:55 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/dev/application/models/Migration_database_new_model.php on line 49
+[11-Mar-2022 14:44:06 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/dev/application/models/Migration_database_new_model.php on line 49
+[11-Mar-2022 14:44:08 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/dev/application/models/Migration_database_new_model.php on line 49
+[11-Mar-2022 14:44:12 Asia/Kolkata] PHP Fatal error:  Cannot use empty array elements in arrays in /home1/a1630btr/public_html/dev/application/models/Migration_database_new_model.php on line 50
+[14-Mar-2022 10:45:48 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[15-Mar-2022 16:29:23 Asia/Kolkata] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home1/a1630btr/public_html/dev/application/models/api_v2/Api_model.php on line 57
+[15-Mar-2022 16:29:25 Asia/Kolkata] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home1/a1630btr/public_html/dev/application/models/api_v2/Api_model.php on line 57
+[15-Mar-2022 16:29:37 Asia/Kolkata] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home1/a1630btr/public_html/dev/application/models/api_v2/Api_model.php on line 57
+[15-Mar-2022 16:29:52 Asia/Kolkata] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home1/a1630btr/public_html/dev/application/models/api_v2/Api_model.php on line 57
+[15-Mar-2022 16:30:00 Asia/Kolkata] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home1/a1630btr/public_html/dev/application/models/api_v2/Api_model.php on line 57
+[15-Mar-2022 16:30:37 Asia/Kolkata] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home1/a1630btr/public_html/dev/application/models/api_v2/Api_model.php on line 66

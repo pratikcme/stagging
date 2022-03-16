@@ -1,0 +1,107 @@
+<?php 
+
+class Vendor_model extends My_model{
+
+
+	public function branchList($vendorName = []){
+		
+		// $q = $this->db->query("SELECT * , (3956 * 2 * ASIN(SQRT( POWER(SIN(( $clat - latitude) *  pi()/180 / 2), 2) +COS( $clat * pi()/180) * COS(latitude * pi()/180) * POWER(SIN(( $clong - longitude) * pi()/180 / 2), 2) ))) as distance from vendor having status = '1' AND distance < '5000' ORDER BY distance desc");
+		$clat = $this->session->userdata('currentlat');
+		$clong = $this->session->userdata('currentlong');
+		$data['table'] = 'delivery_charge';
+		$data['select'] = ['max(end_range) as maxRange'];
+		$max = $this->selectRecords($data);	
+		$maxRange = $max[0]->maxRange;
+		// $maxRange = '300';
+
+		if(isset($clat) && $clat != '' && isset($clong) && $clong != ''){
+		$data['select'] = ['*',"(3956 * 2 * ASIN(SQRT( POWER(SIN(($clat - latitude) *  pi()/180 / 2), 2) +COS( $clat * pi()/180) * COS(latitude * pi()/180) * POWER(SIN(( $clong - longitude) * pi()/180 / 2), 2) ))) as distance"];
+			$data['having'] = ['status' => '1','distance <=' =>$maxRange];
+			}else{
+			$data['select'] = ['*'];
+			$data['where'] = ['status'=>'1'];
+			}
+		$data['table'] = TABLE_BRANCH;
+
+		if($this->uri->segment(1) != 'vendors' && $this->uri->segment(2) != 'list'){
+			// $data['limit'] = '6';
+		}
+		if(!empty($vendorName) && $vendorName['vendor_name'] != ''){
+			$data['like'] = ['name',$vendorName['vendor_name'],true];
+		}
+		if(!empty($vendorName) && $vendorName['id'] != ''){
+			$data['where'] = ['id'=>$vendorName['id']];
+		}
+		$data['where'] = ['domain_name'=>base_url(),'status'=>'1'];
+		// $data['where'] = ['id'=>$this->session->userdata('branch_id')]; //its not working
+
+		// if(!empty($vendorName) &&  $vendorName['page'] == 'vendor'){
+			// $data['limit'] = '6';
+		// }
+		return  $this->selectRecords($data);
+		// echo '<pre>';
+		// echo $this->db->last_query();die;
+		// print_r($return);die;
+	}
+
+	public function venderListAll($id =''){
+		if($id != ''){
+			$data['where']['id'] = $id;
+		}
+		$data['table'] = TABLE_VENDOR;
+		$data['select'] = ['*'];
+		$data['where']['status'] = '1';
+		$data['where']['domain_name'] = base_url();
+		return $this->selectRecords($data);
+	}
+
+	public function ApprovedBranch(){
+		$data['table'] = ADMIN;
+		$data['select'] = ['*'];
+		$data['where'] = ['server_name'=>$_SERVER['SERVER_NAME']];
+		return $this->selectRecords($data);
+	}
+
+
+	public function branchProductCount($branch_id){
+		$data['table'] = TABLE_PRODUCT;
+		$data['select'] = ['*'];
+		$data['where']['branch_id']= $branch_id;
+		$data['where']['status'] = '1';
+		return $this->countRecords($data);
+	}
+
+	public function MyCartRemove(){
+		$data['table'] = TABLE_MY_CART;
+		$data['where']['user_id'] = $this->session->userdata('user_id');
+		return $this->deleteRecords($data);
+	}
+
+	public function getVendorName($vendor_id){
+		$data['table'] = TABLE_VENDOR;
+		$data['select'] = ['*'];
+		$data['where'] = ['id'=>$vendor_id];
+		return $this->selectRecords($data);
+	}
+
+	public function searchVendor($vendorName){
+		// print_r($vendorName);exit;
+		if($vendorName['vendor_name'] != ''){
+			$data['like'] = ['name',$vendorName['vendor_name'],true];
+		}
+		if($vendorName['page'] == 'vendor'){
+			$data['limit'] = '6';
+		}
+		$data['table'] = TABLE_VENDOR;
+		$data['select'] = ['*']; 
+		$data['where'] = ['status'=>'1','server_name'=>$_SERVER['SERVER_NAME']];
+		return $this->selectRecords($data);
+		// echo $this->db->last_query();
+	}
+	
+
+}
+
+
+
+?>
