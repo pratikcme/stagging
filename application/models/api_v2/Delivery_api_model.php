@@ -13,7 +13,7 @@ class Delivery_api_model extends My_model
         $email = $postdata['email'];
         $pass = $postdata['password'];
         $pass = md5($pass);
-        $data['select'] = ['s.id','s.name','s.email','s.phone_no','s.image','s.vehicle_name','s.vehicle_type','s.vehicle_number','s.id_proof_number','s.id_proof_image','s.current_status','s.status','v.multiLanguageType'];
+        $data['select'] = ['s.id','s.name','s.email','s.phone_no','s.image','s.vehicle_name','s.vehicle_type','s.vehicle_number','s.id_proof_number','s.id_proof_image','s.current_status','s.status','v.multiLanguageType','s.branch_id'];
         $data['where'] = ['s.email' => $email, 's.password' => $pass];
         $data['table'] = 'delivery_user as s';
         $data['join'] = ['branch  AS v' => ['v.id = s.branch_id', 'LEFT', ]];
@@ -442,8 +442,25 @@ class Delivery_api_model extends My_model
     public function logout($user_id){
         $data['table'] = 'delivery_user_device';
         $data['where'] = ['delivery_user_id'=>$user_id];
-        return  $this->deleteRecords($data);
-      
+        $this->deleteRecords($data);
+
+        unset($data);
+        $data['table'] = TABLE_BRANCH;
+        $data['where'] = ['id' => $_POST['branch_id']];
+        $data['select'] = ['vendor_id']; 
+        $branch = $this->deleteRecords($data);
+
+        $login_logs = [
+            'user_id' => $user_id,
+            'vendor_id' =>  $branch[0]->vendor_id,
+            'status' => 'logout',
+            'type' => 'delivery',
+            'dt_created' => DATE_TIME
+        ];
+        $this->load->model('api_v2/common_model','v2_common_model');
+        $this->v2_common_model->user_login_logout_logs($login_logs);
+        
+        return true;
     }
 
 }

@@ -225,6 +225,13 @@ Class Common_model extends My_model{
 		return $image; 
 	}
 
+	public function user_login_logout_logs($login_logs){
+		$data['table'] = TABLE_USER_LOGIN_LOGOUT_LOGS;
+		$data['insert'] = $login_logs;
+		$this->insertRecord($data);
+		return true;
+	}
+
 	
 
 

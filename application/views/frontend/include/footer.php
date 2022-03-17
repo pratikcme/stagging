@@ -15,7 +15,7 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-12">
-        <p class="copyright text-center">&#169 Copyright 2021 <?=$this->siteTitle?>. All rights reserved</p>
+        <p class="copyright text-center">&#169 Copyright <?=date('Y')?> <?=$this->siteTitle?>. All rights reserved</p>
       </div>
         <div class="scroll-top" style="display: none;" >
           <button id="scrollTop"><i class="fas fa-chevron-up"></i></button>

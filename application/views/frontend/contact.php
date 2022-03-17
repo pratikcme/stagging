@@ -18,33 +18,33 @@
       <div class="col-lg-7 col-md-6">
         <h1>get in touch</h1>
     
-        <form id="form" method="post" action="<?=base_url().'contact'?>">
+       <form id="form" method="post" action="<?=base_url().'contact'?>">
           <div class="row">
             <div class="col-lg-6 col-md-12 col-sm-6">
               <div class="input-wrapper">
                 <span><i class="fas fa-user-circle"></i></span>
-                <input type="text" name="fname" placeholder="First Name" value="<?=($this->session->userdata('user_name') != '' ) ? $this->session->userdata('user_name') : '' ?>">
+                <input type="text" name="fname" placeholder="First Name" value="<?=($this->session->userdata('user_name') != '' ) ? $this->session->userdata('user_name') : '' ?>" <?=($this->session->userdata('user_name') != '' ) ?'readonly':'';?> >
               </div>
               <label for="fname" class="error"><?=form_error('fname')?></label>
             </div>
             <div class="col-lg-6 col-md-12 col-sm-6">
               <div class="input-wrapper">
                 <span><i class="fas fa-user-circle"></i></span>
-                <input type="text" name="lname" placeholder="Last Name" value="<?=($this->session->userdata('user_lname') != '' ) ? $this->session->userdata('user_lname') : '' ?>">
+                <input type="text" name="lname" placeholder="Last Name" value="<?=($this->session->userdata('user_lname') != '' ) ? $this->session->userdata('user_lname') : '' ?>" <?=($this->session->userdata('user_name') != '' ) ?'readonly':'';?> >
               </div>
               <label for="lname" class="error"><?=form_error('lname')?></label>
             </div>
             <div class="col-md-12">
               <div class="input-wrapper">
                 <span><i class="fas fa-envelope"></i></span>
-                <input type="text" name="email" placeholder="Email" value="<?=($this->session->userdata('user_email') != '' ) ? $this->session->userdata('user_email') : '' ?>">
+                <input type="text" name="email" placeholder="Email" value="<?=($this->session->userdata('user_email') != '' ) ? $this->session->userdata('user_email') : '' ?>" <?=($this->session->userdata('user_name') != '' ) ?'readonly':'';?> >
               </div>
               <label for="email" class="error"><?=form_error('email')?></label>
             </div>
             <div class="col-md-12">
               <div class="input-wrapper">
                 <span><i class="fas fa-phone-alt"></i></span>
-                <input type="text" name="mobile_no" placeholder="Phone" value="<?=($this->session->userdata('user_phone') != '' ) ? $this->session->userdata('user_phone') : '' ?>">
+                <input type="text" name="mobile_no" placeholder="Phone" value="<?=($this->session->userdata('user_phone') != '' ) ? $this->session->userdata('user_phone') : '' ?>" <?=($this->session->userdata('user_name') != '' ) ?'readonly':'';?> >
               </div>
               <label for="mobile_no" class="error"><?=form_error('mobile_no')?></label>
             </div>

@@ -7,7 +7,6 @@ class Users extends User_Controller {
 
 		parent::__construct();
 		$this->controller = $this->myvalues->usersAccount['controller'];
-		// $this->url = SITE_URL . 'users_account/'. $this->controller  ;
 		$this->load->model($this->myvalues->usersAccount['model'],'this_model');
 		$user_id = $this->session->userdata('user_id');
               if(!isset($user_id)){
@@ -17,7 +16,6 @@ class Users extends User_Controller {
 	}
 
 	public function account(){	
-	// print_r($_SESSION);die;	
 		$data['action_name'] = $this->input->get('name');
 		if(isset($_GET['name'])){
 			$uri_segment = $_GET['name'];
@@ -47,35 +45,24 @@ class Users extends User_Controller {
 			}
 
 		}
-		
-		// $data['wishlist'] = $this->this_model->getWishlist();
-		// foreach ($data['wishlist'] as $key => $value) {
-		// 	$wishlist = $this->this_model->defaultProduct($value->product_id);
-		// 	if($value->product_image == '' || !file_exists('public/images/product_image/'.$value->product_image)){
-		//             $data['wishlist'][$key]->product_image = 'defualt.png';	
-		// 	}    
-		// 	$data['wishlist'][$key]->product_discount_price = $wishlist[0]->discount_price;  
-			
-		// }
-			if($this->input->post()){
-				// print_r($this->input->post());die;
-				$validation = $this->setRulesAccount(); 
-				if($validation){
-					$response = $this->this_model->varifiy_password	($this->input->post());
-					if($response){
-						$this->utility->setFlashMessage('success','Profile updated successfully');
-						redirect(base_url().'users_account/users/account?name=my_account');
-					}else{
-						$this->utility->setFlashMessage('danger','Something went wrong');
-						redirect(base_url().'users_account/users/account?name=my_account');
-					}
+
+		if($this->input->post()){
+			$validation = $this->setRulesAccount(); 
+			if($validation){
+				$response = $this->this_model->varifiy_password	($this->input->post());
+				if($response){
+					$this->utility->setFlashMessage('success','Profile updated successfully');
+					redirect(base_url().'users_account/users/account?name=my_account');
 				}else{
-					$this->utility->setFlashMessage('danger',form_error('phone'));
+					$this->utility->setFlashMessage('danger','Something went wrong');
 					redirect(base_url().'users_account/users/account?name=my_account');
 				}
+			}else{
+				$this->utility->setFlashMessage('danger',form_error('phone'));
+				redirect(base_url().'users_account/users/account?name=my_account');
 			}
+		}
 		$data['checkUserLoginType']	= $this->this_model->checkCurrentUserLoginType();
-		// print_r($data['checkUserLoginType']);die; 
 		$this->loadView(USER_LAYOUT,$data);
 	}
 
@@ -94,7 +81,7 @@ class Users extends User_Controller {
 		);
 		$this->form_validation->set_rules($config);
 		if($this->form_validation->run() == FALSE){
-					// echo validation_errors(); exit;
+			// echo validation_errors(); exit;
 		}else{
 			return true;
 		}
@@ -172,33 +159,19 @@ class Users extends User_Controller {
 		if($this->input->post()){
 			$address_id = $this->utility->safe_b64decode($this->input->post('id'));
 			$response = $this->this_model->setDefaultAddress($address_id); 
-
-			// if($response){
-			// 		$this->utility->setFlashMessage('success',' You has been changed your default address');
-			// 			redirect(base_url().'users_account/users/address');
-			// 		}else{
-			// 			$this->utility->setFlashMessage('danger','Something went wrong');
-			// 			redirect(base_url().'users_account/users/address');
-			// }
-
 		}
 	}
 
 	public function edit(){
-		// if($this->input->post()){
-		// }
-			$address_id = $this->utility->safe_b64decode($this->input->post('id'));
-			$get_address = $this->this_model->getEditAddress($address_id);
-			echo json_encode(['result'=>$get_address]);
-
-			
+		$address_id = $this->utility->safe_b64decode($this->input->post('id'));
+		$get_address = $this->this_model->getEditAddress($address_id);
+		echo json_encode(['result'=>$get_address]);
 	}
 
 	
 
 	public function update_address(){
 		if($this->input->post()){
-			// print_r($this->input->post());die;
 				$response = $this->this_model->updateAddress($this->input->post());
 				if($response){
 					$this->utility->setFlashMessage('success','Address Updated successfully');

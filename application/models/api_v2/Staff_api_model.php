@@ -470,6 +470,23 @@ class staff_api_model extends my_model {
         $result = $this->deleteRecords($data);
         $response['status'] = 1;
         $response['message'] = 'staff is logged out';
+        unset($data);
+
+        $data['table'] = TABLE_BRANCH;
+        $data['where'] = ['id' => $postData['branch_id']];
+        $data['select'] = ['vendor_id']; 
+        $branch = $this->deleteRecords($data);
+
+        $login_logs = [
+            'user_id' => $postData['staff_id'],
+            'vendor_id' =>  $branch[0]->vendor_id,
+            'status' => 'logout',
+            'type' => 'staff',
+            'dt_created' => DATE_TIME
+        ];
+        $this->load->model('api_v2/common_model','v2_common_model');
+        $this->v2_common_model->user_login_logout_logs($login_logs);
+
         return $response;
     }
 }

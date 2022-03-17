@@ -288,7 +288,7 @@ class Login_model extends My_model{
 						];
 		$return = $this->selectRecords($data);
 		// echo $this->db->last_query();
-		// print_r($return);die;
+		// dd($return[0]->vendor_id);die;
 		if($return){
 		// $this->updateLoginType($return);
 		$return = $this->selectRecords($data);
@@ -318,15 +318,16 @@ class Login_model extends My_model{
                      delete_cookie("loginpassword");
                 }
 		}
-		print_r($return);die;
+		// print_r($return);die;
 		$login_logs = [
 			'user_id' => $return[0]->id,
-			'user_id' => $return[0]->vendor_id,
+			'vendor_id' => $return[0]->vendor_id,
 			'status' => 'login',
 			'type' => 'user',
 			'dt_created' => DATE_TIME
 		];
-		$this->user_login_logout_logs($login_logs);
+		$this->load->model('api_v2/common_model','v2_common_model');
+		$this->v2_common_model->user_login_logout_logs($login_logs);
 		return $return;
 
 	}

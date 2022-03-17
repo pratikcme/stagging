@@ -16,7 +16,32 @@ class Api_admin_model extends My_model {
                 $token = $this->update_token($row_login['id']);
                 $status = $row_login['status'];
                 if ($status == '1') {
-                    $login_data = array('id' => $row_login['id'],'multiple_lang_type'=>$row_login['multiLanguageType'],'vendor_id'=>$row_login['vendor_id'],'name' => $row_login['owner_name'], 'email' => $row_login['email'], 'phone' => $row_login['phone_no'], 'selfPickUp' => $row_login['selfPickUp'], 'shopName' => $row_login['name'], 'token' => $token, 'gst_number' => $row_login['gst_number'], 'image' => base_url() . 'public/images/'.$this->folder.'vendor_shop/' . $row_login['image'],'currancy'=>$row_default['value'],'address'=>$row_login['address'] ,'logged_in' => TRUE);
+                    $login_data = array(
+                        'id' => $row_login['id'],
+                        'multiple_lang_type'=>$row_login['multiLanguageType'],
+                        'vendor_id'=>$row_login['vendor_id'],
+                        'name' => $row_login['owner_name'], 
+                        'email' => $row_login['email'], 
+                        'phone' => $row_login['phone_no'], 
+                        'selfPickUp' => $row_login['selfPickUp'], 
+                        'shopName' => $row_login['name'], 
+                        'token' => $token, 
+                        'gst_number' => $row_login['gst_number'], 
+                        'image' => base_url() . 'public/images/'.$this->folder.'vendor_shop/' . $row_login['image'],
+                        'currancy'=>$row_default['value'],
+                        'address'=>$row_login['address'] ,
+                        'logged_in' => TRUE
+                    );
+
+                    $login_logs = [
+                        'user_id' => $row_login['id'],
+                        'vendor_id' =>  $row_login['vendor_id'],
+                        'status' => 'login',
+                        'type' => 'branch app',
+                        'dt_created' => DATE_TIME
+                    ];
+                    $this->load->model('api_v2/common_model','v2_common_model');
+                    $this->v2_common_model->user_login_logout_logs($login_logs);
                     $res = ['status' => 1, 'message' => 'Data get success', 'data' => $login_data];
                 } else {
                     $res = ['status' => 0, 'message' => 'User inactivated by admin'];

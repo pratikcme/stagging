@@ -18,13 +18,15 @@ class Order_model extends My_model
 
     public function order_detail_query($order_id){
         $data['table'] = 'order_details as od';
-        $data['select'] =  ['od.*','u.id as user_id','u.fname','u.lname','u.email','w.name as weight_name','p.name as product_name','pw.weight_no','pk.package'];
+        $data['select'] =  ['od.*','u.id as user_id','u.fname','u.lname','u.email','w.name as weight_name','p.name as product_name','pw.weight_no','pk.package','o.delivery_date','t.start_time','t.end_time'];
         $data['join'] = [
+                        'order as o'=>['o.id = od.order_id','LEFT'],
                         'user as u'=>['u.id = od.user_id','LEFT'],
                         'weight as w'=>['w.id=od.weight_id','LEFT'],
                         'product as p'=>['p.id=od.product_id','LEFT'],
                         'product_weight as pw'=>['pw.id=od.product_weight_id','LEFT'],
                         'package as pk'=>['pk.id=pw.package','LEFT'],
+                        'time_slot as t'=>['t.id=o.time_slot_id','LEFT'],
                         ];
         $data['where'] = ['od.status !='=>'9','od.order_id'=>$order_id];
         $data['order'] = 'od.id DESC';
