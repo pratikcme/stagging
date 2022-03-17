@@ -2,6 +2,7 @@
 class Api_admin_model extends My_model {
     public function check_login($postData) {
         // echo "v1";die;
+        // echo "shahid";die;
         $email = $postData['email'];
         $password = md5($postData['password']);
         $result_login = $this->db->query("SELECT * FROM vendor WHERE email='$email' AND password='$password'");
