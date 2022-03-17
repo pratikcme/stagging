@@ -30,21 +30,21 @@
             <div class="col-lg-6 col-md-12 col-sm-6">
               <div class="input-wrapper">
                 <span><i class="fas fa-user-circle"></i></span>
-                <input type="text" name="lname" placeholder="Last Name" value="<?=($this->session->userdata('user_lname') != '' ) ? $this->session->userdata('user_lname') : '' ?>" <?=($this->session->userdata('user_name') != '' ) ?'readonly':'';?> >
+                <input type="text" name="lname" placeholder="Last Name" value="<?=($this->session->userdata('user_lname') != '' ) ? $this->session->userdata('user_lname') : '' ?>" <?=($this->session->userdata('user_lname') != '' ) ?'readonly':'';?> >
               </div>
               <label for="lname" class="error"><?=form_error('lname')?></label>
             </div>
             <div class="col-md-12">
               <div class="input-wrapper">
                 <span><i class="fas fa-envelope"></i></span>
-                <input type="text" name="email" placeholder="Email" value="<?=($this->session->userdata('user_email') != '' ) ? $this->session->userdata('user_email') : '' ?>" <?=($this->session->userdata('user_name') != '' ) ?'readonly':'';?> >
+                <input type="text" name="email" placeholder="Email" value="<?=($this->session->userdata('user_email') != '' ) ? $this->session->userdata('user_email') : '' ?>" <?=($this->session->userdata('user_email') != '' ) ?'readonly':'';?> >
               </div>
               <label for="email" class="error"><?=form_error('email')?></label>
             </div>
             <div class="col-md-12">
               <div class="input-wrapper">
                 <span><i class="fas fa-phone-alt"></i></span>
-                <input type="text" name="mobile_no" placeholder="Phone" value="<?=($this->session->userdata('user_phone') != '' ) ? $this->session->userdata('user_phone') : '' ?>" <?=($this->session->userdata('user_name') != '' ) ?'readonly':'';?> >
+                <input type="text" name="mobile_no" placeholder="Phone" value="<?=($this->session->userdata('user_phone') != '' ) ? $this->session->userdata('user_phone') : '' ?>" <?=($this->session->userdata('user_phone') != '' ) ?'readonly':'';?> >
               </div>
               <label for="mobile_no" class="error"><?=form_error('mobile_no')?></label>
             </div>
