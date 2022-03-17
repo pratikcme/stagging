@@ -912,7 +912,7 @@ class Api_model extends My_model {
                 unset($data);
                 $data['select'] = ['max(end_price) as end_price'];
                 $data['table'] = 'price';
-                $data['where'] = ['status !=' => '9'];
+                $data['where'] = ['status !=' => '9','vendor_id'=>$postdata['vendor_id']];
                 $data['order'] = 'id DESC';
                 $selectmax = $this->selectRecords($data);
                 // echo $this->db->last_query();
