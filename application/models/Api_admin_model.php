@@ -2,7 +2,7 @@
 class Api_admin_model extends My_model {
     public function check_login($postData) {
         // echo "v1";die;
-        // echo "shahid";die;
+        // echo "pratik";die;
         $email = $postData['email'];
         //changes
         $password = md5($postData['password']);
