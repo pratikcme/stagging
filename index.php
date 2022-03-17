@@ -4,7 +4,11 @@ date_default_timezone_set('Asia/Kolkata');
 /**
 
  * CodeIgniter
+<<<<<<< HEAD
  * master chaman chu
+=======
+ * gg
+>>>>>>> 701b899185b86f0885280fc144cf4591891948ea
  * An open source application development framework for PHP
  *
  * This content is released under the MIT License (MIT)
