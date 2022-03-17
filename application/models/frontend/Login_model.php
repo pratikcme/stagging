@@ -234,7 +234,8 @@ class Login_model extends My_model{
 	}
 
 	public function login_chek($postData){
-		;
+		
+		// if user login with social login
 		$data['table'] = TABLE_USER;
 		$data['select'] = ['*'];
 		$data['where'] = [
@@ -277,7 +278,7 @@ class Login_model extends My_model{
 		}
 
 		unset($data);
-
+		// if user register with social login
 		$data['table'] = TABLE_USER;
 		$data['select'] = ['*'];
 		$data['where'] = [
@@ -317,7 +318,7 @@ class Login_model extends My_model{
                      delete_cookie("loginpassword");
                 }
 		}
-		// print_r($return);die;
+		print_r($return);die;
 		$login_logs = [
 			'user_id' => $return[0]->id,
 			'user_id' => $return[0]->vendor_id,
@@ -329,13 +330,7 @@ class Login_model extends My_model{
 		return $return;
 
 	}
-
-	public function user_login_logout_logs($login_logs){
-		$data['table'] = TABLE_USER_LOGIN_LOGOUT_LOGS;
-		$data['insert'] = $login_logs;
-		$this->insertRecord($data);
-		return true;
-	}
+	
 
 	private function updateLoginType($return){
 		$data['table'] = TABLE_USER;
