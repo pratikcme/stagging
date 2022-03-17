@@ -4,7 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Cart extends User_Controller {
 
 	function __construct(){
-		echo "hello";
 		parent::__construct();
 		$this->controller = $this->myvalues->cartFrontEnd['controller'];
 		$this->url = SITE_URL . 'frontend/'. $this->controller;
