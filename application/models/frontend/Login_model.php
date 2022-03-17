@@ -26,7 +26,6 @@ class Login_model extends My_model{
 		$data['table'] = TABLE_USER;
 		$data['insert'] = $insertData;
 		$last_id = $this->insertRecord($data);
-		
 		return TRUE;
  		unset($data);
 		// if($last_id){
@@ -319,7 +318,23 @@ class Login_model extends My_model{
                 }
 		}
 		// print_r($return);die;
+		$login_logs = [
+			'user_id' => $return[0]->id,
+			'user_id' => $return[0]->vendor_id,
+			'status' => 'login',
+			'type' => 'user',
+			'dt_created' => DATE_TIME
+		];
+		$this->user_login_logout_logs($login_logs);
 		return $return;
+
+	}
+
+	public function user_login_logout_logs($login_logs){
+		$data['table'] = TABLE_USER_LOGIN_LOGOUT_LOGS;
+		$data['insert'] = $login_logs;
+		$this->insertRecord($data);
+		return true;
 	}
 
 	private function updateLoginType($return){

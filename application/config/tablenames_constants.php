@@ -28,6 +28,8 @@ define('TABLE_HOME_SECTION_ONE_BACKGROUND', 'home_content_section_one_background
 define('TABLE_CUSTOMER', 'customer');
 define('TABLE_ORDER_TEMP', 'order_temp');
 
+define('TABLE_USER_LOGIN_LOGOUT_LOGS', 'user_login_logout_logs');
+
 
 // ADMIN CONSTANT
 
