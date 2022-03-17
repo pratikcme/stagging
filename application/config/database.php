@@ -86,8 +86,8 @@ $password = 'Ra#Ch^1j.sLR';
 $dbName = 'a1630btr_dev';
 
 // $userName = 'a1630btr_development_user';
-$password = 'Ra#Ch^1j.sLR';
-$dbName = 'a1630btr_dev';
+//$password = 'Ra#Ch^1j.sLR';
+//$dbName = 'a1630btr_dev';
 
 
 $db['default'] = array(
