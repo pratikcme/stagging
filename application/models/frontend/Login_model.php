@@ -26,7 +26,6 @@ class Login_model extends My_model{
 		$data['table'] = TABLE_USER;
 		$data['insert'] = $insertData;
 		$last_id = $this->insertRecord($data);
-		
 		return TRUE;
  		unset($data);
 		// if($last_id){
@@ -235,7 +234,8 @@ class Login_model extends My_model{
 	}
 
 	public function login_chek($postData){
-		;
+		
+		// if user login with social login
 		$data['table'] = TABLE_USER;
 		$data['select'] = ['*'];
 		$data['where'] = [
@@ -278,7 +278,7 @@ class Login_model extends My_model{
 		}
 
 		unset($data);
-
+		// if user register with social login
 		$data['table'] = TABLE_USER;
 		$data['select'] = ['*'];
 		$data['where'] = [
@@ -288,7 +288,7 @@ class Login_model extends My_model{
 						];
 		$return = $this->selectRecords($data);
 		// echo $this->db->last_query();
-		// print_r($return);die;
+		// dd($return[0]->vendor_id);die;
 		if($return){
 		// $this->updateLoginType($return);
 		$return = $this->selectRecords($data);
@@ -319,8 +319,19 @@ class Login_model extends My_model{
                 }
 		}
 		// print_r($return);die;
+		$login_logs = [
+			'user_id' => $return[0]->id,
+			'vendor_id' => $return[0]->vendor_id,
+			'status' => 'login',
+			'type' => 'user',
+			'dt_created' => DATE_TIME
+		];
+		$this->load->model('api_v2/common_model','v2_common_model');
+		$this->v2_common_model->user_login_logout_logs($login_logs);
 		return $return;
+
 	}
+	
 
 	private function updateLoginType($return){
 		$data['table'] = TABLE_USER;

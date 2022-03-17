@@ -174,7 +174,17 @@ class Api_model extends My_model {
                     );
 
         $this->update_device($userdata, $postData);
-       
+        $login_logs = [
+            'user_id' => $postData['id'],
+            'vendor_id' => $postData['id'],
+            'status' => 'login',
+            'type' => 'user',
+            'dt_created' => DATE_TIME
+        ];
+        $this->load->model('api_v2/common_model','v2_common_model');
+        $this->v2_common_model->user_login_logout_logs($login_logs);
+
+
         $response = array();
         $response["success"] = 1;
         $response["message"] = "Login Successfully";
@@ -912,7 +922,7 @@ class Api_model extends My_model {
                 unset($data);
                 $data['select'] = ['max(end_price) as end_price'];
                 $data['table'] = 'price';
-                $data['where'] = ['status !=' => '9'];
+                $data['where'] = ['status !=' => '9','vendor_id'=>$postdata['vendor_id']];
                 $data['order'] = 'id DESC';
                 $selectmax = $this->selectRecords($data);
                 // echo $this->db->last_query();
@@ -2079,6 +2089,7 @@ class Api_model extends My_model {
         }
         function logout($postdata) {
             $user_id = $postdata['user_id'];
+            $vendor_id = $postdata['vendor_id'];
             $device_id = $postdata['device_id'];
             $data['where']['user_id'] = $user_id;
             $data['table'] = "device";
@@ -2087,6 +2098,17 @@ class Api_model extends My_model {
             $data['where']['device_id'] = $device_id;
             $data['table'] = "device";
             $this->deleteRecords($data);
+
+            $login_logs = [
+                'user_id' => $user_id,
+                'vendor_id' =>  $vendor_id,
+                'status' => 'logout',
+                'type' => 'user',
+                'dt_created' => DATE_TIME
+            ];
+            $this->load->model('api_v2/common_model','v2_common_model');
+            $this->v2_common_model->user_login_logout_logs($login_logs);
+
             return true;
         }
         function cancle_order($postdata) {

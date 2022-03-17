@@ -16,6 +16,17 @@ class Logout extends User_Controller {
 
 	public function user_logout(){
 		// print_r($_SESSION);die;
+		$login_logs = [
+			'user_id' => $this->session->userdata('user_id'),
+			'vendor_id' => $this->session->userdata('vendor_id'),
+			'status' => 'logout',
+			'type' => 'user',
+			'dt_created' => DATE_TIME
+		];
+		$this->load->model('api_v2/common_model','v2_common_model');
+		$this->v2_common_model->user_login_logout_logs($login_logs);
+
+
 		$this->session->unset_userdata('user_id');
 		$this->session->unset_userdata('id');
 		$this->session->unset_userdata('user_name');

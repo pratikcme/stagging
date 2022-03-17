@@ -1,4 +1,9 @@
 <?php include('header.php'); ?>
+<style type="text/css">
+    .excel-btn{
+        padding: 8px 40px !important;
+    }
+</style>
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">

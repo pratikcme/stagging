@@ -268,24 +268,12 @@ class Admin extends CI_Controller
     /////////////////////////////ADMIN/////////////////////////////////////////////////////////////
 
     ## Check Login  ##
-    public function check_login()
-    {   
-        // echo "<pre>";
-        // print_r($_SESSION);die;
-
+    public function check_login(){   
         $email = $_POST['loginemail'];
         $password = md5($_POST['loginpassword']);
-
         $result_login = $this->db->query("SELECT * FROM " .TABLE_BRANCH. " WHERE email='$email' AND password ='$password'"); 
-        // echo $this->db->last_query();die;
         $row_login = $result_login->row_array();
-        // print_r($row_login);die;
         if ($result_login->num_rows() > 0) {
-
-            // echo "a";
-            // exit;
-            // print_r($row_login);die;
-
             $status = $row_login['status'];
             if($status=='1'){
                 $login_data = array(
@@ -298,12 +286,20 @@ class Admin extends CI_Controller
                     'logged_in' => TRUE
                 );
                 $this->load->library('session');
+
+                $login_logs = [
+                    'user_id' => $row_login['id'],
+                    'vendor_id' => $row_login['vendor_id'],
+                    'status' => 'login',
+                    'type' => 'branch',
+                    'dt_created' => DATE_TIME
+                ];
+                $this->load->model('api_v2/common_model','v2_common_model');
+                $this->v2_common_model->user_login_logout_logs($login_logs);
+
                 $this->session->set_userdata($login_data);
-
                 $remember = $_POST['remember'];
-                
                 if ($remember!='') {
-
                     delete_cookie("loginemail");
                     delete_cookie("loginpassword");
           
@@ -325,8 +321,6 @@ class Admin extends CI_Controller
                     );
                     $this->input->set_cookie($set_password);
                 }
-                
-
                 redirect('admin/dashboard');
             }else{
                 $this->session->set_flashdata('msg', 'You are not authorised,Please connect support team.');
@@ -371,7 +365,17 @@ class Admin extends CI_Controller
 
             // }
              
-                $this->load->library('session');               
+                $this->load->library('session');
+                $login_logs = [
+                    'user_id' => $row_login['id'],
+                    'vendor_id' => $row_login['id'],
+                    'status' => 'login',
+                    'type' => 'vendorimage',
+                    'dt_created' => DATE_TIME
+                ];
+                $this->load->model('api_v2/common_model','v2_common_model');
+                $this->v2_common_model->user_login_logout_logs($login_logs);
+
                 $this->session->set_userdata($login_data);
 
                 // echo $_POST['email'];
@@ -472,8 +476,29 @@ class Admin extends CI_Controller
     }
 
     ## Super Admin - Logout  ##
-    public function logout()
-    {
+    public function logout(){
+
+        if(isset($_SESSION['vendor_admin']) && $_SESSION['vendor_admin'] == '1' ){
+            $user_id = $this->session->userdata('vendor_admin_id');
+            $type = 'vendor';
+            $vendor_id = $this->session->userdata('vendor_admin_id');
+        }elseif(isset($_SESSION['branch_admin']) && $_SESSION['branch_admin'] == '1' ){
+            $user_id = $this->session->userdata('id');
+            $type = 'branch';
+            $vendor_id = $this->session->userdata('branch_vendor_id');
+        }
+
+        $login_logs = [
+            'user_id' => $user_id,
+            'vendor_id' =>  $vendor_id,
+            'status' => 'logout',
+            'type' => $type,
+            'dt_created' => DATE_TIME
+        ];
+        $this->load->model('api_v2/common_model','v2_common_model');
+        $this->v2_common_model->user_login_logout_logs($login_logs);
+
+
         $this->session->unset_userdata('type');
         $this->session->unset_userdata('flag');
         $this->session->unset_userdata('email');

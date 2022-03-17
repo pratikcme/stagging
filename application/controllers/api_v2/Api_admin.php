@@ -5,8 +5,8 @@ header("HTTP/1.1 200 OK");
 class Api_admin extends Api_Controller {
     function __construct() {
         parent::__construct();
-        error_reporting(E_ALL);
-        ini_set("display_errors",1);
+        // error_reporting(E_ALL);
+        // ini_set("display_errors",1);
         $this->load->model('api_v2/api_admin_model', 'adminApi_model');
         date_default_timezone_set('Asia/Kolkata');
     }

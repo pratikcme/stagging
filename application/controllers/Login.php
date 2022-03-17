@@ -7,11 +7,9 @@ class Login extends MY_Controller {
 		parent::__construct();
 
 		$this->controller = $this->myvalues->loginFrontEnd['controller'];
-		// $this->url = SITE_URL . $this->controller;
 		$this->load->model($this->myvalues->loginFrontEnd['model'],'this_model');
 		$user_id = $this->session->userdata('user_id');
 		$this->user_id = $this->session->userdata('user_id');
-		// print_r($this->user_id);die;
 		include_once APPPATH . "libraries/vendor/autoload.php";
 		
 	}
@@ -20,7 +18,6 @@ class Login extends MY_Controller {
 	public function index()
 	{
 
-		// print_r($_SESSION);die;
 		if(isset($this->user_id) && $this->user_id != ''){
 			redirect(base_url());
 		}
@@ -36,12 +33,10 @@ class Login extends MY_Controller {
 		if($this->input->post()){
 			$validation = $this->setRulesLogin();	
 				if($validation){
-					// echo '1';die;
 					$result = $this->this_model->login_chek($this->input->post());
 
 					 if(!empty($result)){
 					 	if($result[0]->email_verify == '1'){
-					 	// print_r( get_cookie('loginemail'));die;
 					 		$login_data = array(
 					 			'user_id' => $result[0]->id,
                             	'user_name' => $result[0]->fname,
@@ -53,25 +48,9 @@ class Login extends MY_Controller {
 
 					 		$this->session->set_userdata($login_data);
 					 		if($this->session->userdata('user_id') != ''){
-					 			// $this->session->session_destroy('My_cart');
 					 			$MycartData = $this->this_model->MycartData();
 					 			$this->this_model->manageCartItem();	
-					 			
-					 			// if( !empty($MycartData) && !empty($_SESSION["My_cart"]) ){
 
-						 		// 	$branch_ids = array_column($_SESSION["My_cart"], "branch_id");
-
-						 		// 	foreach ($MycartData as $key => $value) {
-						 		// 		if(!in_array($value->branch_id, $branch_ids)){
-						 		// 			// $this->utility->setFlashMessage('danger','Your cart is already have product of '.$value->name.' Please Remove your cart and login again');
-						 		// 			$this->session->unset_userdata('My_cart');
-						 		// 			// exit();
-						 		// 		}
-						 		// 	}
-
-					 			// }
-
-					 			// print_r($MycartData);die;
 					 			if(isset($_SESSION['My_cart'][0]['branch_id'])){
 					 				$branch_id = $_SESSION['My_cart'][0]['branch_id'];
 					 				$this->load->model('frontend/vendor_model','vendor');
@@ -93,7 +72,6 @@ class Login extends MY_Controller {
 					 		}
 
 					 	}else{
-					 		// echo '1';die;
 					 		$token = md5($this->utility->encode($result['email']));
 					 		$this->db->set('email_token', $token);
 					 		$this->db->where('id', $result['id']);
@@ -105,7 +83,6 @@ class Login extends MY_Controller {
 					 		$datas['message'] = $this->load->view('emailTemplate/registration_mail', $datas, true);
 					 		$datas['subject'] = 'Verify user email address';
 					 		$datas["to"] = $email;
-                        // print_r($datas);die;
 					 		$res = sendMailSMTP($datas);
 					 		$this->utility->setFlashMessage('danger','Please verify your email');
 					 		redirect(base_url().'login');
@@ -124,9 +101,8 @@ class Login extends MY_Controller {
 				$google_secret_id = $common[0]->google_secret_id;
 				
 				include_once APPPATH . "libraries/vendor/autoload.php";
-				$google_client = new Google_Client();
-				$google_client->setClientId($google_client_id); 
-/*		          $google_client->setClientId('69869714880-vm8nti4f6qg4r14smabnggrej6579m6j.apps.googleusercontent.com'); *///Define your ClientID
+				  $google_client = new Google_Client();
+				  $google_client->setClientId($google_client_id); 
 		          $google_client->setClientSecret($google_secret_id); //Define your Client Secret Key
 		          $google_client->setRedirectUri(base_url().'users_account/google_login'); //Define your Redirect Uri
 		          $google_client->addScope('email');
@@ -138,8 +114,8 @@ class Login extends MY_Controller {
 		      }
 		      $data['googleUrl'] = $GoogleUrl;
 		      // print_r('1');die;
-		$this->loadView(USER_LAYOUT,$data);
-	}
+			$this->loadView(USER_LAYOUT,$data);
+		}
 
 	public function loginFromlink($postData){
 
@@ -192,7 +168,6 @@ class Login extends MY_Controller {
 	}
 
 	public function register(){
-		// print_r($_SESSION);die;
 		$data['appLinks'] = $this->common_keys;
 		if(isset($this->user_id) && $this->user_id != ''){
 			redirect(base_url());
@@ -202,15 +177,12 @@ class Login extends MY_Controller {
 		$data['init'] = array('LOGIN.init()');
 
 			if($this->input->post()){
-				// print_r($this->input->post());exit;
 				$validation = $this->setRules();
 				if($validation){
 					$result = $this->this_model->register_user($this->input->post());
 					
 					 if($result){
-					 	// $this->utility->setFlashMessage('success','Please check your email to login');
 					 	$this->utility->setFlashMessage('success','Congratulation, your account has been successfully created.');
-					 		// $this->session->unset_userdata('redirect_page');	
 					 		redirect(base_url().'login');
 					 		exit;
 					 }else{
@@ -225,7 +197,6 @@ class Login extends MY_Controller {
 				include_once APPPATH . "libraries/vendor/autoload.php";
 				$google_client = new Google_Client();
 				  $google_client->setClientId('146308288221-esvr5vagpqnhbjge4n5i72idjp7r2cgi.apps.googleusercontent.com'); 
-/*		          $google_client->setClientId('69869714880-vm8nti4f6qg4r14smabnggrej6579m6j.apps.googleusercontent.com'); *///Define your ClientID
 		          $google_client->setClientSecret('MpGvzh064GVROoie7M0p8nuF'); //Define your Client Secret Key
 		          $google_client->setRedirectUri(base_url().'users_account/google_login'); //Define your Redirect Uri
 		          $google_client->addScope('email');
@@ -239,16 +210,13 @@ class Login extends MY_Controller {
 	}
 
 	public function fb_login(){
-			// Call Facebook API
-		// echo base_url().'login/oauth/';
-		// die;
+		// Call Facebook API
+
 		$common = $this->common_keys;
 
 		$facebook_client_id = $common[0]->facebook_client_id;
 		$facebook_secret_id = $common[0]->facebook_secret_id;
-		// echo '<pre>';
-		// echo $this->db->last_query();
-		// print_r($common);die;
+		
 		$facebook = new \Facebook\Facebook([
 			'app_id'      => $facebook_client_id,
 			'app_secret'     => $facebook_secret_id,
@@ -258,7 +226,6 @@ class Login extends MY_Controller {
 		$facebook_permissions = ['email']; // Optional permissions
 
    		$facebook_login_url = $facebook_helper->getLoginUrl(base_url().'login/oauth/', $facebook_permissions);	
-		// print_r($facebook_login_url);die;
    		redirect($facebook_login_url);
 	}
 
@@ -281,15 +248,12 @@ class Login extends MY_Controller {
 			$graph_response = $facebook->get("/me?locale=en_US&fields=id,name,email,first_name,last_name,picture", $access_token);
 
 			$facebook_user_info = $graph_response->getGraphUser();
-			// echo "<pre>";
-			// print_r($facebook_user_info);die;
+			
 			$this->load->model('account/google_login_model','google_login_model');
 			if(!empty($facebook_user_info['id'])){
 
 				$re = $this->google_login_model->Is_already_register($facebook_user_info['email']);
-    // print_r($re);die;
 				if($re){
-     //update data
 					$user_data = array(
 						'fname' => $facebook_user_info['first_name'],
 						'vendor_id'=>$this->session->userdata('vendor_id'),
@@ -302,7 +266,7 @@ class Login extends MY_Controller {
 
 				}else{
 
-     //insert data
+    			 //insert data
 					$user_data = array(  
 						'facebook_token_id'=>$facebook_user_info['id'],
 						'vendor_id'=>$this->session->userdata('vendor_id'),
@@ -324,7 +288,17 @@ class Login extends MY_Controller {
 					'user_phone' => $result[0]->phone,
 					'logged_in' => TRUE
 				);
-				// print_r($login_data);die;
+
+				$login_logs = [
+                    'user_id' => $re[0]->id,
+                    'vendor_id' => $re[0]->vendor_id,
+                    'status' => 'google login',
+                    'type' => 'user',
+                    'dt_created' => DATE_TIME
+                ];
+                $this->load->model('api_v2/common_model','v2_common_model');
+                $this->v2_common_model->user_login_logout_logs($login_logs);
+
 				$this->session->set_userdata($login_data);
 				if($this->session->userdata('user_id') != ''){
 					$this->load->model($this->myvalues->loginFrontEnd['model'],'that_model');
