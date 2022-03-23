@@ -202,22 +202,9 @@ public function Product_add_update(){
             $response = array('status'=>5,'msg'=>"Product can not disabled,order is available for this product");
             echo json_encode($response);
            exit;
-           // $return = ['status'=>4,'message'=>'Category is not deleted.. Order available on this category']; 
-           //  return echo json_encode($return);
+          
         } 
-        // unset($data);
-        // $data['table'] = 'product_weight';
-        // $data['select'] = ['*'];
-        // $data['where'] = ['status !='=>'9','product_id'=>$id];
-        // $res = $this->countRecords($data);
-        // // print_r($res);die;
-        // if($res > 0){
-        //     ob_get_clean();
-        //     header('Access-Control-Allow-Origin: *');
-        //     header('Content-Type: application/json');
-        //     echo json_encode(['status'=>2,'msg'=>"Product is not deleted..,please delete varient"]);
-        //     exit;
-        // }
+     
         echo json_encode(['status'=>1]);
          exit;
     }
@@ -244,61 +231,6 @@ public function Product_add_update(){
     }
 
 
-    ## Product Multi Delete ##
-    // public function multi_delete_product()
-    // {
-    //     $ids = $_GET['ids'];
-    //     // print_r($ids);die;
-    //     $id = explode(",", $ids);
-    //     $a = [];
-    //     foreach ($id as $key => $value) {
-
-    //         $branch_id = $this->session->userdata('id');
-    //         $data['table'] = 'order as o';
-    //         $data['select'] = ['p.*'];
-    //         $data['join'] = [ 'order_details as od'=>['od.order_id=o.id','LEFT'],
-    //                           'product as p'=>['p.id = od.product_id','LEFT'],
-    //                       ];
-    //         $data['where'] = ['o.branch_id'=>$branch_id,'p.id'=>$value,'o.status !='=>'9','o.order_status <'=>'7'];
-    //         $re = $this->selectFromJoin($data);
-    //          array_push($a, $re[0]->name);
-    //         if(count($re) > 0 ){
-    //             ob_get_clean();
-    //             header('Access-Control-Allow-Origin: *');
-    //             header('Content-Type: application/json');
-
-    //             $response = array('status'=>5,'names'=>implode(',', $a));
-    //             echo json_encode($response);
-    //            exit;
-    //            // $return = ['status'=>4,'message'=>'Category is not deleted.. Order available on this category']; 
-    //            //  return echo json_encode($return);
-    //         }
-
-    //         $this->db->select('*');
-    //         $this->db->where('product_id', $value);
-    //         $this->db->where('status !=','9');
-    //         $this->db->from('product_weight');
-    //         $query = $this->db->get();
-
-
-    //         // echo $this->db->last_query();
-    //            $this->db->select('name');
-    //            $this->db->where('id =',$value);
-    //            $this->db->from('product');
-    //            $rows= $this->db->get();
-    //            $row1 = $rows->row_array();
-
-    //             if($query->num_rows() > 0){
-    //                 $row = $query->row_array();
-    //                 ob_get_clean();
-    //                 header('Access-Control-Allow-Origin: *');
-    //                 header('Content-Type: application/json');
-    //                 $response = array('status'=>2,'names'=>$row1['name']);
-    //                  echo json_encode($response);
-    //                 // echo json_encode(['status'=>2]);  
-    //                 exit;
-    //             }
-    //     }
 
         ## Product Multi Delete ##
     public function multi_delete_product()
@@ -318,8 +250,7 @@ public function Product_add_update(){
             ];
             $data['where'] = ['o.branch_id'=>$branch_id,'p.id'=>$value,'o.status !='=>'9'];
             $re = $this->selectFromJoin($data);
-        // print_r($re);die;
-        // echo $this->db->last_query();die;
+    
             if(count($re) > 0 ){
 
                 ob_get_clean();
@@ -366,10 +297,7 @@ public function Product_add_update(){
     ## Product Images Profile ##
     public function product_image_add_update($file,$product_id,$variant_id){
         $vendor_id = $this->session->userdata['id'];
-        // print_r($product_id);
-        // print_r($variant_id);die;
-        // print_r($file);die;
-        // $product_id = $_REQUEST['product_id'];
+       
 
         if($file['userfile']['name'][0] != ''){
 
@@ -456,16 +384,8 @@ public function Product_add_update(){
                     // print_r($data);exit;
                 }
 
-                // $this->session->set_flashdata('msg', 'Product images have been added successfully.');
-                
-                // redirect(base_url().'product/product_image_list?product_id='.$this->utility->encode($product_id));
-            }else{
-                // $this->session->set_flashdata('msg_error', 'Product images could not be uploaded.');
-                // redirect(base_url().'product/product_image_list?product_id='.$this->utility->encode($product_id));
+               
             }
-        }else{
-            // $this->session->set_flashdata('msg_error', 'Product images could not be uploaded.');
-            // redirect(base_url().'product/product_image_list?product_id='.$this->utility->encode($product_id));
         }
     }
 
@@ -474,7 +394,7 @@ public function Product_add_update(){
     {
          
          $ids = $_GET['ids'];
-         // $data = array( 'status' => '9', 'dt_updated' => strtotime(date('Y-m-d H:i:s')) );
+       
          $data['table'] = 'product_image';
          $data['select'] = ['image'];
          $data['where'] = ['id'=>$ids];
@@ -486,11 +406,7 @@ public function Product_add_update(){
          $data['table'] = 'product_image';
          $data['where'] = ['id'=>$ids];
          $image = $this->deleteRecords($data);
-            // $this->db->where('id', $ids);
-            // $this->db->select('product_image', $data);
-            // $this->db->get('product_image', $data);
-
-        // echo $this->db->last_query();exit;
+           
         ob_get_clean();
         header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
@@ -518,13 +434,7 @@ public function Product_add_update(){
         return $image;
     }
 
-    // public function getproductGst($product_id){
-    //     $data['table'] = 'product';
-    //     $data['select'] = ['gst'];
-    //     $data['where'] = ['id'=>$product_id];
-    //     $return = $this->selectRecords($data);
-    //     return $return[0]->gst;
-    // }
+    
 
     public function product_weight_add_update(){
         // print_r($_SESSION);die;
@@ -551,11 +461,7 @@ public function Product_add_update(){
                 $unit = (int)$unit;   
             }
 
-        // $gst =  $this->getproductGst($product_id);
-        // $gst_amount = (($price * $gst) / 100);
-        // print_r($gst_amount);die;    
-
-        // if(isset($_POST['submit_frm'])) {
+        
             /* Product Weight Update */
             if ($id != '') {
 
@@ -579,8 +485,7 @@ public function Product_add_update(){
                 $this->db->where('branch_id',$vendor_id);
                 $this->db->where('id', $id);
                 $this->db->update('product_weight', $data);
-                // $this->delete_variant_image($id);
-                // $this->product_image_add_update($_FILES,$product_id,$id);
+              
                 if($_FILES['userfile']['error'][0] == 0){
                     
                     $files = $_FILES;
@@ -612,8 +517,7 @@ public function Product_add_update(){
 
                 $this->session->set_flashdata('msg', 'Product variant has been updated successfully');
                 redirect(base_url() . 'product/product_weight_list?product_id='.$this->utility->encode($product_id));
-                
-                // redirect(base_url() .'product/product_weight_list');
+               
                 exit();
             }
             /* Product Weight Add */
@@ -649,10 +553,7 @@ public function Product_add_update(){
                 // redirect(base_url() .'product/product_list');
                 exit();
             }
-        // }else{
-        //     $this->session->set_flashdata('msg_error', 'Error to add');
-        //         redirect(base_url() . 'product/product_weight_list?product_id='.$this->utility->encode($product_id));
-        // }
+        
     }
      public function check_product_varient_in_order(){
 
@@ -843,85 +744,7 @@ public function Product_add_update(){
     }
 
 
-    // public  $order_column_product = array("name","c.name","sc.name","b.name");  
-    // function make_query_product($postData){
-    //      $branch_id = $this->session->userdata('id');
-    //     if(isset($postData['supplier_id'])){
-    //       $supplier=$this->utility->decode($postData['supplier_id']);
-    //         $where = [
-    //             'p.branch_id'=>$branch_id,
-    //             'p.status !='=>'9',
-    //             'p.supplier_id' => $supplier  
-    //         ];
-    //     }else{
-    //         $where = [
-    //             'p.branch_id'=>$branch_id,
-    //             'p.status !='=>'9',
-    //         ];
-    //     }
-    //      $this->db->select('p.*,c.name as category_name,sc.name as subcategory_name,b.name as brand_name');  
-    //      $this->db->from('product as p ');
-    //      $this->db->join('category as c','c.id = p.category_id','left');
-    //      $this->db->join('subcategory as sc','sc.id = p.subcategory_id','left');
-    //      $this->db->join('brand as b','b.id = p.brand_id','left');
-    //      $this->db->where($where);
-    //      if(isset($postData["search"]["value"]) && $postData["search"]["value"] != ''){ 
-    //     $this->db->group_start();
-    //         $this->db->like("p.name", $postData["search"]["value"]);
-    //         $this->db->or_like("sc.name", $postData["search"]["value"]);
-    //         $this->db->or_like("c.name", $postData["search"]["value"]);
-    //         $this->db->or_like("b.name", $postData["search"]["value"]);
-    //     $this->db->group_end(); 
-    //     }  
-        
-    //     if(isset($postData["order"]) && $postData["order"] != '' ){  
-    //         $this->db->order_by($this->order_column_product[$postData['order']['0']['column']], $postData['order']['0']['dir']);  
-    //        }else{  
-    //             $this->db->order_by('p.id', 'DESC');  
-    //        } 
-    // }
-
-
-    // function make_datatables_product($postData){ 
-    //     $this->make_query_product($postData);
-    //    if($postData["length"] != -1){  
-    //         $this->db->limit($postData['length'], $postData['start']);  
-    //     }  
-    //         $query = $this->db->get();  
-    //         return $query->result();
-    //         // echo $this->db->last_query();
-    //     }
-
-    // function get_filtered_data_product($postData = false){  
-    //     $this->make_query_product($postData);  
-    //     $query = $this->db->get();  
-    //     return $query->num_rows();
-    // }    
-
-    // function get_all_data_product($postData = array()){
-    //     $branch_id = $this->session->userdata('id');
-    //   if(isset($postData['supplier_id'])){
-    //     $supplier_id=$this->utility->decode($postData['supplier_id']);
-    //     $where = [
-    //         'p.branch_id'=>$branch_id,
-    //         'p.status !='=>'9',
-    //         'p.supplier_id' => $supplier_id
-    //         ];
-    //     }else{
-    //         $where = [
-    //             'p.branch_id'=>$branch_id,
-    //             'p.status !='=>'9',
-    //         ];
-    //     }
-    //     $this->db->select('p.*,c.name as category_name,sc.name as subcategory_name,b.name as brand_name');  
-    //      $this->db->from('product as p ');
-    //      $this->db->join('category as c','c.id = p.category_id','left');
-    //      $this->db->join('subcategory as sc','sc.id = p.subcategory_id','left');
-    //      $this->db->join('brand as b','b.id = p.brand_id','left');
-    //     $this->db->where($where);
-    //     return $this->db->count_all_results(); 
-    //        // echo $this->db->last_query();
-    // }
+    
 
 
 public  $order_column_weight_list = array("p.product_name","pw.quantity","pw.discount_price","pw.price","pw.discount_per",'pw.weight_no');  
@@ -1025,8 +848,7 @@ public  $order_column_weight_list = array("p.product_name","pw.quantity","pw.dis
                       ];
         $data['where'] = ['o.branch_id'=>$branch_id,'p.id'=>$id,'o.status !='=>'9'];
         $re = $this->selectFromJoin($data);
-        // print_r($re);die;
-        // echo $this->db->last_query();die;
+       
         if(count($re) > 0 ){
 
             ob_get_clean();

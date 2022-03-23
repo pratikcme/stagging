@@ -2,9 +2,7 @@
 class Delivery_model extends My_model{
     
     function __construct(){
-     // $this->load->model('common_model');
-     // $re = $this->common_model->getExistingVendorId();
-        // print_r($_SESSION);die;
+    
      $this->branch_id = $this->session->userdata('id');
     }
 
@@ -28,7 +26,7 @@ class Delivery_model extends My_model{
         $this->db->update('admin', $data);
     }
    public function delivery_user_register(){
-        // print_r($_POST);exit;
+     
     if(isset($_POST['submit1'])){
         $email = $_POST['email'];
         $password = md5($_POST['password']);
@@ -45,11 +43,7 @@ class Delivery_model extends My_model{
                 $url = './public/images/delivery_profile'.$old_image;
                 unlink($url);
                 $files = $_FILES;
-                // $_FILES['image_edit']['name'] = $files['image_edit']['name']; 
-                // $_FILES['image_edit']['type'] = $files['image_edit']['type']; 
-                // $_FILES['image_edit']['tmp_name'] = $files['image_edit']['tmp_name']; 
-                // $_FILES['image_edit']['error'] = $files['image_edit']['error']; 
-                // $_FILES['image_edit']['size'] = $files['image_edit']['size'];
+                
                 $profile_upload_path = "./public/images/delivery_profile";
                 $uploadResponse = upload_single_image_ByName($_FILES,'image_edit',$profile_upload_path);
                 
@@ -68,11 +62,7 @@ class Delivery_model extends My_model{
                 unlink($url);
                 $id_upload_path = "./public/images/delivery_id";
                 $files = $_FILES;
-                // $_FILES['id_image_edit']['name'] = $files['id_image_edit']['name']; 
-                // $_FILES['id_image_edit']['type'] = $files['id_image_edit']['type']; 
-                // $_FILES['id_image_edit']['tmp_name'] = $files['id_image_edit']['tmp_name']; 
-                // $_FILES['id_image_edit']['error'] = $files['id_image_edit']['error']; 
-                // $_FILES['id_image_edit']['size'] = $files['id_image_edit']['size'];
+           
                 $id_uploadResponse = upload_single_image_ByName($_FILES,'id_image_edit',$id_upload_path);
                 $id_image = $id_uploadResponse['data']['file_name']; 
             }else{
@@ -101,20 +91,12 @@ class Delivery_model extends My_model{
                     $profile_upload_path = "./public/images/delivery_profile";
                     $id_upload_path = "./public/images/delivery_id";
                     $files = $_FILES;
-                    // $_FILES['id_image']['name'] = $files['id_image']['name']; 
-                    // $_FILES['id_image']['type'] = $files['id_image']['type']; 
-                    // $_FILES['id_image']['tmp_name'] = $files['id_image']['tmp_name']; 
-                    // $_FILES['id_image']['error'] = $files['id_image']['error']; 
-                    // $_FILES['id_image']['size'] = $files['id_image']['size'];
+                   
                     $id_uploadResponse = upload_single_image_ByName($_FILES,'id_image',$profile_upload_path);
 
-                    // $_FILES['image']['name'] = $files['image']['name']; 
-                    // $_FILES['image']['type'] = $files['image']['type']; 
-                    // $_FILES['image']['tmp_name'] = $files['image']['tmp_name']; 
-                    // $_FILES['image']['error'] = $files['image']['error']; 
-                    // $_FILES['image']['size'] = $files['image']['size'];
+                   
                     $uploadResponse = upload_single_image_ByName($_FILES,'image',$id_upload_path);
-                    // print_r($uploadResponse);exit;
+                   
                     $profile_image = $uploadResponse['data']['file_name'];  
                     $id_image = $id_uploadResponse['data']['file_name'];  
                     
@@ -147,15 +129,15 @@ class Delivery_model extends My_model{
     
 
     public function change_status($id){
-         // $id = $_GET['id'];
+        
         $id = $this->utility->decode($id);
-//        echo $id;exit;
+
         $this->db->select('*');
         $this->db->where('id', $id);
         $this->db->where('status','1');
         $this->db->from('delivery_user');
         $query = $this->db->get();
-         // print_r($query->result());die;
+       
         if ( $query->num_rows() > 0 )
         {
             $data = array('status'=>'0','dt_updated'=> date('Y-m-d H:i:s'));
@@ -166,7 +148,7 @@ class Delivery_model extends My_model{
            $this->db->where('id',$id);
            $this->db->update('delivery_user',$data);
         }
-        // echo $this->db->last_query(); die;
+       
 
         ob_get_clean();
         header('Access-Control-Allow-Origin: *');
@@ -176,7 +158,7 @@ class Delivery_model extends My_model{
 
     }
     public function staff_add_update(){
-        // echo 1;exit;
+       
          if(isset($_POST['submit1'])){
                 $vendor_id = $this->session->userdata['id'];
                 $email = $_POST['email'];
@@ -247,15 +229,13 @@ class Delivery_model extends My_model{
     }
     function getChartData(){
     $vendor_id = $this->session->userdata['id'];
-         // echo $se = strtotime(date('Y-m-04 12:01:01'));exit;  
+      
          $month = strtotime(date('Y-m-01 00:00:00'));  
 
         $vendor_id = $this->session->userdata['id'];
 
         $total_order_month = $this->db->query("SELECT o.product_id,COUNT(o.product_id) AS Todal_count,p.name FROM `order_details` AS o  LEFT JOIN product as p on o.product_id = p.id WHERE o.vendor_id='$vendor_id' AND o.dt_added >= '$month' GROUP BY o.product_id order by todal_count DESC limit 10")->result();
 
-//        print_r($total_order_month);exit;
-        // echo $this->db->last_query();
         $color = ['red','blue','grey','black','green','pink','yellow','brown','orange','purple'];
         for($i=0;$i<count($total_order_month);$i++){
             $finalArray[] = array(
@@ -264,7 +244,7 @@ class Delivery_model extends My_model{
                 'color' =>$color[$i]
             );
         }
-        // print_r($finalArray);exit;
+       
         return $finalArray;
     }
 

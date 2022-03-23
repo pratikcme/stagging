@@ -7,8 +7,7 @@
 <?php }
 $myhidejs = 0;
 $vendor_id = $this->session->userdata('id');
-$register_query = $this->db->query("SELECT * FROM `register` WHERE branch_id = '$vendor_id' GROUP BY id DESC LIMIT 1");
-$register_result = $register_query-> result();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -102,7 +102,7 @@ elseif($_SERVER['SERVER_NAME']=='mehta.launchestore.com'){
 
 }
 
-elseif($_SERVER['SERVER_NAME']=='bmart.launchestore.com'){
+elseif($_SERVER['SERVER_NAME']=='bmart.launchestore.com'||$_SERVER['SERVER_NAME']=='localhost'||$_SERVER['SERVER_NAME']=='bmartsupermarket.in'){
     $primaryColor= "#e30016";
     $secondaryColor= "#373854";
     $lightPrimary= "#ff774b";

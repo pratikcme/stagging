@@ -1,4 +1,4 @@
-        <?php
+<?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 header("Access-Control-Allow-Origin: *");
@@ -9,8 +9,6 @@ class Delivery_api extends CI_Controller
 {
     function __construct()
     {
-        // ini_set("display_errors", "1");
-        // error_reporting(E_ALL);
 
         parent::__construct();
 
@@ -20,7 +18,7 @@ class Delivery_api extends CI_Controller
 
     public function login()
     {
-       // echo 1;exit;
+       
 
         $postdata = $this->input->post();
 
@@ -57,7 +55,7 @@ class Delivery_api extends CI_Controller
 
     public function update_status()
     {
-        // $this->demo("",80);exit;
+      
         $postdata = $this->input->post();
 
         if (isset($postdata['status']) && isset($postdata['id'])) {
@@ -79,7 +77,7 @@ class Delivery_api extends CI_Controller
 
     public function notification_detail()
     {
-        // print_r($_GET['order_id']);exit;
+     
         $postdata = $this->input->post();
         if (isset($postdata['order_id'])) {
             $result = $this->this_model->notification_detail($postdata);

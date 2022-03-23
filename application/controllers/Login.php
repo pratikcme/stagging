@@ -12,6 +12,31 @@ class Login extends MY_Controller {
 		$this->user_id = $this->session->userdata('user_id');
 		include_once APPPATH . "libraries/vendor/autoload.php";
 		
+		if($this->session->userdata('user_id') == ''){
+			if(isset($_SESSION['My_cart']) && !empty($_SESSION['My_cart'])){
+				$this->cartCount = count($_SESSION['My_cart']);
+
+			}
+		}else{
+			$this->load->model('frontend/product_model','product_model');
+			$my_cart = $this->product_model->getMyCart();
+			$this->cartCount = count($my_cart);
+		}
+		$this->load->model('frontend/product_model');
+		$this->load->model('common_model');
+		$my_cart = $this->product_model->getMyCart();
+		
+		$default_product_image = $this->common_model->default_product_image();
+		foreach ($my_cart as $key => $value) {
+			$product_image = $this->product_model->GetUsersProductInCart($value->product_id,$value->product_weight_id);
+			if(!file_exists('public/images/'.$this->folder.'product_image/'.$product_image[0]->image) || $product_image[0]->image == '' ){
+				$product_image[0]->image = $default_product_image;
+			}
+			$my_cart[$key]->product_name = $product_image[0]->name;
+			$my_cart[$key]->image = $product_image[0]->image;
+		}
+		$data['mycart'] = $my_cart;
+		
 	}
 
 

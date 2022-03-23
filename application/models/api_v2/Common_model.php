@@ -30,13 +30,6 @@ Class Common_model extends My_model{
 
 	public function getLogo(){
 
-		//i f($this->session->userdata('logo') != '' && $this->session->userdata('webTitle') != ''){
-		// 	$return = ['logo'=>$this->session->userdata('logo'),'webTitle'=>$this->session->userdata('webTitle')];
-		// 	return $return;
- 	// 	}	
-		// echo '<pre>';
-		// print_r($_SESSION);
-		// die;	
 		$vendor_id = 0;
 		if(isset($_SESSION['branch_id'])){
 			$data['select'] = ['*'];
@@ -56,7 +49,6 @@ Class Common_model extends My_model{
 			$vendor_id = $get[0]->vendor_id;
 			unset($data);
 		}elseif(isset($_SESSION['vendor_admin_id'])){
-			// echo '1';die;
 			$vendor_id = $this->session->userdata('vendor_admin_id');
 		}else{
 			$data['where_or'] = ['server_name'=>$_SERVER['SERVER_NAME']];
@@ -92,14 +84,14 @@ Class Common_model extends My_model{
 	}
 
 	public function getDefaultCurrency($branch_id = ''){
-		// $re = $this->getExistingBranchId();
+		
 		if(isset($_SESSION['vendor_id'])){
 			$vendor_id = $_SESSION['vendor_id'];
-		$data['where']['vendor_id'] = $vendor_id;
+			$data['where']['vendor_id'] = $vendor_id;
 
 		}elseif(isset($_SESSION['vendor_admin_id'])){
 			$vendor_id = $_SESSION['vendor_admin_id'];
-		$data['where']['vendor_id'] = $vendor_id;
+			$data['where']['vendor_id'] = $vendor_id;
 			
 		}elseif(isset($_POST['branch_id'])){
 			$branch_id = $_POST['branch_id'];
@@ -111,21 +103,15 @@ Class Common_model extends My_model{
 		}elseif(isset($_POST['vendor_id'])){
 			$vendor_id = $_POST['vendor_id'];
 			$data['where']['vendor_id'] = $vendor_id;
-		}else{
-			
 		}
-		// if($vendor_id != 0){
-		// 	$data['where']['vendor_id'] = $vendor_id;
-		// }
-		
-		// print_r($_SESSION);die;
+	
 		$data['table'] = 'set_default';
 		$data['select'] = ['*'];
 		$data['where']['request_id'] = '3';
 
 		
 		$return =  $this->selectRecords($data);
-		// echo $this->db->last_query();die;
+		
 		if(!empty($return)){
 			return $return[0]->value;
 		}else{
@@ -154,8 +140,15 @@ Class Common_model extends My_model{
 	public function CountCategory(){
 		$data['table'] = TABLE_CATEGORY;
 		$data['select'] = ['count(*) as categoryCount'];
-		$data['where'] = ['branch_id'=>$this->session->userdata('branch_id'),'status!='=>'9'];
+		if($this->session->userdata('branch_id')){
+			$data['where'] = ['branch_id'=>$this->session->userdata('branch_id'),'status!='=>'9'];
+		}else
+		if(isset($_POST['vendor_id'])){
+			$branch_id = $this->getBranchFromVendorId($_POST['vendor_id']);
+			$data['where'] = ['branch_id'=>$branch_id[0]->id,'status!='=>'9'];
+		}
 		$CountCategory =$this->selectRecords($data);
+		
 		return $CountCategory[0]->categoryCount;
 	}
 
@@ -179,6 +172,13 @@ Class Common_model extends My_model{
 		$data['table'] = 'branch';
 		$data['select'] = ['*'];
 		$data['where'] = ['id'=>$_POST['branch_id']];
+		return $this->selectRecords($data);
+		 
+	}
+	public function getBranchFromVendorId(){
+		$data['table'] = 'branch';
+		$data['select'] = ['*'];
+		$data['where'] = ['vendor_id'=>$_POST['vendor_id']];
 		return $this->selectRecords($data);
 		 
 	}

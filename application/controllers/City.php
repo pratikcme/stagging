@@ -4,7 +4,6 @@
 class City extends Admin_Controller
 {
      function __construct(){
-
         parent::__construct();
         $vendor_id = $this->session->userdata['id'];
         $this->load->model('city_model','this_model');
@@ -12,8 +11,7 @@ class City extends Admin_Controller
      public function city_list()
     {
         $data['city_result'] = $this->this_model->GetCity();
-        //     echo '<pre>';
-        // print_r($data['city_result']);die;
+        
         $data['table_js'] = array('city.js');
         $data['start'] = array('CITY.table()');
         $this->load->view('city_list',$data);

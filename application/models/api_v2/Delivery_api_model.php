@@ -4,8 +4,7 @@ require 'vendor/autoload.php';
 class Delivery_api_model extends My_model
 {
     public function __construct() {
-        // $this->url = 'https://launchestore-1ad02-default-rtdb.firebaseio.com/';
-        // $this->token = 'XylZHjphOd9Ezqor5zVGITOjvI5EOCkO6Hi6kwsT';
+        
     }
 
     public function login($postdata)
@@ -102,8 +101,7 @@ class Delivery_api_model extends My_model
 
 
         $path = '/'.$this->firebaseNode.'/';
-        // print_r($path);die;
-        // echo $this->token;exit;
+       
         $firebase = new \Firebase\FirebaseLib($this->url, $this->token);
         $result = $firebase->get($path);
         // print_r($result);
@@ -111,8 +109,7 @@ class Delivery_api_model extends My_model
         $decodeRe = json_decode($result);
         
         // echo "<pre/>"; print_r($decodeRe); exit();
-         // echo count($decodeRe);die;
-        
+        // echo count($decodeRe);die;
 
         // print_r($res);die;
 
@@ -134,7 +131,7 @@ class Delivery_api_model extends My_model
             $s_long = $res['s_long'];
             $i = 0;
         foreach ($decodeRe as $value) {
-            // print_r($decodeRe);exit;
+          
             if(empty($value)){
                 continue;
             }
@@ -158,16 +155,15 @@ class Delivery_api_model extends My_model
                          'delivery_notification'=>true
                     );
 
-                // $key = "AAAAiEVdA8M:APA91bHLObncewgHcuCHN1vlK8KON4pyixZ3MpBXG0PRfr6Fh3qMUe7ZF66t7TGv5Bzfz-zr4MGP93SBwELaDFtFDfSnMxmtKcU2lrGth6TVGfrVodrp-WOLgAeRGMf0ESD1pJc0e_En";
+               
 
                 $key = "AAAAIhCnTt0:APA91bEAjiw53KeCGPM4Ns6lfvvBlihTd5FTrWo3_yW9ozu0iM8vs1MBErm1g0hOel4UXdk9zCtsX2l0YCa99XCystgrOsjyQ2lvZWcimH0FcNgNqBsKWWPEiniN9M2z5dBIhwaIizPH";
                 
                 
-                    // $this->utility_apiv2->sendNotification($dataArray, $notification_type,NULL,$key);
                     $this->load->model('api_v2/api_model');
                     $result = $this->api_model->getNotificationKey($branch_id);
                     $this->utility_apiv2->sendNotification($dataArray, $notification_type,$result,NULL,$this->key);
-                    // echo 1; exit;
+                
                     $this->insert_notification($order_id,$value->userId,$message,$branch_id);
                 }
                 
@@ -210,7 +206,6 @@ class Delivery_api_model extends My_model
 
         $res = array();
 
-        // print_r($get);exit;
         foreach ($get as $value) { 
           
             $order['order_id'] = $value['order_id'];
@@ -289,7 +284,7 @@ class Delivery_api_model extends My_model
         $data['table'] = 'order as o';
         $data['groupBy'] = 'o.id';
         $res = $this->selectFromjoin($data,true);
-        // echo $this->db->last_query();die;
+       
         if(count($res)>0 || !empty($res)){
         
             $res = $res[0];
@@ -407,10 +402,11 @@ class Delivery_api_model extends My_model
             $arr['date'][$value['delivery_datetime']][] = $this->notification_detail($value);
         }
 
-        // print_r($arr);die;
+      
         return $arr;
 
     }
+
     public function update_profile($postdata){
           if($_FILES['image']['name'] != ''){
                 $data['select'] = ['*'];
@@ -424,10 +420,10 @@ class Delivery_api_model extends My_model
                 @unlink($url);
                
                 $profile_upload_path = $path;
-                // print_r($_FILES);
+               
                 $uploadResponse = upload_single_image_ByName($_FILES,'image',$profile_upload_path);
                 
-                // print_r($uploadResponse);exit;
+               
                 $profile_image = $uploadResponse['data']['file_name'];  
                 $data['update'] = ['image'=>$profile_image];
                 $data['update'] = ['dt_updated'=>date('Y-m-d h:i:s')];

@@ -1,6 +1,4 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-// error_reporting(E_ALL);
-// ini_set("display_errors", "1");
 
 class Admin extends CI_Controller
 {
@@ -10,7 +8,7 @@ class Admin extends CI_Controller
         $this->load->model('vendor_model','vendor_model');
         $this->load->model('common_model');
         $siteDetail = $this->common_model->getLogo();
-        // print_r($siteDetail);die;
+      
         $this->siteLogo = $siteDetail['logo'];
         $this->siteTitle = $siteDetail['webTitle'];
         $this->siteFevicon = $siteDetail['favicon_image'];
@@ -45,7 +43,7 @@ class Admin extends CI_Controller
     }
 
     public function AccessVendor(){
-        // print_r($this->input->post());die;
+      
         if($this->input->post()){
             $vendor = $this->input->post('vendor_id');
             if($vendor != 'vendor_admin'){
@@ -84,8 +82,7 @@ class Admin extends CI_Controller
                 $this->session->unset_userdata('phone');
                 $this->session->unset_userdata('email');
                 $this->session->unset_userdata('logged_in');
-            // print_r($row_login);exit;
-            // print_r($result_login->num_rows());exit;
+          
             if ($result_login->num_rows() > 0) {
                 if($row_login['type']=='1'){
 
@@ -108,8 +105,7 @@ class Admin extends CI_Controller
     }
 }
     public function index(){
-        // echo "<pre>";
-        // print_r($_SESSION);die;
+      
         $this->load->model('vendor_model');
         $data['grap'] = json_encode($this->vendor_model->getChartData());
 
@@ -132,11 +128,7 @@ class Admin extends CI_Controller
 
     public function dashboard()
     { 
-        // echo "<pre>";
-        // print_r($_SESSION);die;
-    	
-        // $this->load->model('Vendor_model','vendor_model');
-        // $data['grap'] = json_encode($this->vendor_model->getChartData()); 
+        
         $this->load->model('dashboard_model','this_model');
         $data['total_order_monthly'] = $this->this_model->total_order_month();
         $data['total_order'] = $this->this_model->total_order_today();
@@ -157,11 +149,10 @@ class Admin extends CI_Controller
         $data['total_return_payment'] = $this->this_model->total_return_payment_query();
         $data['daily_order_Status'] = $this->this_model->daily_order_Status_query(); 
         $data['daily_order_Status_user_name'] = $this->this_model->daily_order_Status_user_name_query(); 
-        // echo '<pre>';
-        // print_r( $data['daily_order_Status']);die;
+      
        
         $data['table_js'] = array('admin.js');
-            // print_r($data['AllVendor']);exit;
+         
         $this->load->view('dashboard',$data);
     }
 
@@ -197,6 +188,42 @@ class Admin extends CI_Controller
         }
     }
     
+    public function genrate_excel()
+    {
+        $listInfo = $this->vendor_model->userList();
+        //print_r($items);
+        
+        $filename = "userData-".date('d-m-Y').".xls";
+
+        $this->load->library('excel');
+       
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        // set Header
+        $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'First Name');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B1', 'Last Name');
+        $objPHPExcel->getActiveSheet()->SetCellValue('C1', 'Email');
+        $objPHPExcel->getActiveSheet()->SetCellValue('D1', 'Phone Number');
+        $objPHPExcel->getActiveSheet()->SetCellValue('E1', 'Register Date');       
+        // set Row
+        $rowCount = 2;
+        foreach ($listInfo as $list) {
+          
+            $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $list->fname);
+            $objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $list->lname);
+            $objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $list->email);
+            $objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $list->phone);
+            $objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, date('Y-m-d H:i',$list->dt_added));
+            $rowCount++;
+        }
+        $filename = "userList". date("Y-m-d-H-i-s").".csv";
+        header('Content-Type: application/vnd.ms-excel'); 
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0'); 
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');  
+        $objWriter->save('php://output'); 
+
+    }
 
     public function user_address_list()
     {
@@ -327,18 +354,13 @@ class Admin extends CI_Controller
                 redirect(base_url().'admin/login');
             }
         } else {
-            //    echo "b";
-            // exit;
-
-            // echo "select * from admin where email='$email' and password='$password'";exit;
+           
            $result_login = $this->db->query("SELECT * FROM `vendor` WHERE email='$email' and password='$password'"); 
             $row_login = $result_login->row_array();
-            // print_r($row_login);exit;
-            // print_r($result_login->num_rows());exit;
+         
 
         if ($result_login->num_rows() > 0) {
-            // if($row_login['type']=='1'){
-
+           
                 $login_data = array(
                     'vendor_admin' => TRUE,
                     'super_id' => $row_login['id'],
@@ -351,19 +373,7 @@ class Admin extends CI_Controller
                     'flag' => $row_login['id'], // flag is using fo super admin acess to all vendor access
                     'type' => $row_login['type'],
                 );
-            // }
-            // else{
-            //     $login_data = array(
-            //         'delivery_admin' => TRUE,
-            //         'delivery_id' => $row_login['id'],
-            //         'id' => '0',
-            //         'name' => $row_login['name'],
-            //         'email' => $row_login['email'],
-            //         'phone' => $row_login['phone_no'],
-            //         'logged_in' => TRUE
-            //     );
-
-            // }
+           
              
                 $this->load->library('session');
                 $login_logs = [
@@ -378,9 +388,6 @@ class Admin extends CI_Controller
 
                 $this->session->set_userdata($login_data);
 
-                // echo $_POST['email'];
-                // echo $_POST['password'];
-                // exit;     
                 $remember = $_POST['remember'];
                 if ($remember!='') {
 
@@ -527,8 +534,7 @@ class Admin extends CI_Controller
     public function update_profile()
     {   
         error_reporting(E_ALL);
-        // print_r($_REQUEST);die;
-        // print_r($_FILES);die;
+       
         if(isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Update'){
 
             $branch_id = $this->session->userdata['id'];
@@ -546,23 +552,7 @@ class Admin extends CI_Controller
                 $path = 'public/images/'.$this->folder.'vendor_shop';
                 $result = upload_single_image_Byname($_FILES,'image',$path);
                    $vendorimage = $result['data']['file_name'];
-                   // print_r($result);die;
-                   //  $config['upload_path'] = 'public/images/vendor_shop';
-                   //  $config['allowed_types'] = 'gif|jpg|png|jpeg|JPEG|PNG|JPG';
-                   //  $config['file_name'] = $_FILES['vendorimage']['name'];
-                   // // print_r($config['file_name']); die;
-                   //  $this->load->library('upload', $config);
-
-                   //  if (!$this->upload->do_upload('vendorimage'))
-                   //  {
-                   //      $return['error'] = $this->upload->display_errors();
-                       
-                   //  } 
-                   //  else 
-                   //  {
-                   //      $result = $this->upload->data();
-                   //      $vendorimage = $result['file_name'];
-                   // }
+                   
                 }else{
                     $vendorimage =  $this->input->post('old_file');
                 } 
@@ -605,7 +595,7 @@ class Admin extends CI_Controller
                     'gst_number'=>(!isset($_POST['gst_number']) ? '' : $_POST['gst_number']),
                     'dt_updated' => date('Y-m-d H:i:s')
                 );  
-                // print_r($data);
+              
             }else{
                 $folder_name = $this->input->post('folder_name');
                 $path = "./public/images/".$folder_name;
@@ -659,7 +649,7 @@ class Admin extends CI_Controller
             }
 
             
-            // print_r($data); die;
+          
             $branch_id = $this->session->userdata['id'];
             if($branch_id == 0){
 
@@ -781,9 +771,7 @@ class Admin extends CI_Controller
                 $CI->email->clear();
                 $CI->email->from($config['smtp_user'], $this->siteTitle);
                 $CI->email->to($email);
-                // if (isset($data["bcc"])) {
-                //     $CI->email->bcc($data["bcc"]);
-                // }
+                
                 $CI->email->reply_to($config['smtp_user'], '<noreply@stagegator.com>');
                 $CI->email->subject($subject);
 
@@ -818,19 +806,14 @@ class Admin extends CI_Controller
             $old_password_query = $this->db->query("SELECT password FROM $tablename WHERE id = '$id'");
             $old_password_result = $old_password_query->row_array();
             $old_password = $old_password_result['password'];
-            // echo $old_password.' , '.$np;exit;
+          
                 if($old_pass == $old_password){
             if($old_password != $np){
 
 
                     if($new_pass == $confirm_pass){
 
-                        // $data = array( 'password' => md5($new_pass), 'dt_updated' => date('Y-m-d H:i:s'));
                        
-                        // $this->db->where('id', $id);               
-                        // $this->db->update($tablename, $data);
-    // echo $this->db->last_query(); die;
-                        // $this->session->set_flashdata('msg', 'Password has been updated successfully.');
                         echo 1;
                         exit();
                     }else{
@@ -855,9 +838,6 @@ class Admin extends CI_Controller
 
     public function changed_password(){
 
-
-
-        // print_r($_POST);exit;
         if(isset($_POST)){
 
             $id = $_POST['appid'];
@@ -874,12 +854,12 @@ class Admin extends CI_Controller
                 $tablename= "branch";
              }
          
-             // echo $tablename;die;
+            
 
             $data = array( 'password' => md5($new_pass), 'dt_updated' => date('Y-m-d H:i:s'));           
             $this->db->where('id', $id);               
             $this->db->update($tablename, $data);
-    // echo $this->db->last_query(); die;
+   
             $this->session->set_flashdata('msg', 'Password has been updated successfully.');
             echo 1;
             exit();

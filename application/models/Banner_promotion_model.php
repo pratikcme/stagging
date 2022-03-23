@@ -2,9 +2,7 @@
 class Banner_promotion_model extends My_model{  
 
     function __construct(){
-        // $this->load->model('common_model');
-        // $re = $this->common_model->getExistingVendorId();
-        // $this->vendor_id = $re[0]->id;
+        
         $this->vendor_id = $this->session->userdata('vendor_admin_id'); 
     }
 
@@ -21,8 +19,7 @@ class Banner_promotion_model extends My_model{
 
     ## Banner Promotion Add Update ##
     public function banner_promotion_add_update($postData){
-        // print_r($postData);die;
-        // $vendor_id = $postData['vendor_id'];
+       
         $vendor_id = $this->session->userdata('vendor_admin_id');
         $product_id = $postData['product_id'];
 

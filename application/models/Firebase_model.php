@@ -95,7 +95,6 @@ Class Firebase_model extends My_model{
             $data['update']['firebase_url'] = trim($postData['firebase_url']);
             $data['update']['firebase_token'] = trim($postData['firebase_token']);
             $data['update']['firebase_node'] = trim($postData['firebase_node']);
-            $data['update']['created_at'] = DATE_TIME;
             $data['update']['updated_at'] = DATE_TIME;
             $data['where'] = ['id' => $result[0]->id];
             $data['table'] = TABLE_FIREBASE;

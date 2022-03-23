@@ -328,7 +328,7 @@ class Api_admin_model extends My_model {
         $response = $this->selectRecords($data);
         /* if got token in database then update token as empty and user status is active */
         if (count($response) > 0) {
-            $updatedata = array('email_token' => '', 'email_verify' => '1',);
+            $updatedata = array('email_token' => '', 'email_verify' => '1','dt_updated' => DATE_TIME );
             unset($data);
             $data['update'] = $updatedata;
             $data['where'] = ['id' => $response[0]->id];
@@ -1333,6 +1333,8 @@ class Api_admin_model extends My_model {
         $id = $postData['order_id'];
         $otp = $postData['otp'];
         $data['update']['otp_verify'] = '1';
+        $data['update']['dt_updated'] =DATE_TIME;
+
         $data['where'] = ['order_id' => $id, 'otp' => $otp];
         $data['table'] = 'delivery_order';
         $res = $this->updateRecords($data);
@@ -1494,6 +1496,7 @@ class Api_admin_model extends My_model {
         $token = md5('user_' . time());
         $token = "1234";
         $data['update']['token'] = $token;
+        $data['update']['dt_updated'] =strtotime(DATE_TIME);
         $data['where'] = ['id' => $vendor_id];
         $data['table'] = 'vendor';
         $updateRecord = $this->updateRecords($data);

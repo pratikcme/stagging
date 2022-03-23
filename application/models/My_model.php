@@ -15,8 +15,13 @@ class My_model extends CI_Model
 
     public function selectRecords($data, $array = false)
     {
-        
-        $this->db->select($data ["select"]);
+        if(!isset($data["select"])){
+            $this->db->select('*');
+
+        }else{
+
+            $this->db->select($data ["select"]);
+        }
         $this->db->from($data ["table"]);
         
         if (isset($data ["where"])) {
@@ -256,6 +261,7 @@ class My_model extends CI_Model
 
     public function selectFromJoin($data, $array = false)
     {
+        again:
         $this->db->select($data ["select"]);
         $this->db->from($data ["table"]);
         if (isset($data ["where"])) {
@@ -343,7 +349,18 @@ class My_model extends CI_Model
         if (isset($data ["having"])) {
             $this->db->having($data ["having"]);
         }
-        $result = $this->db->get();
+       
+        if (!$result = $this->db->get() )
+        {
+            $error = $this->db->error(); 
+            if($error['code']=='1055'){
+                $this->db->query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
+                goto again;
+            }
+            return false;
+        }
+
+        
         if ($array) {
             $result = $result->result_array();
         }

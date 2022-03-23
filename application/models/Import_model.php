@@ -150,8 +150,7 @@ class Import_model extends My_model {
                     redirect(base_url().'import/import_excel');
                     die;
                 }
-            // echo 1;die;
-
+          
             if(!empty($brand)){
                 return $result;
 
@@ -222,8 +221,7 @@ class Import_model extends My_model {
 
                     if($subCategory != ''){
                         $getSub = $this->subcategory_list($categoryId, $subCategory);
-                        // echo $this->db->last_query();
-                        // print_r($getSub);die;
+                      
                         $subCategoryId = $getSub[0]['id'];
                     }
 
@@ -235,11 +233,7 @@ class Import_model extends My_model {
                         // $brandId = '10';
                     }
 
-                    // if($supplier != ''){
-                    //     $getSupply = $this->supplier_list($supplier);
-                    //     $supplierId = $getSupply[0]['id'];
-                    // }
-
+                 
                     if($package != ''){
                         $getPackage = $this->package_list($package);
                         $packageId = $getPackage[0]['id'];
@@ -252,27 +246,7 @@ class Import_model extends My_model {
                     if($image != ''){
                         $image = $image;
                         $images = explode(',', $image);
-                        // print_r($images);die;
-                        // ini_set('allow_url_fopen', '1');
-            // echo $image;exit;
-
-             // $ext = pathinfo($image, PATHINFO_EXTENSION);
-            // print_r(file_get_contents($image),FILE_USE_INCLUDE_PATH);exit;
-            // $data_filename = 'user_image_'.time().'.'.$ext;
-            // $fileName = 'public/images/product_image_thumb/user_image_'.time().'.'.$ext;
-            // $imageFromthird = file_put_contents($fileName,file_get_contents($image));
-
-//                        $imgpath = base_url().'public/images/product_image/user_image_'.time().'.'.$ext;
-//
-//                        $ch = curl_init($imgpath);
-//                        $fp = fopen($image, 'wb');
-//                        curl_setopt($ch, CURLOPT_FILE, $fp);
-//                        curl_setopt($ch, CURLOPT_HEADER, 0);
-//                        curl_exec($ch);
-//                        curl_close($ch);
-//                        fclose($fp);
-                    }
-                    // echo $categoryId;die;
+                        
                     if($type != ''){
 
                         if ($type == 'New') {
@@ -291,11 +265,10 @@ class Import_model extends My_model {
                             $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                             $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                             $data['table'] = 'product';
-                            // print_r($data);die;
+                        
                             $lastId = $this->insertRecord($data);
                             $lastInsertedId = $lastId;
-                            // echo $this->db->last_query();die;
-                            // print_r($data);die;
+                           
                             unset($data);
 
                             goto a;
@@ -314,7 +287,7 @@ class Import_model extends My_model {
                                 $dicount = 0;
                                 $final_discount_price = $retailPrice;
                             }
-                            // echo $unitId .'/'.$packageId .'/'.$varient .'/'. $purchasePrice.'/'.$retailPrice.'/'.$qty;die;  
+                            
                             if($unitId !='' && ($packageId !='') && ($varient !='') && ($purchasePrice == 0 || $purchasePrice != '') && ($retailPrice !='') && ($qty !='') ) {
                                 $data['insert']['branch_id'] = $this->branch_id;
                                 $data['insert']['product_id'] = ($lastId != '') ? $lastId : $lastInsertedId;
@@ -335,7 +308,7 @@ class Import_model extends My_model {
                                 $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                                 $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                                 $data['table'] = 'product_weight';
-                                 // print_r($data);die;
+                               
                                 $result = $this->insertRecord($data);
 
                                 unset($data);
@@ -357,7 +330,7 @@ class Import_model extends My_model {
                     }
 
                 }
-                // retrun 
+               
             }
         }
         return true;
@@ -384,15 +357,7 @@ class Import_model extends My_model {
     }
 
     public function getVarientOfProduct($product_id,$branch_id){
-        // $data['table'] = TABLE_CATEGORY;
-        // $data['select'] = ['*'];
-        // $data['where'] = [
-        //     'name'=>$postData['category_name'],'status!='=>'9'
-        // ];
-        // $result = $this->selectRecords($data);
-        // // echo $this->db->last_query();die;
-        // $category_id = $result[0]->id;
-        // unset($data);
+       
 
         $data['table'] = TABLE_PRODUCT_WEIGHT . ' as pw';
         $data['join'] = [
@@ -405,17 +370,16 @@ class Import_model extends My_model {
             'pw.status !='=>'9',
         ];
         $data['select'] = ['pw.weight_no','pw.quantity','w.name','pkg.package','pw.discount_per','pw.price'];
-        // $data['groupBy'] = 'p.id';
+       
         return $return = $this->selectFromJoin($data);
-        // echo $this->db->last_query();die;
+     
     }
 
     public function UpdateProductQuantity(){
         if (isset($_FILES["file"]["name"])) {
             $path = $_FILES["file"]["tmp_name"];
             $name = explode('.',$_FILES["file"]["name"]);
-            // $getCategory = $this->getCatgory($name[0]);
-            // $categoryId = $getCategory[0]->id;
+           
             $categoryId = $this->input->post('catgeory');
 
             $object = PHPExcel_IOFactory::load($path);
@@ -423,7 +387,7 @@ class Import_model extends My_model {
             foreach ($object->getWorksheetIterator() as $worksheet) {
                 $highestRow = $worksheet->getHighestRow();
                 $highestColumn = $worksheet->getHighestColumn();
-                // print_r($highestRow);die;
+              
                 $i = 0;
                 for ($row = 2; $row <= $highestRow; $row++) {
 
@@ -437,11 +401,11 @@ class Import_model extends My_model {
                     $discount = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
                     $max_order_qty = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
 
-                    // echo $price .'/'. $discount;
+                  
 
                     $discount_price = ($price * $discount)/100; 
 
-                    // print_r($discount_price);die;
+                  
 
                     $Varient = $this->ProductVarient($productName);
 
@@ -461,8 +425,7 @@ class Import_model extends My_model {
                             $data['where']['id'] =  $firstVarient_id;
                         }
                         if ($type == 'Old') {   
-                            // if(($unitId !='') && ($varient !='') && ($qty !='')){
-                            // }
+                            
                             $Varient_id = $Varient[$i]->id;  
                             $data['update']['quantity'] = $qty;
                             $data['update']['price'] = $price;
@@ -476,12 +439,10 @@ class Import_model extends My_model {
 
                         }
 
-                        // print_r($data);die;
+                      
                         $data['update']['dt_updated'] = strtotime(DATE_TIME);
                         $lastId = $this->updateRecords($data);
-                        // if($row == 11){
-                        //     echo $this->db->last_query();die;
-                        // }
+                       
                         $lastInsertedId = $lastId;
 
                     }else{
