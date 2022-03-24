@@ -40,8 +40,7 @@ class Brand_model extends My_model{
         $data['where']['status!='] = '9';
         $data['select'] = ['name'];
         $res = $this->selectRecords($data);
-        // print_r($res);die;
-        // echo $this->db->last_query();die;
+       
         if(!empty($res)){
             return 'false';
         }else{
@@ -57,7 +56,7 @@ class Brand_model extends My_model{
         $data['where_in'] = ['id'=>$cat_array];
         $result = $this->selectRecords($data);
         return $result;
-        // echo $this->db->last_query();
+      
     }
 
     public function InsertBrand($postData){
@@ -142,11 +141,7 @@ class Brand_model extends My_model{
             $result =$this->selectRecords($data,true);
             $count = $this->countRecords($data);
 
-            // $this->db->select('*');
-            // $this->db->where('brand_id', $value);
-            // $this->db->where('status !=','9');
-            // $this->db->from('product');
-            // $query = $this->db->get();
+            
             unset($data);
 
             $data['table'] = 'brand';
@@ -154,7 +149,7 @@ class Brand_model extends My_model{
             $data['where'] = ['id'=>$value];
             $rows =$this->selectRecords($data,true);
             $row1 = $rows[0];
-            // print_r($row1['name']);die;
+           
             if ($count > 0){
                 $row = $result[0];
                 ob_get_clean();

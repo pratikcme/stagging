@@ -14,7 +14,7 @@ class Staff_api extends Staff_Controller {
         } else {
             $response = array('status' => '0', 'message' => 'Invalid Parameter');
         }
-        // $this->response($response);
+       
         echo json_encode($response);
     }
     public function order_list() {

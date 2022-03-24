@@ -27,6 +27,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <section class="panel">
+                     <a class="btn btn-warning" href="<?php echo base_url().'admin/genrate_excel'; ?>" style="float: right;">Download Excel</a>
                     <header class="panel-heading"> Users</header>
                     <div class="panel-body">
                         <div class="adv-table">

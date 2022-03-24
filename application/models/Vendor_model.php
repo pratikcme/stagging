@@ -2,16 +2,12 @@
 class vendor_model extends My_model{
 
     function __construct(){
-        // print_r($_SESSION);die;
-        // $this->load->model('common_model');
-        //  $re = $this->common_model->getExistingBranchId();
-        //  $this->branch_id = $re[0]->id;
+      
          $this->vendor_id = $this->session->userdata('vendor_admin_id');
     }
 
        public function new_vendor_register(){
-        // echo "<pre>";
-        // print_r($_POST);die;
+      
         if(isset($_POST['submit1'])){
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
@@ -21,11 +17,7 @@ class vendor_model extends My_model{
                     $id = $_POST['id'];
                     $files = $_FILES;                  
                     if($_FILES['image_edit']['name'] != ''){
-                        // $_FILES['image_edit']['name'] = $files['image_edit']['name'];
-                        // $_FILES['image_edit']['type'] = $files['image_edit']['type'];
-                        // $_FILES['image_edit']['tmp_name'] = $files['image_edit']['tmp_name'];
-                        // $_FILES['image_edit']['error'] = $files['image_edit']['error'];
-                        // $_FILES['image_edit']['size'] = $files['image_edit']['size'];
+                       
 
                         $query = $this->db->query("SELECT image FROM vendor WHERE id = '$id'");
                         $result = $query->row_array();
@@ -43,11 +35,7 @@ class vendor_model extends My_model{
                     }
 
                     if($_FILES['logo_image_edit']['name'] != ''){
-                        // $_FILES['logo_image_edit']['name'] = $files['logo_image_edit']['name'];
-                        // $_FILES['logo_image_edit']['type'] = $files['logo_image_edit']['type'];
-                        // $_FILES['logo_image_edit']['tmp_name'] = $files['logo_image_edit']['tmp_name'];
-                        // $_FILES['logo_image_edit']['error'] = $files['logo_image_edit']['error'];
-                        // $_FILES['logo_image_edit']['size'] = $files['logo_image_edit']['size'];
+                       
 
                         $query = $this->db->query("SELECT logo_image FROM vendor WHERE id = '$id'");
                         $result = $query->row_array();
@@ -188,12 +176,12 @@ class vendor_model extends My_model{
 
 
     public function getAllVendor($postData = ''){
-        // print_r($postData);die;
+       
         if(!empty($postData)){
             $vendor_id = $postData['vendor_id'];
             $data['where'] = ['id'=>$vendor_id];
         }else{
-            // $data['where'] = ['domain_name'=>base_url()]; 
+           
             $data['where'] = ['vendor_id'=>$this->session->userdata('flag')]; 
         }
         $data['table'] = TABLE_BRANCH;
@@ -521,14 +509,16 @@ class vendor_model extends My_model{
     public function change_delivery_type(){
 
 
-           $status = $this->input->post('status');
-           $vendor_id = $this->session->userdata['id'];
+        $status = $this->input->post('status');
+        $vendor_id = $this->session->userdata['id'];
 
-           $data['update']['delivery_by'] = $status;
-           $data['where'] = ['id' => $vendor_id];
-           $data['table'] = 'vendor';
-           $this->updateRecords($data);
-           exit;
+        $data['update']['delivery_by'] = $status;
+        $data['update']['dt_updated'] = strtotime(DATE_TIME);
+
+        $data['where'] = ['id' => $vendor_id];
+        $data['table'] = 'vendor';
+        $this->updateRecords($data);
+        exit;
     }
 //  request from staff controller
     public function getStaff(){

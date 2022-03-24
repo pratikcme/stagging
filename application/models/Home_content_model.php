@@ -23,26 +23,26 @@ Class Home_content_model extends My_model{
     }
     public function addRecord($postData){
       
-    	 if($_FILES['image']['error'] == 0){
-                    $image = $_FILES['image']['name'];
-                    $image = explode('.',$image);
-                    $image = $image[0] . time(). '.' . $image[1];
-                    $temp_location = $_FILES['image']['tmp_name'];
-                    $uploadpath = 'public/uploads/home_content/'.$image;
-                    move_uploaded_file($temp_location, $uploadpath);
-            }
-                    $data['table'] = TABLE_HOME_CONTENT;
-                    $data['insert']['image'] = $image;
-                    $data['insert']['main_title'] = $postData['main_title'];
-                    $data['insert']['sub_title'] = $postData['sub_title'];
-                    $data['insert']['created_at'] = DATE_TIME;
-                    $data['insert']['updated_at'] = DATE_TIME;
-                    $result = $this->insertRecord($data);
-                        if($result){
-                            return ['success','Record Added Successfully'];
-                        }else{
-                            return ['danger', DEFAULT_MESSAGE];
-                        }
+	   if($_FILES['image']['error'] == 0){
+            $image = $_FILES['image']['name'];
+            $image = explode('.',$image);
+            $image = $image[0] . time(). '.' . $image[1];
+            $temp_location = $_FILES['image']['tmp_name'];
+            $uploadpath = 'public/uploads/home_content/'.$image;
+            move_uploaded_file($temp_location, $uploadpath);
+        }
+        $data['table'] = TABLE_HOME_CONTENT;
+        $data['insert']['image'] = $image;
+        $data['insert']['main_title'] = $postData['main_title'];
+        $data['insert']['sub_title'] = $postData['sub_title'];
+        $data['insert']['created_at'] = DATE_TIME;
+        $data['insert']['updated_at'] = DATE_TIME;
+        $result = $this->insertRecord($data);
+        if($result){
+            return ['success','Record Added Successfully'];
+        }else{
+            return ['danger', DEFAULT_MESSAGE];
+        }
     }
 
     public function getSectionTwo(){
@@ -62,29 +62,29 @@ Class Home_content_model extends My_model{
     public function updateAboutRecord($postData){
          $id = $this->utility->safe_b64decode($postData['update_id']);
          if($_FILES['image']['error'] == 0){
-                $image = $_FILES['image']['name'];
-                $image = explode('.',$image);
-                $image = $image[0] . time(). '.' . $image[1];
-                $temp_location = $_FILES['image']['tmp_name'];
-                $uploadpath = 'public/uploads/home_content/'.$image;
-                move_uploaded_file($temp_location, $uploadpath);
-                unlink('public/uploads/home_content/'.$postData['hidden_image']);
-                }else{
-                    $image = $postData['hidden_image'];
-                }
+            $image = $_FILES['image']['name'];
+            $image = explode('.',$image);
+            $image = $image[0] . time(). '.' . $image[1];
+            $temp_location = $_FILES['image']['tmp_name'];
+            $uploadpath = 'public/uploads/home_content/'.$image;
+            move_uploaded_file($temp_location, $uploadpath);
+            unlink('public/uploads/home_content/'.$postData['hidden_image']);
+        }else{
+            $image = $postData['hidden_image'];
+        }
 
-            $data['table'] = TABLE_HOME_CONTENT;
-            $data['update']['image'] = $image;
-            $data['update']['main_title'] = $postData['main_title'];
-            $data['update']['sub_title'] = $postData['sub_title'];
-            $data['update']['updated_at'] = DATE_TIME;
-            $data['where']['id'] = $id;
-    	    $result = $this->updateRecords($data); 
-    		if($result) {
-                return ['success', 'Record Edit Successfully'];
-            } else {
-                return ['danger', DEFAULT_MESSAGE];
-            } 	
+        $data['table'] = TABLE_HOME_CONTENT;
+        $data['update']['image'] = $image;
+        $data['update']['main_title'] = $postData['main_title'];
+        $data['update']['sub_title'] = $postData['sub_title'];
+        $data['update']['updated_at'] = DATE_TIME;
+        $data['where']['id'] = $id;
+	    $result = $this->updateRecords($data); 
+		if($result) {
+            return ['success', 'Record Edit Successfully'];
+        } else {
+            return ['danger', DEFAULT_MESSAGE];
+        } 	
     }
 
     public function removeRecord($id){

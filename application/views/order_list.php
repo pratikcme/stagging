@@ -389,6 +389,10 @@
             var X = confirm('Are you sure..? You want to cancel and Refund');
             if(!X){
                 return false;
+            }else{
+                orderstatus.val('9');
+               orderstatus.attr('disabled','disabled');
+               style ="background-color:#f92e2e !important; color: white; font-weight:bold;";  
             }
         }
          $.ajax({
@@ -399,7 +403,7 @@
                     type: 'POST',
                     success: function (data) {
 
-                         if(data.status == 9){
+                     if(data.status == 9){
                            orderstatus.val('9');
                            orderstatus.attr('disabled','disabled');
                            style ="background-color:#f92e2e !important; color: white; font-weight:bold;";

@@ -45,9 +45,9 @@ class Category_model extends My_model{
 
     ## Category Profile ##
     public function category_add_update(){
-        // date_default_timezone_set('Asia/Kolkata');
+        
         $branch_id = $this->session->userdata['id'];
-        // print_r($_FILES);die;
+        
        if (isset($_REQUEST['submit'])){
 
             $id = $_REQUEST['id'];
@@ -155,11 +155,7 @@ class Category_model extends My_model{
 
     public function check_category(){
 
-        // $data['table'] = 'product';
-        // $data['where'] = ['branch_id'=>'1'];
-        // $data['update'] = ['status'=>1];
-        // $this->updateRecords($data);
-        // die;
+       
 
          $id = $_GET['id']; 
         
@@ -169,7 +165,7 @@ class Category_model extends My_model{
         $this->db->where('branch_id',$this->branch_id);
         $this->db->from('brand');
         $query = $this->db->get();
-       // echo $this->db->last_query();exit;
+       
         if ( $query->num_rows() > 0 )
         {
             $row = $query->row_array();
@@ -233,9 +229,7 @@ class Category_model extends My_model{
         $data['update'] = $updateData;
         $data['where'] = ['id'=>$id];
         $this->updateRecords($data);
-        // $this->db->where('id', $id);
-        // $this->db->update('category', $data);
-
+        
         ob_get_clean();
         header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
@@ -355,7 +349,7 @@ class Category_model extends My_model{
 
     public  $order_column_category = array("name"); 
     function make_query_category($postData){
-     // $branch_id = $this->session->userdata('id');
+   
         $where = [
             'branch_id'=>$this->branch_id,
             'status !='=>'9',  
@@ -366,7 +360,7 @@ class Category_model extends My_model{
          if(isset($postData["search"]["value"]) && $postData["search"]["value"] != ''){ 
         $this->db->group_start();
             $this->db->like("name", $postData["search"]["value"]);
-        $this->db->group_end(); 
+            $this->db->group_end(); 
         }  
         
         if(isset($postData["order"]) && $postData["order"] != '' ){  
@@ -384,7 +378,7 @@ class Category_model extends My_model{
         }  
             $query = $this->db->get();  
             return $query->result();
-            // echo $this->db->last_query();
+           
         }
 
     function get_filtered_data_category($postData = false){  

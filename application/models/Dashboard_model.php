@@ -2,8 +2,7 @@
 class Dashboard_model extends My_model{ 
 	
 	public function __construct(){
-		// echo "<pre>";
-		// print_r($_SESSION);die;
+		
 		$this->branch_id = $this->session->userdata['id'];
 	}
 
@@ -36,20 +35,12 @@ class Dashboard_model extends My_model{
         }
 
 
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['vendor_id'] = $vendor_id;
-  //       }
- 	// 	$today = strtotime(date('Y-m-d 00:00:00')); 
- 	// 	$data['table'] = 'order';
- 	// 	$data['select'] = ['count(*) as total'];
- 	// 	$data['where']['dt_added >='] = $today;
- 	// 	$total_order = $this->selectRecords($data,true);
-		// return $total_order[0];
+		
 
 	}
 
 	public function total_order_month(){
-		// print_r($_SESSION);die;
+	
         $month = strtotime(date('Y-m-01 00:00:00'));
 
         if(isset($_SESSION['vendor_admin']) ){
@@ -64,13 +55,13 @@ class Dashboard_model extends My_model{
 	 		$total_order_monthly =  $this->selectFromJoin($data,true);
 	 		return $total_order_monthly[0];
         }else{
-        	// echo '1';die;
+        	
 	        $data['table'] = TABLE_ORDER . ' as o';
 	 		$data['select'] = ['count(*) as total'];
 	 		$data['where']['dt_added >='] = $month;
 	 		$data['where']['branch_id'] = $this->branch_id;
 	 		$total_order_monthly = $this->selectRecords($data,true);
-	 		// echo $this->db->last_query(); exit;
+	 	
 			return $total_order_monthly[0];
         }
 
@@ -91,34 +82,19 @@ class Dashboard_model extends My_model{
 	 		$return =  $this->selectFromJoin($data,true);
 	 		return $return[0];
         }else{
-        	// echo '1';die;
+        
 	        $data['table'] = TABLE_ORDER . ' as o';
 	 		$data['select'] = ['count(*) as total'];
 	 		$data['where']['status !='] = '9';
 	 		$data['where']['branch_id'] = $this->branch_id;
 	 		$return = $this->selectRecords($data,true);
-	 		// echo $this->db->last_query(); exit;
+	 	
 			return $return[0];
         }
 
 
 
 
-
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['o.vendor_id'] = $this->vendor_id;
-  //       }
-
- 	// 	$data['table'] = 'order as o';
-  //       $data['select'] =  ['count(*) as total'];
-  //       $data['where']['o.status !='] = '9';
-  //       $data['order'] = 'o.id DESC';
-  //       $return = $this->selectRecords($data,true);
-  //       return $return[0];
-
-		// $total_order_del = $this->db->query("SELECT count(*) as total FROM `order` WHERE dt_updated >= '$del'  AND vendor_id = '$vendor_id' AND order_status = '3'");
-		// // echo $this->db->last_query();exit;
-		// $total_order_delt = $total_order_del->row_array();
 	}
 
 	public function total_product_query(){
@@ -165,23 +141,17 @@ class Dashboard_model extends My_model{
 	 		$total_registered_user =  $this->selectFromJoin($data,true);
 	 		return $total_registered_user[0];
         }else{
-        	// echo '1';die;
-		$data['table'] = 'user';
-		$data['select'] = ['count(*) as total_registered_user'];
-		$data['where'] = ['status !='=> '9'];
-	 	$data['where']['vendor_id'] = $this->session->userdata('branch_vendor_id');
-		$total_registered_user = $this->selectRecords($data,true);
-		// echo $this->db->last_query();
-		return $total_registered_user[0];
+       
+			$data['table'] = 'user';
+			$data['select'] = ['count(*) as total_registered_user'];
+			$data['where'] = ['status !='=> '9'];
+		 	$data['where']['vendor_id'] = $this->session->userdata('branch_vendor_id');
+			$total_registered_user = $this->selectRecords($data,true);
+			
+			return $total_registered_user[0];
 
         }
 
-  //       $data['table'] = 'user';
-		// $data['select'] = ['count(*) as total_registered_user'];
-		// $data['where'] = ['status !='=> '9'];
-	 // 	$data['where']['branch_id'] = $this->branch_id;
-		// $total_registered_user = $this->selectRecords($data,true);
-		// return $total_registered_user[0];
 
 	}
 
@@ -199,7 +169,7 @@ class Dashboard_model extends My_model{
 			$total_delivered =  $this->selectFromJoin($data,true);
 			return $total_delivered[0];
 		}else{
-        	// echo '1';die;
+        	
 			$data['table'] = 'order';
 			$data['select'] = ['count(*) as total_delivered'];
 			$data['where']['order_status'] = '8';
@@ -209,14 +179,7 @@ class Dashboard_model extends My_model{
 
 		}
 
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['vendor_id'] = $this->vendor_id;
-  //       }
-		// $data['table'] = 'order';
-		// $data['select'] = ['count(*) as total_delivered'];
-		// $data['where']['order_status'] = '8';
-		// $total_delivered = $this->selectRecords($data,true);
-		// return $total_delivered[0];
+	
 
 	}
 
@@ -234,7 +197,7 @@ class Dashboard_model extends My_model{
 			$total_sales =  $this->selectFromJoin($data,true);
 			return $total_sales[0];
 		}else{
-        	// echo '1';die;
+        	
 			$data['table'] = 'order';
 			$data['select'] = ['SUM(total) as sales'];
 			$data['where']['order_status !='] = '9';
@@ -244,14 +207,7 @@ class Dashboard_model extends My_model{
 
 		}
 
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['vendor_id'] = $this->vendor_id;
-  //       }
-		// $data['table'] = 'order';
-		// $data['select'] = ['SUM(total) as sales'];
-		// $data['where']['order_status !='] = '9';
-		// $total_sales = $this->selectRecords($data,true);
-		// return $total_sales[0];
+	
 	}
 
 	public function total_pending_order_query(){
@@ -277,15 +233,7 @@ class Dashboard_model extends My_model{
 			return $total_pending_order[0];
 
 		}
-
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['vendor_id'] = $this->vendor_id;
-  //       }
-		// $data['table'] = 'order';
-		// $data['select'] = ['count(*) as total'];
-		// $data['where']['order_status'] = '2';
-		// $total_pending_order = $this->selectRecords($data,true);
-		// return $total_pending_order[0];
+		
 	}
 
 	public function total_pending_payment_query(){
@@ -304,7 +252,7 @@ class Dashboard_model extends My_model{
 			$total_pending_order =  $this->selectFromJoin($data,true);
 			return $total_pending_order[0];
 		}else{
-        	// echo '1';die;
+        	
 			$data['table'] = 'order';
 			$data['select'] = ['SUM(total) as pending_payment'];
 			$data['where']['order_status != "8" AND order_status !='] ='9';
@@ -315,23 +263,13 @@ class Dashboard_model extends My_model{
 
 		}
 
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['vendor_id'] = $this->vendor_id;
-  //       }
-		// $data['table'] = 'order';
-		// $data['select'] = ['SUM(total) as pending_payment'];
-		// $data['where']['payment_type'] = '0';
-		// $data['where']['order_status != "8" AND order_status !='] ='9';
-		// $total_pending_order = $this->selectRecords($data,true);
-		// // echo $this->db->last_query(); die;
-		// return $total_pending_order[0];
 	}
 
 	public function total_return_order_query(){
 
 		if(isset($_SESSION['vendor_admin']) ){
 			$data['table'] = 'vendor as v';
-			$data['select'] = ['SUM(total) as pending_payment'];
+			$data['select'] = ['count(*) as total'];
 			$data['join'] = [
 				TABLE_BRANCH .' as b'=>[' v.id = b.vendor_id ','LEFT'],
 				TABLE_ORDER .' as o'=>['b.id = o.branch_id','LEFT']
@@ -351,14 +289,6 @@ class Dashboard_model extends My_model{
 
 		}
 
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['vendor_id'] = $this->vendor_id;
-  //       }
-		// $data['table'] = 'order';
-		// $data['select'] = ['count(*) as total'];
-		// $data['where']['order_status'] = '9';
-		// $total_return_order = $this->selectRecords($data,true);
-		// return $total_return_order[0];
 	}
 
 	public function total_return_payment_query(){
@@ -376,7 +306,7 @@ class Dashboard_model extends My_model{
 			$daily_order_Status =  $this->selectFromJoin($data,true);
 			return $daily_order_Status[0];
 		}else{
-        	// echo '1';die;
+        
 			$data['table'] = 'order';
 			$data['select'] = ['SUM(total) as return_payment'];
 			$data['where']['order_status'] ='9';
@@ -387,15 +317,6 @@ class Dashboard_model extends My_model{
 
 		}
 
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['vendor_id'] = $this->vendor_id;
-  //       }
-		// $data['table'] = 'order';
-		// $data['select'] = ['SUM(total) as return_payment'];
-		// $data['where']['daily_order_Status'] = '9';
-		// $total_return_payment = $this->selectRecords($data,true);
-		// // echo $this->db->last_query(); die;
-		// return $total_return_payment[0];
 	}
 
 	public function daily_order_Status_query(){
@@ -427,20 +348,9 @@ class Dashboard_model extends My_model{
 		}
 
 
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['vendor_id'] = $this->vendor_id;
-  //       }
-		// $data['table'] = 'order';
-		// $data['select'] = ['*'];
-		// $data['where']['dt_added >='] = $today;
-		// $daily_order_Status = $this->selectRecords($data);
-		// return $daily_order_Status;
 	}
 	
 	public function daily_order_Status_user_name_query(){
-		// if($this->session->userdata('vendor_admin') == '1'){
-  //           $data['where']['vendor_id'] = $this->vendor_id;
-  //       }
 		$data['table'] = 'order';
 		$data['select'] = ['*'];
 		$data['where'] = ['branch_id' =>$this->branch_id ];

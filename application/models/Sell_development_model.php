@@ -28,8 +28,7 @@ class Sell_development_model extends My_model
     }
 
     public function addProducttoTempOrder($postdata){
-        // error_reporting(E_ALL);
-        // ini_set("display_errors", '1');     
+       
         $product_id = $postdata['product_id'];
         $varient_id = $postdata['pw_id'];
         $quantity = 1;
@@ -59,7 +58,7 @@ class Sell_development_model extends My_model
                 'discount_price'=>number_format((float)$update_discount_price,2,'.','')
             ];
             $this->UpdateOrderTemp($varient_id,$updateArray);
-            // $this->db->query("UPDATE product_weight SET quantity = quantity - $quantity,temp_quantity = temp_quantity + $quantity  WHERE id = '$varient_id'");
+           
             $response = 1;
         }else{
             $response = 0;
@@ -72,7 +71,7 @@ class Sell_development_model extends My_model
             $price = number_format((float)$varient[0]->discount_price,2,'.','');
             $discount_percentage = number_format((float)$varient[0]->discount_per,2,'.','');
             $discounInPrice = ($varient[0]->price * $varient[0]->discount_per)/100;
-            // print_r($discounInPrice);die;
+            
             $date = strtotime(DATE_TIME);
             $insertedData = [
                 'branch_id'=>$this->branch_id,
@@ -91,7 +90,7 @@ class Sell_development_model extends My_model
             $data['insert'] = $insertedData;
             $result = $this->insertRecord($data);
             $response = 1; 
-            // $this->db->query("UPDATE product_weight SET quantity = quantity - $quantity,temp_quantity = $quantity  WHERE id = '$varient_id'");
+           
         }else{
             $response = 0;
         }
@@ -100,14 +99,14 @@ class Sell_development_model extends My_model
 }
 
     public function addProducttoParkedOrder($postdata){
-        // print_r($postdata);die;     
+       
         $product_id = $postdata['product_id'];
         $varient_id = $postdata['pw_id'];
         $parked_id = $postdata['isParked'];
         $quantity = 1;
         $varient = $this->checkProductVarient($varient_id);
         $isAvailable = $this->checkOrderIdParked($parked_id,$varient_id,$this->branch_id); 
-        // print_r($isAvailable);die;
+       
         if(!empty($isAvailable)){
             // update
             $updateQuantity = $isAvailable[0]->quantity + $quantity;
@@ -141,7 +140,7 @@ class Sell_development_model extends My_model
             $price = number_format((float)$varient[0]->discount_price,2,'.','');
             $discount_percentage = number_format((float)$varient[0]->discount_per,2,'.','');
             $discounInPrice = ($varient[0]->price * $varient[0]->discount_per)/100;
-            // print_r($discounInPrice);die;
+           
             $date = strtotime(DATE_TIME);
             $insertedData = [
                 'branch_id'=>$this->branch_id,
@@ -263,8 +262,7 @@ class Sell_development_model extends My_model
         $r = $this->selectRecords($data);
         $quantity = $r[0]->quantity;
         $product_wieght_id = $r[0]->product_weight_id;
-        // $this->db->query("UPDATE product_weight SET quantity = quantity + $quantity,temp_quantity = 0  WHERE id= '$product_wieght_id'");
-        // echo $this->db->last_query();    die;
+       
         $data['table'] = TABLE_ORDER_TEMP;
         $data['where'] = ['id'=>$order_temp_id];
         return $this->deleteRecords($data);
@@ -277,7 +275,7 @@ class Sell_development_model extends My_model
         $temp_id = $postdata['temp_id'];
         $update_quantity = $postdata['qunt'];
         $actual_discount_price = $postdata['actual_discount_price'];
-        // print_r($postdata);die;
+       
 
         $data['table'] = TABLE_ORDER_TEMP;
         $data['select'] = ['*'];
@@ -307,7 +305,7 @@ class Sell_development_model extends My_model
         $temp_id = $postdata['temp_id'];
         $update_quantity = $postdata['qunt'];
         $actual_discount_price = $postdata['actual_discount_price'];
-        // print_r($postdata);die;
+      
 
         $data['table'] = 'parked_order_details';
         $data['select'] = ['*'];
@@ -357,7 +355,7 @@ class Sell_development_model extends My_model
         $disc_price = (($product_price * $discount) / 100) * $quantity;
         $updatprice = $product_price * $quantity;
         $updatprice = $updatprice - $disc_price;  
-          // print_r($updatprice);die;
+     
 
         $updateData = array(
             'quantity'=>$quantity,
@@ -542,9 +540,6 @@ class Sell_development_model extends My_model
         $park = $postdata['park'];
         $order_temp_id = $postdata['order_temp_id'];
 
-
-//        echo $order_temp_id;exit;
-
         if ($park == "park") {
 
             $data['select'] = ['quantity'];
@@ -589,8 +584,7 @@ class Sell_development_model extends My_model
 
     function temp_order($postdata)
     {
-        // echo 1;exit;
-        // print_r($postdata);exit;
+        
 
         $product_variant_id = $postdata['product_w_id'];
         $this->branch_id = $this->session->userdata('id');
@@ -605,7 +599,7 @@ class Sell_development_model extends My_model
         $quantity = $result[0]['quantity'] - 1;
 
 
-        // print_r($result);exit;
+      
         if ($result[0]['quantity'] > 0) {
 
             $data['select'] = ['temp_quantity'];
@@ -698,7 +692,7 @@ class Sell_development_model extends My_model
 
 
     function order_checkout($postdata){
-        // dd($postdata);die;
+      
 
         $park = $postdata['parked_order'];
         $this->branch_id = $postdata['branch_id'];
@@ -739,13 +733,8 @@ class Sell_development_model extends My_model
                     $example = explode('qnt', $key);
                     
                     $product_temp_id = $example['1'];
-                     // dd($product_temp_id);die;
+                 
                     if ($product_temp_id != '') {
-
-
-//                        $pro_temp_row = $this->db->query("SELECT product_weight_id, quantity, price, discount, discount_price FROM order_temp WHERE id = '$product_temp_id'");
-//                        $pro_temp_result = $pro_temp_row->row_array();
-
 
                         $data['select'] = ['product_weight_id', 'quantity', 'price', 'discount', 'discount_price'];
                         $data['where'] = ['id' => $product_temp_id];
@@ -762,14 +751,12 @@ class Sell_development_model extends My_model
                             $quantity_temp = '0';
                         }
 
-                        /*27/10/2022*/
-                        // $this->db->query("UPDATE product_weight SET  temp_quantity = temp_quantity - $quantity_temp ,  park_quantity = park_quantity + $quantity_temp WHERE id= '$p_id'"); 
+                        
                         /*27/10/2022*/
 
                         $product_detail = $this->get_product_from_variant($p_id);
 
 
-//                        $this->db->query("UPDATE product_weight SET  temp_quantity = 0 WHERE id= '$p_id'");
 
                         $discount_price = ($product_detail->price * $quantity_temp) - $pro_temp_result[0]->price;
 
@@ -789,19 +776,19 @@ class Sell_development_model extends My_model
                             'dt_added' => strtotime(DATE_TIME),
                             'dt_updated' => strtotime(DATE_TIME),
                         );
-                        // dd($insertion);die;
+                        
                         $data['insert'] = $insertion;
                         $data['table'] = 'parked_order_details';
                         $result = $this->insertRecord($data);
 
                     }
-                    // unset($data);
+                    
                     $data['where'] = ['id' => $product_temp_id];
                     $data['table'] = 'order_temp';
                     $this->deleteRecords($data);
                 }
             }
-            // echo 'Not In';die;
+           
             $this->session->set_flashdata("msg", "Order parked successfully.");
             redirect(base_url() . '	sell_development');
             exit;
@@ -814,7 +801,7 @@ class Sell_development_model extends My_model
         if (isset($postdata['credit_card']) && $postdata['credit_card'] == 'Credit Card') {
             $payment_type = '1';
         }
-        // dd($postdata);die;
+       
         $insertion = array(
             'order_from' => $order_from,
             'order_no' => 'OD' . strtotime(DATE_TIME),
@@ -832,7 +819,7 @@ class Sell_development_model extends My_model
             'dt_added' => strtotime(DATE_TIME),
             'dt_updated' => strtotime(DATE_TIME)
         );
-        // dd($insertion);die;
+     
         $data['insert'] = $insertion;
         $data['table'] = 'order';
         $last_id = $this->insertRecord($data);
@@ -847,8 +834,6 @@ class Sell_development_model extends My_model
                 if ($product_temp_id != '') {
 
 
-//                        $pro_temp_row = $this->db->query("SELECT product_weight_id, quantity, price, discount, discount_price FROM order_temp WHERE id = '$product_temp_id'");
-//                        $pro_temp_result = $pro_temp_row->row_array();
                     if ($park == "park") {
 
                         $data['select'] = ['parked_order_id', 'product_weight_id', 'quantity', 'price', 'discount', 'discount_price'];
@@ -867,8 +852,7 @@ class Sell_development_model extends My_model
 
                         $parked_order_id = 0;
                     }
-                    // print_r($pro_temp_result);exit;
-
+                
                     $p_id = $pro_temp_result[0]->product_weight_id;
                     $quantity_temp = $pro_temp_result[0]->quantity;
                     $total_item = $total_item + $quantity_temp;
@@ -1032,7 +1016,7 @@ class Sell_development_model extends My_model
                         $quantity_temp = '0';
                     }
                     $product_detail = $this->get_product_from_variant($p_id);
-                    // $this->db->query("UPDATE product_weight SET quantity = $temp_qnt - $quantity_temp, temp_quantity = $temp_qnt - $quantity_temp WHERE id= '$p_id'");
+                   
 
                     $order_temp_array = array(
                         'branch_id' => $this->branch_id,
@@ -1117,13 +1101,7 @@ class Sell_development_model extends My_model
 
         $old_order_id = $_POST['old_order_id'];
 
-        //Delete From Order Delete
-        // $this->db->where('pos_order_id', $old_order_id);
-        // $this->db->delete('pos_order_detail');
-
-        // //Delete From Order
-        // $this->db->where('id', $old_order_id);
-        // $this->db->delete('pos_order');
+        
 
         $cash_array = array(
             'user_id' => $user_id,
