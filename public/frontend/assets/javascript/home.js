@@ -1,22 +1,19 @@
 $(document).on('click','.addcartbutton', function(){
     var that = $(this);
 
-    // $(this).prop('disabled', true);
-    var product_id = $(this).data('product_id');
     var varient_id = $(this).data('varient_id');
     var url = $('#url').val();
     var qnt = $(this).parent().next('div').find('input:text').val();
-
     var siteCurrency = $('#siteCurrency').val(); // currency is dynamic
+    alert(1);
     if(qnt == 0){
-      alert(0);
       qnt = 1;
       $(this).next('div').find('input:text').val('1');
     //   return false;
     }
      $.ajax({
                 url : url+'products/addProducToCart',
-                data:{product_id:product_id,qnt:qnt,varient_id:varient_id},
+                data:{qnt:qnt,varient_id:varient_id},
                 method:'post',
                 dataType:'json',
                 success:function(output){

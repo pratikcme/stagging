@@ -715,8 +715,7 @@ Class Product_model extends My_model{
     }
 
     public function getToCheckMycard($postdata){
-   		$productId = $this->utility->safe_b64decode($postdata['product_id']);
-    	// $weight_id = $postdata['weight_id'];
+   		
     	
     	$product_weight_id = $postdata['varient_id'];
 
@@ -725,7 +724,6 @@ Class Product_model extends My_model{
     	$data['where'] = [
 						'status !=' => '9',
 						'user_id'=>$this->session->userdata('user_id'),
-						'product_id'=>$productId,
 						'branch_id'=>$this->branch_id,
 						'product_weight_id'=>$product_weight_id
 					];	
@@ -796,27 +794,6 @@ Class Product_model extends My_model{
     	$this->insertRecord($data);
     }
 
-
-   //  public function checkMyCard($postdata){
-	  //   	$productId = $this->utility->safe_b64decode($postdata['product_id']);
-	  //   	$weight_id = $postdata['weight_id'];
-	  //   	
-	  //   	$product_weight_id = $postdata['product_weight_id'];
-
-			// $data['table'] = TABLE_MY_CART;
-			// $data['select'] = ['*'];
-			// $data['where'] = [
-
-			// 				'user_id'=>$this->session->userdata('user_id'),
-			// 				'product_id'=>$productId,
-			// 				'weight_id'=>$weight_id,
-			// 				'vendor_id'=>$this->branch_id,
-			// 				'product_weight_id'=>$product_weight_id 
-							
-			// 				];
-			// 	return $this->selectRecords($data);
-
-   //  }
 
 
 
@@ -927,12 +904,11 @@ Class Product_model extends My_model{
     	}
     }
 
-  	public function DefaultProductAddInCart($product_id,$varient_id=''){
-  		$productId = $this->utility->safe_b64decode($product_id);
-  		if($varient_id != ''){
+  	public function DefaultProductAddInCart($varient_id){
+  		
   			$varient_id = $this->utility->safe_b64decode($varient_id);
   			$data['where']['pw.id'] = $varient_id;
-  		}
+  		
 
 			$data['table'] = TABLE_PRODUCT . " as p";
 			$data['select'] = ['p.*','pw.price','pw.id as pw_id', 'pw.quantity','pw.weight_id','pw.discount_per','pw.discount_price','pi.image','pw.weight_no','pw.max_order_qty'];
@@ -941,15 +917,8 @@ Class Product_model extends My_model{
 				TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']
 			];
 			$data['where']['pw.status!='] = '9';
-			$data['where']['p.id'] = $productId;
+			
 	  		
-			// $data['where'] = [
-			// 			'pw.status !=' => '9',
-			// 			'p.id'=>$productId,
-			// 			'pw.id'=>$varient_id,
-			// 			// 'pw.quantity >=' => 1,
-
-			// 		];
 			$data['groupBy'] = 'p.id';	
 		return $this->selectFromJoin($data);
   	}

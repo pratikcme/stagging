@@ -593,7 +593,7 @@ class Api_model extends My_model {
         }
     }
     function subcategory_list($postdata) {
-          $user_id = $postdata['user_id'];
+        
         if(!isset($postdata['category_id'])){
             $data['table'] = 'category';
             $data['select'] = ['id'];

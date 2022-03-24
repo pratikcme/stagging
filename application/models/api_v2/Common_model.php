@@ -200,7 +200,7 @@ Class Common_model extends My_model{
 	}
 
 	public function default_product_image(){
-		// die;
+		
 		$branch_id = $this->session->userdata('branch_id');
 		$data['select'] = ['product_default_image'];
 		$data['table'] = 'branch '; // vendor

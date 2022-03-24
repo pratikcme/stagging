@@ -118,11 +118,7 @@ function NavbarDropdown(){
             $value["image"] = $default_product_image;
           }
         }
-        // if(!file_exists('public/images/'.$CI->folder.'product_image/'.$value["image"]) || $value["image"] == '' ){
-        //   // $product_image[0]->image = 'defualt.png';
-        //   $value["image"] = $default_product_image;
-        // }
-
+      
 
         $html .= '<li>
         <a href='.base_url().'products/productDetails/'.$encode_id.'/'.$varient_id.'>
