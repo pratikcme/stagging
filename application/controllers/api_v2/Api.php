@@ -1146,10 +1146,11 @@ class Api extends Apiuser_Controller {
         $response["message"] = "Product has been updated in your cart";
         $gettotal = $this->this_model->get_total($postdata);
 
-        $getactual = $this->this_model->get_actual_total($postdata,true);
-        dd($getactual);
+        $getactual = $this->this_model->get_actual_total($postdata);
+        $cartData = $this->this_model->get_cart_variant($postdata);
+
         $gettotalPrice = $getactual[0]->gettotal;
-        $quantity = $getactual[0]->quantity;
+        
         $my_cal = (float)$gettotal[0]->total;
         
         if ($my_cal === null || $my_cal == "<null>") {
@@ -1164,7 +1165,7 @@ class Api extends Apiuser_Controller {
         $response["total_price"] = number_format((float)$my_cal, 2, '.', '');
         $response["TotalGstAmount"] = number_format((float)$total_gst, 2, '.', '');
         $response["amountWithoutGst"] = number_format((float)$my_cal - $total_gst, 2, '.', '');
-        $response["updated_quantity"] = $quantity;
+        $response["updated_quantity"] = $cartData[0]['quantity'];
         $output = json_encode(array('responsedata' => $response));
         echo $output;
         exit;

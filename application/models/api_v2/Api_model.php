@@ -805,7 +805,7 @@ class Api_model extends My_model {
         return $result;
     }
 
-    function get_actual_total($postdata,$arrayInRes=false) {
+    function get_actual_total($postdata) {
         if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
             $user_id = $postdata['user_id'];
         } else {
@@ -837,10 +837,7 @@ class Api_model extends My_model {
             $total = $quantity * $actual_price;
             $gettotal = $total + $gettotal;
         }
-        if($arrayInRes){
-            $result[0]->gettotal = $gettotal;
-            return $result;
-        }
+        
         return $gettotal;
     }
     public function gstCalculation($postData) {
