@@ -663,7 +663,7 @@ class Api_model extends My_model {
                 $response['currency'] = $cur_value[0]->value;
                 $response['categoryCount'] = (int)$this->categoryCount($branch_id);
                 $response['subcategoryCount'] = (int)$this->subcategoryCount($branch_id);
-                if ($postdata['user_id'] != '') {
+                if (isset($postdata['user_id'])&&$postdata['user_id'] != '') {
                 	$response["userupdate_data"] = $this->userInfo($postdata);
                 }
 
