@@ -480,6 +480,11 @@ public function Product_add_update(){
                 );
                 if(isset($_POST['max_order_qty'])){
                     $data['max_order_qty'] = $_POST['max_order_qty'];
+
+                    $dt['update']['quantity'] = $_POST['max_order_qty'];
+                    $dt['where'] = ['product_weight_id'=>$id,'quantity >'=>$_POST['max_order_qty']];
+                    $dt['table'] = 'my_cart';
+                    $this->updateRecords($dt);
                 }
              
                 $this->db->where('branch_id',$vendor_id);

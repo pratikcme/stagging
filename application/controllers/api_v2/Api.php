@@ -1077,6 +1077,14 @@ class Api extends Apiuser_Controller {
         $variant_id = $postdata['product_weight_id'];
         $vendor_id = $postdata['vendor_id'];
         $result = $this->this_model->check_quantity($qnt, $variant_id);
+        if($result['success']==6){
+            $cartData = $this->this_model->get_cart_variant($postdata);
+
+            $result['updated_quantity'] = $cartData[0]['quantity'];
+            $output = json_encode(array('responsedata' => $result));
+            echo $output;
+            exit;
+        }
         if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
             $user_id = $postdata['user_id'];
             $device_id = $postdata['device_id'];

@@ -1613,6 +1613,39 @@ class Api_model extends My_model {
             echo $output;
         }
     }
+
+
+
+    public function get_cart_variant($postdata) {
+        if (isset($postdata['user_id']) && $postdata['user_id'] != ''&& $postdata['user_id'] != 0) {
+                $user_id = $postdata['user_id'];
+        } else {
+            $user_id = 0;
+        }
+        if (isset($postdata['device_id'])) {
+            $device_id = $postdata['device_id'];
+        }
+        $data['select'] = ['mc.*','pw.product_id','pw.discount_price'];
+        if (isset($user_id) && $user_id != '') {
+            $data['where']['mc.user_id'] = $user_id;
+        }
+        if ((!isset($user_id) || $user_id == ''|| $user_id == 0) && isset($device_id)) {
+            $data['where']['mc.device_id'] = $device_id;
+            $data['where']['mc.user_id'] = 0;
+        }
+        if(isset($postdata['vendor_id']) && $postdata['vendor_id'] != ''){
+            $data['where']['mc.vendor_id'] = $postdata['vendor_id'];
+        }
+        $product_weight_id = $postdata['product_weight_id'];
+        $data['where']['product_weight_id'] = $product_weight_id;
+        $data['table'] = 'my_cart as mc';
+        $data['join'] = ['product_weight as pw' =>['pw.id = mc.product_weight_id','INNER']];
+
+        return $this->selectFromJoin($data,true);
+
+    }
+
+
     public function getProductGst($id) {
         $data['table'] = TABLE_PRODUCT;
         $data['select'] = ['gst'];
@@ -2328,21 +2361,18 @@ class Api_model extends My_model {
                 $response = array();
                 $response["success"] = 6;
                 $response["message"] = "Item is out of stock";
-                $output = json_encode(array('responsedata' => $response));
-                echo $output;
-                exit;
+                return $response;
             }
 
             if ($max_order_qty!='' && $max_order_qty!='0' && $qnt > $max_order_qty) {
                 $response = array();
                 $response["success"] = 6;
                 $response["message"] = "Maximum order quantity reached";
-                $output = json_encode(array('responsedata' => $response));
-                echo $output;
-                exit;
+                return $response;
             }
-
-            return true;
+            $response = array();
+            $response["success"] = 1;
+            return $response;
         }
 
 
