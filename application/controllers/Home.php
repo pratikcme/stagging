@@ -5,10 +5,7 @@ class Home extends User_Controller {
 
 	function __construct(){
 		parent::__construct();
-		// print_r($_SESSION);die;
-		
 		$this->controller = $this->myvalues->homeFrontEnd['controller'];
-		// $this->url = SITE_URL . 'frontend/'. $this->controller;
 		$this->load->model($this->myvalues->homeFrontEnd['model'],'this_model');
 		if($this->session->userdata('branch_id') == ''){
 			redirect(base_url());
@@ -17,8 +14,7 @@ class Home extends User_Controller {
 	}
 
 	public function index(){
-		// echo '<pre>';
-		// print_r($_SESSION);die;
+	
 		$data['page'] = 'frontend/home/home';
 		$subcategory = $this->this_model->countSubcategory();
 		$data['subcategory'] = count($subcategory);
@@ -32,17 +28,16 @@ class Home extends User_Controller {
 		}
 		
 		$data['js'] = array('home.js');
-		// $data['banner'] = $this->this_model->selectbanner();
+		
 		$data['category'] = $this->this_model->selectCategory();
-		// print_r($data);
+		
 		$data['new_arrival'] = $this->this_model->selectNewArrivel();
 		$data['folder'] = $this->folder.'category/';
 		if($this->countCategory == 1 && count($subcategory) > 1){
 			$data['category'] = $this->this_model->subcategory_list();
 			$data['folder'] = $this->folder.'product_image/';
 		}
-		// echo "<pre>";
-		// print_r($data['category']);die;
+		
 		$product_ids = [];
 		$default_product_image = $this->common_model->default_product_image(); 
 		foreach ($data['new_arrival'] as $key => $value) {
@@ -64,8 +59,7 @@ class Home extends User_Controller {
 		}
 		
 		$data['top_sell_core'] = $this->this_model->selectTopSelling($product_ids);
-		// echo $this->db->last_query();die;
-		// print_r($data['top_sell_core']);die;
+		
 		$top_selling_core = array();
 		foreach ($data['top_sell_core'] as $key => $value) {  
 			$selling_core = $this->this_model->top_selling_product($value->product_id);
@@ -83,22 +77,15 @@ class Home extends User_Controller {
   			$value->addQuantity = $addQuantity;
 			
 			$varientQuantity = $this->this_model->checkVarientQuantity($value->id);
-			// if($key == 1){
-			// echo $this->db->last_query();die;
-			// print_r($varientQuantity);die;
-			// }
+			
 			$top_selling_core[$key]->varientQuantity = ($varientQuantity == '0' ) ? "0" : $varientQuantity[0]->quantity;
 
 		}
 
 		$data['top_sell'] = $top_selling_core;
-		// echo "<pre>";
-		// print_r($data['top_sell']);die;
-		// $this->load->model('admin/web_banners_model','web_banners');
-		@$data['banner'] = $this->this_model->getWebBannerImage();
-		// echo $this->db->last_query();die;
 		
-		// print_r($data['banner']);die;
+		@$data['banner'] = $this->this_model->getWebBannerImage();
+		
 
 		$item_weight_id = [];
 		if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != '' ){
@@ -115,12 +102,10 @@ class Home extends User_Controller {
 
 		}
 
-		// echo "<pre>";
-		// print_r($data);die;
+		
 		$data['item_weight_id'] = $item_weight_id ;
 		$this->loadView(USER_LAYOUT,$data);
-// print_r('2');die;
-		
+	
 	}
 
 	

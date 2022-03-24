@@ -60,6 +60,7 @@ class Vendor_model extends My_model{
 		$data['select'] = ['*'];
 		$data['where'] = ['server_name'=>$_SERVER['SERVER_NAME']];
 		return $this->selectRecords($data);
+		
 	}
 
 
