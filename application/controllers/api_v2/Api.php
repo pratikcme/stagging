@@ -1166,7 +1166,12 @@ class Api extends Apiuser_Controller {
         $response["total_price"] = number_format((float)$my_cal, 2, '.', '');
         $response["TotalGstAmount"] = number_format((float)$total_gst, 2, '.', '');
         $response["amountWithoutGst"] = number_format((float)$my_cal - $total_gst, 2, '.', '');
-        $response["updated_quantity"] = $cartData[0]['quantity'];
+        $quntity = 0;
+        if(!empty($cartData)){
+        $quntity = $cartData[0]['quantity'];
+        
+        }
+        $response["updated_quantity"] = $quntity;
         $output = json_encode(array('responsedata' => $response));
         echo $output;
         exit;
