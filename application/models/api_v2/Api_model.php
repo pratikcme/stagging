@@ -821,6 +821,7 @@ class Api_model extends My_model {
                 $data['where'] = ['mc.device_id' => $device_id, 'user_id' => 0];
             }
         }
+        
          if (isset($postdata['branch_id']) && $postdata['branch_id'] != '') {
             $data['where']['mc.branch_id'] = $postdata['branch_id'];
          }elseif(isset($postdata['vendor_id']) && $postdata['vendor_id'] != ''){
@@ -839,6 +840,7 @@ class Api_model extends My_model {
         }
         
         return $gettotal;
+
     }
     public function gstCalculation($postData) {
       

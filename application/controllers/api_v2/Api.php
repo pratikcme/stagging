@@ -1138,6 +1138,7 @@ class Api extends Apiuser_Controller {
             $output = json_encode(array('responsedata' => $response));
             echo $output;
         }
+        
     }
 
     public function send_cart_response($postdata) {
