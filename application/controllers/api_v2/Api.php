@@ -1149,7 +1149,7 @@ class Api extends Apiuser_Controller {
         $getactual = $this->this_model->get_actual_total($postdata);
         $cartData = $this->this_model->get_cart_variant($postdata);
 
-        $gettotalPrice = $getactual[0]->gettotal;
+        $gettotalPrice = $getactual;
         
         $my_cal = (float)$gettotal[0]->total;
         
