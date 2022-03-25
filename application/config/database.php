@@ -85,9 +85,9 @@ $host = 'localhost';
 // $password = 'Ra#Ch^1j.sLR';
 // $dbName = 'a1630btr_dev';
 
-$userName = 'a1630btr_development_user';
-$password = 'Ra#Ch^1j.sLR';
-$dbName = 'a1630btr_dev';
+$userName = 'root';
+$password = 'root';
+$dbName = 'launchestore_dev';
 
 
 $db['default'] = array(
