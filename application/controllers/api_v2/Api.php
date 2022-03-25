@@ -464,36 +464,38 @@ class Api extends Apiuser_Controller {
            
            
             $my_cart_price_result = $total_cart[0]->total_price;
-
-            $vendorId = $my_cart_result[0]->branch_id;
-
-            $vendor_query = $this->db->query("SELECT * FROM branch WHERE id ='$vendorId'");
-            $vendor_result = $vendor_query->result();
-
-            $payment_method = $this->db->query("SELECT * FROM payment_method WHERE branch_id ='$vendorId' AND status='1'");
-
-            $p_method = $payment_method->result();
-
-            if ($p_method[0]->IsTestOrLive == '0') {
-                $p_method[0]->publish_key = $p_method[0]->test_publish_key;
-            }
-            $vendorData = [];
-            $vendorData['id'] = ($vendor_result[0]->id == null) ? "" : $vendor_result[0]->id ;
-            $vendorData['name'] = ($vendor_result[0]->name == null) ? "" : $vendor_result[0]->name ;
-            $vendorData['address'] = ($vendor_result[0]->address == null) ? "" : $vendor_result[0]->address;
-            $vendorData['currency_code'] = ($vendor_result[0]->currency_code == null) ? "" : $vendor_result[0]->currency_code; 
-            $vendorData['selfPickUp'] =  ($vendor_result[0]->selfPickUp == null) ? "" : $vendor_result[0]->selfPickUp;
-            $vendorData['isOnlinePayment'] = (string)$vendor_result[0]->isOnlinePayment;
-            $vendorData['isCOD'] = (string)$vendor_result[0]->isCOD;
-            $vendorData['store_time'] =  ($vendor_result[0]->selfPickupOpenClosingTiming == null) ? "" : $vendor_result[0]->selfPickupOpenClosingTiming;
-
-            require_once 'vendor/autoload.php';
-            $cryptor = new \RNCryptor\RNCryptor\Encryptor;
-            $password = "BGV9UAw9wp5tT7I9wRcw%Xv!a@8aApqW";
-            $vendorData['publish_key'] = ($p_method[0]->publish_key == null) ? '' : $cryptor->encrypt($p_method[0]->publish_key, $password);
-            $vendorData['paymentMethod'] = ($p_method[0]->publish_key == null) ? '' : $p_method[0]->payment_opt;
-
             $cart_response["data"] = array();
+            if(!empty($my_cart_result)){
+
+                $vendorId = $my_cart_result[0]->branch_id;
+
+                $vendor_query = $this->db->query("SELECT * FROM branch WHERE id ='$vendorId'");
+                $vendor_result = $vendor_query->result();
+
+                $payment_method = $this->db->query("SELECT * FROM payment_method WHERE branch_id ='$vendorId' AND status='1'");
+
+                $p_method = $payment_method->result();
+                
+
+                if ($p_method[0]->IsTestOrLive == '0') {
+                    $p_method[0]->publish_key = $p_method[0]->test_publish_key;
+                }
+                $vendorData = [];
+                $vendorData['id'] = ($vendor_result[0]->id == null) ? "" : $vendor_result[0]->id ;
+                $vendorData['name'] = ($vendor_result[0]->name == null) ? "" : $vendor_result[0]->name ;
+                $vendorData['address'] = ($vendor_result[0]->address == null) ? "" : $vendor_result[0]->address;
+                $vendorData['currency_code'] = ($vendor_result[0]->currency_code == null) ? "" : $vendor_result[0]->currency_code; 
+                $vendorData['selfPickUp'] =  ($vendor_result[0]->selfPickUp == null) ? "" : $vendor_result[0]->selfPickUp;
+                $vendorData['isOnlinePayment'] = (string)$vendor_result[0]->isOnlinePayment;
+                $vendorData['isCOD'] = (string)$vendor_result[0]->isCOD;
+                $vendorData['store_time'] =  ($vendor_result[0]->selfPickupOpenClosingTiming == null) ? "" : $vendor_result[0]->selfPickupOpenClosingTiming;
+
+                require_once 'vendor/autoload.php';
+                $cryptor = new \RNCryptor\RNCryptor\Encryptor;
+                $password = "BGV9UAw9wp5tT7I9wRcw%Xv!a@8aApqW";
+                $vendorData['publish_key'] = ($p_method[0]->publish_key == null) ? '' : $cryptor->encrypt($p_method[0]->publish_key, $password);
+                $vendorData['paymentMethod'] = ($p_method[0]->publish_key == null) ? '' : $p_method[0]->payment_opt;
+
             if (!empty($my_cart_result)) {
 
                 $cart_response['success'] = "1";
@@ -551,6 +553,8 @@ class Api extends Apiuser_Controller {
                     $counter++;
                 }
             }
+        }
+
             if ($query->num_rows() > 0) {
                 $address_arr = [];
                 if ($user_address_result) {
