@@ -1079,8 +1079,11 @@ class Api extends Apiuser_Controller {
         $result = $this->this_model->check_quantity($qnt, $variant_id);
         if($result['success']==6){
             $cartData = $this->this_model->get_cart_variant($postdata);
-
-            $result['updated_quantity'] = $cartData[0]['quantity'];
+            $quntity = 0;
+            if(!empty($cartData)){
+                $quntity = $cartData[0]['quantity'];            
+            }
+            $result["updated_quantity"] = $quntity;
             $output = json_encode(array('responsedata' => $result));
             echo $output;
             exit;
