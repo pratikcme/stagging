@@ -866,12 +866,10 @@ class Products extends User_Controller {
 
 							
 							 $itemExist = 'Product quantity updated successfully';
-							}
-					
-					else{
-					 $temp = max(array_keys($_SESSION["My_cart"]));
-					 $_SESSION["My_cart"][$temp+1] = $cart_item;
-					 $message = 'success';
+							}else{
+							 $temp = max(array_keys($_SESSION["My_cart"]));
+							 $_SESSION["My_cart"][$temp+1] = $cart_item;
+							 $message = 'success';
 					}
 				}else{
 					$_SESSION["My_cart"][0] = $cart_item;	

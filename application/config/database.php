@@ -72,22 +72,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
-// $c= explode('.',$_SERVER['SERVER_NAME']);
-
-// if(count($c)==3){
-// 	$_SERVER['SERVER_NAME'] = $c[1].'.'.$c[2];
-// }
-// print_r($_SERVER['SERVER_NAME']);die;
-
-
+if($_SERVER['HTTP_HOST'] == '192.168.2.2' || $_SERVER['HTTP_HOST'] == 'localhost'){
+	
+	$dbName = 'launchestore_dev';
+	$userName = 'root';
+	$password = 'root';
+	$host = 'localhost';
+	
+}else{
+	
 $host = 'localhost';
-// $userName = 'a1630btr_development_user';
-// $password = 'Ra#Ch^1j.sLR';
-// $dbName = 'a1630btr_dev';
-
 $userName = 'a1630btr_development_user';
 $password = 'Ra#Ch^1j.sLR';
 $dbName = 'a1630btr_dev';
+	
+}
+
+
 
 
 $db['default'] = array(
