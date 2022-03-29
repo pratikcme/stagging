@@ -291,7 +291,7 @@ class Login_model extends My_model{
 		// dd($return[0]->vendor_id);die;
 		if($return){
 		// $this->updateLoginType($return);
-		$return = $this->selectRecords($data);
+
 				@$remember = $postData['remember'];
                 if (isset($remember) && $remember != '') {
                     delete_cookie("loginemail");
@@ -317,17 +317,17 @@ class Login_model extends My_model{
                 	 delete_cookie("loginemail");
                      delete_cookie("loginpassword");
                 }
-		}
-		// print_r($return);die;
-		$login_logs = [
-			'user_id' => $return[0]->id,
-			'vendor_id' => $return[0]->vendor_id,
+				// print_r($return);die;
+				$login_logs = [
+					'user_id' => $return[0]->id,
+					'vendor_id' => $return[0]->vendor_id,
 			'status' => 'login',
 			'type' => 'user',
 			'dt_created' => DATE_TIME
 		];
 		$this->load->model('api_v2/common_model','v2_common_model');
 		$this->v2_common_model->user_login_logout_logs($login_logs);
+	}
 		return $return;
 
 	}
