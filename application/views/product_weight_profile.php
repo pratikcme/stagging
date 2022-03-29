@@ -261,13 +261,15 @@ $package_results = $package_query->result();
     //         return true;
     //     }
     // }, "Please enter purchase price less than MRP");
-
+    jQuery.validator.addMethod("alphanumeric", function(value, element) {
+        return this.optional(element) || /^[\w.]+$/i.test(value);
+    }, "Letters, numbers only please");
 
     $('#product_weight_form').validate({
         rules: {
             unit: {
                 required: true,
-                number: true
+                alphanumeric: true
             },
             weight_id: {
                 required: true
