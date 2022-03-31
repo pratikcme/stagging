@@ -91,6 +91,11 @@ class vendor_model extends My_model{
                         $uploadLogoImage = upload_single_image_ByName($_FILES,'logo_image',$logo_upload_path);
                         $logo = $uploadLogoImage['data']['file_name'];
                     }
+                    $data['table'] = 'branch';
+                    $data['where'] = ['vendor_id'=>$this->session->userdata('vendor_admin_id')];
+                    $data['select'] = ['*'];
+                    $count = $this->countRecords($data);
+
                     $data = array(
                         'vendor_id' => $this->session->userdata('vendor_admin_id'),
                         'image' => $image,
@@ -117,7 +122,7 @@ class vendor_model extends My_model{
                     // print_r($data);die;
                     $this->db->insert('branch', $data);
                     $lastId = $this->db->insert_id();
-                    if($lastId){
+                    if($lastId != '' && $count == 0){
                         $fire_base_keys = array(
                             'vendor_id'=>$this->session->userdata('vendor_admin_id'),
                             'staff_firebase_key'=>'AAAAYmVu0RM:APA91bGMSKZnWRlSZrDilKghySf-ywPbiyRgT5C0Gnfa4-TQRI-Bz7-RiKL6FbL632rbX7mNIszlDnJ1dAogf4GFOBaSRAi5NcxnRlOdXbAxhDVoVOjXiqfICuHPCpnlGysK4_Ygitx9',

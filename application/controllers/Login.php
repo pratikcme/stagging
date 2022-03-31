@@ -118,23 +118,23 @@ class Login extends MY_Controller {
 					 }
 				}
 			}
-			if(!isset($_SESSION['oauth']))
-			{
+			$common = $this->common_keys;
+			$google_client_id = $common[0]->google_client_id;
+			$google_secret_id = $common[0]->google_secret_id;
+			if(!isset($_SESSION['oauth']) && $google_client_id != '' && $google_secret_id != ''){
+				
 				// print_r($common);die;
-				$common = $this->common_keys;
-				$google_client_id = $common[0]->google_client_id;
-				$google_secret_id = $common[0]->google_secret_id;
 				
 				include_once APPPATH . "libraries/vendor/autoload.php";
-				  $google_client = new Google_Client();
-				  $google_client->setClientId($google_client_id); 
+					 $google_client = new Google_Client();
+					 $google_client->setClientId($google_client_id); 
 		          $google_client->setClientSecret($google_secret_id); //Define your Client Secret Key
 		          $google_client->setRedirectUri(base_url().'users_account/google_login'); //Define your Redirect Uri
 		          $google_client->addScope('email');
 		          $google_client->addScope('profile');
 		          $GoogleUrl = $google_client->createAuthUrl();
 				// print_r($GoogleUrl);die;
-		      }else{
+		      }else{	
 		      	$GoogleUrl = base_url().'login';
 		      }
 		      $data['googleUrl'] = $GoogleUrl;
@@ -217,18 +217,22 @@ class Login extends MY_Controller {
 					 }
 				}
 			}
-			if(!isset($_SESSION['oauth']))
-			{
+			$common = $this->common_keys;
+			$google_client_id = $common[0]->google_client_id;
+			$google_secret_id = $common[0]->google_secret_id;
+			if(!isset($_SESSION['oauth']) && $google_client_id != '' && $google_secret_id != ''){
 				include_once APPPATH . "libraries/vendor/autoload.php";
 				$google_client = new Google_Client();
-				  $google_client->setClientId('146308288221-esvr5vagpqnhbjge4n5i72idjp7r2cgi.apps.googleusercontent.com'); 
-		          $google_client->setClientSecret('MpGvzh064GVROoie7M0p8nuF'); //Define your Client Secret Key
+				  $google_client->setClientId($google_client_id); 
+		          $google_client->setClientSecret($google_secret_id); //Define your Client Secret Key
 		          $google_client->setRedirectUri(base_url().'users_account/google_login'); //Define your Redirect Uri
 		          $google_client->addScope('email');
 		          $google_client->addScope('profile');
 		          $GoogleUrl = $google_client->createAuthUrl();
 		      }else{
-      			$GoogleUrl = base_url().'users_account/google_login/login';
+      			// $GoogleUrl = base_url().'users_account/google_login/login';
+      			// $this->utility->setFlashMessage('danger','Social credential not found');
+      			$GoogleUrl = base_url().'register';
     		  }
       		$data['googleUrl'] = $GoogleUrl;
 		$this->loadView(USER_LAYOUT,$data);	
@@ -236,22 +240,26 @@ class Login extends MY_Controller {
 
 	public function fb_login(){
 		// Call Facebook API
-
 		$common = $this->common_keys;
-
 		$facebook_client_id = $common[0]->facebook_client_id;
 		$facebook_secret_id = $common[0]->facebook_secret_id;
-		
-		$facebook = new \Facebook\Facebook([
-			'app_id'      => $facebook_client_id,
-			'app_secret'     => $facebook_secret_id,
-			'redirect' =>  base_url().'login/oauth/',
-		]);
-		$facebook_helper = $facebook->getRedirectLoginHelper();
-		$facebook_permissions = ['email']; // Optional permissions
 
-   		$facebook_login_url = $facebook_helper->getLoginUrl(base_url().'login/oauth/', $facebook_permissions);	
+		if($facebook_client_id != '' && $facebook_secret_id != ''){
+			$facebook = new \Facebook\Facebook([
+				'app_id'      => $facebook_client_id,
+				'app_secret'     => $facebook_secret_id,
+				'redirect' =>  base_url().'login/oauth/',
+			]);
+			$facebook_helper = $facebook->getRedirectLoginHelper();
+			$facebook_permissions = ['email']; // Optional permissions
+   		$facebook_login_url = $facebook_helper->getLoginUrl(base_url().'login/oauth/', $facebook_permissions);
    		redirect($facebook_login_url);
+		
+		}else{
+			// echo '2';die;
+			$this->utility->setFlashMessage('danger','Social credential not found');
+			redirect(base_url().'login');
+		}
 	}
 
 	public function oauth(){
@@ -280,9 +288,9 @@ class Login extends MY_Controller {
 				$re = $this->google_login_model->Is_already_register($facebook_user_info['email']);
 				if($re){
 					$user_data = array(
-						'fname' => $facebook_user_info['first_name'],
-						'vendor_id'=>$this->session->userdata('vendor_id'),
-						'lname'  => $facebook_user_info['last_name'],
+						// 'fname' => $facebook_user_info['first_name'],
+						// 'vendor_id'=>$this->session->userdata('vendor_id'),
+						// 'lname'  => $facebook_user_info['last_name'],
 						'facebook_token_id'=>$facebook_user_info['id'],
 						'login_type'=>'1',
 						'dt_updated' => strtotime(DATE_TIME)

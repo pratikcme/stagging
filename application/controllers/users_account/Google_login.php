@@ -43,9 +43,9 @@ class Google_login extends MY_Controller {
                 if($re){
                 //update data
                     $user_data = array(
-                        'fname' => $data['givenName'],
-                        'vendor_id'=>$this->session->userdata('vendor_id'),
-                        'lname'  => $data['family_name'],
+                        // 'fname' => $data['givenName'],
+                        // 'vendor_id'=>$this->session->userdata('vendor_id'),
+                        // 'lname'  => $data['family_name'],
                         'gmail_token_id'=>$data['id'],
                         'login_type'=>'2',
                         'dt_updated' => strtotime(DATE_TIME)
