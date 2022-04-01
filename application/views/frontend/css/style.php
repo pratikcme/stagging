@@ -46,9 +46,7 @@ elseif($_SERVER['SERVER_NAME']=='development.launchestore.com'){
     $logoWidth = "150px";
     $hvrClr = "#04527A";
 }
-
-
-elseif($_SERVER['SERVER_NAME']=='anandgarden.launchestore.com'){
+elseif($_SERVER['SERVER_NAME']=='anandgarden.com' || $_SERVER['SERVER_NAME']=='www.anandgarden.com' ){
   
     $primaryColor= "#507b14";
     $secondaryColor= "#507b14";
@@ -65,7 +63,8 @@ elseif($_SERVER['SERVER_NAME']=='anandgarden.launchestore.com'){
     $hvrClr = "#04527A";
 }
 
-elseif($_SERVER['SERVER_NAME']=='mehtaenterpriseonline.com'){  
+
+elseif($_SERVER['SERVER_NAME']=='mehtaenterpriseonline.com' || $_SERVER['SERVER_NAME']=='www.mehtaenterpriseonline.com'){  
     $primaryColor= "#0685c5";
     $secondaryColor= "#04527A";
     $lightPrimary= "#ff774b";
@@ -83,7 +82,7 @@ elseif($_SERVER['SERVER_NAME']=='mehtaenterpriseonline.com'){
     $hvrClr = "#04527A";
 }
 
-elseif($_SERVER['SERVER_NAME']=='mehta.launchestore.com'){
+elseif($_SERVER['SERVER_NAME']=='mehta.launchestore.com' ){
     $primaryColor= "#0685c5";
     $secondaryColor= "#04527A";
     $lightPrimary= "#ff774b";
@@ -102,7 +101,7 @@ elseif($_SERVER['SERVER_NAME']=='mehta.launchestore.com'){
 
 }
 
-elseif($_SERVER['SERVER_NAME']=='bmart.launchestore.com'||$_SERVER['SERVER_NAME']=='localhost'||$_SERVER['SERVER_NAME']=='bmartsupermarket.in'){
+elseif($_SERVER['SERVER_NAME']=='bmart.launchestore.com'){
     $primaryColor= "#e30016";
     $secondaryColor= "#373854";
     $lightPrimary= "#ff774b";
@@ -116,13 +115,12 @@ elseif($_SERVER['SERVER_NAME']=='bmart.launchestore.com'||$_SERVER['SERVER_NAME'
     $loginBtnBackground = "#ffffff";
     $loginBtnColor = "#373854";
     $loginBtnborder = "#fff";
-    $abtImgWidth = "350px"; 
     // $lightHeaderColor = "fff"; 
  	$logoWidth = "150px";
  	$hvrClr = "#373854";
 }
 
-elseif($_SERVER['SERVER_NAME']=='bmartsupermarket.in'){
+elseif($_SERVER['SERVER_NAME']=='bmartsupermarket.in' || $_SERVER['SERVER_NAME']=='www.bmartsupermarket.in'){
     $primaryColor= "#e30016";
     $secondaryColor= "#373854";
     $lightPrimary= "#ff774b";
@@ -141,7 +139,7 @@ elseif($_SERVER['SERVER_NAME']=='bmartsupermarket.in'){
     $hvrClr = "#373854";
 }
 
-elseif($_SERVER['SERVER_NAME']=='bigbucket.launchestore.com'){
+elseif($_SERVER['SERVER_NAME']=='bigbucket.launchestore.com'|| $_SERVER['SERVER_NAME']=='thebigbucket.in' || $_SERVER['SERVER_NAME']=='www.thebigbucket.in'){
     $primaryColor= "#8dc342";
     $secondaryColor= "#000";
     $lightPrimary= "#ff774b";
@@ -161,7 +159,7 @@ elseif($_SERVER['SERVER_NAME']=='bigbucket.launchestore.com'){
 }
 
 
-elseif($_SERVER['SERVER_NAME']=='shukantea.com'){
+elseif($_SERVER['SERVER_NAME']=='shukantea.com' || $_SERVER['SERVER_NAME']=='www.shukantea.com'){
     $primaryColor= "#000";
     $secondaryColor= "#9F0C10";
     $lightPrimary= "#ff774b";
@@ -258,7 +256,7 @@ elseif($_SERVER['SERVER_NAME']=='ogworld.launchestore.com'){
 }
 
 
-elseif($_SERVER['SERVER_NAME']=='unibest.launchestore.com'){
+elseif($_SERVER['SERVER_NAME']=='unibest.launchestore.com' ){
 
     $primaryColor= "#C41E49";
     $secondaryColor= "#000";
@@ -325,34 +323,29 @@ elseif($_SERVER['SERVER_NAME']=='www.iwingzy.in' || $_SERVER['SERVER_NAME']=='iw
     $hvrClr = "#ed1c24";
 
 
-// $primaryColor= "#000";
-// $secondaryColor= "#9F0C10";
-// $lightPrimary= "#ff774b";
-// $lightColor= "#fff";
-// $borderColor= "#006598";
-// $borderColor= "#006598";
-// $borderColor2= "#9F0C10"; 
 
 }
 
-elseif($_SERVER['SERVER_NAME']=='dpdecor.launchestore.com'){
+elseif($_SERVER['SERVER_NAME']=='www.dpdecor.launchestore.com'){
     $primaryColor= "#16aa9c";
-    $secondaryColor= "#16aa9c";
+    $secondaryColor= "#000";
     $lightPrimary= "#ff774b";
     $lightColor= "#fff";
-    $borderColor= "#16aa9c";
-    $borderColor2= "#16aa9c";
-    $darkHeaderBackground = "#000";
+    $borderColor= "#c73d00";
+    $borderColor2= "#004846";
+    $darkHeaderBackground = "#f3f3f3";
     $navbarColor = "#818181";
     $cartBtnBackground = "#16aa9c";
     $cartBtnColor = "#fff";
     $loginBtnBackground = "#16aa9c";
     $loginBtnColor = "#fff";
-    $loginBtnborder = "#16aa9c";
-    $logoWidth = "120px";
-    $hvrClr = "#16aa9c";
+    $loginBtnborder = "#ed1c24";
+    $logoWidth = "150px";
+    $hvrClr = "#ed1c24";
 
 }
+
+
 
 
 elseif($_SERVER['SERVER_NAME']=='ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
@@ -1873,7 +1866,7 @@ header .navbrand a img {
     font-family: 'OpenSans-SemiBold';
     text-transform: capitalize;
     margin-bottom: 0px;
-    min-height: 50px;
+    height: 50px;
     white-space: normal !important;
 }
 

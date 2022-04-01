@@ -14,6 +14,20 @@ Class Product_model extends My_model{
 		return $this->selectRecords($data);
 	}	
 
+	public function getBranchVendorID($product_id,$varientID){
+		$product_id = $this->utility->safe_b64decode($product_id);
+		$varientID = $this->utility->safe_b64decode($varientID);
+
+		$data['table'] = TABLE_PRODUCT . " as p";
+		$data['select'] = ["b.id",'b.vendor_id','b.name','p.status'];
+		$data['join'] = [
+				TABLE_PRODUCT_WEIGHT.' as pw'=>['p.id=pw.product_id','LEFT'],
+				TABLE_BRANCH.' as b'=>['p.branch_id = b.id','LEFT']
+			];
+		$data['where'] = ['pw.id'=>$varientID,'pw.status'=>'1','pw.status'=>'1'];
+		return $this->selectFromJoin($data);
+	}
+	
 	public function countProductPriceWise($i){
 		 
 		if($i == '0'){

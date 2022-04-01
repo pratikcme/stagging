@@ -31,7 +31,7 @@ class Order extends Vendor_Controller
     }
     public function order_detail()
     {
-        $vendor_id = $this->session->userdata['id'];
+        $vendor_id = $this->session->userdata['branch_vendor_id'];
         $order_id = $this->utility->decode($_GET['id']);
         if(isset($_GET['vendor_id'])  &&  $_GET['vendor_id'] != ""){
            $vendor_id = $this->utility->decode($_GET['vendor_id']);

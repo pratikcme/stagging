@@ -10,10 +10,10 @@ class Products extends User_Controller {
 		$this->load->library('pagination');
 		$this->load->model('common_model');
 
-		if(!isset($_SESSION['branch_id'])){
-			$this->utility->setFlashMessage('danger','Please select branch');
-			redirect(base_url());
-		}
+		// if(!isset($_SESSION['branch_id'])){
+		// 	$this->utility->setFlashMessage('danger','Please select branch');
+		// 	redirect(base_url());
+		// }
 		$this->session->unset_userdata('isSelfPickup');
 	}
 
@@ -127,6 +127,23 @@ class Products extends User_Controller {
 
 	public function productDetails($id=''){
 		// print_r($_SESSION['My_cart']);die;
+		if(!isset($_SESSION['branch_id'])){
+			$productID = $this->uri->segment(3);
+			$varientID = $this->uri->segment(4);
+			$productDetails = $this->this_model->getBranchVendorID($productID,$varientID);
+			if(!empty($productDetails) && $productDetails[0]->status == '1'){	
+				$branch = array('branch_id'=>$productDetails[0]->id,
+									'branch_name' => $productDetails[0]->name,
+									'vendor_id'=>$productDetails[0]->vendor_id
+									);
+				$this->session->set_userdata($branch);
+			}else{
+				echo "<div style='display: flex;width: 100%;height: 100vh;align-items: center;justify-content: center;flex-flow: column;background: linear-gradient(144deg,#ffe8e8 , #ffadad);'>
+					<h2 style='font-size: 40px;text-transform: capitalize;'>Sorry this product is Discontinue</h2>
+					<a href='".base_url()."'><button style='background: #000;border: 0;padding: 15px;color: #fff;border-radius: 5px;font-size: 20px;text-transform: capitalize;'>Continue Shopping</button></a>
+					<div>";die;
+			}
+		}
 		$default_product_image = $this->common_model->default_product_image();
 		$data['default_product_image'] = $default_product_image;
 		$product_id = $this->utility->safe_b64decode($id);

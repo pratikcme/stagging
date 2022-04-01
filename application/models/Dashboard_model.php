@@ -130,16 +130,16 @@ class Dashboard_model extends My_model{
 	public function total_registered_user_query(){
 		
 		if(isset($_SESSION['vendor_admin']) ){
-	        $data['table'] = 'vendor as v';
-	 		$data['select'] = ['count(*) as total_registered_user'];
-	 		$data['join'] = [
-	 			TABLE_BRANCH .' as b'=>[' v.id = b.vendor_id ','LEFT'],
-	 			TABLE_USER .' as u'=>['b.id = u.vendor_id','LEFT']
-	 		];
-            $data['where']['b.vendor_id'] = $this->session->userdata('vendor_admin_id');
-	 		$data['where']['u.status !='] = '9';
-	 		$total_registered_user =  $this->selectFromJoin($data,true);
-	 		return $total_registered_user[0];
+			$data['table'] = TABLE_USER.' as u';
+			$data['select'] = ['count(*) as total_registered_user'];
+			$data['join'] = [
+				'vendor as v'=>['v.id = u.vendor_id ','LEFT'],
+				TABLE_BRANCH .' as b'=>['b.vendor_id = u.vendor_id','LEFT']
+			];
+		   $data['where']['u.vendor_id'] = $this->session->userdata('vendor_admin_id');
+			$data['where']['u.status !='] = '9';
+			$total_registered_user =  $this->selectFromJoin($data,true);
+			return $total_registered_user[0];
         }else{
        
 			$data['table'] = 'user';

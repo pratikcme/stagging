@@ -24,6 +24,8 @@ class Google_login_model extends My_model
  function Update_user_data($data, $emial)
  {
 
+  $vendor_id = $this->session->userdata('vendor_id');
+  $this->db->where('vendor_id',$vendor_id);
   $this->db->where('email', $emial);
   $this->db->update(TABLE_USER, $data);
  }

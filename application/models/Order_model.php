@@ -57,9 +57,9 @@ class Order_model extends My_model
         return $result[0]->status;   
     }
 
-    public function vendorDetail($branch_id){
+    public function vendorDetail($vendor_id){
         $data['table'] = 'vendor'; 
-        $data['where'] = ['id'=>$branch_id];
+        $data['where'] = ['id'=>$vendor_id];
         $data['select'] = ['*']; 
         $result = $this->selectRecords($data);
         return $result[0];

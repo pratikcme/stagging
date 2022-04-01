@@ -106,7 +106,7 @@
         </li>
     </ul>
 </li>
-<li>
+<li style="display:none">
     <a class="<?php if ($this->uri->segment(1) == 'city' && $this->uri->segment(2) == 'city_list' || $this->uri->segment(2) == 'city_profile') { ?> active <?php } ?>" href="<?php echo base_url() . 'city/city_list/'; ?>">
         <i class="fa fa-building"></i>
         <span>City</span>
