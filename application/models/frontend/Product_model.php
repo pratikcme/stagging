@@ -576,9 +576,9 @@ Class Product_model extends My_model{
 
 	public function checkMycart($p_id = '',$p_v_id){
 		$qnt = 1;
-		if($p_id != ''){
-			$data['where']['product_id'] = $p_id; 
-		}
+		// if($p_id != ''){
+		// 	$data['where']['product_id'] = $p_id; 
+		// }
 		$data['table'] = TABLE_MY_CART;
 		$data['select'] = ['*'];
 		$data['where']['product_weight_id'] = $p_v_id; 
@@ -713,13 +713,16 @@ Class Product_model extends My_model{
     	return $this->selectRecords($data);
     } 
 
-     public function getPoroductVarientQuantity($pro_id,$var_id){
+     public function getPoroductVarientQuantity($pro_id='',$var_id){
     
+    	if($_SESSION['user_id'] && $_SESSION['user_id'] != ''){
+    		$data['where']['user_id'] = $this->session->userdata('user_id');
+    	}
+
     	$data['table'] = TABLE_MY_CART;
     	$data['select'] = ['*'];
-    	$data['where']['product_id'] = $pro_id;
+    	// $data['where']['product_id'] = $pro_id;
     	$data['where']['product_weight_id'] = $var_id;
-    	$data['where']['user_id'] = $this->session->userdata('user_id');
     	$return = $this->selectRecords($data);
     	if(!empty($return)){
     		return $return[0]->quantity;
@@ -755,17 +758,13 @@ Class Product_model extends My_model{
 
      public function CheckMycard($postdata){
     		
-   		$productId = $postdata['product_id'];
-    	// $weight_id = $postdata['weight_id'];
-    	
-    	$product_weight_id = $postdata['product_weight_id'];
 
+    	$product_weight_id = $postdata['product_weight_id'];
     	$data['table'] = TABLE_MY_CART;
     	$data['select'] = ['*'];
     	$data['where'] = [
 						'status !=' => '9',
 						'user_id'=>$this->session->userdata('user_id'),
-						'product_id'=>$productId,
 						'branch_id'=>$this->branch_id,
 						'product_weight_id'=>$product_weight_id
 					];	
@@ -773,11 +772,10 @@ Class Product_model extends My_model{
     	
     }
 
-    public function update_my_card($update_id,$quntity,$price){
+    public function update_my_card($update_id,$quntity){
     	$data['table'] = TABLE_MY_CART;
     	$data['update'] = [
     						'quantity'=>$quntity,
-    						'calculation_price'=>$price,
     						'dt_updated'=>strtotime(DATE_TIME)
     					  ];
     	$data['where']['id'] = $update_id;
@@ -793,7 +791,7 @@ Class Product_model extends My_model{
 
     	$data['table'] = TABLE_MY_CART;
     	$data['where'] = [
-						  'product_id'=>$productId,
+						  // 'product_id'=>$productId,
 						  'product_weight_id'=>$product_weight_id,
 						  'branch_id'=>$this->branch_id,
 						  'user_id' =>$user_id
@@ -805,7 +803,8 @@ Class Product_model extends My_model{
     public function insertToMyCart($cardData){
     	$data['table'] = TABLE_MY_CART;
     	$data['insert'] = $cardData;
-    	$this->insertRecord($data);
+    	return  $this->insertRecord($data);
+    	echo $this->db->last_query();
     }
 
 
@@ -818,7 +817,7 @@ Class Product_model extends My_model{
 		$data['select'] = ['id','price','quantity','weight_no','discount_per','discount_price','product_id'];
 		$data['where'] = [
 						  'status!='=>'9',
-						  'id'=>$postdata['product_varient_id'],
+						  'id'=> $this->utility->safe_b64decode($postdata['product_varient_id']),
 						];
 		return $this->selectRecords($data);
 
@@ -874,7 +873,7 @@ Class Product_model extends My_model{
 			$data['where'] = [
 
 							'user_id'=>$this->session->userdata('user_id'),
-							'product_id'=>$prod_id,
+							// 'product_id'=>$prod_id,
 							'weight_id'=>$weight_id,
 							'branch_id'=>$this->branch_id
 							
@@ -921,42 +920,18 @@ Class Product_model extends My_model{
   	public function DefaultProductAddInCart($varient_id){
   		
   			$varient_id = $this->utility->safe_b64decode($varient_id);
-  			$data['where']['pw.id'] = $varient_id;
-  		
 
 			$data['table'] = TABLE_PRODUCT . " as p";
-			$data['select'] = ['p.*','pw.price','pw.id as pw_id', 'pw.quantity','pw.weight_id','pw.discount_per','pw.discount_price','pi.image','pw.weight_no','pw.max_order_qty'];
+			$data['select'] = [
+				'p.*','pw.price','pw.id as pw_id', 'pw.quantity','pw.weight_id','pw.discount_per','pw.discount_price','pi.image','pw.weight_no','pw.max_order_qty' ];
 			$data['join'] = [
 				TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
 				TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']
 			];
 			$data['where']['pw.status!='] = '9';
-			
-	  		
-			$data['groupBy'] = 'p.id';	
-		return $this->selectFromJoin($data);
-  	}
-
-  	public function DefaultProductAddInCart_add_to_cart($postdata){
-  		$productId = $this->utility->safe_b64decode($postdata['product_id']);
-  		$varient_id = $postdata['varient_id'];
-  		
-
-			$data['table'] = TABLE_PRODUCT . " as p";
-			$data['select'] = ['p.*','pw.price','pw.id as pw_id', 'pw.quantity','pw.weight_id','pw.discount_per','pw.discount_price','pi.image','pw.weight_no','pw.max_order_qty'];
-			$data['join'] = [
-				TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
-				TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']
-			];
-			$data['where'] = [
-						'pw.status !=' => '9',
-						'p.id'=>$productId,
-						'pw.id'=>$varient_id,
-						// 'pw.quantity >=' => 1,
-
-					];
-			$data['groupBy'] = 'p.id';	
-		return $this->selectFromJoin($data);
+  			$data['where']['pw.id'] = $varient_id;
+			// $data['groupBy'] = 'p.id';	
+			return $this->selectFromJoin($data);		 
   	}
 
   	public function getWeightName($weight_id){
@@ -964,13 +939,9 @@ Class Product_model extends My_model{
   		$data['select'] = ['*'];
   		$data['where'] = ['id'=>$weight_id];
   		return $this->selectRecords($data); 
-
   	}
 
-
-
-    function circle_distance($lat1, $lon1, $lat2, $lon2)
-    {
+    public function circle_distance($lat1, $lon1, $lat2, $lon2){
         $rad = 3.14 / 180;
 
         return acos(sin($lat2 * ($rad)) * sin($lat1 * $rad) + cos($lat2 * $rad) * cos($lat1 * $rad) * cos($lon2 * $rad - $lon1 * $rad)) * 6371;
@@ -1181,42 +1152,43 @@ Class Product_model extends My_model{
 	}
 
 	public function getMyCart($user_id=''){
+
 		if($user_id == ''){
 			$user_id = $this->session->userdata('user_id');
 		}
-    	$data['table'] = TABLE_MY_CART;
-    	$data['select'] = ['*'];
-    	$data['where']['user_id'] = $user_id;
-    	$data['where']['branch_id'] = $this->branch_id;
-    	return $this->selectRecords($data);
+
+    	$data['table'] = TABLE_MY_CART .' as mc';
+    	$data['join'] = [TABLE_PRODUCT_WEIGHT . ' as pw'=>['pw.id=mc.product_weight_id','LEFT']];
+    	$data['select'] = ['mc.*','pw.discount_price','pw.product_id'];
+    	$data['where']['mc.user_id'] = $user_id;
+    	$data['where']['mc.branch_id'] = $this->branch_id;
+    	return $this->selectFromJoin($data);
     }
 
-    public function GetUsersProductInCart($product_id,$product_weight_id){
+    public function GetUsersProductInCart($product_weight_id){
     	// $productId = $this->utility->safe_b64decode($product_id);
 
     	$data['table'] = TABLE_PRODUCT . " as p";
-    	$data['select'] = ['p.name','pw.id as pw_id','pi.image'];
+    	$data['select'] = ['p.name','pw.id as pw_id','pw.discount_per','pw.discount_price','pw.product_id as product_id','pi.image','pw.price'];
     	$data['join'] = [
     		TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
     		TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']
     	];
     	$data['where'] = [
     		'pw.status !=' => '9',
-    		'p.status !=' =>'9',
-    		// 'pi.status !=' =>'9', 	
-    		'p.id'=>$product_id,
+    		'p.status !=' =>'9',	
     		'pw.id'=>$product_weight_id,
     	];
     	$data['groupBy'] = 'p.id';	
     	return $this->selectFromJoin($data);
     }
 
-    public function getMyCartUpdated($postdata){
+    public function getMyUpdatedCart($postdata){
+    	// dd($postdata);
 		$user_id = $this->session->userdata('user_id');
     	$data['table'] = TABLE_MY_CART;
     	$data['select'] = ['*'];
     	$data['where']['user_id'] = $user_id;
-    	$data['where']['product_id'] = $postdata['product_id'];
     	$data['where']['product_weight_id'] = $postdata['product_weight_id'];
     	return $this->selectRecords($data);
     }

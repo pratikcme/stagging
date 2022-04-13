@@ -29,29 +29,36 @@
             </thead>
             <tbody>
               <?php 
-                $CI->load->model('common_model');
-                $default_product_image = $CI->common_model->default_product_image(); 
+                 $CI = &get_instance();
+                 $CI->load->model('common_model');
+                 $default_product_image =$CI->common_model->default_product_image();
               ?>
             <?php 
               if(isset($_SESSION['My_cart']) && $_SESSION['My_cart'] != ''){
 
                 foreach ($_SESSION['My_cart'] as $key => $value) { 
-                  if(empty($value['image']) || !file_exists('public/images/'.$this->folder.'product_image/'.$value['image']))
-                    {
-                        // $value['image'] = 'defualt.png';
-                        $value['image'] = $default_product_image;
+                    $CI->load->model('frontend/product_model');
+                    $product = $CI->product_model->GetUsersProductInCart($value['product_weight_id']);
+                    // dd($product);
+                    $product[0]->image = preg_replace('/\s+/', '%20', $product[0]->image);
+                    if(!file_exists('public/images/'.$CI->folder.'product_image/'.$product[0]->image) || $product[0]->image == '' ){
+                      if(strpos($product[0]->image, '%20') === true || $product[0]->image == ''){
+                        $product[0]->image = $default_product_image;
+                      }
                     }
+
+                 $calculation_price = $product[0]->discount_price * $value['quantity']; ;
             ?>
               <tr id="<?=$value['product_id'].'_'.$value['product_weight_id']?>">
                 <td>
                   <div class="cart-item">
                     <a href="<?=base_url().'products/productDetails/'.$this->utility->safe_b64encode($value["product_id"]).'/'.$this->utility->safe_b64encode($value["product_weight_id"])?>">
-                      <div class="cart-img-wrap"> <img src="<?=base_url().'public/images/'.$this->folder.'product_image/'.$value['image']?>"> </div>
+                      <div class="cart-img-wrap"> <img src="<?=base_url().'public/images/'.$this->folder.'product_image/'.$product[0]->image ?>"> </div>
                     </a>
                     <a href="<?=base_url().'products/productDetails/'.$this->utility->safe_b64encode($value["product_id"]).'/'.$this->utility->safe_b64encode($value["product_weight_id"])?>">
                       <div class="cart-detail-wrap">
                         <h6><?=$value['product_name']?></h6>
-                        <p><span><?=$value['quantity']?></span>X<?=$value['discount_price'] ?></p>
+                        <p><span><?=$value['quantity']?></span>X<?=$product[0]->discount_price ?></p>
                       </div>
                     </a>
                   </div>
@@ -69,13 +76,13 @@
                 </td>
                 <td class="text-center">
                   <?php if ($value['discount_per'] > 0): ?>
-                  <p class="discount-on"><span><?=$this->siteCurrency?></span><?=$value['product_price']?></p>
+                  <p class="discount-on"><span><?=$this->siteCurrency?></span><?=$product[0]->price?></p>
                   <?php endif ?>
-                  <p><span><?=$this->siteCurrency?></span><?=$value['discount_price']?></p>
+                  <p><span><?=$this->siteCurrency?></span><?=$product[0]->discount_price?></p>
                 </td>
                 <td class="text-center">
                   <p>
-                    <span><?=$this->siteCurrency?></span><span class="total"><?=number_format((float)$value['total'],2,'.','')?></span>
+                    <span><?=$this->siteCurrency?></span><span class="total"><?=number_format((float)$calculation_price,2,'.','')?></span>
                  </p>
                 </td>
                 <td class="text-center"> 
@@ -147,11 +154,7 @@
             <?php 
 
             foreach ($my_cart as $key => $value) { 
-                  // if(empty($value->image) || !file_exists('public/images/'.$this->folder.'product_image/'.$value->image)){
-                  //       // $value->image = 'defualt.png';
-                  //     $CI->load->model('common_model');
-                  //     $value->image = $CI->common_model->default_product_image();
-                  //   }
+              $calculation_price = $value->discount_price * $value->quantity; 
             ?>
               <tr id="<?=$value->product_id.'_'.$value->product_weight_id?>">
                 <td>
@@ -186,7 +189,7 @@
                 </td>
                 <td class="text-center">
                   <p>
-                    <span><?=$this->siteCurrency?></span><span class="total"><?=number_format((float)$value->calculation_price,2,'.','')?></span>
+                    <span><?=$this->siteCurrency?></span><span class="total"><?=number_format((float)$calculation_price,2,'.','')?></span>
                  </p>
                 </td>
                 <td class="text-center"> 

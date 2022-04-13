@@ -155,21 +155,25 @@ class Vendor_Controller extends MY_Controller
                 $this->load->model('frontend/product_model','product_model');
                 $data['CategoryHighrstProduct'] = $this->product_model->getCategoryHighrstProduct();
                 $data['appLinks'] = $this->common_model->getCommonKeysAndLink();
+                
                 // echo '<pre>';
                 // print_r($data['appLinks']);die;
+                
                 $my_cart = $this->product_model->getMyCart();
-                // echo $this->db->last_query();die;
                 $default_product_image = $this->common_model->default_product_image();
+
                 foreach ($my_cart as $key => $value) {
-                     $product_image = $this->product_model->GetUsersProductInCart($value->product_id,$value->product_weight_id);
+                     $product_image = $this->product_model->GetUsersProductInCart($value->product_weight_id);
+                        // dd($product_image);die;
                      if(!file_exists('public/images/'.$this->folder.'product_image/'.$product_image[0]->image) || $product_image[0]->image == '' ){
                         $product_image[0]->image = $default_product_image;
                   }
+
                   $my_cart[$key]->product_name = $product_image[0]->name;
                   $my_cart[$key]->image = $product_image[0]->image;
                 }
                 $data['mycart'] = $my_cart;
-                // print_r($data['mycart']);die;
+                // dd($data['mycart']);die;
                 return $this->load->view($layout,$data);
         }
 

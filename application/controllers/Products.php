@@ -18,14 +18,13 @@ class Products extends User_Controller {
 	}
 
 	public function index(){
-		// echo '<pre>';
-		// 	print_r($_SESSION);die;
+
 		if(isset($_GET['cat_id']) && $_GET['cat_id'] != ''){
 			$data['getBycatID'] = $_GET['cat_id'];
 		}
 
 		$data['page'] = 'frontend/product';
-		$data['js'] = array('product.js?v='.js_version);
+		$data['js'] = array('product.js?v='.js_version,'add_to_cart.js?v='.js_version);
 		$data['category'] = $this->this_model->selectCategory();
 		// print_r($data['category']);die;
 		$this->load->model('frontend/home_model','home_model');
@@ -126,7 +125,7 @@ class Products extends User_Controller {
 	}
 
 	public function productDetails($id=''){
-		// print_r($_SESSION['My_cart']);die;
+
 		if(!isset($_SESSION['branch_id'])){
 			$productID = $this->uri->segment(3);
 			$varientID = $this->uri->segment(4);
@@ -233,9 +232,9 @@ class Products extends User_Controller {
 				$value->image = $default_product_image;
 			}
 		}
-		// print_r($data['product_image']);die;
+
 		$quantity = 1;
-		if((!isset($_SESSION['user_id']) || $_SESSION['user_id'] == '') && isset($_SESSION['My_cart']) ){
+		if($this->session->userdata('user_id') !== ''){
 	 		foreach ($_SESSION['My_cart'] as $key => $value) {
 	 				if($value['product_id'] == $product_id  && $value['product_weight_id'] == $var_id){
 	 					$quantity = $value['quantity'];
@@ -246,9 +245,7 @@ class Products extends User_Controller {
 	 	}
 
 		$data['cartQuantityForVarient'] = $quantity;
-		// echo '<pre>';
-		// print_r($data['varientDetails']);
-		// exit;
+
 		$item_weight_id = [];
 		if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != '' ){
 				$res = $this->this_model->UsersCartData();
@@ -528,22 +525,20 @@ class Products extends User_Controller {
 	 	// print_r($result);die;
 	 	// for check save cart quantity of user
 	 	$product_id = $result[0]->product_id;
-	 	$verient_id = $this->input->post('product_varient_id');
-	 	// print_r($product_id);die;
+
+	 	$verient_id = $this->utility->safe_b64decode($this->input->post('product_varient_id'));
 	 	$quantity = 0;
+	 	// dd($_SESSION);die;
 	 	if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != ''){
 	 		$quantity = $this->this_model->getPoroductVarientQuantity($product_id,$verient_id);
 	 	}else{
-	 		// echo '2';die;
+	 		
 	 		foreach ($_SESSION['My_cart'] as $key => $value) {
-	 			// echo '2';die;
 	 			if($value['product_id'] == $product_id  && $value['product_weight_id'] == $verient_id){
 	 				$quantity = $value['quantity'];
 	 			}
 	 		}
 	 	}
-	   	
-
 	 	$wish_pid = $this->this_model->getUsersWishlist();
 	 	$class = '';
 	 	if(in_array($result[0]->product_id, $wish_pid)){
@@ -551,6 +546,8 @@ class Products extends User_Controller {
 	 	}	
 	 	$div_nav = '';
 	 	$div_for = ''; 
+	   	
+
 	 	foreach ($image as $key => $value) {
 	 		$value->image = preg_replace('/\s+/', '%20', $value->image);
 	 		// print_r($value->image);die;
@@ -602,16 +599,18 @@ class Products extends User_Controller {
 
 		$data['calc_shiping'] = 'NotInRange'; //default shipping in NotInRange when user nou login its equal to 0
 		if($this->session->userdata('user_id') != ''){
+            $this->load->model('common_model');
+			$default_product_image = $this->common_model->default_product_image();
+			
 			$data['my_cart'] = $this->this_model->getMyCart($this->session->userdata('user_id'));
 			foreach ($data['my_cart'] as $key => $value) {
-				$product_image = $this->this_model->GetUsersProductInCart($value->product_id,$value->product_weight_id);
+				$product_image = $this->this_model->GetUsersProductInCart($value->product_weight_id);
 				$data['my_cart'][$key]->product_name = $product_image[0]->name;
 				$data['my_cart'][$key]->image = $product_image[0]->image;
 
 				if(empty($value->image) || !file_exists('./public/images/'.$this->folder.'product_image/'.$value->image)){
                         // $value->image = 'defualt.png';
-                      $this->load->model('common_model');
-                      $value->image = $this->common_model->default_product_image();
+                      $value->image = $default_product_image;
                 }
 			}
 			// echo "<pre>";
@@ -664,330 +663,6 @@ class Products extends User_Controller {
 		}
 	}
 
-	public function cartIncDec(){
-		// error_reporting(E_ALL);
-		// 	ini_set('display_errors', 1);
-		if($this->input->post()){	
-			$result = $this->this_model->CartIncDec($this->input->post());
-	 	}
-	 	// print_r($result);
-	 	$prod_id = $this->input->post('product_id');
-    	$product_weight_id = $this->input->post('product_weight_id');
-	 	$quantity = 1;
-
-	 	if($this->session->userdata('user_id') == ''){ 
-	 	
-	 		foreach ($_SESSION['My_cart'] as $key => $value) {
-
-				if($value['product_id'] == $prod_id && $value['product_weight_id'] == $product_weight_id){
-					// echo (1);
-					// exit;
-					$old_qun = $value['quantity'];
-					if($this->input->post('action') == 'decrease'){
-
- 						$qun = $value['quantity'] - $quantity;
-					}else{
-						$qun = $value['quantity'] + $quantity;
-					}
-					if($result[0]->max_order_qty!='' && $result[0]->max_order_qty!='0' && $qun > $result[0]->max_order_qty){
-
-						$errormsg = 'Maximum order quantity reached';
-					}
-					else if($qun > $result[0]->quantity){
-						$errormsg = "Item Out Of Stock"; 
-					}else{ 
-
-					if($this->session->userdata('user_id') !=''){
-
-			 			$cartTable = $this->this_model->CheckMycard($this->input->post());
-
-			 			if($cartTable){
-			 				if($this->input->post('action') == 'decrease'){
-								$old_qun = $value['quantity'];
-		 						$update_quantity = $cartTable[0]->quantity - $quantity;
-							}else{
-								$update_quantity = $cartTable[0]->quantity + $quantity;
-							}
-			 				$update_calculation_price = $cartTable[0]->discount_price * $update_quantity;
-			 				$update_id = $cartTable[0]->id;
-			 			$this->this_model->update_my_card($update_id,$update_quantity,$update_calculation_price);
-			 			}
-			 		}
-	 		// exit;
-
-						$price = $value['discount_price'] * $qun;
-						$_SESSION["My_cart"][$key]['quantity'] = $qun;
-						$_SESSION["My_cart"][$key]['total'] = $price;
-						$new_total = $_SESSION["My_cart"][$key]['total'];
-						$new_quan = $_SESSION["My_cart"][$key]['quantity'];
-					}
-
-				}
-			}
-		}else{
-			$cartTable = $this->this_model->CheckMycard($this->input->post());
-			// print_r($this->input->post());die;
-			$old_qun = $cartTable[0]->quantity;
-			if($this->input->post('action') == 'decrease'){
-
-				$qun = $cartTable[0]->quantity - $quantity;
-			}else{
-				$qun = $cartTable[0]->quantity + $quantity;
-			}
-			if($result[0]->max_order_qty!='' && $result[0]->max_order_qty!='0' && $qun > $result[0]->max_order_qty){
-
-						$errormsg = 'Maximum order quantity reached';
-			}else if($qun > $result[0]->quantity){
-				$errormsg = "Item Out Of Stock"; 
-			}else{ 
-
-				if($this->session->userdata('user_id') !=''){
-
-					$cartTable = $this->this_model->CheckMycard($this->input->post());
-
-					if($cartTable){
-						if($this->input->post('action') == 'decrease'){
-
-							$update_quantity = $cartTable[0]->quantity - $quantity;
-						}else{
-							$update_quantity = $cartTable[0]->quantity + $quantity;
-						}
-						$update_calculation_price = $cartTable[0]->discount_price * $update_quantity;
-						$update_id = $cartTable[0]->id;
-						$this->this_model->update_my_card($update_id,$update_quantity,$update_calculation_price);
-					}
-				}
-	 		// exit;
-				$my_cart = $this->this_model->getMyCartUpdated($this->input->post());
-
-				$price = $my_cart[0]->discount_price * $qun;
-				// $_SESSION["My_cart"][$key]['quantity'] = $qun;
-				// $_SESSION["My_cart"][$key]['total'] = $price;
-				$new_total = $my_cart[0]->calculation_price;
-				$new_quan = $my_cart[0]->quantity;
-			}
-
-		}
-
-
-
-		  if(!isset($errormsg)){
-		  		$errormsg = '';
-		  }if(!isset($new_quan)){
-		  		$new_quan = '';
-		  }if(!isset($new_total)){
-		  		$new_total = '';
-		  }
-
-		$response = [
-					 'new_quan'=>$new_quan,
-					 'new_total'=>number_format((float)$new_total,2,'.',''),
-					 'errormsg'=>$errormsg,
-					 'final_total'=> getMycartSubtotal(),
-					 'max_qun' =>$old_qun,
-					 'updated_list'=>NavbarDropdown(),
-					];
-		echo json_encode($response);
-
-	}
-
-	public function addProducToCart(){
-	
-		if($this->input->post()){	
-			$product_id = $this->input->post('product_id');
-			$varient_id = $this->input->post('varient_id');
-			$quantity = $this->input->post('qnt');
-			$result = $this->this_model->DefaultProductAddInCart($product_id,$varient_id);
-			$getWeight = $this->this_model->getWeightName($result[0]->weight_id);
-	 	}
-	 	// print_r($result);die;
-	 	$this->load->model('common_model');
-	 	$default_product_image =$this->common_model->default_product_image();
-	 	 $result[0]->image = preg_replace('/\s+/', '%20', $result[0]->image);
-	 	if(!file_exists('public/images/'.$this->folder.'product_image/'.$result[0]->image) || $result[0]->image == '' ){
-          if(strpos($result[0]->image, '%20') === true || $result[0]->image == ''){
-            $result[0]->image = $default_product_image;
-          }
-        }
-
-	 	if(!empty($result)){
-	 		if($result[0]->max_order_qty!='' && $result[0]->max_order_qty!='0' && $quantity > $result[0]->max_order_qty){
-				$errormsg = 'Maximum order quantity reached';
-			}else
-			if($quantity > $result[0]->quantity){
-				 // $errormsg = $quantity .' Quantity not available';
-				// echo $result[0]->quantity;die;
-				if($result[0]->quantity == '0'){
-				 	$errormsg = 'Product not available';
-				}else{
-					// $errormsg = $quantity . ' Quantity not available';
-					$errormsg = 'Item Out of Stock';
-				}
-				// exit();
-			}else{
-
-				if($this->session->userdata('user_id') != ''){
-
-					$product_array = array(
-								'product_id'=> $this->utility->safe_b64encode($result[0]->id),
-								'varient_id'=>$result[0]->pw_id,
-					);
-
-
-				$cartTable = $this->this_model->getToCheckMycard($product_array);
-
-				if(count($cartTable) > 0){
-					$update_id = $cartTable[0]->id;
-					$update_quantity = $cartTable[0]->quantity + $quantity ;
-					$price = 	$cartTable[0]->discount_price * $quantity;
-					$this->this_model->update_my_card($update_id,$quantity,$price);
-					$itemExist = 'Update successfully';
-				}else{
-				$my_cart_table_data = array(
-						'branch_id'=>$this->session->userdata('branch_id'),
-						'vendor_id'=>$this->session->userdata('vendor_id'),
-						'user_id'=> $this->session->userdata('user_id'),	
-						'product_id'=> $result[0]->id,	
-						'product_weight_id'=> $result[0]->pw_id,
-						'weight_id'=> $result[0]->weight_id,
-						'quantity'=> $quantity,
-						'actual_price'=>$result[0]->price,
-						'actual_quantity'=>$result[0]->quantity,
-						'discount_per'=>$result[0]->discount_per,
-						'discount_price'=>$result[0]->discount_price,
-						'calculation_price'=>$quantity * $result[0]->discount_price,
-						'status'=>'1',
-						'dt_added' => strtotime(DATE_TIME),
-						'dt_updated' => strtotime(DATE_TIME)
-					);
-					$this->this_model->insertToMyCart($my_cart_table_data);
-				}
-			}
-				
-					$cart_item = array(
-						'product_id' => $result[0]->id,
-						'branch_id' => $result[0]->branch_id,
-						'vendor_id' => $this->session->userdata('vendor_id'),
-						'weight_id' => $result[0]->weight_id,
-						'product_name'=>$result[0]->name,
-						'product_price' =>	$result[0]->price,
-						'discount_per' =>$result[0]->discount_per,
-						'discount_price' => $result[0]->discount_price,
-						'quantity'=> $quantity,
-						'image'=> $result[0]->image,
-						'total'=> $result[0]->discount_price * $quantity,
-						'product_weight_id'=> $result[0]->pw_id
-					);
-
-						// print_r($cart_item);
-						// print_r($_SESSION['My_cart']);
-						// exit;
-					if(isset($_SESSION['My_cart'])){
-
-					$item_array_id = array_column($_SESSION["My_cart"], "product_id");
-					$item_weight_id = array_column($_SESSION["My_cart"], "product_weight_id");
-
-							if(in_array($result[0]->id, $item_array_id)){
-								if(!in_array($result[0]->pw_id, $item_weight_id)){
-								$temp = max(array_keys($_SESSION["My_cart"]));
-								$_SESSION["My_cart"][$temp+1] = $cart_item;
-								$message = 'success'; 
-								}else{
-
-								foreach($_SESSION["My_cart"] as $key => $value){
-										$p_id = $_SESSION['My_cart'][$key]['product_id'];
-										$w_id = $_SESSION['My_cart'][$key]['weight_id'];
-										$p_qunt = $_SESSION['My_cart'][$key]['quantity'];
-
-										if($p_id == $result[0]->id && $w_id == $result[0]->weight_id ){
-											if($p_qunt > $result[0]->quantity){
-												$errormsg ='stock not available';
-											}else{
-												$qun = $quantity;
-												// $qun = $value['quantity'] + $quantity;
-												// $price = $value['product_price'] * $qun;
-												$price = $value['product_price'] * $qun;
-					 							$_SESSION["My_cart"][$key]['quantity'] = $qun;
-					 							$_SESSION["My_cart"][$key]['total'] = $price;			 
-											}
-									}
-								}
-
-							// $errormsg = "Item Already Added";
-							 // $itemExist = 'Item Already Added';
-							 $itemExist = 'Product quantity updated successfully';
-							}
-					}
-					else{
-					 $temp = max(array_keys($_SESSION["My_cart"]));
-					 $_SESSION["My_cart"][$temp+1] = $cart_item;
-					 $message = 'success';
-					}
-				}else{
-					$_SESSION["My_cart"][0] = $cart_item;	
-					$message = 'success';
-				}
-			}
-
-	}else{
-			$errormsg ='Currently this product is out of stock';
-			
-		}
-		  if(!isset($message)){
-		  	$message = '';
-		  }
-		  if(!isset($errormsg)){
-		  		$errormsg = '';
-		  }
-		  if(!isset($itemExist)){
-		  		$itemExist = '';
-		  }
-		  	$image= '';
-		  	$weight_name = '';
-		  if(!empty($result)){
-		  	$product_id = $result[0]->id;
-		  	$image = (!empty($result[0]->image))?$result[0]->image :'';
-		  	$name = $result[0]->name;
-		  	$discount_price = $result[0]->discount_price;
-		  	$weight_id = $result[0]->weight_id;
-		  	$available_quantity = $result[0]->quantity;
-		  	$weight_name = $getWeight[0]->name;
-		  	$weight_no = $result[0]->weight_no;
-		  	$product_variant_id = $result[0]->pw_id;
-		  }else{
-		  	$product_id = '';
-		  	$image = '';
-		  	$name = '';
-		  	$discount_price = '';
-		  	$weight_id = '';
-		  	$available_quantity = '';
-		  	$weight_name = '';
-		  	$weight_no = '';
-		  	$product_variant_id = '';
-		  }
-
-		$final_total = getMycartSubtotal();
-		$response = [
-					'product_id'=>$product_id,
-					'product_name'=>$name,
-					'total'=> $discount_price,
-					'weight_id'=> $weight_id,
-					'image'=>$image,
-					'count'=>cartItemCount(),
-					'errormsg'=>$errormsg,
-					'itemExist' =>$itemExist,
-					'final_total'=>$final_total,
-					'available_quantity'=>$available_quantity,
-					'weight_no'=>$weight_no,
-					'weight_name' => $weight_name,
-					'product_variant_id'=>$product_variant_id,
-					'enc_prod_id' => $this->utility->safe_b64encode($product_id),
-					'updated_list'=>NavbarDropdown(),
-					'success'=>$message
-					];
-		echo json_encode($response);
-
-	}
 
 	public function setWishlist(){
 		if($this->session->userdata('user_id') == ''){

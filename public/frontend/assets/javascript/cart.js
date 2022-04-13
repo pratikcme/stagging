@@ -91,7 +91,6 @@ $(document).ready(function(){
 		shipping_charge = parseFloat(shipping_charge);
 		var that = $(this);
 		if(quantity == 0){
-
 				swal({
 					  title: "Are you sure?",
 					  text: "Press Ok to delete cart item !",
@@ -130,12 +129,13 @@ $(document).ready(function(){
 							}
 						})
 				} else {
+					$(this).prop('disabled', false);
 					that.next('input').val(1);
 				}
 	});
 		}else{
 			$.ajax({
-				url : url +'products/cartIncDec',
+				url : url +'add_to_card/cartIncDec',
 				method: 'post',
 				dataType: 'json',
 				async : false,
@@ -190,7 +190,7 @@ $(document).ready(function(){
 			swal('Are you want to delete this product');
 		}else{
 			$.ajax({
-				url : url +'products/cartIncDec',
+				url : url +'add_to_card/cartIncDec',
 				method: 'post',
 				dataType: 'json',
 				async : false,

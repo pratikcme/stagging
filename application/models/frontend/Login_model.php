@@ -65,30 +65,21 @@ class Login_model extends My_model{
 
 					foreach ($cart as $k => $v) {
 						
-						if($value['product_id'] == $v->product_id){
+
 							if( $value['product_weight_id'] == $v->product_weight_id ){
 
 								$cart_quantity = $value['quantity'];
-								$cart_item = array(
-									'branch_id'=>$value['branch_id'],	
-									'vendor_id'=>$value['vendor_id'],	
-									'user_id'=> $this->session->userdata('user_id'),	
-									'product_id'=> $value['product_id'],	
+								$cart_item = array(		
 									'product_weight_id'=> $value['product_weight_id'],
-									'weight_id'=> $value['weight_id'],
 									'quantity'=> $value['quantity'],
-									'actual_price'=>$g[0]->price,
-									'actual_quantity'=>$cart_quantity,
-									'discount_per'=>$g[0]->discount_per,
-									'discount_price'=>$g[0]->discount_price,
-									'calculation_price'=>$cart_quantity * $g[0]->discount_price,
 									'status'=>'1',
 									'dt_added' => strtotime(DATE_TIME),
 									'dt_updated' => strtotime(DATE_TIME)
 							);
 								$data['table'] = TABLE_MY_CART;
 								$data['where'] = [
-									'product_id'=>$value['product_id'],
+									'branch_id'=>$value['branch_id'],
+									'vendor_id'=>$value['vendor_id'],
 									'user_id'=> $this->session->userdata('user_id'),
 									'product_weight_id'=> $value['product_weight_id'],
 								];
@@ -102,15 +93,8 @@ class Login_model extends My_model{
 								'vendor_id'=>$value['vendor_id'],
 								'branch_id'=>$value['branch_id'],
 								'user_id'=> $this->session->userdata('user_id'),	
-								'product_id'=> $value['product_id'],	
 								'product_weight_id'=> $value['product_weight_id'],
-								'weight_id'=> $value['weight_id'],
 								'quantity'=> $value['quantity'],
-								'actual_price'=>$g[0]->price,
-								'actual_quantity'=>$cart_quantity,
-								'discount_per'=>$g[0]->discount_per,
-								'discount_price'=>$g[0]->discount_price,
-								'calculation_price'=>$cart_quantity * $g[0]->discount_price,
 								'status'=>'1',
 								'dt_added' => strtotime(DATE_TIME),
 								'dt_updated' => strtotime(DATE_TIME)
@@ -119,31 +103,6 @@ class Login_model extends My_model{
 								$data['insert'] = $cart_item;
 								$this->insertRecord($data);		
 							}
-						}else{
-						unset($data);
-						$cart_quantity = $value['quantity'];
-						$cart_item = array(
-							'vendor_id'=>$value['vendor_id'],
-							'branch_id'=>$value['branch_id'],	
-							'user_id'=> $this->session->userdata('user_id'),	
-							'product_id'=> $value['product_id'],	
-							'product_weight_id'=> $value['product_weight_id'],
-							'weight_id'=> $value['weight_id'],
-							'quantity'=> $value['quantity'],
-							'actual_price'=>$g[0]->price,
-							'actual_quantity'=>$cart_quantity,
-							'discount_per'=>$g[0]->discount_per,
-							'discount_price'=>$g[0]->discount_price,
-							'calculation_price'=>$cart_quantity * $g[0]->discount_price,
-							'status'=>'1',
-							'dt_added' => strtotime(DATE_TIME),
-							'dt_updated' => strtotime(DATE_TIME)
-						);
-
-							$data['table'] = TABLE_MY_CART;
-							$data['insert'] = $cart_item;
-							$this->insertRecord($data);
-						}
 					}
 				}else{
 					unset($data);
@@ -151,15 +110,8 @@ class Login_model extends My_model{
 							'vendor_id'=>$value['vendor_id'],
 							'branch_id'=>$value['branch_id'],	
 							'user_id'=> $this->session->userdata('user_id'),	
-							'product_id'=> $value['product_id'],	
 							'product_weight_id'=> $value['product_weight_id'],
-							'weight_id'=> $value['weight_id'],
 							'quantity'=> $value['quantity'],
-							'actual_price'=>$g[0]->price,
-							'actual_quantity'=>$value['quantity'],
-							'discount_per'=>$g[0]->discount_per,
-							'discount_price'=>$g[0]->discount_price,
-							'calculation_price'=>$value['quantity'] * $g[0]->discount_price,
 							'status'=>'1',
 							'dt_added' => strtotime(DATE_TIME),
 							'dt_updated' => strtotime(DATE_TIME)

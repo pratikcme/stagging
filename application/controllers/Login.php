@@ -46,6 +46,7 @@ class Login extends MY_Controller {
 		if(isset($this->user_id) && $this->user_id != ''){
 			redirect(base_url());
 		}
+
 		$data['appLinks'] = $this->common_keys;
 		$data['page'] = 'frontend/account/login';
 		$data['js'] = array('login.js');
@@ -64,16 +65,16 @@ class Login extends MY_Controller {
 					 	if($result[0]->email_verify == '1'){
 					 		$login_data = array(
 					 			'user_id' => $result[0]->id,
-                            	'user_name' => $result[0]->fname,
-                            	'user_lname' => $result[0]->lname,
+                        'user_name' => $result[0]->fname,
+                        'user_lname' => $result[0]->lname,
 					 			'user_email' => $result[0]->email,
-                             	'user_phone' => $result[0]->phone,
+                        'user_phone' => $result[0]->phone,
 					 			'logged_in' => TRUE
 					 		); 
 
 					 		$this->session->set_userdata($login_data);
 					 		if($this->session->userdata('user_id') != ''){
-					 			$MycartData = $this->this_model->MycartData();
+					 			// $MycartData = $this->this_model->MycartData();
 					 			$this->this_model->manageCartItem();	
 
 					 			if(isset($_SESSION['My_cart'][0]['branch_id'])){

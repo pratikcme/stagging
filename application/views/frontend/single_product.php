@@ -86,7 +86,8 @@
           </p>
           </div>
           <div class="product-vairant">
-            <?php foreach ($varient as $key => $value) { ?> <span class="variant product_varient_id <?=($varientDetails[0]->id == $value) ? 'active' : '' ?>" data-varient_id="<?=$value?>">
+            <?php foreach ($varient as $key => $value) { ?> 
+              <span class="variant product_varient_id <?=($varientDetails[0]->id == $value) ? 'active' : '' ?>" data-varient_id="<?=$this->utility->safe_b64encode($value)?>">
               <?=$weight_no[$key].' '.$weight_name[$key]?>
             </span>
               <?php } ?>
@@ -249,5 +250,5 @@
   </div>
 <?php } ?>
 <input type="hidden" name="product_id" id="product_id" value='<?=$product_id?>'>
-<input type="hidden" name="product_varient_id" id="product_varient_id" value='<?=(isset($varientDetails[0]->id) && $varientDetails[0]->id != '' ) ? $varientDetails[0]->id : $productDetail[0]->variant_id ?>'>
+<input type="hidden" name="product_varient_id" id="product_varient_id" value='<?=(isset($varientDetails[0]->id) && $varientDetails[0]->id != '' ) ? $this->utility->safe_b64encode($varientDetails[0]->id) : $this->utility->safe_b64encode($productDetail[0]->variant_id) ?>'>
 </section>

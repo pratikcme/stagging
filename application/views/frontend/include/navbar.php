@@ -66,23 +66,32 @@
                  <div class="cart-view-content ">
                   <?php if ($this->session->userdata('user_id') == ''){ ?> 
                    <ul id='updated_list'>
-                    <?php if(isset($this->cartCount)){ ?>
-                     <?php foreach ($this->session->userdata('My_cart') as $key => $value) { 
-                              // $image = $value['image'];
-                              // if(!file_exists('public/images/product_image_thumb/'.$image)){
-                              //   $image = 'defualt.png'; 
-                              // }
-                          ?>
+                    <?php if(isset($this->cartCount)){ 
+                       $CI = &get_instance();
+                       $CI->load->model('common_model');
+                       $default_product_image =$CI->common_model->default_product_image(); ?>
+
+                     <?php foreach ($this->session->userdata('My_cart') as $key => $value) {
+                        $product = $CI->product_model->GetUsersProductInCart($value['product_weight_id']);
+                        // dd($product);
+                        $product[0]->image = preg_replace('/\s+/', '%20', $product[0]->image);
+
+                        if(!file_exists('public/images/'.$CI->folder.'product_image/'.$product[0]->image) || $product[0]->image == '' ){
+                          if(strpos($product[0]->image, '%20') === true || $product[0]->image == ''){
+                            $product[0]->image = $default_product_image;
+                          }
+                        }
+                    ?>
                      <li>
                           <a href="<?=base_url().'products/productDetails/'.$this->utility->safe_b64encode($value['product_id']).'/'.$this->utility->safe_b64encode($value['product_weight_id'])?>">
                         <div class="cart-img-wrap">
-                          <img src="<?=base_url()?>public/images/<?=$this->folder?>product_image/<?=($value['image'] != '') ? $value['image'] : 'defualt.png' ?>">
+                          <img src="<?=base_url()?>public/images/<?=$this->folder?>product_image/<?=$product[0]->image?>">
                         </div>
                       </a>
                         <a href="<?=base_url().'products/productDetails/'.$this->utility->safe_b64encode($value['product_id']).'/'.$this->utility->safe_b64encode($value['product_weight_id'])?>">
                         <div class="cart-detail-wrap">
                           <h6><?=$value['product_name']?></h6>
-                          <p><span><?=$value['quantity']?></span> X <?=number_format((float)$value['discount_price'], 2, '.', '')?></p>
+                          <p><span><?=$value['quantity']?></span> X <?=number_format((float)$product[0]->discount_price, 2, '.', '')?></p>
                         </div>
                       </a>
                         <a href="javascript:" class="remove_item" data-product_id="<?=$value['product_id']?>" data-product_weight_id="<?=$value['product_weight_id']?>" >

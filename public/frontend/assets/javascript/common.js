@@ -368,12 +368,14 @@ $(document).on('click','.dec',function(){
 										$('#itemCount').css('display','none');
 											// window.location.reload();
 									}
-									
-									if(segments[4] == 'productDetails' && !that.hasClass('related_cat')){
+
+									// segments[4] when live
+									if(segments[5] == 'productDetails' && !that.hasClass('related_cat')){
 										that.parent().addClass('d-none');
 										that.parent().next('div.order-btn').find('a:first').removeClass('d-none');
-									}else{
+									}else{					
 										that.parent().addClass('d-none');
+										// that.parent().next('div.order-btn').find('a:first').removeClass('d-none');
 										that.parent().prev('div').removeClass('d-none');										
 									}
 
@@ -391,7 +393,7 @@ $(document).on('click','.dec',function(){
 	});
 		}else{
 			$.ajax({
-				url : url +'products/cartIncDec',
+				url : url +'add_to_card/cartIncDec',
 				method: 'post',
 				dataType: 'json',
 				async : false,
@@ -440,7 +442,7 @@ $(document).on('click','.dec',function(){
 			swal('Are you want to delete this product');
 		}else{
 			$.ajax({
-				url : url +'products/cartIncDec',
+				url : url +'add_to_card/cartIncDec',
 				method: 'post',
 				dataType: 'json',
 				async : false,

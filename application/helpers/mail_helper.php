@@ -39,11 +39,13 @@ function sendMail($data) {
 function getMycartSubtotal(){
   $CI = &get_instance();
   $total = number_format((float)0,2,'.','');
+  $CI->load->model('frontend/product_model');
   if($CI->session->userdata('user_id') == '' ){
 
     if(isset($_SESSION['My_cart'])){
       foreach ($_SESSION['My_cart'] as $key => $value) {
-        $total += $value['total'];
+        $product = $CI->product_model->GetUsersProductInCart($value['product_weight_id']);
+        $total += $product[0]->discount_price * $value['quantity'];
       }
     }
 
@@ -52,7 +54,8 @@ function getMycartSubtotal(){
     $CI->load->model('frontend/product_model','product_model');
     $my_cart = $CI->product_model->getMyCart();
     foreach ($my_cart as $key => $value) {
-     $total += $value->calculation_price; 
+     // $total += $value->calculation_price; 
+     $total += $value->discount_price * $value->quantity; 
     }
 
   }
@@ -142,9 +145,12 @@ function NavbarDropdown(){
     }
   }else{
      $CI->load->model('frontend/product_model','product_model');
+     
      $my_cart = $CI->product_model->getMyCart();
+      
      foreach ($my_cart as $key => $value) {
-        $product_image = $CI->product_model->GetUsersProductInCart($value->product_id,$value->product_weight_id);
+        $product_image = $CI->product_model->GetUsersProductInCart($value->product_weight_id);
+        
         $product_image[0]->image = preg_replace('/\s+/', '%20', $product_image[0]->image);
         if(!file_exists('public/images/'.$CI->folder.'product_image/'.$product_image[0]->image) || $product_image[0]->image == '' ){
           if(strpos($product_image[0]->image, '%20') === true || $product_image[0]->image == ''){
@@ -167,7 +173,7 @@ function NavbarDropdown(){
         <a href='.base_url().'products/productDetails/'.$encode_id.'/'.$varient_id.'>
         <div class="cart-detail-wrap">
         <h6>'.$value->product_name.'</h6>
-        <p><span>'.$value->quantity.'</span> X '.number_format((float)$value->discount_price, 2, '.', '').'</p>
+        <p><span>'.$value->quantity.'</span> X '.number_format((float)$product_image[0]->discount_price, 2, '.', '').'</p>
         </div>
         </a>
         <a href="javescript:" class="remove_item" data-product_id='.$value->product_id.' data-product_weight_id='.$value->product_weight_id.'>

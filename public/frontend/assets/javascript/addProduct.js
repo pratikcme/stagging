@@ -87,42 +87,43 @@ var ADDPRODUCT = function(){
 
     $(document).on('click','#addtocart',function(){
       var siteCurrency = $('#siteCurrency').val();
-        var quantity = checkNotNull('qnt');
+        var qnt = checkNotNull('qnt');
         var url = $('#url').val();
-        if(quantity <= 0 || quantity == '' || quantity == '-0' || quantity == '+0' || quantity == 'NaN'){
+        
+        if(qnt <= 0 || qnt == '' || qnt == '-0' || qnt == '+0' || qnt == 'NaN'){
           $('#qnt').val('1');
-          // swal('please select valid quantity');
+          // swal('please select valid qnt');
           // return false;
-          quantity = 1;
+          qnt = 1;
         }
 
         var varient_id =  checkNotNull('product_varient_id');
         var product_id =  checkNotNull('product_id');
       $.ajax({
-          url: url+'products/addtocart',
+          // url: url+'products/addtocart',
+          url: url+'add_to_card/addProducToCart',
           method:'post',
           dataType:'json',
-          data: {quantity:quantity,varient_id:varient_id,product_id:product_id},
+          data: {qnt:qnt,varient_id:varient_id,product_id:product_id},
           success:function(output){
             $('#updated_list').html(output.updated_list);
-             $('#nav_subtotal').html(siteCurrency+' '+output.cartTotal);
-            // console.log(output);return false;
+            $('#nav_subtotal').html(siteCurrency+' '+output.cartTotal);
+
             if(output.errormsg != ''){
-              swal(output.errormsg);
-              $('.cart-plus-minus-box').val('1');
+                swal(output.errormsg);
+                $('.cart-plus-minus-box').val('1');
             }else if(output.itemExist != ''){
               swal(output.itemExist).then((value) => {
                   // window.location.href = url+'products/cart_item';
               });
             }else{
               $('#nav_cart_dropdown').removeClass("d-none");
-              // $("#backdrop").addClass("backdrop_bg");
-              // $('#pupup_message').css('display','block');
-                  window.location.href = url+'products/productDetails/'+product_id+'/'+output.product_variant_id;
-              setTimeout(function() {
-                  // $("#backdrop").removeClass("backdrop_bg");
-                  // $('#pupup_message').fadeOut('fast');
-                }, 500);
+                window.location.href = url+'products/productDetails/'+product_id+'/'+output.enc_product_variant_id;
+
+                // setTimeout(function() {
+                //     // $("#backdrop").removeClass("backdrop_bg");
+                //     // $('#pupup_message').fadeOut('fast');
+                //   }, 500);
             }            
           }
         })
@@ -144,16 +145,11 @@ var ADDPRODUCT = function(){
           dataType:'json',
           data: {quantity:quantity,varient_id:varient_id,product_id:product_id},
           success:function(output){
-            // $('#updated_list').html(output.updated_list);
-            // console.log(output);return false;
             if(output.errormsg != ''){
               swal(output.errormsg);
               $('.cart-plus-minus-box').val('1');
             }else if(output.itemExist != ''){
               window.location.href = url+'checkout';
-              // swal(output.itemExist).then((value) => {
-              //     window.location.href = url+'/products/cart_item';
-              // });
             }else{
               window.location.href = url+'checkout';            
             }
@@ -425,12 +421,12 @@ $(document).on('click','.addcartbutton', function(){
       return false;
     }
      $.ajax({
-                url : url+'products/addProducToCart',
+                url : url+'add_to_card/addProducToCart',
                 data:{product_id:product_id,qnt:qnt,varient_id:varient_id},
                 method:'post',
                 dataType:'json',
                 success:function(output){
-                  
+        
                   if(output.errormsg != ''){
                       swal(output.errormsg);
                       $('.cart-plus-minus-box').val('1');

@@ -666,13 +666,28 @@ class Api extends Apiuser_Controller {
     }
 
     public function product_detail() {
-      
+
         if (isset($_POST['product_id']) && isset($_POST['branch_id'])) {
             $product_id = $_POST['product_id'];
             $category_id = $_POST['category_id'];
             $user_id = $_POST['user_id'];
             $device_id = $_POST['device_id'];
             $branch_id = $_POST['branch_id'];
+            
+            // get branch details
+            $branchRecord = $this->db->query("SELECT phone_no,whatsappFlag FROM branch where id = '$branch_id'");
+            $branchDetails = $branchRecord->result();
+            $whatsappFlag = $branchDetails[0]->whatsappFlag;
+            $countryCode = '91';
+            $mobile = '';   
+            if(!empty($branchDetails) && $branchDetails[0]->phone_no != ''){
+                if($_SERVER['SERVER_NAME'] == 'ugiftonline.com'){
+                    $countryCode = '1';
+                }
+                $mobile = $countryCode.$branchDetails[0]->phone_no;
+            }
+
+
             $result_count = $this->db->query("SELECT p.* FROM `product` as p 
         LEFT JOIN product_weight as w ON w.product_id = p.id
         WHERE p.branch_id = '$branch_id'  AND w.status != '9' AND p.id = '$product_id' GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
@@ -696,6 +711,9 @@ class Api extends Apiuser_Controller {
                     $product_weight_result = $product_weight_query->result();
                     $new_array_product_weight = array();
                     foreach ($product_weight_result as $pro_weight) {
+                        
+                        $whatsappShareUrl = base_url().'products/productDetails/'.$this->utility->safe_b64encode($pro_weight->product_id).'/'.$this->utility->safe_b64encode($pro_weight->id);
+
                         $package_id = $pro_weight->package;
                         $package_name = $this->this_model->get_package($package_id);
                         $product_weight_id = $pro_weight->id;
@@ -726,7 +744,7 @@ class Api extends Apiuser_Controller {
                             $pro_image->image = str_replace(' ', '%20', $pro_image->image);
                             $img[] = array('id' => $pro_image->id, 'product_id' => $pro_image->product_id, 'weight_id' => $pro_weight->weight_id, 'image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $pro_image->image, 'thumb_image' => base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $pro_image->image,);
                         }
-                        $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => ($pro_weight->weight_no) . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'avail_quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_images' => $img,);
+                        $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => ($pro_weight->weight_no) . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'avail_quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_images' => $img,'whatsappShareUrl'=>$whatsappShareUrl);
                         array_push($new_array_product_weight, $data);
                     }
                     $product_weight_array = $new_array_product_weight;
@@ -743,6 +761,8 @@ class Api extends Apiuser_Controller {
                     $data['image_thumb'] = base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $prothimg;
                     $data['about'] = ($row->about != null) ? $row->about : "";
                     $data['content'] = ($row->content != null) ? $row->content : "";
+                    $data['whatsappFlag'] = $whatsappFlag;
+                    $data['mobile'] = $mobile;
                     $data['status'] = $row->status;
                     $data['dt_added'] = $row->dt_added;
                     $data['dt_updated'] = $row->dt_updated;

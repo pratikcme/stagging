@@ -74,7 +74,7 @@ $active_group = 'default';
 $query_builder = TRUE;
 if($_SERVER['HTTP_HOST'] == '192.168.2.2' || $_SERVER['HTTP_HOST'] == 'localhost'){
 	
-	$dbName = 'launchestore_dev';
+	$dbName = 'launchestore_dev_new';
 	$userName = 'root';
 	$password = 'root';
 	$host = 'localhost';
@@ -88,7 +88,7 @@ $dbName = 'a1630btr_dev';
 	
 }
 
-
+// echo $dbName;die;
 
 
 $db['default'] = array(

@@ -14,7 +14,6 @@ class Home extends User_Controller {
 	}
 
 	public function index(){
-	
 		$data['page'] = 'frontend/home/home';
 		$subcategory = $this->this_model->countSubcategory();
 		$data['subcategory'] = count($subcategory);
@@ -27,7 +26,7 @@ class Home extends User_Controller {
 			$data['background_image'] = $this->home_content_model->getSectionOneBackground();
 		}
 		
-		$data['js'] = array('home.js');
+		$data['js'] = array('add_to_cart.js');
 		
 		$data['category'] = $this->this_model->selectCategory();
 		
@@ -58,6 +57,7 @@ class Home extends User_Controller {
 			$data['new_arrival'][$key]->varientQuantity = ($varientQuantity == '0') ? "0" : $varientQuantity[0]->quantity;
 		}
 		
+
 		$data['top_sell_core'] = $this->this_model->selectTopSelling($product_ids);
 		
 		$top_selling_core = array();
