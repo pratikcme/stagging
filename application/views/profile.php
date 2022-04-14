@@ -168,6 +168,14 @@
                               </div>
                             </div>
                             <div class="form-group">
+                                <label for="">Whatsapp share <span class="required" aria-required="true"> * </span></label>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <input type="radio" name="whatsapp_share" class="whatsappFlag" value="0" <?=($app_result[ 'whatsappFlag']=='0' ) ? 'checked' : '' ?> > Disabled
+                                    <input type="radio" name="whatsapp_share" class="whatsappFlag" value="1" <?=($app_result[ 'whatsappFlag']=='1' ) ? 'checked' : '' ?> >Enabled </div>
+                                </div>
+                              </div>
+                            <div class="form-group">
                               <label for="selfPickupOpenClosingTiming">Self pickup open & closing Day & time</label>
                               <textarea type="text" id="selfPickupOpenClosingTiming" name="selfPickupOpenClosingTiming" class="form-control"><?php echo @$app_result['selfPickupOpenClosingTiming'] != '' ? $app_result['selfPickupOpenClosingTiming'] : @set_value('selfPickupOpenClosingTiming'); ?></textarea>
                               <label for="selfPickupOpenClosingTiming" class="error">

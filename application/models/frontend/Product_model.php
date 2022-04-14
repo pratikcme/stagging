@@ -24,7 +24,7 @@ Class Product_model extends My_model{
 				TABLE_PRODUCT_WEIGHT.' as pw'=>['p.id=pw.product_id','LEFT'],
 				TABLE_BRANCH.' as b'=>['p.branch_id = b.id','LEFT']
 			];
-		$data['where'] = ['pw.id'=>$varientID,'pw.status'=>'1','pw.status'=>'1'];
+		$data['where'] = ['pw.id'=>$varientID,'pw.status'=>'1'];
 		return $this->selectFromJoin($data);
 	}
 	
@@ -1191,6 +1191,14 @@ Class Product_model extends My_model{
     	$data['where']['user_id'] = $user_id;
     	$data['where']['product_weight_id'] = $postdata['product_weight_id'];
     	return $this->selectRecords($data);
+    }
+
+    public function getBranchDtails(){
+    	$branch_id = $this->session->userdata('branch_id');
+    	$data['table'] = TABLE_BRANCH;
+    	$data['select'] = ['*'];
+    	$data['where']['id'] = $branch_id;
+    	return $this->selectRecords($data);	
     }
 
 

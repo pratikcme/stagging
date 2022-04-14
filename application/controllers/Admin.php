@@ -577,6 +577,7 @@ class Admin extends CI_Controller
                 $longitude = $this->input->post('longitude');
                 $isOnlinePayment = $this->input->post('isOnlinePayment');
                 $isCOD = $this->input->post('isCOD');
+                $whatsappFlag = $this->input->post('whatsapp_share');
                 $data = array(
                     'name' => $ownername,
                     'phone_no' => $phone,
@@ -589,6 +590,7 @@ class Admin extends CI_Controller
                     'image' => $vendorimage,
                     'selfPickUp'=>$selfPickUp,
                     'isCOD'=>$isCOD,
+                    'whatsappFlag' =>$whatsappFlag,
                     'product_default_image'=>$default_image,
                     'isOnlinePayment'=>$isOnlinePayment,
                     'selfPickupOpenClosingTiming'=>$selfPickupOpenClosingTiming,

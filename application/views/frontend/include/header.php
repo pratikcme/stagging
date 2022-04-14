@@ -7,6 +7,14 @@
 <title><?=$this->siteTitle?></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+  <meta property="og:title" content="<?=(isset($productDetail) && isset($productDetail[0]) && $productDetail[0]->name !='' ) ? $productDetail[0]->name : $this->siteTitle?>" />
+    <meta property="og:image" content="<?=(isset($productDetail) && isset($productDetail[0]) && $productDetail[0]->name !=' ' ) ? base_url().'public/images/'.$this->folder.'product_image/'.$product_image[0]->image : ''?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:image" content="<?=(isset($productDetail) && isset($productDetail[0]) && $productDetail[0]->name !=' ' ) ? base_url().'public/images/'.$this->folder.'product_image/'.$product_image[0]->image : ''?>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="jetpack-boost-ready" content="true" />
+    <meta name="msapplication-TileImage" content="<?=(isset($productDetail) && isset($productDetail[0]) && $productDetail[0]->name !=' ' ) ? base_url().'public/images/'.$this->folder.'product_image/'.$product_image[0]->image : ''?>" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;display=swap" rel="stylesheet">
   <!-- BOOTSRAP CSS -->
   <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/frontend/assets/css/bootstrap.min.css">

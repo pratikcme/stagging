@@ -1,17 +1,25 @@
 <style type="text/css">
+  
   .quantity-wrap {
     margin: 30px 0px;
   }
+
   .quantity-wrap button{
     width: 60px;
     height: 50px;
 
-  } 
+  }
+
   .quantity-wrap input{
     width: 60px;
     height: 50px;
+  }
 
-  } 
+  .whatsapp-help-btn i {
+    color: #25D366;
+    font-size: 20px;
+    margin-right: 10px;
+}
 </style>
 <!--=================BREADCRUMB SECTION=================  -->
 <section class="breadcrumb-menu p-100">
@@ -117,6 +125,18 @@
               <a href="javascript:">
                 <button class="btn hover" id="order_now">order now</button>
               </a>
+               <?php 
+              $product_id = $this->uri->segment(3);
+              $varient_id = $this->uri->segment(4);
+              $url = base_url().'products/productDetails/'.$product_id.'/'.$varient_id;
+              ?>
+              <?php
+              if(!empty($BranchDetails) && $BranchDetails[0]->whatsappFlag  != '0' && $BranchDetails[0]->phone_no != ''){
+                  $mobile = '91'.$BranchDetails[0]->phone_no; ?>
+                <a target="_black" id='whatsapp_link' href="https://wa.me/<?=$mobile?>/?text=<?=$url?>">
+                  <button class="btn hover whatsapp-help-btn" id=""><i class="fab fa-whatsapp"></i> Help!</button>
+                </a>
+              <?php } ?>
             </div>
           </div>
          <!--  <div class="quantity-wrap">
