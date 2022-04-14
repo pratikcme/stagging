@@ -731,22 +731,6 @@ Class Product_model extends My_model{
     	}
     }
 
-    public function getToCheckMycard($postdata){
-   		
-    	
-    	$product_weight_id = $postdata['varient_id'];
-
-    	$data['table'] = TABLE_MY_CART;
-    	$data['select'] = ['*'];
-    	$data['where'] = [
-						'status !=' => '9',
-						'user_id'=>$this->session->userdata('user_id'),
-						'branch_id'=>$this->branch_id,
-						'product_weight_id'=>$product_weight_id
-					];	
-    	return $this->selectRecords($data);
-    	
-    }
 
     public function UsersCartData(){
     	$data['table'] = TABLE_MY_CART;
@@ -756,9 +740,7 @@ Class Product_model extends My_model{
     	return $this->selectRecords($data);	
     }
 
-     public function CheckMycard($postdata){
-    		
-
+     public function CheckMycard($postdata){	
     	$product_weight_id = $postdata['product_weight_id'];
     	$data['table'] = TABLE_MY_CART;
     	$data['select'] = ['*'];
@@ -1165,11 +1147,27 @@ Class Product_model extends My_model{
     	return $this->selectFromJoin($data);
     }
 
+    public function getMyCartOrder(){
+    	$data['table'] = 'my_cart';
+        $data['select'] = [
+        	'my_cart.*',
+        	'product_weight.discount_price',
+        	'product_weight.discount_per',
+        	'product_weight.product_id',
+        	'product_weight.price as actual_price',
+        	'product_weight.weight_id'
+        ];
+        $data['join'] = ['product_weight'=>['product_weight.id = my_cart.product_weight_id','LEFT']];
+        $data['where']['my_cart.user_id'] = $this->session->userdata('user_id');
+        $data['where']['my_cart.branch_id'] = $this->session->userdata('branch_id');
+        return $this->selectFromJoin($data);
+    }
+
     public function GetUsersProductInCart($product_weight_id){
     	// $productId = $this->utility->safe_b64decode($product_id);
 
     	$data['table'] = TABLE_PRODUCT . " as p";
-    	$data['select'] = ['p.name','pw.id as pw_id','pw.discount_per','pw.discount_price','pw.product_id as product_id','pi.image','pw.price'];
+    	$data['select'] = ['p.name','pw.id as pw_id','pw.discount_per','pw.discount_price','pw.product_id as product_id','pi.image','pw.price','p.gst'];
     	$data['join'] = [
     		TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
     		TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']
@@ -1184,7 +1182,6 @@ Class Product_model extends My_model{
     }
 
     public function getMyUpdatedCart($postdata){
-    	// dd($postdata);
 		$user_id = $this->session->userdata('user_id');
     	$data['table'] = TABLE_MY_CART;
     	$data['select'] = ['*'];

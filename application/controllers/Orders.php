@@ -21,6 +21,7 @@ class Orders extends User_Controller {
 		$this->loadView(USER_LAYOUT,$data);
 	}
 
+
 	public function view($id){
 		error_reporting(0);
 		$id = $this->utility->safe_b64decode($id);

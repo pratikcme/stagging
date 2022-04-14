@@ -2600,8 +2600,6 @@ class Api_model extends My_model {
             $data['join'] = ['staff_device as d' => ['d.user_id = s.id', 'INNER']];
             $data['table'] = 'staff as s';
             $select = $this->selectFromJoin($data);
-            // echo
-            // print_r($select);die;
             foreach ($select as $key => $value) {
                 $notification_type = 'new_order';
                 $dataArray = array('device_id' => $value->token, 'type' => $value->type, 'message' => $message, 'for_staff' => true);
@@ -3048,7 +3046,7 @@ class Api_model extends My_model {
             unset($data);
             $data['table'] = TABLE_ORDER_DETAILS . ' as od';
             $data['select'] = ['od.id', 'od.product_id', 'od.product_weight_id', 'od.quantity', 'od.actual_price', 'od.discount_price', 'od.calculation_price', 'p.name'];
-            $data['join'] = [TABLE_PRODUCT . ' as p' => ['od.product_id=p.id', 'LEFT'], ];
+            $data['join'] = [TABLE_PRODUCT . ' as p' => ['od.product_id=p.id', 'LEFT']];
             $data['where'] = ['od.status !=' => '9', 'od.order_id' => $order_id];
             $result = $this->selectFromJoin($data);
             $re[0]->order_details = $result;
@@ -3056,7 +3054,7 @@ class Api_model extends My_model {
             foreach ($result as $key => $value) {
                 $gst = $this->getProductGst($value->product_id);
                 $gst_amount = ($value->discount_price * $gst) / 100;
-                $total_gst+= $gst_amount * $value->quantity;
+                $total_gst += $gst_amount * $value->quantity;
             }
             $re[0]->TotalGstAmount = number_format((float)$total_gst, 2, '.', '');
             unset($data);
@@ -3091,6 +3089,7 @@ class Api_model extends My_model {
                 //     $this->siteLogo = base_url().'public/client_logo/'.$bigbucket_logo;
                 // }
                 $emailTemplate = $this->load->view('emailTemplate/customer_template_', $data, true);
+
                 if($i == 1){
                      $pdf = $this->load->view('emailTemplate/pdf_customer_template', $data, true);
                     require_once 'vendor/autoload.php';
@@ -3108,6 +3107,7 @@ class Api_model extends My_model {
                 // $datas["to"] = 'sahid.cmexpertise@gmail.com';
                 $res = $this->sendMailSMTP($datas);
                 @unlink(FCPATH.'public/'.$file_name.".pdf");
+                return true;
             }
         }
 

@@ -53,11 +53,11 @@ class Add_to_card extends User_Controller {
 					if($this->session->userdata('user_id') != ''){
 						$product_array = array(
 									'product_id'=> $this->utility->safe_b64encode($result[0]->id),
-									'varient_id'=>$result[0]->pw_id,
+									'product_weight_id'=>$result[0]->pw_id,
 						);
 
 
-					$cartTable = $this->this_model->getToCheckMycard($product_array);
+					$cartTable = $this->this_model->CheckMycard($product_array);
 
 					if(count($cartTable) > 0){
 						$update_id = $cartTable[0]->id;
@@ -235,31 +235,14 @@ class Add_to_card extends User_Controller {
 					}else{
 						$qun = $value['quantity'] + $quantity;
 					}
-					if($result[0]->max_order_qty!='' && $result[0]->max_order_qty!='0' && $qun > $result[0]->max_order_qty){
 
+					if($result[0]->max_order_qty !='' && $result[0]->max_order_qty!='0' && $qun > $result[0]->max_order_qty){
 						$errormsg = 'Maximum order quantity reached';
+						$qun = $result[0]->max_order_qty;
 					}
 					else if($qun > $result[0]->quantity){
 						$errormsg = "Item Out Of Stock"; 
 					}else{ 
-
-					if($this->session->userdata('user_id') !=''){
-
-			 			$cartTable = $this->this_model->CheckMycard($this->input->post());
-
-			 			if($cartTable){
-			 				if($this->input->post('action') == 'decrease'){
-								$old_qun = $value['quantity'];
-		 						$update_quantity = $cartTable[0]->quantity - $quantity;
-							}else{
-								$update_quantity = $cartTable[0]->quantity + $quantity;
-							}
-			 				$update_calculation_price = $cartTable[0]->discount_price * $update_quantity;
-			 				$update_id = $cartTable[0]->id;
-			 			$this->this_model->update_my_card($update_id,$update_quantity,$update_calculation_price);
-			 			}
-			 		}
-	 		// exit;
 
 						$price = $value['discount_price'] * $qun;
 						$_SESSION["My_cart"][$key]['quantity'] = $qun;
@@ -275,41 +258,38 @@ class Add_to_card extends User_Controller {
 			// print_r($this->input->post());die;
 			$old_qun = $cartTable[0]->quantity;
 			if($this->input->post('action') == 'decrease'){
-
 				$qun = $cartTable[0]->quantity - $quantity;
-			}else{
+			}else{	
 				$qun = $cartTable[0]->quantity + $quantity;
 			}
 
 			if($result[0]->max_order_qty!='' && $result[0]->max_order_qty!='0' && $qun > $result[0]->max_order_qty){
-
+			
 				$errormsg = 'Maximum order quantity reached';
-			}else if($qun > $result[0]->quantity){
+				$old_qun = $result[0]->max_order_qty; // max sale quantity per order
+			
+			}elseif($qun > $result[0]->quantity){
+
 				$errormsg = "Item Out Of Stock"; 
+				$old_qun = $result[0]->quantity; // available quantity 
+				$update_id = $cartTable[0]->id;
+				$this->this_model->update_my_card($update_id,$old_qun);
+
 			}else{ 
 
-				if($this->session->userdata('user_id') !=''){
-
-					$cartTable = $this->this_model->CheckMycard($this->input->post());
-
-					if($cartTable){
-						if($this->input->post('action') == 'decrease'){
-
-							$update_quantity = $cartTable[0]->quantity - $quantity;
-						}else{
-							$update_quantity = $cartTable[0]->quantity + $quantity;
-						}
-						// $update_calculation_price = $cartTable[0]->discount_price * $update_quantity;
-						$update_id = $cartTable[0]->id;
-						$this->this_model->update_my_card($update_id,$update_quantity);
-					}
+				if($this->input->post('action') == 'decrease'){
+					$update_quantity = $cartTable[0]->quantity - $quantity;
+				}else{
+					$update_quantity = $cartTable[0]->quantity + $quantity;
 				}
-	 		// exit;
+				// $update_calculation_price = $cartTable[0]->discount_price * $update_quantity;
+				$update_id = $cartTable[0]->id;
+				$this->this_model->update_my_card($update_id,$update_quantity);
 				$my_cart = $this->this_model->getMyUpdatedCart($this->input->post());
-
 				$price = $result[0]->discount_price * $qun;
 				$new_total = $result[0]->discount_price * $my_cart[0]->quantity;
 				$new_quan = $my_cart[0]->quantity;
+			
 			}
 
 		}

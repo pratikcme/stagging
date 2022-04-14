@@ -50,7 +50,7 @@ function getMycartSubtotal(){
     }
 
   }else{
-
+    
     $CI->load->model('frontend/product_model','product_model');
     $my_cart = $CI->product_model->getMyCart();
     foreach ($my_cart as $key => $value) {

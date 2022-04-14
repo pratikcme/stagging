@@ -52,7 +52,7 @@ Class Order_model extends My_model{
 
     public function makeOrder($fromStripe = ''){
     	// echo "<pre>";
-     //    print_r($_SESSION);die;
+     //    print_r($_POST);die;
       $user_id = $this->session->userdata('user_id');
       $branch_id = $this->session->userdata('branch_id');
       $vendor_id = $this->session->userdata('vendor_id');
@@ -141,17 +141,21 @@ Class Order_model extends My_model{
         /*$delivery_charge_query = $this->db->query("SELECT price FROM setting WHERE title = 'delivery_charge' AND vendor_id = '$vendor_id'");
 
         $delivery_charge_result = $delivery_charge_query->row_array();*/
-
         
-        $my_cart_query = $this->db->query("SELECT SUM(calculation_price) as sub_total, SUM((actual_price - discount_price) * quantity) as total_savings, COUNT(*) as total_item FROM my_cart WHERE status != '9' AND user_id = '$user_id' AND branch_id = '$branch_id'");
-        $my_cart_result =  $my_cart_query->row_array();
-        
+        $this->load->model('frontend/product_model');
+        $myCart = $this->product_model->getMyCartOrder();
+        $sub_total = 0;
+        $total_savings = 0;
+        foreach ($myCart as $key => $value) {
+            $sub_total += $value->discount_price * $value->quantity;
+            $total_savings += ($value->actual_price - $value->discount_price) * $value->quantity ;
+        }
 
-        $sub_total = number_format((float)$my_cart_result['sub_total'], 2, '.', '');
-        $total_savings = number_format((float)$my_cart_result['total_savings'], 2, '.', '');
-        $total_item = $my_cart_result['total_item'];
+      
 
-
+        $sub_total = number_format((float)$sub_total, 2, '.', '');
+        $total_savings = number_format((float)$total_savings, 2, '.', '');
+        $total_item = count($myCart);
         $total_price = number_format((float)$sub_total, 2, '.', '');
 
 
@@ -173,8 +177,10 @@ Class Order_model extends My_model{
 
         
         /*Order Details*/
-        $my_order_query = $this->db->query("SELECT * FROM my_cart WHERE status != '9' AND  user_id = '$user_id' AND branch_id = '$branch_id'");
-        $my_order_result = $my_order_query->result();
+        // $my_order_query = $this->db->query("SELECT * FROM my_cart WHERE status != '9' AND  user_id = '$user_id' AND branch_id = '$branch_id'");
+        // $my_order_result = $my_order_query->result();
+
+        $my_order_result = $this->product_model->getMyCartOrder();
             // echo "<pre>";
 //         print_r($my_order_result);die;
         if(!empty($my_order_result)){
@@ -215,6 +221,7 @@ Class Order_model extends My_model{
                     'dt_added' => strtotime(date('Y-m-d H:i:s')),
                     'dt_updated' => strtotime(date('Y-m-d H:i:s')),
                 );
+
                 $this->db->insert('order', $data);
                 $last_insert_id = $this->db->insert_id();
                 $otpForSelfPickup = '';
@@ -247,20 +254,18 @@ Class Order_model extends My_model{
                     'product_weight_id' => $my_order->product_weight_id,
                     'quantity' => $my_order->quantity,
                     'actual_price' => $my_order->actual_price,
-    //              'actual_quantity' => $my_order->actual_quantity,
                     'discount' => $my_order->discount_per,
                     'discount_price' => $my_order->discount_price,
-                    'calculation_price' => $my_order->calculation_price,
+                    'calculation_price' => ($my_order->discount_price * $my_order->quantity),
                     'status' => '1',
                     'dt_added' => strtotime(date('Y-m-d H:i:s')),
                     'dt_updated' => strtotime(date('Y-m-d H:i:s')),
                 );
                 $this->db->insert('order_details', $data);
                 $last_order_d_id = $this->db->insert_id();
-                $total_profit = ($my_order->calculation_price * $profit_per) / 100;
+                $total_profit = (($my_order->discount_price * $my_order->quantity) * $profit_per) / 100;
                 $this->insert_profit($last_insert_id,$last_order_d_id,$my_order->branch_id,$total_profit);
-
-    //                    $this->this_model->update_quantity($my_order->product_weight_id,$my_order->quantity);
+            //  $this->this_model->update_quantity($my_order->product_weight_id,$my_order->quantity);
             }
         }else{
             $response = array();

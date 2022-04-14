@@ -409,6 +409,7 @@ $(document).on('click','.dec',function(){
 						// $('.total'+product_id+'_'+product_weight_id).html(output.new_total);
 						// $('#order_total').html(currency+' '+(subtot+parseInt(shipping_charge)));
 					}else{
+						that.next('input').val(output.max_qun);
 						swal(output.errormsg);
 					}
 				}
@@ -457,7 +458,8 @@ $(document).on('click','.dec',function(){
 					if(output.errormsg == ''){
 						$('#nav_subtotal').html(output.final_total);
 					}else{
-						that.prev('input').val(quantity - 1);
+						// that.prev('input').val(quantity - 1);
+						that.prev('input').val(output.max_qun);
 						swal(output.errormsg);
 					}
 				}

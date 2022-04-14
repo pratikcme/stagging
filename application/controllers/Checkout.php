@@ -55,9 +55,9 @@ class Checkout extends User_Controller {
         
       }
     }else{
-       $my_cart = $this->product_model->getMyCart();
+       $my_cart = $this->product_model->getMyCart(); //return value of mycart and product_wieght;
        foreach ($my_cart as $key => $value) {
-          $myCartValue += $value->calculation_price;
+          $myCartValue += $value->discount_price * $value->quantity;
           $this->load->model('api_model');
           $gst = $this->api_model->getProductGst($value->product_id);
           $gst_amount = ($value->discount_price * $gst)/100;
@@ -66,7 +66,8 @@ class Checkout extends User_Controller {
     }
     $data['TotalGstAmount'] = number_format((float)$total_gst,'2','.','');    
     $data['AmountWithoutGst'] = number_format((float)($myCartValue-$gst_amount),'2','.','');
-    // print_r($data['TotalGstAmount']);die;
+    // print_r($myCartValue);die;
+
     if($myCartValue < $defaultCartValue ){
       $this->utility->setFlashMessage_cartValue('danger','Minimum cart value should be greater than '.$this->session->userdata('de_currency').' '.$defaultCartValue );
       redirect($_SERVER['HTTP_REFERER']);
