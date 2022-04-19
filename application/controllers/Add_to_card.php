@@ -121,8 +121,6 @@ class Add_to_card extends User_Controller {
 													$errormsg ='stock not available';
 												}else{
 													$qun = $quantity;
-													// $qun = $value['quantity'] + $quantity;
-													// $price = $value['product_price'] * $qun;
 													$price = $value['product_price'] * $qun;
 						 							$_SESSION["My_cart"][$key]['quantity'] = $qun;
 						 							$_SESSION["My_cart"][$key]['total'] = $price;			 
