@@ -856,6 +856,7 @@ class Api_model extends My_model {
         }
         $result = $this->selectFromJoin($data);
         $total_gst = 0;
+        
         foreach ($result as $key => $value) {
             $gst = $this->getProductGst($value->product_id);
             $gst_amount = ($value->discount_price * $gst) / 100;

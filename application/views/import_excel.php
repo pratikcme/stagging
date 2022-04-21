@@ -78,6 +78,69 @@ include('header.php');
             <!-- page end-->
         </section>
     </section>
+      <!-- The Modal -->
+     <?php $nu = $this->utility->safe_b64decode($this->uri->segment(3)); 
+      $ar = range(10,100);
+
+     ?>
+  <div class="modal <?=(in_array($nu,$ar)) ? 'show' : '' ?> " id="myModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="row">
+                    <!--Left Part-->
+                    <div class="col-lg-12">
+                       <table class="table table-bordered table-striped ">
+                           <thead>
+                               <tr role="row">
+                                   <th>Product name</th>
+                                   <th>Weight Number</th>
+                                   <th>Weight Name</th>
+                                   <th>Package Name</th>
+                                   <th>Price</th>
+                                   <th>Quantity</th>
+                                   <th>Discount per</th>
+                                   <th>Discount price</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                            <?php foreach ($tempRecord as $key => $value): ?>
+                               <tr role="row"> 
+                                   <td><?=$value->name?></td>
+                                   <td><?=$value->weight_no?></td>
+                                   <td><?=$value->weight_name?></td>
+                                   <td><?=$value->package_name?></td>
+                                   <td><?=$value->price?></td>
+                                   <td><?=$value->quantity?></td>
+                                   <td><?=$value->discount_per?></td>
+                                   <td><?=$value->discount_price?></td>
+                               </tr>
+                            <?php endforeach ?>
+                           </tbody>
+                       </table>
+                    </div>
+                    <!--Map Part-->
+                </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <a class="btn btn-danger" href="<?=base_url().'import/import_excel/'?>">Cancel</a>
+            <a class="btn btn-success" href="<?=base_url().'import/insertExcelRecordParmanent'?>">Add Record</a>
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        </div>
+        
+      </div>
+    </div>
+  </div>
     <!--main content end-->
     <script src="<?php echo base_url(); ?>public/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>

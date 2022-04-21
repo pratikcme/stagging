@@ -710,6 +710,7 @@ class Api extends Apiuser_Controller {
                     $product_weight_query = $this->db->query("SELECT * FROM product_weight WHERE status != '9' AND product_id = '$product_id'  AND branch_id = '$branch_id' GROUP BY id ORDER BY min(discount_price) * 1 ASC");
                     $product_weight_result = $product_weight_query->result();
                     $new_array_product_weight = array();
+
                     foreach ($product_weight_result as $pro_weight) {
                         
                         $whatsappShareUrl = base_url().'products/productDetails/'.$this->utility->safe_b64encode($pro_weight->product_id).'/'.$this->utility->safe_b64encode($pro_weight->id);
@@ -717,18 +718,21 @@ class Api extends Apiuser_Controller {
                         $package_id = $pro_weight->package;
                         $package_name = $this->this_model->get_package($package_id);
                         $product_weight_id = $pro_weight->id;
+
                         $product_image_query = $this->db->query("SELECT * FROM product_image WHERE status != '9' AND product_id = '$product_id'  AND product_variant_id = '$product_weight_id' AND branch_id = '$branch_id' ORDER BY id DESC");
                         $product_image_result = $product_image_query->result();
+                        
                         $weight_id = $pro_weight->weight_id;
                         $weight_query = $this->db->query("SELECT name FROM weight WHERE id = '$weight_id'");
                         $weight_result = $weight_query->row_array();
                         $weight_name = $weight_result['name'];
+
                         if (isset($_POST['user_id']) && $_POST['user_id'] != '') {
-                            $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_id = '$product_id'AND product_weight_id = '$product_weight_id' AND branch_id = '$branch_id' AND user_id = '$user_id'");
+                            $my_cart_query = $this->db->query("SELECT mc.quantity  FROM my_cart as mc LEFT join product_weight as pw ON pw.id=mc.product_weight_id WHERE pw.product_id = '$product_id'AND mc.product_weight_id = '$product_weight_id' AND mc.branch_id = '$branch_id' AND mc.user_id = '$user_id'");
                             $my_cart_result = $my_cart_query->row_array();
                         } else {
                             if (isset($_POST['device_id'])) {
-                                $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_id = '$product_id' AND product_weight_id = '$product_weight_id' AND branch_id = '$branch_id' AND (user_id = '0' AND device_id = '$device_id')");
+                                $my_cart_query = $this->db->query("SELECT mc.quantity FROM my_cart as mc LEFT join product_weight as pw ON pw.id=mc.product_weight_id WHERE pw.product_id = '$product_id' AND mc.product_weight_id = '$product_weight_id' AND mc.branch_id = '$branch_id' AND (mc.user_id = '0' AND mc.device_id = '$device_id')");
                                 $my_cart_result = $my_cart_query->row_array();
                             } else {
                                 $my_cart_result = array();

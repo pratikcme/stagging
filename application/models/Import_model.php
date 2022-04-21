@@ -107,10 +107,11 @@ class Import_model extends My_model {
             // unset($data['where']);
             $data['table'] = 'subcategory';
             $result = $this->selectRecords($data,true);
-            // echo $this->db->last_query();die;
-            // echo "<pre>";
-            // print_r($result);die;
+          
             if($subCategory){
+                // $this->db->query('truncate table temp_product');
+                // $this->db->query('truncate table temp_product_weight');
+                // $this->db->query('truncate table temp_product_image');
                 return $result;
             }else{
                 $subCateArray = array();
@@ -146,6 +147,9 @@ class Import_model extends My_model {
 
             }
                 if(empty($result)){
+                    // $this->db->query('truncate table temp_product');
+                    // $this->db->query('truncate table temp_product_weight');
+                    // $this->db->query('truncate table temp_product_image');
                     $this->utility->setFlashMessage('danger',"Brand does not exist.Excel is not uploaded!");
                     redirect(base_url().'import/import_excel');
                     die;
@@ -221,7 +225,6 @@ class Import_model extends My_model {
 
                     if($subCategory != ''){
                         $getSub = $this->subcategory_list($categoryId, $subCategory);
-                      
                         $subCategoryId = $getSub[0]['id'];
                     }
 
@@ -264,7 +267,7 @@ class Import_model extends My_model {
                             $data['insert']['status'] = '1';
                             $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                             $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
-                            $data['table'] = 'product';
+                            $data['table'] = 'temp_product';
                         
                             $lastId = $this->insertRecord($data);
                             $lastInsertedId = $lastId;
@@ -287,7 +290,7 @@ class Import_model extends My_model {
                                 $dicount = 0;
                                 $final_discount_price = $retailPrice;
                             }
-                            
+                            // echo $unitId .'/'.$packageId .'/'. $varient .'/'. $purchasePrice .'/'.$purchasePrice .'/'. $retailPrice .'/'. $qty ; die; 
                             if($unitId !='' && ($packageId !='') && ($varient !='') && ($purchasePrice == 0 || $purchasePrice != '') && ($retailPrice !='') && ($qty !='') ) {
                                 $data['insert']['branch_id'] = $this->branch_id;
                                 $data['insert']['product_id'] = ($lastId != '') ? $lastId : $lastInsertedId;
@@ -307,7 +310,7 @@ class Import_model extends My_model {
                                 $data['insert']['status'] = '1';
                                 $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                                 $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
-                                $data['table'] = 'product_weight';
+                                $data['table'] = 'temp_product_weight';
                                
                                 $result = $this->insertRecord($data);
 
@@ -321,7 +324,7 @@ class Import_model extends My_model {
                                     $data['insert']['image_order'] = '0';
                                     $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                                     $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
-                                    $data['table'] = 'product_image';
+                                    $data['table'] = 'temp_product_image';
                                     $res = $this->insertRecord($data);
                                 }
                                 unset($data);
@@ -335,6 +338,7 @@ class Import_model extends My_model {
         }
         return true;
     }
+} 
 
     public function getProductOfCategory($postData){
         $data['table'] = TABLE_CATEGORY;
@@ -474,6 +478,63 @@ class Import_model extends My_model {
         $data['select'] = ['*'];
         $data['where'] = ['product_id'=>$product_id,'status!='=>'9'];
         return $this->selectRecords($data);
+    }
+
+    public function getTemopRecord(){
+        $data['table'] = 'temp_product_weight as pw';
+        $data['join'] = [
+            'temp_product as p'=>['p.id=pw.product_id','LEFT'],
+            'temp_product_image as pi'=>['pw.id=pi.product_variant_id','LEFT'],
+            TABLE_WEIGHT . ' as w' =>['w.id=pw.weight_id','LEFT'],
+            'package as pk'=>['pk.id=pw.package','LEFT']
+        ];
+        $data['select'] = ['p.name','pw.weight_no','w.name as weight_name','pw.price','pw.quantity','pw.discount_price','pw.discount_per','pk.package as package_name',];
+        $data['where'] = ['p.branch_id'=>$this->session->userdata('id')];
+        $result = $this->selectFromJoin($data);
+        return $result;
+    }
+
+    public function insertExcelRecordParmanent(){
+        $check = ''; 
+        $tempRecords = $this->tempTableRecords('temp_product');
+        foreach ($tempRecords as $key => $records) {
+            $temp_product_id = $tempRecords[$key]->id;
+            unset($tempRecords[$key]->id);
+            $this->db->insert(TABLE_PRODUCT,$tempRecords[$key]);
+            $product_id = $this->db->insert_id();
+            $temp_product_weight = $this->tempTableRecords('temp_product_weight',['product_id'=>$temp_product_id]);
+            $check++;
+            foreach ($temp_product_weight as $k => $v) {
+                $temp_varient_id = $temp_product_weight[$k]->id;
+                unset($temp_product_weight[$k]->id);
+                unset($temp_product_weight[$k]->$product_id);
+                $v->product_id = $product_id;
+                $this->db->insert(TABLE_PRODUCT_WEIGHT,$temp_product_weight[$k]);
+                $variant_id = $this->db->insert_id();
+                $temp_product_image = $this->tempTableRecords('temp_product_image',['product_variant_id'=>$temp_varient_id]);
+                $check++;
+                foreach ($temp_product_image as $tpik => $image) {
+                    unset($temp_product_image[$tpik]->id);
+                    unset($temp_product_image[$tpik]->product_variant_id);
+                    $image->product_id = $product_id;
+                    $image->product_variant_id = $variant_id;
+                     $this->db->insert(TABLE_PRODUCT_IMAGE,$temp_product_image[$tpik]);
+                    $check++;
+                 } 
+            }
+        }
+        return $check;
+
+    }
+
+    public function tempTableRecords($table,$where = ''){
+        if(!empty($where) && $where != ''){
+            $data['where'] = $where; 
+        }
+        $data['table'] = $table;
+        $data['select'] = ['*'];
+        return $this->selectRecords($data);
+
     }
 
 }

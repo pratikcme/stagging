@@ -21,12 +21,13 @@ class Import extends Vendor_Controller
 
     public function generate(){
         $type = $this->input->post('type');
-        // print_r($this->input->post());die;
+
         if($type == 1){
             $this->genrate_excel();
         }else{
             $this->genrate_excel_for_update();
         }
+
     }
 
     public function importExcelFile(){
@@ -89,12 +90,13 @@ class Import extends Vendor_Controller
         $this->excel->getActiveSheet()->setCellValue('N1', 'Discount');
         $this->excel->getActiveSheet()->setCellValue('O1', 'Image');
         $this->excel->getActiveSheet()->setCellValue('P1', 'GST');
+        $this->excel->getActiveSheet()->setCellValue('Q1', 'Max Order Qty');
 
 
-        $this->excel->getActiveSheet()->getStyle('A1:P1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $this->excel->getActiveSheet()->getStyle('A1:P1')->getFont()->setBold(true);
-        $this->excel->getActiveSheet()->getStyle('A1:P1')->getFont()->setSize(12);
-        $this->excel->getActiveSheet()->getStyle('A1:P1')->getFill()->getStartColor()->setARGB('#333');
+        $this->excel->getActiveSheet()->getStyle('A1:Q1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $this->excel->getActiveSheet()->getStyle('A1:Q1')->getFont()->setBold(true);
+        $this->excel->getActiveSheet()->getStyle('A1:Q1')->getFont()->setSize(12);
+        $this->excel->getActiveSheet()->getStyle('A1:Q1')->getFill()->getStartColor()->setARGB('#333');
 
         $default_border = array(
             'style' => PHPExcel_Style_Border::BORDER_THIN,
@@ -256,12 +258,20 @@ class Import extends Vendor_Controller
     }
 
     public function import_excel(){
+        $productResult = $this->display_records();
+        $data['tempRecord'] = $productResult;
         $this->load->library('excel');
         if($this->input->post()){
+            $this->db->query('TRUNCATE TABLE temp_product');
+            $this->db->query('TRUNCATE TABLE temp_product_weight');
+            $this->db->query('TRUNCATE TABLE temp_product_image');
             $result = $this->this_model->importExcel($this->input->post());
             if($result){
-                $this->utility->setFlashMessage('success',"Product uploaded successfully");
+                // $this->utility->setFlashMessage('success',"Product uploaded successfully");
+                $number = rand(10,100);
+                redirect(base_url().'import/import_excel/'.$this->utility->safe_b64encode($number));
             }else{
+
                 $this->utility->setFlashMessage('danger',"Somthing went Wrong");
             }
             redirect(base_url().'import/import_excel');
@@ -397,6 +407,27 @@ class Import extends Vendor_Controller
         }
         $data['category'] = $this->this_model->getCategorys(); 
         $this->load->view('import_excel',$data);
+    }
+
+    public function display_records(){
+        $tempRecord = $this->this_model->getTemopRecord();
+        return $tempRecord;
+    }
+
+    public function insertExcelRecordParmanent(){
+        $result = $this->this_model->insertExcelRecordParmanent();
+        // lq();
+        if($result >= 3){
+            $this->db->query('TRUNCATE TABLE temp_product');
+            $this->db->query('TRUNCATE TABLE temp_product_weight');
+            $this->db->query('TRUNCATE TABLE temp_product_image');
+            $this->utility->setFlashMessage('success',"Product uploaded successfully");
+             redirect(base_url().'import/import_excel');
+        }else{
+            $this->utility->setFlashMessage('danger',"Somthing went wrong");
+             redirect(base_url().'import/import_excel');
+        }
+
     }
 }
 
