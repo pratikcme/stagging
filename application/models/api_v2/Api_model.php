@@ -1072,9 +1072,9 @@ class Api_model extends My_model {
                     $weight_name = $weight_result[0]['name'];
                     $data['select'] = ['quantity'];
                     if (isset($user_id) && isset($device_id)) {
-                        $data['where'] = ['product_id' => $product_id, 'product_weight_id' => $product_weight_id, 'user_id' => $user_id, 'device_id' => $device_id];
+                        $data['where'] = [ 'product_weight_id' => $product_weight_id, 'user_id' => $user_id, 'device_id' => $device_id];
                     } else if (isset($user_id) || isset($device_id)) {
-                        $data['where'] = ['product_id' => $product_id, 'product_weight_id' => $product_weight_id, ];
+                        $data['where'] = ['product_weight_id' => $product_weight_id, ];
                         $data['where_or'] = ['user_id' => $user_id, 'device_id' => $device_id];
                     }
                     $data['table'] = 'my_cart';
