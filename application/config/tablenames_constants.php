@@ -29,6 +29,7 @@ define('TABLE_CUSTOMER', 'customer');
 define('TABLE_ORDER_TEMP', 'order_temp');
 
 define('TABLE_USER_LOGIN_LOGOUT_LOGS', 'user_login_logout_logs');
+define('TABLE_BANNERS', 'banners');
 
 
 // ADMIN CONSTANT
