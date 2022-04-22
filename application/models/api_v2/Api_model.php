@@ -1086,9 +1086,17 @@ class Api_model extends My_model {
                     } else {
                         $my_cart_quantity = $my_cart_result[0]['quantity'];
                     }
-                    $product_image_result[0]->image = str_replace(' ', '%20',$product_image_result[0]->image);
+                    
 
-                    $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => $pro_weight->weight_no . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image,);
+                     if (count($product_image_result) <= 0) {
+                                $image = '';
+                            } else {
+                                $image = base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image;
+                            }
+                    $image = str_replace(' ', '%20', $image);
+
+
+                    $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => $pro_weight->weight_no . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_image' =>  $image);
                     array_push($new_array_product_weight, $data);
                 }
                 $product_weight_array = $new_array_product_weight;
