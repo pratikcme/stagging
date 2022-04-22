@@ -84,7 +84,7 @@ if($_SERVER['HTTP_HOST'] == '192.168.2.2' || $_SERVER['HTTP_HOST'] == 'localhost
 	$dbName = 'a1630btr_bigbucket';	
 }
 
-echo $dbName;die;
+// echo $dbName;die;
 
 
 $db['default'] = array(
