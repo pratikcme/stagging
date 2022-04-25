@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-// error_reporting(E_ALL);
-// ini_set("display_errors", '1');
+
 class Banners extends Admin_Controller{
 
 	function __construct(){
@@ -12,32 +11,33 @@ class Banners extends Admin_Controller{
 	public function index()
 	{
 		$data['page'] = 'banners/list';
-		$data['js'] = array('web_banners.js');
-		$data['init'] = array('WEBBANNERS.table()','WEBBANNERS.delete()');
-		// $data['getData'] = $this->this_model->getWebBannerImage();
-		// $data['section_two_data'] = $this->this_model->getWebBannerImage();
-		$this->load->view('web_banners/list',$data);
+		$data['js'] = array('banners.js');
+		$data['init'] = array('BANNERS.table()','BANNERS.delete()');
+		$data['banners'] = $this->this_model->getBanners();
+		// dd($data['banners']);
+		$this->load->view('banners/list',$data);
 	}
 
-	public function add()
-	{
-		$data['page'] = 'admin/web_banners/add';
-		$data['js'] = array('web_banners.js');
-		$data['init'] = array('WEBBANNERS.add()');
-		$data['FormAction'] = base_url().'admins/web_banners/add';
+	public function add(){
+		$data['page'] = 'banners/add';
+		$data['js'] = array('banners.js');
+		$data['init'] = array('BANNERS.add()');
+		$data['FormAction'] = base_url().'banners/add';
 			if($this->input->post()){
-				// echo "string"; die;
 				$validation = $this->serRules();
 				if($validation){
 					$result = $this->this_model->addRecord($this->input->post());
 					 if($result){
 					 	$this->utility->setFlashMessage($result[0],$result[1]);
-						redirect(base_url().'admins/about/about_section_two');
+						redirect(base_url().'banners');
 					 }
 				}
 
 			}
-		$this->load->view('web_banners/add',$data);
+		// $data['category'] = $this->this_model->CategoryList();
+		// $this->load->model('frontend/vendor_model','v_model');
+		$data['branchList'] = $this->this_model->getBranch();
+		$this->load->view('banners/add',$data);
 	}
 
 	function serRules(){
@@ -59,6 +59,13 @@ class Banners extends Admin_Controller{
 					'errors' => [ 
 							'required' => "please enter sub title"
 						]
+				),array(
+					'field'=> 'type',
+					'label'=> 'type',
+					'rules' => 'trim|required',
+					'errors' => [ 
+							'required' => "please select type"
+						]
 				),
             	
 		);
@@ -76,10 +83,11 @@ class Banners extends Admin_Controller{
 	 public function edit($id=''){
 
         $id = $this->utility->safe_b64decode($id);
-        $data['page'] = 'admin/web_banners/edit';
-        $data['js'] = array('web_banners.js');
-        $data['init'] = array('WEBBANNERS.edit()');
-        $data['getAboutSectionTwo'] = $this->this_model->selectSectionTwoEditRecord($id);
+        $data['page'] = 'banners/edit';
+        $data['js'] = array('banners.js');
+        $data['init'] = array('BANNERS.edit()');
+
+        // $data['getAboutSectionTwo'] = $this->this_model->selectSectionTwoEditRecord($id);
         
             if($this->input->post()){
                 $result = $this->this_model->updateAboutRecord($this->input->post());
@@ -88,7 +96,8 @@ class Banners extends Admin_Controller{
                         redirect(base_url().'admins/web_banners');
                     }
             }
-        $this->load->view('web_banners/edit',$data);
+        $data['branchList'] = $this->this_model->getBranch();
+        $this->load->view('banners/edit',$data);
     }
 
 	public function removeRecord(){
@@ -129,6 +138,38 @@ class Banners extends Admin_Controller{
   //       echo json_encode(['status'=>1]);
   //       exit;
   //   }
+
+	public function get_category_list(){
+		if($this->input->post()){
+			$category = $this->this_model->get_category_list($this->input->post());
+			$product = $this->this_model->get_product_list($this->input->post());
+			$category_list = '<option value="">Select category</option>';
+			$product_list = '<option value="">Select product</option>';
+			
+			foreach ($category as $key => $value) {
+				$category_list .='<option value='.$value->id.'>'.$value->name.'</option>';
+			}
+
+			foreach ($product as $key => $value) {
+				$product_list .='<option value='.$value->id.'>'.$value->name.'</option>';
+			}
+
+			echo json_encode(['category_list'=>$category_list,'product_list'=>$product_list]);
+		}
+	}
+
+	public function getproductVarient(){
+		if($this->input->post()){
+			$varient = $this->this_model->getproductVarient($this->input->post());
+			$varient_list = '<option value="">Select product varient</option>';
+			foreach ($varient as $key => $value) {
+				$varient_list .='<option value='.$value->id.'>'.$value->weight_no.' '.$value->name.'</option>';
+			}
+
+			echo json_encode(['varient_list'=>$varient_list]);
+		}
+	}
+	
 
 
 }

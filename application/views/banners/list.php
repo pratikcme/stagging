@@ -26,7 +26,7 @@
                         <div class="adv-table">
                             <div id="example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                 <div class="panel-body padding-zero" style="float: right">
-                                    <a href="<?=base_url().'admins/web_banners/add'?>" class="btn btn-primary">Add </a>
+                                    <a href="<?=base_url().'banners/add'?>" class="btn btn-primary">Add </a>
                                     <a href="#" id="delete_user" class="btn btn-danger">Delete </a>
                                 </div>
                                 <table class="display table table-bordered table-striped dataTable" id=""
@@ -42,7 +42,12 @@
                                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
                                             rowspan="1" colspan="1"
                                             aria-label="Platform(s): activate to sort column ascending"
-                                            style="width: 200px;">Image
+                                            style="width: 200px;">Web Banner
+                                        </th>
+                                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
+                                            rowspan="1" colspan="1"
+                                            aria-label="Platform(s): activate to sort column ascending"
+                                            style="width: 200px;">App Banner
                                         </th>
                                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
                                             rowspan="1" colspan="1"
@@ -63,18 +68,21 @@
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
-                                      <?php foreach ($section_two_data as $key => $value) { ?>
+                                    <tbody role="alert" aria-live="polite" aria-relevant="all" >
+                                      <?php foreach ($banners as $key => $value) { ?>
                                           <tr>
                                             <td> 
                                               <?php if ($value->id) { ?>
                                                     <input type="checkbox" name="delete[]" id='iId' value="<?php echo $value->id; ?>" class="checkbox_user">
                                                 <?php } ?>
                                             </td>
-                                            <td><div id="" class="" style="width: 150px;height: 150px; margin-top: 20px; "><img id="ContentImage" src="<?=base_url().'public/images/'.$this->folder.'web_banners/'.$value->image ?>" height="100%" width="100%"></div></td>
+                                            <td><div id="" class="" style="width: 150px;height: 150px; margin-top: 20px; "><img id="ContentImage" src="<?=base_url().'public/images/'.$this->folder.'web_banners/'.$value->web_banner_image ?>" height="100%" width="100%"></div></td>
+
+                                            <td><div id="" class="" style="width: 150px;height: 150px; margin-top: 20px; "><img id="ContentImage" src="<?=base_url().'public/images/'.$this->folder.'banner_promotion/'.$value->app_banner_image ?>" height="100%" width="100%"></div></td>
+
                                             <td><?=$value->main_title?></td>
                                             <td><?=$value->sub_title?></td>
-                                            <td> <a href="<?php echo base_url() . 'admins/web_banners/edit/'.$this->utility->safe_b64encode($value->id); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                            <td> <a href="<?php echo base_url() . 'banners/edit/'.$this->utility->safe_b64encode($value->id); ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                                 <a href="javascript:;" onclick="single_delete(<?php echo $value->id; ?>)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a></td>
                                           </tr>
                                      <?php } ?>

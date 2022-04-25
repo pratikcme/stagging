@@ -17,48 +17,53 @@ Class Banners_model extends My_model{
         return $config;
     }
 
-    public function getWebBannerImage(){
-        $data['table'] = 'web_banners';
+    public function getBanners(){
+        $data['table'] = TABLE_BANNERS;
         $data['select'] = ['*'];
-        $data['where'] = ['status !='=>'9','vendor_id'=>$this->vendor_id];
+        $data['where'] = ['vendor_id'=>$this->vendor_id];
         return $this->selectRecords($data);        
     }
 
 
   ## Banner Promotion Add Update ##
     public function addRecord($postData){
-        // print_r($_FILES);die;
-        // $vendor_id = $postData['vendor_id'];
-        if($_FILES['image']['name']!= ''){
-
+        if($_FILES['web_banner_image']['error'] == 0){
+            ## Image Upload ##
             $this->load->library('upload');
-            if($_FILES['image']['name'] != ''){
-
-                ## Image Upload ##
-               $uploadpath = 'public/images/'.$this->folder.'web_banners/'.$image;
-               $uploadResult = upload_single_image($_FILES,'add',$uploadpath);
-               $image = $uploadResult['data']['file_name'];
-               $data = array(
-                'vendor_id'=>$this->vendor_id,
-                'image' => $image,
-                'main_title'=>$postData['main_title'],
-                'sub_title'=>$postData['sub_title'],
-                'status' => '1',
-                'dt_created' => DATE_TIME,
-                'dt_updated' => DATE_TIME
-            );
-               $this->db->insert('web_banners',$data);
-
-               $this->session->set_flashdata('msg', 'Banner have been added successfully.');
-               redirect(base_url().'admins/web_banners');
-           }else{
-            $this->session->set_flashdata('msg_error', 'Images could not be uploaded.');
-            redirect(base_url().'admins/web_banners');
+            $uploadpath = 'public/images/'.$this->folder.'web_banners/';
+            $uploadResult = upload_single_image_Byname($_FILES,'web_banner_image',$uploadpath);
+            $web_banner_image = $uploadResult['data']['file_name'];
+        }else{
+            $web_banner_image = $postData['hidden_web_banner_image'];
         }
-    }else{
-        $this->session->set_flashdata('msg_error', 'Images could not be uploaded.');
-        redirect(base_url().'admins/web_banners');
-    }
+
+        if($_FILES['app_banner_image']['error'] == 0){
+            ## Image Upload ##
+            $this->load->library('upload');
+            $uploadpath = 'public/images/'.$this->folder.'banner_promotion/';
+            $uploadResult = upload_single_image_Byname($_FILES,'app_banner_image',$uploadpath);
+            $app_banner_image = $uploadResult['data']['file_name'];
+        }else{
+            $app_banner_image = $postData['hidden_app_banner_image'];
+        }
+
+        $data = array(
+            'vendor_id'=>$this->vendor_id,
+            'branch_id' => $postData['branch'],
+            'category_id' => (isset($postData['category_id']) ? $postData['category_id'] : ''),
+            'product_id' => (isset($postData['product_id']) ? $postData['product_id'] : ''),
+            'product_varient_id' => (isset($postData['product_varient_id']) ? $postData['product_varient_id'] : ''),
+            'main_title'=>$postData['main_title'],
+            'sub_title'=>$postData['sub_title'],
+            'type' => $postData['type'],
+            'app_banner_image' => $app_banner_image,
+            'web_banner_image' => $web_banner_image,
+            'dt_created' => DATE_TIME,
+            'dt_updated' => DATE_TIME
+        );
+        $this->db->insert('banners',$data);
+        $this->session->set_flashdata('msg', 'Banner have been added successfully.');
+        redirect(base_url().'banners');
 }
 
 
@@ -158,7 +163,37 @@ Class Banners_model extends My_model{
         
     }
  
+    public function getBranch(){
+        $data['table'] = TABLE_BRANCH;
+        $data['select'] = ['*'];
+        $data['where'] = ['domain_name'=>base_url(),'status'=>'1'];
+        return  $this->selectRecords($data);
+    }
 
+    public function get_category_list($postData){
+        $branch_id = $postData['branch_id'];
+        $data['table'] = TABLE_CATEGORY;
+        $data['select'] = ['*'];
+        $data['where'] = ['branch_id'=>$branch_id];
+        return $this->selectRecords($data);
+    }
+
+    public function get_product_list($postData){
+        $branch_id = $postData['branch_id'];
+        $data['table'] = TABLE_PRODUCT;
+        $data['select'] = ['*'];
+        $data['where'] = ['branch_id'=>$branch_id];
+        return $this->selectRecords($data);
+    }
+
+    public function getproductVarient($postData){
+        $product_id = $postData['product_id'];
+        $data['table'] = TABLE_PRODUCT_WEIGHT .' as pw';
+        $data['join'] = ['package as pkg'=>['pw.package=pkg.id','LEFT'],TABLE_WEIGHT .' as w' =>['pw.weight_id=w.id','LEFT']];
+        $data['select'] = ['pw.id','pw.weight_no','w.name','pkg.package'];
+        $data['where'] = ['pw.product_id'=>$product_id];
+        return $this->selectFromJoin($data);
+    }
    
 }
 
