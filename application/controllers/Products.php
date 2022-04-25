@@ -234,7 +234,8 @@ class Products extends User_Controller {
 		}
 
 		$quantity = 1;
-		if($this->session->userdata('user_id') == ''){
+		if($this->session->userdata('user_id') == '' && isset($_SESSION['My_cart'])){
+
 	 		foreach ($_SESSION['My_cart'] as $key => $value) {
 	 				if($value['product_weight_id'] == $var_id){
 	 					$quantity = $value['quantity'];
