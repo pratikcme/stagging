@@ -1704,14 +1704,14 @@ class Api_model extends My_model {
             foreach ($materials as $duplicate => $value) {
                 if ($value > 1) {
                     unset($data);
-                    $data['select'] = ['count(quantity) AS total', 'id', 'sum(calculation_price) AS calculation_price', 'count(discount_price) AS discount_price'];
+                    $data['select'] = ['count(quantity) AS total', 'id'];
                     $data['where'] = ['user_id' => $user_id, 'product_weight_id' => $duplicate];
                     $data['table'] = 'my_cart';
                     $gettotal = $this->selectRecords($data);
                     $gettotalqu = $gettotal[0]->total;
                     $updateid = $gettotal[0]->id;
                     unset($data);
-                    $data['update'] = ['quantity' => $gettotalqu, 'calculation_price' => $gettotal[0]->calculation_price, ];
+                    $data['update'] = ['quantity' => $gettotalqu];
                     $data['where'] = ['id' => $updateid, 'user_id' => $user_id];
                     $data['table'] = 'my_cart';
                     $result = $this->updateRecords($data);
@@ -2258,7 +2258,7 @@ class Api_model extends My_model {
                 $userData['table'] = 'user';
                 $userData['where'] = ['id' => $postData['user_id']];
                 $userDetail = $this->selectRecords($userData);
-                $postdata = array('user_id' => $postData['user_id'], 'device_id' => $postData['device_id'],);
+                $postdata = array('user_id' => $postData['user_id'], 'device_id' => $postData['device_id'],'vendor_id'=>$postdata['vendor_id']);
                 $this->set_user_cart($postdata);
                 $total_count = $this->get_total($postdata);
                 $notification_status = $this->notification_status($postData['user_id']);
