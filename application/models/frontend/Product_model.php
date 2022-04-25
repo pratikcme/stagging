@@ -715,7 +715,7 @@ Class Product_model extends My_model{
 
      public function getPoroductVarientQuantity($pro_id='',$var_id){
     
-    	if($_SESSION['user_id'] && $_SESSION['user_id'] != ''){
+    	if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != ''){
     		$data['where']['user_id'] = $this->session->userdata('user_id');
     	}
 
@@ -830,7 +830,7 @@ Class Product_model extends My_model{
     	// print_r($postdata);
     	// exit;
     	$productId = $postdata['product_id'];
-    	$weight_id = $postdata['weight_id'];
+    	
     	$product_vairiant_id = $postdata['product_weight_id'];
     	
 

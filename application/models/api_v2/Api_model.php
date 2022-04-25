@@ -1072,9 +1072,9 @@ class Api_model extends My_model {
                     $weight_name = $weight_result[0]['name'];
                     $data['select'] = ['quantity'];
                     if (isset($user_id) && isset($device_id)) {
-                        $data['where'] = ['product_id' => $product_id, 'product_weight_id' => $product_weight_id, 'user_id' => $user_id, 'device_id' => $device_id];
+                        $data['where'] = [ 'product_weight_id' => $product_weight_id, 'user_id' => $user_id, 'device_id' => $device_id];
                     } else if (isset($user_id) || isset($device_id)) {
-                        $data['where'] = ['product_id' => $product_id, 'product_weight_id' => $product_weight_id, ];
+                        $data['where'] = ['product_weight_id' => $product_weight_id, ];
                         $data['where_or'] = ['user_id' => $user_id, 'device_id' => $device_id];
                     }
                     $data['table'] = 'my_cart';
@@ -1086,9 +1086,17 @@ class Api_model extends My_model {
                     } else {
                         $my_cart_quantity = $my_cart_result[0]['quantity'];
                     }
-                    $product_image_result[0]->image = str_replace(' ', '%20',$product_image_result[0]->image);
+                    
 
-                    $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => $pro_weight->weight_no . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image,);
+                     if (count($product_image_result) <= 0) {
+                                $image = '';
+                            } else {
+                                $image = base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image;
+                            }
+                    $image = str_replace(' ', '%20', $image);
+
+
+                    $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => $pro_weight->weight_no . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_image' =>  $image);
                     array_push($new_array_product_weight, $data);
                 }
                 $product_weight_array = $new_array_product_weight;
@@ -1098,16 +1106,15 @@ class Api_model extends My_model {
                     array_push($new_array_product_image, $data);
                 }
                 $product_image_array = $new_array_product_image;
-                $proimg = $product_image_result[0]->image;
-                $prothimg = $product_image_result[0]->image;
+               
               
                 $set_data = array();
                 $set_data['id'] = $row->id;
                 $set_data['category_id'] = $row->category_id;
                 $set_data['brand_id'] = $row->brand_id;
                 $set_data['name'] = $row->name;
-                $set_data['image'] = base_url() . 'public/images/'.$this->folder.'product_image/' . $proimg;
-                $set_data['image_thumb'] = base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $prothimg;
+                $set_data['image'] =  $image;
+                $set_data['image_thumb'] =  $image;
                 $set_data['about'] = $row->about;
                 $set_data['content'] = $row->content;
                 $set_data['status'] = $row->status;
@@ -1697,14 +1704,14 @@ class Api_model extends My_model {
             foreach ($materials as $duplicate => $value) {
                 if ($value > 1) {
                     unset($data);
-                    $data['select'] = ['count(quantity) AS total', 'id', 'sum(calculation_price) AS calculation_price', 'count(discount_price) AS discount_price'];
+                    $data['select'] = ['count(quantity) AS total', 'id'];
                     $data['where'] = ['user_id' => $user_id, 'product_weight_id' => $duplicate];
                     $data['table'] = 'my_cart';
                     $gettotal = $this->selectRecords($data);
                     $gettotalqu = $gettotal[0]->total;
                     $updateid = $gettotal[0]->id;
                     unset($data);
-                    $data['update'] = ['quantity' => $gettotalqu, 'calculation_price' => $gettotal[0]->calculation_price, ];
+                    $data['update'] = ['quantity' => $gettotalqu];
                     $data['where'] = ['id' => $updateid, 'user_id' => $user_id];
                     $data['table'] = 'my_cart';
                     $result = $this->updateRecords($data);
@@ -2251,7 +2258,7 @@ class Api_model extends My_model {
                 $userData['table'] = 'user';
                 $userData['where'] = ['id' => $postData['user_id']];
                 $userDetail = $this->selectRecords($userData);
-                $postdata = array('user_id' => $postData['user_id'], 'device_id' => $postData['device_id'],);
+                $postdata = array('user_id' => $postData['user_id'], 'device_id' => $postData['device_id'],'vendor_id'=>$postData['vendor_id']);
                 $this->set_user_cart($postdata);
                 $total_count = $this->get_total($postdata);
                 $notification_status = $this->notification_status($postData['user_id']);
