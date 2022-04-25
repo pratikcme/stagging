@@ -2003,9 +2003,10 @@ class Api_model extends My_model {
                     }
 
                     /*Remove From My Cart*/
+                    $this->db->query('UNLOCK TABLES;');
+                    
                     $this->deleteUserCart($user_id);
                   
-                    $this->db->query('UNLOCK TABLES;');
                     $response = array();
                     $gettotal = $this->get_total($postdata);
                     $response["cart_count"] = (int)$gettotal[0]->cart_items;
