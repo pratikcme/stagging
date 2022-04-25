@@ -476,10 +476,8 @@ class Api extends Apiuser_Controller {
 
                 $p_method = $payment_method->result();
                 
-
-                if ($p_method[0]->IsTestOrLive == '0') {
-                    $p_method[0]->publish_key = $p_method[0]->test_publish_key;
-                }
+                
+                
                 $vendorData = [];
                 $vendorData['id'] = ($vendor_result[0]->id == null) ? "" : $vendor_result[0]->id ;
                 $vendorData['name'] = ($vendor_result[0]->name == null) ? "" : $vendor_result[0]->name ;
@@ -489,12 +487,23 @@ class Api extends Apiuser_Controller {
                 $vendorData['isOnlinePayment'] = (string)$vendor_result[0]->isOnlinePayment;
                 $vendorData['isCOD'] = (string)$vendor_result[0]->isCOD;
                 $vendorData['store_time'] =  ($vendor_result[0]->selfPickupOpenClosingTiming == null) ? "" : $vendor_result[0]->selfPickupOpenClosingTiming;
+                $publish_key ='';
+                $paymentMethod ='';
+                if(!empty($p_method)){
+                     require_once 'vendor/autoload.php';
+                    $cryptor = new \RNCryptor\RNCryptor\Encryptor;
+                    $password = "BGV9UAw9wp5tT7I9wRcw%Xv!a@8aApqW";
+                    if ($p_method[0]->IsTestOrLive == '0') {
+                        $p_method[0]->publish_key = $p_method[0]->test_publish_key;
+                    }
+                   $publish_key =  ($p_method[0]->publish_key == null) ? '' : $cryptor->encrypt($p_method[0]->publish_key, $password);
+                   $paymentMethod = ($p_method[0]->publish_key == null) ? '' : $p_method[0]->payment_opt;
 
-                require_once 'vendor/autoload.php';
-                $cryptor = new \RNCryptor\RNCryptor\Encryptor;
-                $password = "BGV9UAw9wp5tT7I9wRcw%Xv!a@8aApqW";
-                $vendorData['publish_key'] = ($p_method[0]->publish_key == null) ? '' : $cryptor->encrypt($p_method[0]->publish_key, $password);
-                $vendorData['paymentMethod'] = ($p_method[0]->publish_key == null) ? '' : $p_method[0]->payment_opt;
+                }
+
+               
+                $vendorData['publish_key'] = $publish_key;
+                $vendorData['paymentMethod'] = $paymentMethod;
 
             if (!empty($my_cart_result)) {
 
