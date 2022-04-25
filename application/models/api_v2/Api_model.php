@@ -2258,7 +2258,7 @@ class Api_model extends My_model {
                 $userData['table'] = 'user';
                 $userData['where'] = ['id' => $postData['user_id']];
                 $userDetail = $this->selectRecords($userData);
-                $postdata = array('user_id' => $postData['user_id'], 'device_id' => $postData['device_id'],'vendor_id'=>$postdata['vendor_id']);
+                $postdata = array('user_id' => $postData['user_id'], 'device_id' => $postData['device_id'],'vendor_id'=>$postData['vendor_id']);
                 $this->set_user_cart($postdata);
                 $total_count = $this->get_total($postdata);
                 $notification_status = $this->notification_status($postData['user_id']);
