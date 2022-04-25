@@ -1106,16 +1106,15 @@ class Api_model extends My_model {
                     array_push($new_array_product_image, $data);
                 }
                 $product_image_array = $new_array_product_image;
-                $proimg = $product_image_result[0]->image;
-                $prothimg = $product_image_result[0]->image;
+               
               
                 $set_data = array();
                 $set_data['id'] = $row->id;
                 $set_data['category_id'] = $row->category_id;
                 $set_data['brand_id'] = $row->brand_id;
                 $set_data['name'] = $row->name;
-                $set_data['image'] = base_url() . 'public/images/'.$this->folder.'product_image/' . $proimg;
-                $set_data['image_thumb'] = base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $prothimg;
+                $set_data['image'] =  $image;
+                $set_data['image_thumb'] =  $image;
                 $set_data['about'] = $row->about;
                 $set_data['content'] = $row->content;
                 $set_data['status'] = $row->status;
