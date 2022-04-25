@@ -547,9 +547,16 @@ class Api extends Apiuser_Controller {
                     $data['discount_per'] = $product_weight_result['discount_per'];
                     $data['product_actual_price'] = $product_actual_price;
                     $data['product_discount_price'] = $product_discount_price;
-                    $product_image_result[0]->image = str_replace(' ', '%20', $product_image_result[0]->image);
-                    $data['product_image'] = base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image;
-                    $data['product_image_thumb'] = base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $product_image_result[0]->image;
+                    if (count($product_image_result) <= 0) {
+                        $image = '';
+                    } else {
+                        $image = base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image;
+                    }
+                    $image = str_replace(' ', '%20', $image);
+
+                   
+                    $data['product_image'] = $image;
+                    $data['product_image_thumb'] = $image;
                     $data['product_id'] = $row->product_id;
                     $data['weight_id'] = $row->weight_id;
                     $data['quantity'] = $row->quantity;
