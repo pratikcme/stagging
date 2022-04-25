@@ -240,6 +240,7 @@ class Add_to_card extends User_Controller {
 					}
 					else if($qun > $result[0]->quantity){
 						$errormsg = "Item Out Of Stock"; 
+						$qun = $result[0]->max_order_qty;
 					}else{ 
 
 						$price = $value['discount_price'] * $qun;
@@ -253,7 +254,7 @@ class Add_to_card extends User_Controller {
 			}
 		}else{
 			$cartTable = $this->this_model->CheckMycard($this->input->post());
-			// print_r($this->input->post());die;
+	
 			$old_qun = $cartTable[0]->quantity;
 			if($this->input->post('action') == 'decrease'){
 				$qun = $cartTable[0]->quantity - $quantity;
