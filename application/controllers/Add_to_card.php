@@ -276,8 +276,8 @@ class Add_to_card extends User_Controller {
 				$my_cart = $this->this_model->getMyUpdatedCart($this->input->post());
 				$price = $result[0]->discount_price * $qun;
 				$new_total = $result[0]->discount_price * $my_cart[0]->quantity;
-			echo	$new_quan = $my_cart[0]->quantity;
-die;
+				$new_quan = $my_cart[0]->quantity;
+				print_r($my_cart);die;
 			}else{ 
 
 				if($this->input->post('action') == 'decrease'){
