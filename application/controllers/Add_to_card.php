@@ -241,6 +241,9 @@ class Add_to_card extends User_Controller {
 					else if($qun > $result[0]->quantity){
 						$errormsg = "Item Out Of Stock"; 
 						$qun = $result[0]->max_order_qty;
+						$new_quan = $_SESSION["My_cart"][$key]['quantity'];
+						$new_total = $_SESSION["My_cart"][$key]['total'];
+						
 					}else{ 
 
 						$price = $value['discount_price'] * $qun;
