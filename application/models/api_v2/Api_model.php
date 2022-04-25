@@ -1491,7 +1491,7 @@ class Api_model extends My_model {
        return true;
     }
     function deleteUserCart($user_id) {
-		$data['where'] = ['mc.user_id'=>$user_id];
+		$data['where'] = ['user_id'=>$user_id];
         $data['table'] = 'my_cart as mc';
         $this->deleteRecords($data);
         return true;
