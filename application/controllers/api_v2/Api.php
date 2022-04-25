@@ -1723,10 +1723,10 @@ class Api extends Apiuser_Controller {
                         $weight_result = $weight_query->row_array();
                         $weight_name = $weight_result['name'];
                         if (isset($_POST['user_id'])) {
-                            $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_variant_id = '$variant_id' AND user_id = '$user_id'");
+                            $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_weight_id = '$variant_id' AND user_id = '$user_id'");
                             $my_cart_result = $my_cart_query->row_array();
                         } elseif (isset($_POST['device_id']) && (!isset($_POST['user_id']) || $_POST['user_id'] == '')) {
-                            $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_variant_id = '$variant_id' AND  device_id = '$device_id'");
+                            $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_weight_id = '$variant_id' AND  device_id = '$device_id'");
                             $my_cart_result = $my_cart_query->row_array();
                         } else {
                             $my_cart_result = array();
