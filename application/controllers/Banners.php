@@ -86,16 +86,23 @@ class Banners extends Admin_Controller{
         $data['page'] = 'banners/edit';
         $data['js'] = array('banners.js');
         $data['init'] = array('BANNERS.edit()');
+        $data['FormAction'] = base_url().'banners/edit';
+        $data['editRecord'] = $this->this_model->getBanners($id);
 
-        // $data['getAboutSectionTwo'] = $this->this_model->selectSectionTwoEditRecord($id);
-        
             if($this->input->post()){
-                $result = $this->this_model->updateAboutRecord($this->input->post());
+                $result = $this->this_model->updateRecord($this->input->post());
                     if($result){
                         $this->utility->setFlashMessage($result[0],$result[1]);
-                        redirect(base_url().'admins/web_banners');
+                        redirect(base_url().'banners');
                     }
             }
+        $branch_id = $data['editRecord'][0]->branch_id;
+        $data['category']	= $this->this_model->get_category_list([],$branch_id);
+        $data['product'] = $this->this_model->get_product_list([],$branch_id);
+        if($data['editRecord'][0]->product_id != ''){
+        	$product_id =  $data['editRecord'][0]->product_id;
+        	$data['product_varient'] = $this->this_model->getproductVarient([],$product_id);
+        } 
         $data['branchList'] = $this->this_model->getBranch();
         $this->load->view('banners/edit',$data);
     }
@@ -103,13 +110,11 @@ class Banners extends Admin_Controller{
 	public function removeRecord(){
 
 	 if($this->input->post()){
-		   // $id = $this->utility->safe_b64decode($this->input->post('id'));
-		   $response = $this->this_model->removeRecord($this->input->post('id'));
-
-		 }
+		 $response = $this->this_model->removeRecord($this->input->post('id'));
 		 if($response){
 		 	echo json_encode(['status'=>1]);
 		 }
+		}
 
 	}
 
@@ -119,25 +124,7 @@ class Banners extends Admin_Controller{
 		
 	}	
 
-	 // public function multipleDelete()
-  //   {
-  //       echo $ids = $_GET['ids'];
-  //       $date = DATE_TIME;
-  //       // $data = array('status' => '9', 'dt_updated' => strtotime(date('Y-m-d H:i:s')));
 
-  //       $this->db->query("UPDATE web_banners SET status = '9', dt_updated = '$date' WHERE id IN ($ids)");
-
-  //       // $this->db->WHERE_IN('id', $ids);
-  //       // $this->db->UPDATE('banner_promotion', $data);
-
-  //       // echo $this->db->last_query(); die;
-        
-  //       ob_get_clean();
-  //       header('Access-Control-Allow-Origin: *');
-  //       header('Content-Type: application/json');
-  //       echo json_encode(['status'=>1]);
-  //       exit;
-  //   }
 
 	public function get_category_list(){
 		if($this->input->post()){

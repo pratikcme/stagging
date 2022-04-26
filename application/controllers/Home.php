@@ -85,7 +85,7 @@ class Home extends User_Controller {
 		$data['top_sell'] = $top_selling_core;
 		
 		@$data['banner'] = $this->this_model->getWebBannerImage();
-		
+		// dd($data['banner']);die;
 
 		$item_weight_id = [];
 		if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != '' ){

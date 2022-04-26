@@ -223,16 +223,16 @@
     </ul>
 </li>
 <li>
-    <a class="<?php if ($this->uri->segment(1) == 'banner_promotion' || $this->uri->segment(2) == 'web_banners') { ?> active <?php } ?>" href="#">
+    <a class="<?php if ($this->uri->segment(1) == 'banners') { ?> active <?php } ?>" href="#">
         <i class="fa fa-picture-o"></i>
         <span>Banner</span>
-        <i class="fas fa-chevron-right <?=($this->uri->segment(1) == 'banner_promotion' || $this->uri->segment(2) == 'web_banners') ? 'rotate' : '' ?>"></i>
+        <i class="fas fa-chevron-right <?=($this->uri->segment(1) == 'banners') ? 'rotate' : '' ?>"></i>
     </a>
     <ul>
         <li>
-            <a class="<?php if ($this->uri->segment(2) == 'banner_promotion_list') { ?> active <?php } ?>" href="<?php echo base_url() . 'banner_promotion/banner_promotion_list/'; ?>">
+            <a class="<?php if ($this->uri->segment(2) == 'banners') { ?> active <?php } ?>" href="<?php echo base_url() . 'banners'; ?>">
                 <i class="fa fa-picture-o"></i>
-                <span>Banner Promotion</span>
+                <span>Web & App Banner</span>
             </a>
         </li>
     </ul>

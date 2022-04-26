@@ -4,6 +4,71 @@ var BANNERS = function(){
                 $('.alert').fadeOut(5000);
             });
 
+         $(document).on('change','#type',function(){
+        var type = $(this).val();
+        if(type == 1 || type == ''){
+            $('#category').parent().css('display','none');
+            $('#product').parent().css('display','none');
+            $('#product_varient').parent().css('display','none');
+        }
+
+        if(type == 2){
+            $('#category').parent().css('display','block');
+            $('#product').parent().css('display','none');
+            $('#product_varient').parent().css('display','none');
+        }
+
+        if(type == 3){
+            $('#category').parent().css('display','none');
+            $('#product').parent().css('display','block');
+            $('#product_varient').parent().css('display','block');
+        }
+
+    });
+
+     $(document).on('change','#branch',function(){
+        var branch_id = $(this).val();
+        if(branch_id != ''){
+            $.ajax({
+                url: url+'banners/get_category_list',
+                type:'post',
+                dataType:"json",
+                data:{branch_id:branch_id},
+                success:function(output){
+                    console.log(output);
+                    $('#category').html(output.category_list);
+                    $('#product').html(output.product_list);
+                    $('#type').removeAttr('disabled');
+                    $('#product_varient').html('');
+                    $('#product_varient').html(' <option value="">Select product varient</option>');
+
+                }
+            })
+        }else{
+            $('#category').parent().css('display','none');
+            $('#product').parent().css('display','none');
+            $('#product_varient').parent().css('display','none'); 
+            $('#type').attr("disabled", true);
+            $('#type').val("");
+
+        }
+     });
+
+     $(document).on('change','#product',function(){
+        var product_id = $(this).val();
+            $.ajax({
+                url: url+'banners/getproductVarient',
+                type:'post',
+                dataType:"json",
+                data:{product_id:product_id},
+                success:function(output){
+                    console.log(output);
+                    $('#product_varient').html(output.varient_list);
+                }
+            })
+     });
+
+
 
 	var HandleBannerImage = function () {
     
@@ -112,67 +177,6 @@ var BANNERS = function(){
 
 var HandleSectionTwo = function () {	
 
-    $(document).on('change','#type',function(){
-        var type = $(this).val();
-        if(type == 1 || type == ''){
-            $('#category').parent().css('display','none');
-            $('#product').parent().css('display','none');
-            $('#product_varient').parent().css('display','none');
-        }
-
-        if(type == 2){
-            $('#category').parent().css('display','block');
-            $('#product').parent().css('display','none');
-            $('#product_varient').parent().css('display','none');
-        }
-
-        if(type == 3){
-            $('#category').parent().css('display','none');
-            $('#product').parent().css('display','block');
-            $('#product_varient').parent().css('display','block');
-        }
-
-    });
-
-     $(document).on('change','#branch',function(){
-        var branch_id = $(this).val();
-        if(branch_id != ''){
-            $.ajax({
-                url: url+'banners/get_category_list',
-                type:'post',
-                dataType:"json",
-                data:{branch_id:branch_id},
-                success:function(output){
-                    console.log(output);
-                    $('#category').html(output.category_list);
-                    $('#product').html(output.product_list);
-                    $('#type').removeAttr('disabled');
-                }
-            })
-        }else{
-            $('#category').parent().css('display','none');
-            $('#product').parent().css('display','none');
-            $('#product_varient').parent().css('display','none'); 
-            $('#type').attr("disabled", true);
-            $('#type').val("");
-
-        }
-     });
-
-     $(document).on('change','#product',function(){
-        var product_id = $(this).val();
-            $.ajax({
-                url: url+'banners/getproductVarient',
-                type:'post',
-                dataType:"json",
-                data:{product_id:product_id},
-                success:function(output){
-                    console.log(output);
-                    $('#product_varient').html(output.varient_list);
-                }
-            })
-     });
-
 
         $('#frmAddEdit').validate({
             rules: {
@@ -243,26 +247,42 @@ var HandleSectionTwo = function () {
          $('#frmAddEdit').validate({
              ignore: [],
               debug: false,
-             // ignore: " :hidden",
+             ignore: " :hidden",
             rules: {
-                    image : {
+                web_banner_image : {
                     required: {depends: function (e) {
-                            return ($('#hidden_image').val() === '');
+                            return ($('#hidden_web_banner_image').val() === '');
                         },
                     },
                             accept:"jpg,png,jpeg,gif"
                 },
-
-                name: {required: true},
-                designation: {required: true},
-                content: { required: true },
+                app_banner_image : {
+                    required: {depends: function (e) {
+                            return ($('#hidden_app_banner_image').val() === '');
+                        },
+                    },
+                            accept:"jpg,png,jpeg,gif"
+                },
+                main_title: { required: true },
+                sub_title:  { required: true },
+                branch:     { required: true },
+                type:       { required: true },
+                category_id: { required: true },
+                product_id: { required: true },
+                product_varient_id: { required: true },
             },
             messages: {
-                image : {required: 'please select image',
+                main_title : {required: "Please enter main title"},
+                sub_title : {required: "Please enter sub title"},
+                branch : {required: "Please select branch"},
+                type : {required: "Please select type"},
+                category_id: { required: 'Please select category'},
+                product_id: { required: 'Please select product'},
+                product_varient_id: { required: 'Please select product varient'},
+                web_banner_image : {required: 'please select web image',
                 accept:"Only image type jpg/png/jpeg/gif is allowed"},
-                name: { required: "Please enter name"},
-                designation : {required: "Please enter designation"},
-                content : {required: "Please enter content"},
+                app_banner_image : {required: 'please select app image',
+                accept:"Only image type jpg/png/jpeg/gif is allowed"},
             }, 
             submitHandler: function (form) {
 

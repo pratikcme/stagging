@@ -25,9 +25,10 @@ class Home_model extends My_model{
  function getWebBannerImage(){
  
 		$branch_id = $this->session->userdata('branch_id');
-        $data['table'] = 'web_banners';
+        // $data['table'] = 'web_banners';
+        $data['table'] = 'banners';
         $data['select'] = ['*'];
-        $data['where'] = ['status !='=>'9','branch_id'=>$branch_id];
+        $data['where'] = ['branch_id'=>$branch_id];
         return $this->selectRecords($data);
         
     }

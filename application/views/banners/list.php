@@ -53,13 +53,13 @@
                                             rowspan="1" colspan="1"
                                             aria-label="Platform(s): activate to sort column ascending"
                                             style="width: 200px;">
-                                            Main Title
+                                            Main Title Web
                                         </th>
                                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
                                             rowspan="1" colspan="1"
                                             aria-label="Platform(s): activate to sort column ascending"
                                             style="width: 200px;">
-                                            Sub Title
+                                            Sub Title Web
                                         </th>                                       
                                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
                                             rowspan="1" colspan="1"
@@ -106,7 +106,7 @@
             if (confirmed == true) {
                 var id = value;
                 $.ajax({
-                    url: '<?php echo base_url().'admins/web_banners/removeRecord'; ?>' ,
+                    url: '<?php echo base_url().'banners/removeRecord'; ?>' ,
                     type:'post',
                     dataType:'json',
                     data: {
@@ -149,7 +149,7 @@
                     ids.push($(this).val());
                 });
                 $.ajax({
-                    url: '<?php echo base_url().'admins/web_banners/multipleDelete'; ?>',
+                    url: '<?php echo base_url().'banners/multipleDelete'; ?>',
                     dataType:'Json',
                     data: { ids: ids},
                     success: function(data) {

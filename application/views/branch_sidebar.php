@@ -198,7 +198,7 @@
         <span>Payment Method</span>
     </a>
 </li>
-<li>
+<li style="display:none">
     <a class="<?php if ($this->uri->segment(1) == 'banner_promotion' || $this->uri->segment(2) == 'web_banners') { ?> active <?php } ?>" href="#">
         <i class="fa fa-picture-o"></i>
         <span>Banner</span>

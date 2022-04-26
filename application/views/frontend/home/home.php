@@ -36,7 +36,7 @@
     <?php foreach ($banner as $key => $value){ ?>
 
     <div class="carousel-item <?=($key == 0) ? "active" : ""?> <?=$calss[$key]?>">
-    <img data-src="<?php echo base_url().'public/images/'.$this->folder.'web_banners/'.$value->image?>" class="banner-image lazy" alt="">
+    <img data-src="<?php echo base_url().'public/images/'.$this->folder.'web_banners/'.$value->web_banner_image?>" class="banner-image lazy" alt="">
       <div class="container h-100 ">
         <div class="row align-items-center h-100">
           <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -44,7 +44,13 @@
               <!-- <h2 class="animated fadeInLeft">Hurry! <span style="color:red;">Fresh offer </span> </h2> -->
               <h2 class="animated fadeInLeft"> <?=$value->main_title?> </h2>
               <p class="animated fadeInRight"><?=$value->sub_title?></p> 
-              <a class="btn animated fadeInUp" href="<?=base_url().'products'?>">Shop Now</a> </div>
+              <?php if($value->type == '1'){ ?>
+               <a class="btn animated fadeInUp" href="<?=base_url().'products'?>">Shop Now</a> </div>
+              <?php }else if($value->type == '2'){ ?>
+                  <a class="btn animated fadeInUp" href="<?=base_url().'products?cat_id='.$this->utility->safe_b64encode($value->category_id)?>">Shop Now</a> </div>
+              <?php }else{ ?>
+                  <a class="btn animated fadeInUp" href="<?=base_url().'products/productDetails/'.$this->utility->safe_b64encode($value->product_id).'/'.$this->utility->safe_b64encode($value->product_varient_id)?>">Shop Now</a> </div>
+              <?php } ?>
           </div>
         </div>
       </div>

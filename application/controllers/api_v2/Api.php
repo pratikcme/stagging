@@ -1032,30 +1032,30 @@ class Api extends Apiuser_Controller {
             $query1 = $this->db->query("SELECT * FROM branch WHERE vendor_id = '$vendor_id' AND status != '9' ");
             $branch = $query1->result();
             $branch_id = $branch[0]->id;
-            $query = $this->db->query("SELECT * FROM banner_promotion WHERE vendor_id = '$vendor_id' AND status != '9' ORDER BY image_order ");
-           
-        } else {
-            $query = $this->db->query("SELECT * FROM banner_promotion WHERE  status != '9' ORDER BY image_order ");
+            // $query = $this->db->query("SELECT * FROM banner_promotion WHERE vendor_id = '$vendor_id' AND status != '9' ORDER BY image_order ");  
+            $query = $this->db->query("SELECT * FROM banners WHERE vendor_id = '$vendor_id'");  
+            $result = $query->result();
         }
 
-        $result = $query->result();
         if ($query->num_rows() > 0) {
             $response['success'] = "1";
             $response['message'] = "Banner promotion list";
             $response["data"] = array();
             $counter = 0;
             foreach ($result as $row) {
-                $query = $this->db->query("SELECT branch_id FROM product WHERE  id = '".$row->product_id."'");
-                $getBranch = $query->result();
-                $row->branch_id = $getBranch[0]->branch_id;
+                // $query = $this->db->query("SELECT branch_id FROM product WHERE  id = '".$row->product_id."'");
+                // $getBranch = $query->result();
+                // $row->branch_id = $getBranch[0]->branch_id;
                 $data = array();
                 $data['id'] = $row->id;
-                $data['branch_id'] = $branch_id;
+                $data['branch_id'] = $row->branch_id;
+                $data['type'] = $row->type;
+                $data['category_id'] = $row->category_id;
                 $data['product_id'] = $row->product_id;
-                $data['image'] = base_url() . 'public/images/'.$this->folder.'banner_promotion/' . $row->image;
-                $data['image_thumb'] = base_url() . 'public/images/'.$this->folder.'banner_promotion_thumb/' . $row->image;
-                $data['status'] = $row->status;
-                $data['dt_added'] = $row->dt_added;
+                $data['product_varient_id'] = $row->product_varient_id;
+                $data['image'] = base_url() . 'public/images/'.$this->folder.'banner_promotion/' . $row->app_banner_image;
+                $data['image_thumb'] = base_url() . 'public/images/'.$this->folder.'banner_promotion_thumb/' . $row->app_banner_image;
+                $data['dt_added'] = $row->dt_created;
                 $data['dt_updated'] = $row->dt_updated;
                 array_push($response["data"], $data);
                 $counter++;

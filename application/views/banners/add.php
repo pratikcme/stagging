@@ -9,7 +9,7 @@
          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <!--breadcrumbs start -->
             <ul class="breadcrumb">
-               <li class="active"><a href=""><i class="fa fa-home"></i> <a href="<?php echo base_url().'admin/dashboard'; ?>">Home</a> / <a href="<?php echo base_url().'admins/about/about_section_two'; ?>">List</a> /Add </a></li>
+               <li class="active"><a href=""><i class="fa fa-home"></i> <a href="<?php echo base_url().'admin/dashboard'; ?>">Home</a> / <a href="<?php echo base_url().'banners'; ?>">List</a> /Add </a></li>
             </ul>
             <!--breadcrumbs end -->
          </div>
@@ -61,7 +61,7 @@
                                <div class="form-group" style="display:none">
                                   <label for="type">Product varient</label>
                                   <select class="form-control" name="product_varient_id" id="product_varient">
-                                      <option value="">Select product</option>
+                                      <option value="">Select product varient</option>
                                   </select>
                                </div>
                             </div>
