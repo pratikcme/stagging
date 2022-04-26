@@ -310,12 +310,13 @@ class Import extends Vendor_Controller
         $this->excel->getActiveSheet()->setCellValue('G1', 'Quantity');
         $this->excel->getActiveSheet()->setCellValue('H1', 'Product_price');
         $this->excel->getActiveSheet()->setCellValue('I1', 'Discount(%)');
+        $this->excel->getActiveSheet()->setCellValue('J1', 'Maximum order quantity');
 
 
-        $this->excel->getActiveSheet()->getStyle('A1:I1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $this->excel->getActiveSheet()->getStyle('A1:I1')->getFont()->setBold(true);
-        $this->excel->getActiveSheet()->getStyle('A1:I1')->getFont()->setSize(12);
-        $this->excel->getActiveSheet()->getStyle('A1:I1')->getFill()->getStartColor()->setARGB('#333');
+        $this->excel->getActiveSheet()->getStyle('A1:J1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $this->excel->getActiveSheet()->getStyle('A1:J1')->getFont()->setBold(true);
+        $this->excel->getActiveSheet()->getStyle('A1:J1')->getFont()->setSize(12);
+        $this->excel->getActiveSheet()->getStyle('A1:J1')->getFill()->getStartColor()->setARGB('#333');
 
         $default_border = array(
             'style' => PHPExcel_Style_Border::BORDER_THIN,
@@ -373,6 +374,7 @@ class Import extends Vendor_Controller
                 $objPHPExcel = $this->excel->getActiveSheet()->SetCellValue('G'.$k.'', ''.$v->quantity.'');
                 $objPHPExcel = $this->excel->getActiveSheet()->SetCellValue('H'.$k.'', ''.$v->price.'');
                 $objPHPExcel = $this->excel->getActiveSheet()->SetCellValue('I'.$k.'', ''.$v->discount_per.'');
+                $objPHPExcel = $this->excel->getActiveSheet()->SetCellValue('J'.$k.'', ''.$v->max_order_qty.'');
             $k++;
             $x++;
             }

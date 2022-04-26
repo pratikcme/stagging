@@ -5,6 +5,21 @@ include('header.php');
        label.error{
             color: red;
         }
+        #excl-modal .modal-dialog{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                box-shadow: 0px 0px 21px -5px rgba(0,0,0,0.75);
+                width: 100%;
+               max-width: 920px;
+
+        }
+        #excl-modal .modal-body{
+            height: 350px;
+            overflow: auto;
+            overflow-x: hidden;
+        }
     </style>
     <!--main content start-->
     <section id="main-content">
@@ -83,14 +98,13 @@ include('header.php');
       $ar = range(10,100);
 
      ?>
-  <div class="modal <?=(in_array($nu,$ar)) ? 'show' : '' ?> " id="myModal">
-    <div class="modal-dialog modal-xl">
+  <div class=" modal <?=(in_array($nu,$ar)) ? 'show' : '' ?> " id="excl-modal">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Click Add Record To Save Uploaded Excel</h4>
         </div>
         
         <!-- Modal body -->
@@ -98,9 +112,10 @@ include('header.php');
             <div class="row">
                     <!--Left Part-->
                     <div class="col-lg-12">
-                       <table class="table table-bordered table-striped ">
+                       <table class="table table-bordered table-striped import_excel">
                            <thead>
                                <tr role="row">
+                                   <th>S.no</th>
                                    <th>Product name</th>
                                    <th>Weight Number</th>
                                    <th>Weight Name</th>
@@ -114,6 +129,7 @@ include('header.php');
                            <tbody>
                             <?php foreach ($tempRecord as $key => $value): ?>
                                <tr role="row"> 
+                                   <td><?=$key+1?></td>
                                    <td><?=$value->name?></td>
                                    <td><?=$value->weight_no?></td>
                                    <td><?=$value->weight_name?></td>

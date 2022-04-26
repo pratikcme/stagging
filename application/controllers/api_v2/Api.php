@@ -1031,8 +1031,7 @@ class Api extends Apiuser_Controller {
         if (!empty($this->input->post('vendor_id')) && $_POST['vendor_id'] != '0') {
             $query1 = $this->db->query("SELECT * FROM branch WHERE vendor_id = '$vendor_id' AND status != '9' ");
             $branch = $query1->result();
-            $branch_id = $branch[0]->id;
-            // $query = $this->db->query("SELECT * FROM banner_promotion WHERE vendor_id = '$vendor_id' AND status != '9' ORDER BY image_order ");  
+            $branch_id = $branch[0]->id; 
             $query = $this->db->query("SELECT * FROM banners WHERE vendor_id = '$vendor_id'");  
             $result = $query->result();
         }
@@ -1043,9 +1042,6 @@ class Api extends Apiuser_Controller {
             $response["data"] = array();
             $counter = 0;
             foreach ($result as $row) {
-                // $query = $this->db->query("SELECT branch_id FROM product WHERE  id = '".$row->product_id."'");
-                // $getBranch = $query->result();
-                // $row->branch_id = $getBranch[0]->branch_id;
                 $data = array();
                 $data['id'] = $row->id;
                 $data['branch_id'] = $row->branch_id;
