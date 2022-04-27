@@ -1581,6 +1581,7 @@ class Api_model extends My_model {
                     $data['product_actual_price'] = $product_actual_price;
                     $data['product_discount_price'] = $product_discount_price;
                     $data['avail_quantity'] = $avail_quantity;
+                    $data['discount_per'] = $product_weight_result[0]['discount_per'];
                    
                     $data['product_image'] = $proimg;
                     $data['package_name'] = $package_name;
