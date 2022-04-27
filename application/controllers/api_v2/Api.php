@@ -1047,7 +1047,7 @@ class Api extends Apiuser_Controller {
                 $data['branch_id'] = $row->branch_id;
                 $data['type'] = $row->type;
                 $data['category_id'] = $row->category_id;
-                $data['category_name'] = $row->category_name;
+                $data['category_name'] = ($row->category_name!='')?$row->category_name:'';
                 $data['product_id'] = $row->product_id;
                 $data['product_varient_id'] = $row->product_varient_id;
                 $data['image'] = base_url() . 'public/images/'.$this->folder.'banner_promotion/' . $row->app_banner_image;
