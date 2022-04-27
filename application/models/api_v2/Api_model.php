@@ -1544,9 +1544,14 @@ class Api_model extends My_model {
                   
                     $product_image_result = $this->selectRecords($data);
                    
-                    $product_image_result[0]->image = str_replace(' ', '%20', $product_image_result[0]->image); // image space filter
-                    $proimg = base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image;
-                    $prothimg = base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $product_image_result[0]->image;
+                     if (count($product_image_result) <= 0) {
+                                $proimg = '';
+                            } else {
+                                $proimg = base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image;
+                            }
+                    $proimg = str_replace(' ', '%20', $proimg);
+
+                    $prothimg = $proimg;
                     unset($data);
                     
 
