@@ -1,80 +1,95 @@
-var BANNERS = function(){
+var OFFER = function(){
 		var url = $('#url').val();
      $(document).ready(function(){
-                $('.alert').fadeOut(5000);
-            });
-
-         $(document).on('change','#type',function(){
-        var type = $(this).val();
-        if(type == 1 || type == ''){
-            $('#category').parent().css('display','none');
-            $('#product').parent().css('display','none');
-            $('#product_varient').parent().css('display','none');
-        }
-
-        if(type == 2){
-            $('#category').parent().css('display','block');
-            $('#product').parent().css('display','none');
-            $('#product_varient').parent().css('display','none');
-        }
-
-        if(type == 3){
-            $('#category').parent().css('display','none');
-            $('#product').parent().css('display','block');
-            $('#product_varient').parent().css('display','block');
-        }
-
-    });
-
-     $(document).on('change','#branch',function(){
-        var branch_id = $(this).val();
-        if(branch_id != ''){
-            $.ajax({
-                url: url+'banners/get_category_list',
-                type:'post',
-                dataType:"json",
-                data:{branch_id:branch_id},
-                success:function(output){
-                    console.log(output);
-                    $('#category').html(output.category_list);
-                    $('#product').html(output.product_list);
-                    $('#type').removeAttr('disabled');
-                    $('#product_varient').html('');
-                    $('#product_varient').html(' <option value="">Select product varient</option>');
-
-                }
-            })
-        }else{
-            $('#category').parent().css('display','none');
-            $('#product').parent().css('display','none');
-            $('#product_varient').parent().css('display','none'); 
-            $('#type').attr("disabled", true);
-            $('#type').val("");
-
-        }
-     });
-
-     $(document).on('change','#product',function(){
-        var product_id = $(this).val();
-            $.ajax({
-                url: url+'banners/getproductVarient',
-                type:'post',
-                dataType:"json",
-                data:{product_id:product_id},
-                success:function(output){
-                    console.log(output);
-                    $('#product_varient').html(output.varient_list);
-                }
-            })
+        $('.alert').fadeOut(5000);
      });
 
 
+     var HandleTable = function(){
 
-	var HandleBannerImage = function () {
+    $(document).on('change','#branch',function () {
+        // alert();
+            var url = $('#url').val();
+            var branch_id = $(this).val();
+               $('#example_product_offer').DataTable({ 
+                   "destroy": true, 
+                   "processing":true,  
+                   "serverSide":true,  
+                   "order":[],  
+                   "ajax":{  
+                        url: url+"offer/showProduct",  
+                        type:"POST",
+                        data : { branch_id : branch_id }
+                   },  
+                   createdRow: function ( tr ) {
+                        $(tr).addClass('gradeX');
+                        },
+                       "columnDefs":[  
+                            {
+                                'targets':[0],
+                                "orderable" : false, 
+                            },
+                            {  className:"hidden-phone", "targets":[0,1,2,3,4,5]},
+                       ],
+                        "oLanguage": {
+                        "sEmptyTable" : "Product list Not Available",
+                        "sZeroRecords": "Product Not Available",
+                        }  
+                   // bFilter: false,  
+              });
+            
+        });
+         
+            var url = $('#url').val();
+              var dataTable = $('#example_product_offer').DataTable({
+                       // "processing":true,  
+                       // "serverSide":true,  
+                       "order":[],  
+                       // "ajax":{  
+                       //      url: url+"offer/showProduct",  
+                       //      type:"POST",
+                       // },
+                       createdRow: function ( tr ) {
+                        $(tr).addClass('gradeX');
+                        },
+                       "columnDefs":[  
+                            {
+                                'targets':[0],
+                                "orderable" : false,
+                                'checkboxes': {'selectRow': true
+            }  
+                            },
+                            {  className:"hidden-phone", "targets":[0,1,2,3,4,5]},
+                       ],
+                        'select': {
+                                'style': 'multi'
+                        },
+                        "oLanguage": {
+                        "sEmptyTable" : "Product list Not Available",
+                        "sZeroRecords": "Product Not Available",
+                        }  
+              });
+
+        var checked = [];
+        $(document).on('click','.checked_id',function () {
+            var id =  $(this).val();
+            if( $(this).is(':checked') ){
+                checked.push(id);
+            }else{
+                checked.splice( $.inArray(id, checked),id);
+            }
+        $('#hidden_varient_id').val(checked);
+        })
+     }
+
+
+
+
+	var HandleImage = function () {
     
-            $(document).ready(function(){
-                $('.alert').fadeOut(5000);
-            });
+        $(document).ready(function(){
+        	$('.alert').fadeOut(5000);
+        });
                 
         $('#frmAddEditSection').validate({
              ignore: [],
@@ -139,34 +154,17 @@ var HandleSectionTwo = function () {
 
         $('#frmAddEdit').validate({
             rules: {
-                main_title: { required: true },
-                sub_title:  { required: true },
+                offer_title: { required: true },
                 branch: 	{ required: true },
-                type: 		{ required: true },
-                category_id: { required: true },
-                product_id: { required: true },
-                product_varient_id: { required: true },
-                web_banner_image : { 
-                	required : true,
-                    accept:"jpg,png,jpeg,gif"
-                },
-               
-                app_banner_image : { 
+                offer_image : { 
                 	required : true,
                     accept:"jpg,png,jpeg,gif"
                 },
         },
             messages : {
-                main_title : {required: "Please enter main title"},
-                sub_title : {required: "Please enter sub title"},
+                offer_title : {required: "Please enter offer title"},
                 branch : {required: "Please select branch"},
-                type : {required: "Please select type"},
-                category_id: { required: 'Please select category'},
-                product_id: { required: 'Please select product'},
-                product_varient_id: { required: 'Please select product_varient'},
                 web_banner_image : {required: 'please select web image',
-                accept:"Only image type jpg/png/jpeg/gif is allowed"},
-                app_banner_image : {required: 'please select app image',
                 accept:"Only image type jpg/png/jpeg/gif is allowed"},
 
             }, 
@@ -175,7 +173,7 @@ var HandleSectionTwo = function () {
                 $('body').attr('disabled','disabled');
                 $('#btnSubmit').attr('disabled','disabled');
                 $('#btnSubmit').value('please wait');
-                    $(form).submit();
+                $(form).submit();
             }
         
         });
@@ -244,7 +242,6 @@ var HandleSectionTwo = function () {
                 accept:"Only image type jpg/png/jpeg/gif is allowed"},
             }, 
             submitHandler: function (form) {
-
                 $('body').attr('disabled','disabled');
                 $('#btnSubmit').attr('disabled','disabled');
                 $('#btnSubmit').value('please wait');
@@ -278,7 +275,7 @@ var HandleSectionTwo = function () {
 
     return {
     	init:function(){
-    		HandleBannerImage();
+    		HandleImage();
     	},
     	add:function(){
     		HandleSectionTwo();
@@ -291,6 +288,9 @@ var HandleSectionTwo = function () {
     	},
       delete:function(){
         HandleRemoveRecord();
+      },
+      table: function () {
+        HandleTable();
       }
     }
 

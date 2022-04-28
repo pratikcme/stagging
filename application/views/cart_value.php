@@ -1,8 +1,6 @@
 <?php
 include('header.php');
-
-    $id = $this->utility->decode($_GET['id']);
-
+    @$id = $this->utility->decode($_GET['id']);
     // $vendor_id = $this->session->userdata['id'];
 
     // $query = $this->db->query("SELECT * FROM set_default WHERE request_id='1'");

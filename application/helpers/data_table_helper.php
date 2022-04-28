@@ -859,4 +859,44 @@ function getAjaxPriceList($TableData){
 
             return json_encode($output);
      } 
+
+
+  function showProductOnOffer($TableData){
+    // print_r($TableData);die;
+    $CI = &get_instance();
+    $CI->load->model('product_model','this_model');  
+    $library= $CI->load->library('utility');  
+          $fetch_data = $CI->this_model->make_datatables_offer_product($TableData);
+         // print_r($fetch_data); die;
+        // $product_id = $TableData['product_id'];
+           $data = array();
+           foreach($fetch_data as $row){
+             $checkbox = '<td class="hidden-phone">';
+            if($row->id){ 
+              $checkbox .= '<input type="checkbox" name="product_varient_id[]" id="iId" value='.$row->id.' class="checkbox_user">';
+             }
+              $checkbox .= '</td>';
+                $sub_array = array();  
+                $sub_array[] = $checkbox;  
+                $sub_array[] = $row->product_name;  
+                $sub_array[] = $row->price; 
+                $sub_array[] = $row->discount_per; 
+                $sub_array[] = $row->weight_no; 
+                $sub_array[] = $row->weight_name; 
+                // $sub_array[] = $row->package; 
+                // $sub_array[] = $row->weight_no.' '.$row->weight_name.' '.$row->package;
+                // $sub_array[] = $row->purchase_price; 
+                // $sub_array[] = $row->quantity;  
+                $sub_array[] = '<a href='.base_url().'offer/view/'.$CI->utility->encode($row->id).' class="btn btn-primary btn-xs"><i class="fa fa-eye"></i></a>'; 
+                $data[] = $sub_array;  
+           }  
+           $output = array(  
+                "draw"                    =>     intval($TableData["draw"]),  
+                "recordsTotal"          =>      $CI->this_model->get_all_data_offer_product($TableData),  
+                "recordsFiltered"     =>        $CI->this_model->get_filtered_data_offer_product($TableData),  
+                "data"                    =>     $data  
+           );
+
+           return json_encode($output);
+  }
 ?>

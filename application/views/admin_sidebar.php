@@ -237,3 +237,19 @@
         </li>
     </ul>
 </li>
+
+<li>
+    <a class="<?php if ($this->uri->segment(1) == 'offer') { ?> active <?php } ?>" href="#">
+        <i class="fa fa-picture-o"></i>
+        <span>Offer</span>
+        <i class="fas fa-chevron-right <?=($this->uri->segment(1) == 'offer') ? 'rotate' : '' ?>"></i>
+    </a>
+    <ul>
+        <li>
+            <a class="<?php if ($this->uri->segment(2) == 'offer') { ?> active <?php } ?>" href="<?php echo base_url() . 'offer'; ?>">
+                <i class="fa fa-crosshairs"></i>
+                <span>Offer</span>
+            </a>
+        </li>
+    </ul>
+</li>

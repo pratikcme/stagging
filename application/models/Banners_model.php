@@ -197,7 +197,7 @@ Class Banners_model extends My_model{
     public function getBranch(){
         $data['table'] = TABLE_BRANCH;
         $data['select'] = ['*'];
-        $data['where'] = ['domain_name'=>base_url(),'status'=>'1'];
+        $data['where'] = ['vendor_id'=>$this->vendor_id,'status'=>'1'];
         return  $this->selectRecords($data);
     }
 

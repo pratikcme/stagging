@@ -62,8 +62,7 @@ class Products extends User_Controller {
 			}
 		}
 	}
-	// echo '<pre>';
-	// print_r($available_subcat);die;
+
 		$data['product'] =  $this->this_model->selectProduct();
 		$data['brand'] = $this->this_model->selectBrand();
 		$data['subCategory'] = $this->this_model->getAllSubCategory();

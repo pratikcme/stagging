@@ -463,7 +463,7 @@ class Api extends Apiuser_Controller {
 
            
            
-            $my_cart_price_result = $total_cart[0]->total_price;
+            $my_cart_price_result = $total_cart[0]->total;
             $cart_response["data"] = array();
             if(!empty($my_cart_result)){
 
@@ -1027,7 +1027,7 @@ class Api extends Apiuser_Controller {
              $output = json_encode(array('responsedata' => $response));
             echo $output;die;
         }
-            $vendor_id = $_POST['vendor_id'];
+        $vendor_id = $_POST['vendor_id'];
         if (!empty($this->input->post('vendor_id')) && $_POST['vendor_id'] != '0') {
             $query1 = $this->db->query("SELECT * FROM branch WHERE vendor_id = '$vendor_id' AND status != '9' ");
             $branch = $query1->result();

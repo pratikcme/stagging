@@ -38,9 +38,9 @@ class Product extends Vendor_Controller
 
     public function product_profile()
     { 
-      
         $this->load->view('product_profile');
     }
+    
     public function product_add_update(){
         $this->this_model->product_add_update();
     }

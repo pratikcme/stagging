@@ -35,7 +35,6 @@ class Admin extends CI_Controller
             // $data['to'] = 'cmexpertise@gmail.com';
             $mail['subject'] = $this->input->post('subject');
             $mail['to'] = 'cmexpertise@gmail.com';
-            // print_r($mail);die;
             sendMail($mail);
             $this->utility->setFlashMessage('success','Your email suucesfully send to admin');
             redirect(base_url().'admin/dashboard');

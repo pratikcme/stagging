@@ -17,7 +17,6 @@ class Setting extends Admin_Controller
     public function cart_value()
     {
         $data['result'] = $this->this_model->getCartValue();
-        // print_r($data['result']['id']);die;
         $this->load->view('cart_value',$data);
     }
     public function cart_add()
