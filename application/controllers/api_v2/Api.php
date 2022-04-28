@@ -1032,7 +1032,7 @@ class Api extends Apiuser_Controller {
             $query1 = $this->db->query("SELECT * FROM branch WHERE vendor_id = '$vendor_id' AND status != '9' ");
             $branch = $query1->result();
             $branch_id = $branch[0]->id; 
-            $query = $this->db->query("SELECT * FROM banners WHERE vendor_id = '$vendor_id'");  
+            $query = $this->db->query("SELECT b.* ,c.name as category_name FROM banners as b LEFT JOIN category as c ON c.id = b.category_id WHERE vendor_id = '$vendor_id'");  
             $result = $query->result();
         }
 
@@ -1047,6 +1047,7 @@ class Api extends Apiuser_Controller {
                 $data['branch_id'] = $row->branch_id;
                 $data['type'] = $row->type;
                 $data['category_id'] = $row->category_id;
+                $data['category_name'] = ($row->category_name!='')?$row->category_name:'';
                 $data['product_id'] = $row->product_id;
                 $data['product_varient_id'] = $row->product_varient_id;
                 $data['image'] = base_url() . 'public/images/'.$this->folder.'banner_promotion/' . $row->app_banner_image;

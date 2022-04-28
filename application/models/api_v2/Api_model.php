@@ -1544,9 +1544,14 @@ class Api_model extends My_model {
                   
                     $product_image_result = $this->selectRecords($data);
                    
-                    $product_image_result[0]->image = str_replace(' ', '%20', $product_image_result[0]->image); // image space filter
-                    $proimg = base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image;
-                    $prothimg = base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $product_image_result[0]->image;
+                     if (count($product_image_result) <= 0) {
+                                $proimg = '';
+                            } else {
+                                $proimg = base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image;
+                            }
+                    $proimg = str_replace(' ', '%20', $proimg);
+
+                    $prothimg = $proimg;
                     unset($data);
                     
 
@@ -1581,6 +1586,7 @@ class Api_model extends My_model {
                     $data['product_actual_price'] = $product_actual_price;
                     $data['product_discount_price'] = $product_discount_price;
                     $data['avail_quantity'] = $avail_quantity;
+                    $data['discount_per'] = $product_weight_result[0]['discount_per'];
                    
                     $data['product_image'] = $proimg;
                     $data['package_name'] = $package_name;
