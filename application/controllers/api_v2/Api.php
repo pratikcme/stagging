@@ -468,7 +468,6 @@ class Api extends Apiuser_Controller {
             if(!empty($my_cart_result)){
 
                 $vendorId = $my_cart_result[0]->branch_id;
-
                 $vendor_query = $this->db->query("SELECT * FROM branch WHERE id ='$vendorId'");
                 $vendor_result = $vendor_query->result();
 
