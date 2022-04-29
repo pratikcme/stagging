@@ -6,7 +6,7 @@ view.php<?php $this->load->view('header.php'); ?>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!--breadcrumbs start -->
                 <ul class="breadcrumb">
-                    <li class="active"><a href=""><i class="fa fa-home"></i> <a href="<?php echo base_url().'admin/index'; ?>">Home</a> / list</a></li>
+                    <li class="active"><a href=""><i class="fa fa-home"></i> <a href="<?php echo base_url().'admin/dashboard'; ?>">Home</a> / <a href="<?php echo base_url().'offer'; ?>">List</a> / offer product list</a></li>
                 </ul>
                 <!--breadcrumbs end -->
             </div>
@@ -21,63 +21,57 @@ view.php<?php $this->load->view('header.php'); ?>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <section class="panel">
-                    <header class="panel-heading"> List</header>
+                    <header class="panel-heading"> Offer product List</header>
                     <div class="panel-body">
                         <div class="adv-table">
                             <div id="example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                <div class="panel-body padding-zero" style="float: right">
-                                    <a href="<?=base_url().'offer/add'?>" class="btn btn-primary">Add </a>
-                                    <a href="#" id="delete_user" class="btn btn-danger">Delete </a>
-                                </div>
                                 <table class="display table table-bordered table-striped dataTable" id=""
                                        aria-describedby="example_info">
                                     <thead>
-                                    <tr role="row">
-                                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
-                                            rowspan="1" colspan="1"
-                                            aria-label="Rendering engine: activate to sort column ascending"
-                                            style="width: 100px;"><input type="checkbox" class="checkboxMain">
-                                        </th>
-                                        
+                                     <tr role="row">
+                                      
                                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
                                             rowspan="1" colspan="1"
                                             aria-label="Platform(s): activate to sort column ascending"
-                                            style="width: 200px;">Image
+                                            style="width: 180px;">Product Name
                                         </th>
                                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
                                             rowspan="1" colspan="1"
                                             aria-label="Platform(s): activate to sort column ascending"
-                                            style="width: 200px;">Branch 
+                                            style="width: 180px;">price
                                         </th>
                                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
                                             rowspan="1" colspan="1"
                                             aria-label="Platform(s): activate to sort column ascending"
-                                            style="width: 200px;">
-                                            Title
-                                        </th>                                    
+                                            style="width: 180px;">discount (%)
+                                        </th>
                                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
                                             rowspan="1" colspan="1"
-                                            aria-label="Rendering engine: activate to sort column ascending"
-                                            style="width: 100px;">Action
+                                            aria-label="Platform(s): activate to sort column ascending"
+                                            style="width: 180px;">Unit
+                                        </th>
+                                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
+                                            rowspan="1" colspan="1"
+                                            aria-label="Platform(s): activate to sort column ascending"
+                                            style="width: 180px;">weight
+                                        </th>
+                                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
+                                            rowspan="1" colspan="1"
+                                            aria-label="Platform(s): activate to sort column ascending"
+                                            style="width: 180px;">Package
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody role="alert" aria-live="polite" aria-relevant="all">
-                                      <?php foreach ($offer as $key => $value) { ?>
-                                          <tr>
-                                            <td> 
-                                              <?php if ($value->id) { ?>
-                                                    <input type="checkbox" name="delete[]" id='iId' value="<?php echo $value->id; ?>" class="checkbox_user">
-                                                <?php } ?>
-                                            </td>
-                                            <td><div id="" class="" style="width: 150px;height: 150px; margin-top: 20px; "><img id="ContentImage" src="<?=base_url().'public/images/'.$this->folder.'offer_image/'.$value->image ?>" height="100%" width="100%"></div></td>
-                                            <td><?=$value->branch_name?></td>
-                                            <td><?=$value->offer_title?></td>
-                                            <td>
-                                                <a href="javascript:;" onclick="single_delete(<?php echo $value->id; ?>)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
-                                                <a href="<?=base_url().'offer/view/'.$this->utility->encode($value->id)?>" class="btn btn-primary btn-xs"/><i class="fa fa-eye"></i></a>
-                                            </td>
-                                          </tr>
+                                      <?php foreach ($offer_detail as $key => $result) { ?>
+                                          <tr class="gradeX odd">
+                                            <td class="hidden-phone"><?=$result->product_name; ?></td>
+                                            <td class="hidden-phone"><?=$result->price; ?></td>
+                                            <td class="hidden-phone"><?=$result->discount_per; ?></td>
+                                            <td class="hidden-phone"><?=$result->weight_no; ?></td>
+                                            <td class="hidden-phone"><?=$result->weight_name; ?></td>
+                                            <td class="hidden-phone"><?=$result->package; ?></td>
+                                        </tr>
                                      <?php } ?>
                                     </tbody>
                                 </table>

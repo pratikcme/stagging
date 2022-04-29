@@ -75,7 +75,8 @@
                                             <td><?=$value->offer_title?></td>
                                             <td>
                                                 <a href="javascript:;" onclick="single_delete(<?php echo $value->id; ?>)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
-                                                <a href="<?=base_url().'offer/view/'.$this->utility->encode($value->id)?>" class="btn btn-primary btn-xs"/><i class="fa fa-eye"></i></a>
+                                                <a href="<?=base_url().'offer/view/'.$this->utility->encode($value->id)?>" class="btn btn-success btn-xs"/><i class="fa fa-eye"></i></a>
+                                                <a href="<?=base_url().'offer/edit/'.$value->branch_id.'/'.$value->id?>" class="btn btn-primary btn-xs"/><i class="fa fa-pencil"></i></a>
                                             </td>
                                           </tr>
                                      <?php } ?>

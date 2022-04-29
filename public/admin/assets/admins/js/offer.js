@@ -70,15 +70,21 @@ var OFFER = function(){
                         }  
               });
 
-        var checked = [];
+        checked = [];
         $(document).on('click','.checked_id',function () {
+            console.log(checked);
             var id =  $(this).val();
             if( $(this).is(':checked') ){
                 checked.push(id);
             }else{
-                checked.splice( $.inArray(id, checked),id);
+                checked = jQuery.grep(checked, function(value) {
+                    return value != id;
+                });
+                // checked.push(id);
+                // checked.splice( $.inArray(id, checked),id);
             }
-        $('#hidden_varient_id').val(checked);
+            console.log(checked);
+            $('#hidden_varient_id').val(checked);
         })
      }
 
@@ -164,7 +170,7 @@ var HandleSectionTwo = function () {
             messages : {
                 offer_title : {required: "Please enter offer title"},
                 branch : {required: "Please select branch"},
-                web_banner_image : {required: 'please select web image',
+                offer_image : {required: 'please select offer image',
                 accept:"Only image type jpg/png/jpeg/gif is allowed"},
 
             }, 
@@ -201,54 +207,90 @@ var HandleSectionTwo = function () {
 
     var HandleSectionTwoEdit = function () {
 
-         $('#frmAddEdit').validate({
-             ignore: [],
-              debug: false,
-             ignore: " :hidden",
+        var inString = $('#hidden_varient_id').val();
+        checked = inString.split(',');
+      console.log(checked);
+        $('#hidden_varient_id').val(checked);
+        $('#Edit').validate({
             rules: {
-                web_banner_image : {
-                    required: {depends: function (e) {
-                            return ($('#hidden_web_banner_image').val() === '');
-                        },
-                    },
-                            accept:"jpg,png,jpeg,gif"
-                },
-                app_banner_image : {
-                    required: {depends: function (e) {
-                            return ($('#hidden_app_banner_image').val() === '');
-                        },
-                    },
-                            accept:"jpg,png,jpeg,gif"
-                },
-                main_title: { required: true },
-                sub_title:  { required: true },
+                offer_title: { required: true },
                 branch:     { required: true },
-                type:       { required: true },
-                category_id: { required: true },
-                product_id: { required: true },
-                product_varient_id: { required: true },
-            },
-            messages: {
-                main_title : {required: "Please enter main title"},
-                sub_title : {required: "Please enter sub title"},
+                offer_image : { 
+                    required : {
+                        depends : function (e){
+                            return ($('#hidden_offer_image').val() === '');
+                        }
+                    },
+                    accept:"jpg,png,jpeg,gif"
+                },
+        },
+            messages : {
+                offer_title : {required: "Please enter offer title"},
                 branch : {required: "Please select branch"},
-                type : {required: "Please select type"},
-                category_id: { required: 'Please select category'},
-                product_id: { required: 'Please select product'},
-                product_varient_id: { required: 'Please select product varient'},
-                web_banner_image : {required: 'please select web image',
+                offer_image : {required: 'please select offer image',
                 accept:"Only image type jpg/png/jpeg/gif is allowed"},
-                app_banner_image : {required: 'please select app image',
-                accept:"Only image type jpg/png/jpeg/gif is allowed"},
+
             }, 
             submitHandler: function (form) {
+
                 $('body').attr('disabled','disabled');
                 $('#btnSubmit').attr('disabled','disabled');
                 $('#btnSubmit').value('please wait');
-                    $(form).submit();
+                $(form).submit();
             }
         
         });
+
+
+
+        //  $('#frmAddEdit').validate({
+        //      ignore: [],
+        //       debug: false,
+        //      ignore: " :hidden",
+        //     rules: {
+        //         web_banner_image : {
+        //             required: {depends: function (e) {
+        //                     return ($('#hidden_web_banner_image').val() === '');
+        //                 },
+        //             },
+        //                     accept:"jpg,png,jpeg,gif"
+        //         },
+        //         app_banner_image : {
+        //             required: {depends: function (e) {
+        //                     return ($('#hidden_app_banner_image').val() === '');
+        //                 },
+        //             },
+        //                     accept:"jpg,png,jpeg,gif"
+        //         },
+        //         main_title: { required: true },
+        //         sub_title:  { required: true },
+        //         branch:     { required: true },
+        //         type:       { required: true },
+        //         category_id: { required: true },
+        //         product_id: { required: true },
+        //         product_varient_id: { required: true },
+        //     },
+        //     messages: {
+        //         main_title : {required: "Please enter main title"},
+        //         sub_title : {required: "Please enter sub title"},
+        //         branch : {required: "Please select branch"},
+        //         type : {required: "Please select type"},
+        //         category_id: { required: 'Please select category'},
+        //         product_id: { required: 'Please select product'},
+        //         product_varient_id: { required: 'Please select product varient'},
+        //         web_banner_image : {required: 'please select web image',
+        //         accept:"Only image type jpg/png/jpeg/gif is allowed"},
+        //         app_banner_image : {required: 'please select app image',
+        //         accept:"Only image type jpg/png/jpeg/gif is allowed"},
+        //     }, 
+        //     submitHandler: function (form) {
+        //         $('body').attr('disabled','disabled');
+        //         $('#btnSubmit').attr('disabled','disabled');
+        //         $('#btnSubmit').value('please wait');
+        //             $(form).submit();
+        //     }
+        
+        // });
 
     }
 

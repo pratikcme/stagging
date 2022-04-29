@@ -9,7 +9,7 @@
          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <!--breadcrumbs start -->
             <ul class="breadcrumb">
-               <li class="active"><a href=""><i class="fa fa-home"></i> <a href="<?php echo base_url().'admin/dashboard'; ?>">Home</a> / <a href="<?php echo base_url().'offer'; ?>">List</a> /Add </a></li>
+               <li class="active"><a href=""><i class="fa fa-home"></i> <a href="<?php echo base_url().'admin/dashboard'; ?>">Home</a> / <a href="<?php echo base_url().'offer'; ?>">List</a> / Edit </a></li>
             </ul>
             <!--breadcrumbs end -->
          </div>
@@ -19,10 +19,11 @@
          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <section class="panel">
                <header class="panel-heading">
-                  Add
+                  Edit
                </header>
-               <form id="frmAddEdit" method="post" enctype="multipart/form-data" action="<?=$FormAction?>">
+               <form id="Edit" method="post" enctype="multipart/form-data" action="<?=$FormAction?>">
                 <input type="hidden" name="branch_id" value="<?=$this->uri->segment(3)?>">
+                <input type="hidden" name="edit_id" value="<?=$editRecord[0]->id?>">
                   <div class="panel-body">
                      <div class="row">
                          <div class="col-md-6 col-sm-12 col-xs-12 padding-zero">
@@ -33,12 +34,13 @@
                                       <option value="">Select Branch</option>
                                       <<?php foreach ($branchList as $key => $value): ?>
                                       <!-- <option value="<?=$value->id?>"><?=$value->name?></option> -->
-                                      <option value="<?=base_url().'offer/add/'.$value->id?>" <?=($value->id == $this->uri->segment(3)) ? "SELECTED" : "" ?>><?=$value->name?></option>
+                                      <option value="<?=base_url().'offer/edit/'.$value->id?>" <?=($value->id == $this->uri->segment(3)) ? "SELECTED" : "" ?>><?=$value->name?></option>
                                       <?php endforeach ?>
                                   </select>
                                </div>
                                <div class="form-group">
                                   <label for="offer_image" >Image</label>
+                                  <input type="hidden" name="hidden_image" id="hidden_offer_image" value="<?=$editRecord[0]->image?>">
                                   <input type = "file" name = "offer_image" class="form-control" onchange="app_readUploadedImage(this)" size = "20" id="offer_image" / <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
                                   <div id='show1' class="" style="width: 150px;height: 150px; margin-top: 20px; display: none" >
                                      <img id="offer_ContentImage" src="#" height="100%" width="100%">
@@ -51,13 +53,13 @@
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="offer_title">Offer Title</label>
-                                  <input type="text" id="offer_title" name="offer_title" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <input type="text" id="offer_title" name="offer_title" class="form-control" value = "<?=$editRecord[0]->offer_title?>" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
                                   <label for="offer_title" style="color: red" class="error"><?php echo @form_error('offer_title'); ?></label>
                                </div>
                             </div>
                          </div>
                      </div>
-                     <input type="hidden" name="hidden_varient_id" id='hidden_varient_id'>
+                     <input type="hidden" name="hidden_varient_id" id='hidden_varient_id' value="<?=implode(",",$offerDetails) ?>">
                       <table class="display table table-bordered table-striped dataTable" id="example_product_offer"
                                        aria-describedby="example_info">
                                     <thead>
@@ -107,7 +109,8 @@
                                         <tr class="gradeX odd">
                                             <td class="hidden-phone">
                                                 <?php if ($result->id) { ?>
-                                                    <input type="checkbox" name="" id='iId' value="<?php echo $result->id; ?>" class="checkbox_user checked_id" >
+                                                    <input type="checkbox" name="" id='iId' value="<?php echo $result->id; ?>" class="checkbox_user checked_id" 
+                                                    <?=(in_array($result->id,$offerDetails) ? "checked" : "")?> >
                                                 <?php } ?>
                                             </td>
                                            

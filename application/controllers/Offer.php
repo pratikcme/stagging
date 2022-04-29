@@ -43,6 +43,41 @@ class Offer extends Admin_Controller{
 		$this->load->view('offer/add',$data);
 	}
 
+	public function edit($branch_id=''){
+
+		$data['js'] = array('offer.js');
+		$data['init'] = array('OFFER.add()','OFFER.table()','OFFER.edit()');
+
+		$data['FormAction'] = base_url().'offer/edit';
+			if($this->input->post()){
+				$validation = $this->serRules();
+				if($validation){
+					// dd($this->input->post());
+					$result = $this->this_model->updateRecord($this->input->post());
+					 if($result){
+					 	$this->utility->setFlashMessage($result[0],$result[1]);
+						redirect(base_url().'offer');
+					 }
+				}
+
+			}
+		$this->load->model('banners_model');
+		$data['branchList'] = $this->banners_model->getBranch();
+		$data['editRecord'] = $this->this_model->getOffer($this->uri->segment(4)); 
+
+		$data['producList'] = [];
+		if($branch_id != ''){
+			$data['producList'] = $this->this_model->getproductVarient($branch_id);
+			$offerAndDetails = $this->this_model->getOfferAndOfferDetails($this->uri->segment(4));
+			$offerDetails = [];
+			foreach ($offerAndDetails as $key => $value) {
+				$offerDetails[] = $value->product_varient_id;
+			}
+		}
+		$data['offerDetails'] = $offerDetails;
+		$this->load->view('offer/edit',$data);
+	}
+
 
 	function serRules(){
 
@@ -71,6 +106,8 @@ class Offer extends Admin_Controller{
 
 	public function view($id){
 		$id = $this->utility->decode($id);
+		$data['offer_detail'] = $this->this_model->getOffer_detail($id);
+		// dd($data['offer_detail']);die;
 		$this->load->view('offer/view',$data);
 	}
 
@@ -83,7 +120,7 @@ class Offer extends Admin_Controller{
 		echo showProductOnOffer($this->input->post());
 	}
 
-	public function edit($id=''){
+	public function edit_old($id=''){
 
         $id = $this->utility->safe_b64decode($id);
         $data['page'] = 'banners/edit';
