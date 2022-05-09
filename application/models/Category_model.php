@@ -117,6 +117,7 @@ class Category_model extends My_model{
                 $uploadResponse['data']['file_name'];
                 $this->image_resize_category($uploadResponse['data']['full_path'], $uploadResponse['data']['file_name']);
                 
+                
                 $data = array(
                     'branch_id' => $this->branch_id,
                     'name' => trim($name),

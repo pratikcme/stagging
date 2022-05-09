@@ -144,12 +144,14 @@ Class Common_model extends My_model{
 			$data['where'] = ['branch_id'=>$this->session->userdata('branch_id'),'status!='=>'9'];
 		}else
 		if(isset($_POST['vendor_id']) && $_POST['vendor_id'] !=''){
-			$branch_id = $this->getBranchFromVendorId($_POST['vendor_id']);
-			$data['where'] = ['branch_id'=>$branch_id[0]->id,'status!='=>'9'];
+			$branch = $this->getBranchFromVendorId($_POST['vendor_id']);
+			$branch_id = (!empty($branch)) ? $branch[0]->id : 0;
+			$data['where'] = ['branch_id'=>$branch_id,'status!='=>'9'];
 		}
-		$CountCategory =$this->selectRecords($data);
+		$CountCategory =$this->selectRecords($data);	
 		
 		return $CountCategory[0]->categoryCount;
+
 	}
 
 	public function CountSubCategory(){

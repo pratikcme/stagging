@@ -94,9 +94,11 @@ Class Banners_model extends My_model{
             $uploadpath = 'public/images/'.$this->folder.'web_banners/';
             $uploadResult = upload_single_image_Byname($_FILES,'web_banner_image',$uploadpath);
             $web_banner_image = $uploadResult['data']['file_name'];
+            delete_single_image($uploadpath,$postData['hidden_web_banner_image']);
         }else{
             $web_banner_image = $postData['hidden_web_banner_image'];
         }
+
 
         if($_FILES['app_banner_image']['error'] == 0){
             ## Image Upload ##
@@ -104,8 +106,13 @@ Class Banners_model extends My_model{
             $uploadpath = 'public/images/'.$this->folder.'banner_promotion/';
             $uploadResult = upload_single_image_Byname($_FILES,'app_banner_image',$uploadpath);
             $app_banner_image = $uploadResult['data']['file_name'];
+            delete_single_image($uploadpath,$postData['hidden_app_banner_image']);
         }else{
             $app_banner_image = $postData['hidden_app_banner_image'];
+        }
+
+        if($web_banner_image == '' || $app_banner_image == ''){
+            return ['danger', 'Image not uploaded'];
         }
 
 		$data['table'] = 'banners';

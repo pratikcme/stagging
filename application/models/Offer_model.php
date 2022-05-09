@@ -86,21 +86,6 @@ Class Offer_model extends My_model{
 }
 
 
-    public function getSectionTwo(){
-		  $data['table'] = ABOUT_SECTION_TWO;
-    	$data['select'] = ['*'];
-      $data['where'] = ['vendor_id'=>$this->vendor_id];
-    	$data['order'] = "id DESC";
-    	return $this->selectRecords($data);    	
-    }
-
-    public function selectSectionTwoEditRecord($id){
-		$data['table'] = 'web_banners';
-    	$data['select'] = ['*'];
-    	$data['where']['id'] = $id;
-    	return $this->selectRecords($data);    	
-    } 
-
     public function updateRecord($postData){
         $varient_ids = explode(',',$postData['hidden_varient_id']);
         if($_FILES['offer_image']['error'] == 0){
@@ -160,15 +145,6 @@ Class Offer_model extends My_model{
         }
     		
     }
-
-    public function aboutSectionTwo(){
-        $this->db->select('*');  
-        $this->db->from(ABOUT_SECTION_TWO);
-        $this->db->where('vendor_id',$this->vendor_id);
-        $query = $this->db->get();  
-        return $query->result();  
-    }
-
 
 
   ## Multi Delete City ##

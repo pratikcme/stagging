@@ -3352,6 +3352,18 @@ class Api_model extends My_model {
             // return $refunds;
         }
 
+    public function get_offer(){
+        $data['table'] = TABLE_OFFER;
+        $data['select'] = ['*'];
+        $result = $this->selectRecords($data);
+        foreach ($result as $k => $v) {
+            $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
+        }
+        return $result;
 
     }
+
+
+}
+
 ?>

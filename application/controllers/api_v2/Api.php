@@ -1030,7 +1030,7 @@ class Api extends Apiuser_Controller {
         if (!empty($this->input->post('vendor_id')) && $_POST['vendor_id'] != '0') {
             $query1 = $this->db->query("SELECT * FROM branch WHERE vendor_id = '$vendor_id' AND status != '9' ");
             $branch = $query1->result();
-            $branch_id = $branch[0]->id; 
+            $branch_id = (!empty($branch)) ? $branch[0]->id : 0;
             $query = $this->db->query("SELECT b.* ,c.name as category_name FROM banners as b LEFT JOIN category as c ON c.id = b.category_id WHERE vendor_id = '$vendor_id'");  
             $result = $query->result();
         }
@@ -1945,6 +1945,28 @@ class Api extends Apiuser_Controller {
         }
         
     }
+
+    /*Developer : Shahid abdul rahman*/
+
+    public function get_offer(){
+       $result = $this->this_model->get_offer();
+        if ($result) {
+            $response = array();
+            $response["success"] = 1;
+            $response["message"] = "Offer Data";
+            $response["data"] = $result;
+            $output = json_encode(array('responsedata' => $response));
+            echo $output;
+        } else {
+            $response = array();
+            $response["success"] = 0;
+            $response["message"] = "No Data Found";
+            $output = json_encode(array('responsedata' => $response));
+            echo $output;
+        }
+    }
+
+
 }
 
 ?>
