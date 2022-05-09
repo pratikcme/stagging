@@ -27,6 +27,7 @@ class Api_model extends My_model {
         
 
     }
+
     public function user_register($postData){
        
         if(isset($postData['facebook_token_id']) && $postData['facebook_token_id']!=''){
@@ -402,22 +403,7 @@ class Api_model extends My_model {
                         ];
         $res = $this->selectFromJoin($data);
         return (string)count($res);
-        // foreach ($result as $key => $value) {
-           
-      
-        //     unset($data);
-        //     $data['table'] = 'category';
-        //     $data['select'] = ["*"];
-        //     $data['where'] = ['id' => $value->category_id, 'status !=' => '9'];
-        //     $pw = $this->selectRecords($data);
-        //     if (empty($pw)) {
-        //         unset($result[$key]);
-        //     }
-        // }
-        // // echo   $this->db->last_query();exit;
-        // $count = count($result);
-        // return (string)$count;
-        // return $result[0]->total_product;
+       
         
     }
     function total_shop_product($id = NULL, $category_id = NULL) {
@@ -429,17 +415,10 @@ class Api_model extends My_model {
             $data['where']['p.category_id'] = $category_id;
         }
         $data['where']['p.status !='] = '9';
-        // $data['join'] = [
-        //     'product_weight  AS w' => [
-        //         'w.product_id = p.id',
-        //         'inner'
-        //     ]
-        // ];
-        // $data['where']['w.quantity >'] = '0';
-        // $data['groupBy'] = 'p.id';
+     
         $data['table'] = 'product AS p';
         $result = $this->selectRecords($data);
-        // echo   $this->db->last_query();exit;
+      
         return $result[0]->total_product;
     }
     function category_list($postdata) {
@@ -2104,6 +2083,7 @@ class Api_model extends My_model {
         $data['table'] = 'profit';
         $this->insertRecord($data);
     }
+
     function get_delivery_charge($lat, $long, $branch_id) {
         $data['select'] = ['vendor_id','latitude', 'longitude'];
         $data['table'] = 'branch';
@@ -2129,8 +2109,7 @@ class Api_model extends My_model {
         // $rad = 3.14 / 5000000;
         return acos(sin($lat2 * ($rad)) * sin($lat1 * $rad) + cos($lat2 * $rad) * cos($lat1 * $rad) * cos($lon2 * $rad - $lon1 * $rad)) * 6371;
     }
-    //update notification status
-    //update notification status
+   
     function notification_status($id) {
         $data['select'] = ['notification_status'];
         $data['where'] = ['id' => $id];
@@ -2138,6 +2117,7 @@ class Api_model extends My_model {
         $response = $this->selectRecords($data, true);
         return $response[0]['notification_status'];
     }
+
     function push_notify($postData) {
         if (isset($postData['status'])) {
             if ($postData['status'] == '') {
@@ -2403,9 +2383,7 @@ class Api_model extends My_model {
             }
         }
         function get_product_list($postdata) {
-            // print_r($postdata);die;
-           
-
+            
             if(isset($postdata['defualt_product'])){
                 $defualt_product = $postdata['defualt_product'];
             }else{
@@ -3361,6 +3339,108 @@ class Api_model extends My_model {
         }
         return $result;
 
+    }
+    //Developer : Pratik S Shah
+    public function sendOtpLogin($postData){
+       $data['table'] = 'user';
+       $data['select'] = ['*'];
+       $data['where']['phone'] = $postData['phone'];
+       $data['where']['vendor_id'] = $postData['vendor_id'];
+       $re = $this->selectRecords($data,true);
+       unset($data);
+       if(empty($re)){
+            $insertData = array(
+                'phone'=>$postData['phone'],
+                'country_code'=>$postData['country_code'],                
+                'vendor_id'=>$postData['vendor_id'],
+                'login_type'=>'4',
+                'email_verify'=>'0',
+                'dt_added'=>strtotime(DATE_TIME),
+                'dt_updated'=>strtotime(DATE_TIME),
+            );
+        $data['table'] = 'user';
+        $data['insert'] = $insertData;
+        $user_id = $this->insertRecord($data); // return last id
+        
+       }else{         
+           $user_id = $re[0]['id'];
+       }
+        $varify =  $this->verify_mobile(
+                                        [
+                                        'user_id'=>$user_id,
+                                        'country_code'=>$postData['country_code'],
+                                        'phone'=>$postData['phone']
+                                        ]
+                                    );
+        $response["success"] = 1;
+        $response["message"] = "successfully sent otp on your mobile";
+        $response['data'] = $varify['otp'];
+        return $response;
+       
+    }
+
+    function VarifyOtpLogin($postData){
+       
+        $device_id = $postData['device_id'];
+        $data['select'] = ['*'];
+        $data['table'] = 'user';
+        $data['where']['vendor_id'] = $postData['vendor_id'];
+        $data['where']['country_code'] = $postData['country_code'];
+        $data['where']['phone'] = $postData['phone'];
+        $re = $this->selectRecords($data,true);
+        unset($data);
+        if(!empty($re)){
+           if($re[0]['otp'] == $postData['otp']){
+
+                $data['update'] = [
+                            'otp' => '',
+                            ];
+                $data['where'] = ['id'=>$re[0]['id']];
+                $data['table'] = 'user';
+                $this->updateRecords($data);
+
+                $postdata = array(
+                                    'user_id' => $re[0]['id'], 
+                                    'device_id' => $device_id, 
+                                    'vendor_id' => $postData['vendor_id']
+                                );
+                $this->set_user_cart($postdata);
+                $response =  $this->sendLoginResponse($re[0],$postData);
+
+           }else{
+                $response["success"] = 0;
+                $response["message"] = "Invalid Otp";                
+           }
+        }else{
+            $response["success"] = 0;
+            $response["message"] = "Data is not found"; 
+        }
+        return $response;
+    }
+
+    function completeProfile($postData){  
+        $data['update'] = [
+                            'fname' => $postData['fname'],
+                            'lname' => $postData['lname'],
+                            'dt_updated'=>strtotime(DATE_TIME),
+
+                            ];
+        if(isset($postData['email'])){
+            $data['email'] = $postData['email'];
+        }
+        $data['table'] = 'user';
+        $data['where']['vendor_id'] = $postData['vendor_id'];    
+        $data['where']['id'] = $postData['user_id'];
+        $re = $this->updateRecords($data);
+        unset($data);
+        if($re){
+            $response["success"] = 1;
+            $response["message"] = "Profile Updated";  
+        }else{
+            $response["success"] = 0;
+            $response["message"] = "Error to update profile";                
+        }
+        return $response;
     }
 
 

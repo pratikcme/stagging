@@ -1966,6 +1966,43 @@ class Api extends Apiuser_Controller {
         }
     }
 
+ // Pratik S Shah
+    public function sendOtpLogin(){
+        $post = $this->input->post();
+        $req = array('country_code','phone','vendor_id');
+        $response = $this->checkRequiredField($post, $req);
+        if ($response['status'] == 1) {
+            $post = $this->input->post();
+            $response = $this->this_model->sendOtpLogin($post);
+            $response = array('responsedata' => $response);
+        }
+       $this->response($response);
+    }
+    
+    public function VarifyOtpLogin(){
+        $post = $this->input->post();
+        $req = array('country_code','phone','otp','vendor_id','device_id','login_type','device_token','device_type');
+        $response = $this->checkRequiredField($post, $req);
+        if ($response['status'] == 1) {
+            $post = $this->input->post();
+            $response = $this->this_model->VarifyOtpLogin($post);
+            $response = array('responsedata' => $response);
+        }
+       $this->response($response);
+    }
+
+    public function completeProfile(){
+        $post = $this->input->post();
+        $req = array('fname','lname','user_id','vendor_id');
+        $response = $this->checkRequiredField($post, $req);
+        if ($response['status'] == 1) {
+            $post = $this->input->post();
+            $response = $this->this_model->completeProfile($post);
+            $response = array('responsedata' => $response);
+        }
+       $this->response($response);
+    }
+
 
 }
 

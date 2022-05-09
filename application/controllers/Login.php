@@ -239,6 +239,35 @@ class Login extends MY_Controller {
 		$this->loadView(USER_LAYOUT,$data);	
 	}
 
+	public function user_register(){
+		$data['appLinks'] = $this->common_keys;
+		if(isset($this->user_id) && $this->user_id != ''){
+			redirect(base_url());
+		}
+		$data['page'] = 'frontend/account/user_registration';
+		$data['js'] = array('login.js');
+		$data['init'] = array('LOGIN.init()');
+
+			if($this->input->post()){
+				$validation = $this->setRules();
+				if($validation){
+					$result = $this->this_model->register_user($this->input->post());
+					
+					 if($result){
+					 	$this->utility->setFlashMessage('success','Congratulation, your account has been successfully created.');
+					 		redirect(base_url().'login');
+					 		exit;
+					 }else{
+						$this->utility->setFlashMessage('danger','Somthing Went Wrong');
+					 		redirect(base_url().'login');
+					 		exit;
+					 }
+				}
+			}
+		
+		$this->loadView(USER_LAYOUT,$data);	
+	}
+
 	public function fb_login(){
 		// Call Facebook API
 		$common = $this->common_keys;

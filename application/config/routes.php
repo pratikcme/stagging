@@ -62,7 +62,7 @@ $route['404_override'] = '404';
 $route['translate_uri_dashes'] = FALSE;
 
 /* login route set*/
-$route['register'] = 'login/register';
+$route['register'] = 'login/user_register';
 // $route['contact_info'] = 'admins/contact/contactinfo';
 $route['message_list'] = 'admins/contact/messagelist';
 
