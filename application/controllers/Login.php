@@ -245,8 +245,8 @@ class Login extends MY_Controller {
 			redirect(base_url());
 		}
 		$data['page'] = 'frontend/account/user_registration';
-		$data['js'] = array('login.js');
-		$data['init'] = array('LOGIN.init()');
+		$data['js'] = array('user_register.js');
+		$data['country_code'] = GetDialcodelist();
 
 			if($this->input->post()){
 				$validation = $this->setRules();
@@ -267,6 +267,22 @@ class Login extends MY_Controller {
 		
 		$this->loadView(USER_LAYOUT,$data);	
 	}
+	public function sendOtpLogin(){
+		$this->load->model('api_v2/api_model','api_model');
+     	$post = $this->input->post();
+      $response = $this->this_model->sendOtpLogin($post);   
+      echo json_encode($response);die;       
+    }
+	public function varifyOtpLogin(){	
+     	$post = $this->input->post();
+      $response = $this->this_model->varifyOtpLogin($post);   
+      echo json_encode($response);die;       
+    }
+    public function completeProfile(){	
+     	$post = $this->input->post();
+      $response = $this->this_model->completeProfile($post);   
+      echo json_encode($response);die;       
+    }
 
 	public function fb_login(){
 		// Call Facebook API

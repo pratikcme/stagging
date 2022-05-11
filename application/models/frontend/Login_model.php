@@ -9,40 +9,159 @@ class Login_model extends My_model{
 
 	public function register_user($postData){
 		$insertData = array(
-						'fname' => $postData['fname'],
-						'lname' => $postData['lname'],
-						'email' => $postData['email'],
-						'password' => md5($postData['password']),
-						'phone' => $postData['phone'],
-						'vendor_id' => $this->vendor_id,
-						'login_type' => '0',
-						'status' => '1',
-						'email_verify'=>'1',
-						'notification_status' => '1',
-						'dt_added' => strtotime(DATE_TIME),
-						'dt_updated' => strtotime(DATE_TIME)
-					);
+				'fname' => $postData['fname'],
+				'lname' => $postData['lname'],
+				'email' => $postData['email'],
+				'password' => md5($postData['password']),
+				'phone' => $postData['phone'],
+				'vendor_id' => $this->vendor_id,
+				'login_type' => '0',
+				'status' => '1',
+				'email_verify'=>'1',
+				'notification_status' => '1',
+				'dt_added' => strtotime(DATE_TIME),
+				'dt_updated' => strtotime(DATE_TIME)
+			);
 
 		$data['table'] = TABLE_USER;
 		$data['insert'] = $insertData;
 		$last_id = $this->insertRecord($data);
 		return TRUE;
- 		unset($data);
-		// if($last_id){
-		// 		$userDetail = [
-		// 			'email' => $postData['email'],
-		// 				'password' => $postData['password'],
-		// 		];
-		// 	 $finalUserdetail = $this->utility->encode(json_encode($userDetail));
-  //                   $datas['name'] = $postData['fname'];
-  //                   $datas['link'] = base_url()."login/loginFromlink/".$finalUserdetail;
-  //                   $datas['message'] = $this->load->view('emailTemplate/registration_mail', $datas, true);
-  //                   $datas['subject'] = 'Please login by link which given below';
-  //                   $datas["to"] = $postData['email'];
-  //                   $res = sendMailSMTP($datas);
-  //                   return TRUE;
-		// }
+ 		
 	}
+
+	public function sendOtpLogin($postData){
+       $data['table'] = 'user';
+       $data['select'] = ['*'];
+       $data['where']['phone'] = $postData['phone'];
+       $data['where']['vendor_id'] = $this->vendor_id;
+       $re = $this->selectRecords($data,true);
+       unset($data);
+       if(empty($re)){
+            $insertData = array(
+                'phone'=>$postData['phone'],
+                'country_code'=>$postData['country_code'],                
+                'vendor_id'=>$this->vendor_id,
+                'login_type'=>'4',
+                'email_verify'=>'0',
+                'dt_added'=>strtotime(DATE_TIME),
+                'dt_updated'=>strtotime(DATE_TIME),
+            );
+        $data['table'] = 'user';
+        $data['insert'] = $insertData;
+        $user_id = $this->insertRecord($data); // return last id
+        
+       }else{         
+           $user_id = $re[0]['id'];
+       }
+        $varify =  $this->api_model->verify_mobile(
+                                        [
+                                        'user_id'=>$user_id,
+                                        'country_code'=>$postData['country_code'],
+                                        'phone'=>$postData['phone']
+                                        ]
+                                    );
+        $response["success"] = 1;
+        $response["message"] = "successfully sent otp on your mobile";
+        // $response['data'] = $varify['otp'];
+        return $response;
+       
+    }
+
+    function varifyOtpLogin($postData){
+      
+        $data['select'] = ['*'];
+        $data['table'] = 'user';
+        $data['where']['vendor_id'] = $this->vendor_id;
+        $data['where']['country_code'] = $postData['country_code'];
+        $data['where']['phone'] = $postData['phone'];
+        $re = $this->selectRecords($data,true);
+        unset($data);
+        if(!empty($re)){
+           if($re[0]['otp'] == $postData['otp']){
+
+                $data['update'] = [
+                            'otp' => '',
+                            ];
+                $data['where'] = ['id'=>$re[0]['id']];
+                $data['table'] = 'user';
+                $this->updateRecords($data);
+
+            	$login_data = array(
+		 			'user_id' => $re[0]['id'],
+                    'user_name' => $re[0]['fname'],
+                    'user_lname' => $re[0]['lname'],
+		 			'user_email' => $re[0]['email'],
+                    'user_phone' => $re[0]['phone'],
+		 			'logged_in' => TRUE
+		 		); 
+
+				$this->session->set_userdata($login_data);
+				if($this->session->userdata('user_id') != ''){	
+					$this->manageCartItem();
+					if(isset($_SESSION['My_cart'][0]['branch_id'])){
+						$branch_id = $_SESSION['My_cart'][0]['branch_id'];
+						$this->load->model('frontend/vendor_model','vendor');
+						$branch = $this->vendor->getVendorName($branch_id);
+						$branch_name = $branch[0]->name;
+						$vendor = array(
+							'branch_id'=>$branch_id,
+							'vendor_name'=>$branch_name,
+						);
+						$this->session->set_userdata($vendor);
+					}
+					unset($_SESSION['My_cart']);
+				}
+
+				$response["success"] = 1;
+        		$response["message"] = "OTP varified";
+        		$response["user_id"] = $re[0]['id'];
+        		$response["fname"] = $re[0]['fname'];
+           }else{
+                $response["success"] = 0;
+                $response["message"] = "Invalid Otp";                
+           }
+        }else{
+            $response["success"] = 0;
+            $response["message"] = "Data is not found"; 
+        }
+        return $response;
+    }
+    function completeProfile($postData){  
+        $data['update'] = [
+                            'fname' => $postData['fname'],
+                            'lname' => $postData['lname'],
+                            'dt_updated'=>strtotime(DATE_TIME),
+
+                            ];
+        if(isset($postData['email'])){
+            $data['email'] = $postData['email'];
+        }
+        $data['table'] = 'user';
+        $data['where']['vendor_id'] = $this->vendor_id;    
+        $data['where']['id'] = $postData['user_id'];
+        $re = $this->updateRecords($data);
+
+      
+        $userData = $this->session->userdata();
+        $userData['user_name'] = $postData['fname'];
+        $userData['user_lname'] = $postData['lname'];
+        $userData['user_email'] = $postData['email'];
+		$this->session->set_userdata($userData);
+				
+
+
+        unset($data);
+        if($re){
+            $response["success"] = 1;
+            $response["message"] = "Profile Updated";  
+        }else{
+            $response["success"] = 0;
+            $response["message"] = "Error to update profile";                
+        }
+        return $response;
+    }
+
 
 	public function manageCartItem()
 	{
