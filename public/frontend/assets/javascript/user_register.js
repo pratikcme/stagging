@@ -34,7 +34,8 @@ $("#frmBtn").click(function(){
     if($('#Register_Form').valid()){
         var that     = $(this);   
 
-
+        that.html("Please wait...");
+        
         if($(this).hasClass("send")){
             var country_code = $('#country_code').val();
             var phone     = $('#phone').val();   
