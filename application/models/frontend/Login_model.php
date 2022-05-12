@@ -64,6 +64,7 @@ class Login_model extends My_model{
         $response["success"] = 1;
         $response["message"] = "successfully sent otp on your mobile";
         $response['data'] = $varify['otp'];
+        $response['user_id'] = $user_id;
         return $response;
        
     }
