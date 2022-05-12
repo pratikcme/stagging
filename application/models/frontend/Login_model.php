@@ -36,7 +36,7 @@ class Login_model extends My_model{
        $data['where']['phone'] = $postData['phone'];
        $data['where']['vendor_id'] = $this->vendor_id;
        $re = $this->selectRecords($data,true);
-       lq();
+      
        unset($data);
        if(empty($re)){
             $insertData = array(
@@ -64,8 +64,8 @@ class Login_model extends My_model{
                                     );
         $response["success"] = 1;
         $response["message"] = "successfully sent otp on your mobile";
-        $response['data'] = $varify['otp'];
-        $response['user_id'] = $user_id;
+        // $response['data'] = $varify['otp'];
+        // $response['user_id'] = $user_id;
         return $response;
        
     }
