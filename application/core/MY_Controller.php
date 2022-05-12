@@ -10,7 +10,7 @@ class MY_Controller extends CI_Controller
     function __construct(){
 
         parent::__construct();
-        // $this->url = SITE_URL . 'frontend/'. $this->controller;
+       
         $this->json_response = array('status' => 'error', 'message' => 'something went wrong!');
 
          if(isset($_SESSION['My_cart']) && count($_SESSION['My_cart']) == 0 ){
@@ -38,14 +38,14 @@ class MY_Controller extends CI_Controller
             $this->siteFevicon = $siteDetail['favicon_image']; 
             $this->folder = $siteDetail['folder'];
             $this->siteCurrency = $this->common_model->getDefaultCurrency();
-            // echo $this->siteCurrency;die;
+        
             $this->countCategory = $this->common_model->CountCategory();
             $this->CountSubcategory = $this->common_model->CountSubCategory();
             $this->common_keys = $this->common_model->getCommonKeysAndLink();
 
             }
            
-            // print_r($siteDetail);die;
+          
             
 
     }
@@ -104,11 +104,7 @@ class Vendor_Controller extends MY_Controller
         function __construct()
         { 
             parent::__construct();
-            // $user_id = $this->session->userdata('user_id');
-            //   if(!isset($user_id)){
-            //     redirect(base_url());
-            //   }
-
+           
              if(isset($_SESSION['My_cart']) && count($_SESSION['My_cart']) == 0 ){
                 $this->session->unset_userdata('My_cart');
             }
@@ -124,18 +120,50 @@ class Vendor_Controller extends MY_Controller
                 $this->cartCount = count($my_cart);
             }
 
+            if($this->session->userdata('vendor_id')=='' ||$this->session->userdata('vendor_id')==NULL){
 
+                $this->load->model($this->myvalues->vendorFrontEnd['model'],'vendor_model');
+                $data['branch'] = $this->vendor_model->branchList();
+    
+                $branch_id = count($data['branch']);
+                foreach ($data['branch'] as $key => $value) {
+                    $data['branch'][$key]->product_count = $this->vendor_model->branchProductCount($value->id);
+                };
+                $Approved = $this->vendor_model->ApprovedBranch();
+
+                if($Approved[0]->approved_branch == '1' || $branch_id == '1'){
+                    $branch_id = $data['branch'][0]->id;
+                    $branch_name = $data['branch'][0]->name;
+                    $this->load->model('vendor_model','vendor');
+
+                    $branch = array('branch_id'=>$branch_id,
+                                    'branch_name' => $branch_name,
+                                    'vendor_id'=>$data['branch'][0]->vendor_id
+                                    );
+
+                
+                    $this->session->set_userdata($branch);
+            
+                    if($this->session->userdata('branch_id') !== $branch_id){
+                        $result = $this->this_model->MyCartRemove();    
+                        $this->session->unset_userdata('My_cart');
+                    }
+            
+                   
+                }
+
+
+
+            }
         }
 
        function loadView($layout,$data){
                 $this->load->model($this->myvalues->contactFrontEnd['model'],'contact');
                 $this->load->model($this->myvalues->homeFrontEnd['model'],'home');
                 $this->load->model($this->myvalues->usersAccount['model'],'users');
-                // $ip = $this->input->ip_address(); 
-                // if($ip == '223.226.208.92'){
-                // }
+               
                     if($this->session->userdata('user_id') != ''){
-                        // print_r($userInfo);die();
+                     
                         $userInfo = $this->users->getUserDetails();
                             $_SESSION['user_name'] = $userInfo[0]->fname;
                             $_SESSION['user_lname'] = $userInfo[0]->lname;
@@ -156,15 +184,14 @@ class Vendor_Controller extends MY_Controller
                 $data['CategoryHighrstProduct'] = $this->product_model->getCategoryHighrstProduct();
                 $data['appLinks'] = $this->common_model->getCommonKeysAndLink();
                 
-                // echo '<pre>';
-                // print_r($data['appLinks']);die;
+             
                 
                 $my_cart = $this->product_model->getMyCart();
                 $default_product_image = $this->common_model->default_product_image();
 
                 foreach ($my_cart as $key => $value) {
                      $product_image = $this->product_model->GetUsersProductInCart($value->product_weight_id);
-                        // dd($product_image);die;
+                    
                      if(!file_exists('public/images/'.$this->folder.'product_image/'.$product_image[0]->image) || $product_image[0]->image == '' ){
                         $product_image[0]->image = $default_product_image;
                   }

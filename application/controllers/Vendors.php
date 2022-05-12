@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-// ini_set("error_display", '1');
-// error_reporting(E_ALL);
+
 
 class Vendors extends User_Controller {
 
@@ -9,25 +8,24 @@ class Vendors extends User_Controller {
 
 		parent::__construct();
 		$this->controller = $this->myvalues->vendorFrontEnd['controller'];
-		// $this->url = SITE_URL . 'frontend/'. $this->controller ;
+		
 		$this->load->model($this->myvalues->vendorFrontEnd['model'],'this_model');
 		$this->session->unset_userdata('isSelfPickup');
 	}
 
 
 	public function index(){
-		// echo "123";die;
+	
 		$data['page'] = 'frontend/vendor/vendor';
 		$data['js'] = array('vendor.js');
 		$data['branch'] = $this->this_model->branchList();
-		// echo $this->db->last_query();die;
-		// print_r($data['branch']);die;
+	
 		$branch_id = count($data['branch']);
 		foreach ($data['branch'] as $key => $value) {
 			$data['branch'][$key]->product_count = $this->this_model->branchProductCount($value->id);
 		};
 		$Approved = $this->this_model->ApprovedBranch();
-		// print_r($Approved);die;
+
 		if($Approved[0]->approved_branch == '1' || $branch_id == '1'){
 			$branch_id = $data['branch'][0]->id;
 	 		$branch_name = $data['branch'][0]->name;
@@ -38,22 +36,18 @@ class Vendors extends User_Controller {
 							'vendor_id'=>$data['branch'][0]->vendor_id
 							);
 
-			// print_r($branch);die;
+		
 			$this->session->set_userdata($branch);
-		// print_r($_SESSION);die;
+	
 			if($this->session->userdata('branch_id') !== $branch_id){
 				$result = $this->this_model->MyCartRemove();	
 				$this->session->unset_userdata('My_cart');
 			}
-		// echo '1';die;
+	
 			redirect(base_url().'home');
 		}
 
-		// if(count($data['branch']) == '1'){
-		// 	$this->session->userdata('vendor_id'.$data['branch'][0]->id);
-		// }
-		// print_r($data['branch']);
-		// exit;
+	
 		
 		if(isset($_SESSION['currentlat']) && $_SESSION['currentlat'] != '' && isset($_SESSION['currentlat']) && $_SESSION['currentlong'] !=''){
 			// echo '<pre>';

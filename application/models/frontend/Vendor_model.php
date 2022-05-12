@@ -5,15 +5,13 @@ class Vendor_model extends My_model{
 
 	public function branchList($vendorName = []){
 		
-		// $q = $this->db->query("SELECT * , (3956 * 2 * ASIN(SQRT( POWER(SIN(( $clat - latitude) *  pi()/180 / 2), 2) +COS( $clat * pi()/180) * COS(latitude * pi()/180) * POWER(SIN(( $clong - longitude) * pi()/180 / 2), 2) ))) as distance from vendor having status = '1' AND distance < '5000' ORDER BY distance desc");
 		$clat = $this->session->userdata('currentlat');
 		$clong = $this->session->userdata('currentlong');
 		$data['table'] = 'delivery_charge';
 		$data['select'] = ['max(end_range) as maxRange'];
 		$max = $this->selectRecords($data);	
 		$maxRange = $max[0]->maxRange;
-		// $maxRange = '300';
-
+		
 		if(isset($clat) && $clat != '' && isset($clong) && $clong != ''){
 		$data['select'] = ['*',"(3956 * 2 * ASIN(SQRT( POWER(SIN(($clat - latitude) *  pi()/180 / 2), 2) +COS( $clat * pi()/180) * COS(latitude * pi()/180) * POWER(SIN(( $clong - longitude) * pi()/180 / 2), 2) ))) as distance"];
 			$data['having'] = ['status' => '1','distance <=' =>$maxRange];
@@ -24,7 +22,7 @@ class Vendor_model extends My_model{
 		$data['table'] = TABLE_BRANCH;
 
 		if($this->uri->segment(1) != 'vendors' && $this->uri->segment(2) != 'list'){
-			// $data['limit'] = '6';
+		
 		}
 		if(!empty($vendorName) && $vendorName['vendor_name'] != ''){
 			$data['like'] = ['name',$vendorName['vendor_name'],true];
@@ -33,15 +31,9 @@ class Vendor_model extends My_model{
 			$data['where'] = ['id'=>$vendorName['id']];
 		}
 		$data['where'] = ['domain_name'=>base_url(),'status'=>'1'];
-		// $data['where'] = ['id'=>$this->session->userdata('branch_id')]; //its not working
-
-		// if(!empty($vendorName) &&  $vendorName['page'] == 'vendor'){
-			// $data['limit'] = '6';
-		// }
+		
 		return  $this->selectRecords($data);
-		// echo '<pre>';
-		// echo $this->db->last_query();die;
-		// print_r($return);die;
+	
 	}
 
 	public function venderListAll($id =''){
