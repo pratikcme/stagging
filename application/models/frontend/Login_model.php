@@ -36,6 +36,7 @@ class Login_model extends My_model{
        $data['where']['phone'] = $postData['phone'];
        $data['where']['vendor_id'] = $this->vendor_id;
        $re = $this->selectRecords($data,true);
+       lq();
        unset($data);
        if(empty($re)){
             $insertData = array(
