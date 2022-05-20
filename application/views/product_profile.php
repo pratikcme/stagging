@@ -1,7 +1,7 @@
 <?php
 
 include('header.php');
-@$id = $this->utility->decode($_GET['id']);
+$id = $this->utility->decode($_GET['id']);
 $branch_id = $this->session->userdata['id'];
 $category_query = $this->db->query("SELECT * FROM category WHERE status != '9' AND branch_id = '$branch_id'");
 $category_result = $category_query->result();
@@ -15,17 +15,19 @@ $subcategory_result = $subcategory_query->result();
 $supply_query = $this->db->query("SELECT * FROM `supplier` WHERE branch_id = '$branch_id' AND status != '9'");
 $supply_result = $supply_query->result();
 
-$category_id = '';
- if(isset($_GET['id']) && $id != ''){
+
+ if($id != ''){
     $query = $this->db->query("SELECT * FROM product WHERE id = '$id' AND branch_id = '$branch_id'");
     $result = $query->row_array();
     $category_id = $result['category_id'];
+    // print_r($category_id);die;
     $brand_id = $result['brand_id'];
     $subid = $result['subcategory_id'];
     $supid = $result['supplier_id'];
 
-    $cat_query = $this->db->query("SELECT * FROM category WHERE id = '$category_id' AND branch_id = '$branch_id' AND status != '9'");
+    $cat_query = $this->db->query("SELECT * FROM category WHERE id = '$category_id' AND branch_id = '$branch_id'");
     $cat_result = $cat_query->row_array();
+
     $bra_query = $this->db->query("SELECT * FROM brand WHERE id = '$brand_id' AND branch_id = '$branch_id'");
     $bra_result = $bra_query->row_array();
 
@@ -48,11 +50,11 @@ $category_id = '';
 }
 ?>
 <?php 
-    if(!empty($result) && $result['id'] != ''){
+    if($result['id']!=''){
         $reqName = "Update";
         }else{
            $reqName ="Add";
-        } 
+    } 
     // echo $subcate_result['id'];exit;    
 ?>
 <style type="text/css">
@@ -61,6 +63,7 @@ $category_id = '';
          }
 </style>
 <!--main content start-->
+
 <section id="main-content">
     <section class="wrapper">
         <!-- page start-->
@@ -81,13 +84,13 @@ $category_id = '';
                         <?php echo $reqName; ?> Product
                     </header>
                     <form role="form" method="post" action="<?php echo base_url().'product/product_add_update'; ?>" name="product_form" id="product_form" enctype="multipart/form-data">
-                        <input type="hidden" id="id" name="id" value="<?=(!empty($result)) ? $result['id'] : ''; ?>">
+                        <input type="hidden" id="id" name="id" value="<?php echo $result['id']; ?>">
                         <div class="panel-body">
                             <div class="col-md-12 col-sm-12 col-xs-12 padding-zero">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label for="name" class="margin_top_label">Product Name<span class="required" aria-required="true"> * </span></label>
-                                        <input type="text" class="form-control margin_top_input" id="name" name="name" placeholder="Product name" value="<?=(!empty($result)) ? $result['name'] : ''; ?>">
+                                        <input type="text" class="form-control margin_top_input" id="name" name="name" placeholder="Product name" value="<?php echo $result['name']; ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id" class="margin_top_label">Category<span class="required" aria-required="true"> * </span></label>
@@ -156,15 +159,19 @@ $category_id = '';
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label for="name" class="margin_top_label">About<span class="required" aria-required="true"> * </span></label>
-                                        <textarea class="form-control margin_top_input ckeditor" id="about" placeholder="About" name="about" rows="5"><?=(!empty($result))  ? $result['about'] : '' ?></textarea>
+                                        <textarea class="form-control margin_top_input ckeditor" id="about" placeholder="About" name="about" rows="5"><?php echo $result['about']; ?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="name" class="margin_top_label">Content<span class="required" aria-required="true"> * </span></label>
-                                        <textarea class="form-control margin_top_input ckeditor" id="content" placeholder="Content" name="content" rows="5"><?=(!empty($result)) ? $result['content'] : '' ?></textarea>
+                                        <textarea class="form-control margin_top_input ckeditor" id="content" placeholder="Content" name="content" rows="5"><?php echo $result['content']; ?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="gst" class="margin_top_label">GST<span class="required" aria-required="true"> * </span></label>
-                                       <input type="text" class="form-control margin_top_input" id="gst" name="gst" placeholder="Product gst" value="<?=(!empty($result)) ?  $result['gst'] : '' ?>">
+                                       <input type="text" class="form-control margin_top_input" id="gst" name="gst" placeholder="Product gst" value="<?=($result['gst'] != '0') ? $result['gst'] : '' ?>">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="gst" class="margin_top_label">TAG<span class="required" aria-required="true"> * </span></label><input type="text" value="" data-role="tagsinput" id="tags" class="form-control">
+
                                     </div>
                                 </div>
                             </div>
@@ -185,6 +192,8 @@ $category_id = '';
 <!--main content end-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script  src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
 <style> label.error { color: red; font-weight: 500; } </style>
