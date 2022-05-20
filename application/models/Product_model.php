@@ -17,7 +17,7 @@ public function Product_add_update(){
             $supplier_id = $_POST['supplier_id'];
             $gst = $_POST['gst'];
             $tags = $_POST['tags'];
-            dd($_POST);
+          
             ## Update Product ##
             if($id != ''){
                 $image = time().$_FILES['image_edit']['name'];
@@ -60,26 +60,9 @@ public function Product_add_update(){
                     $this->db->where('id',$id);
                     $this->db->update('product',$data);
 
-                    $data['where']['product_id'] = $id;
-                    $data['table'] = 'product_search';
-                    $this->deleteRecords($data);
-                    $tags = explode(',',$tags);
-                    $data['table'] = 'product_search';
-                    dd($tags);
-                    foreach($tags as $k => $val){
-                        echo $val;die;
-                        $data['insert'] = [
-                                    'product_id'=>$id,
-                                    'name'=>$val,
-                                    'dt_created' =>date('Y-m-d H:i:s'),
-                                    'dt_updated' =>date('Y-m-d H:i:s'),
-
-                                ];
-                        $this->insertRecord($data);
-                    }
+                    
                     $this->session->set_flashdata('msg', 'Product has been updated successfully');
-                    redirect(base_url().'product/product_list');
-                    exit();
+                    
                 }
                 /* Old Image */
                 else{
@@ -100,9 +83,27 @@ public function Product_add_update(){
                     $this->db->where('branch_id',$branch_id);
                     $this->db->update('product',$data);
                     $this->session->set_flashdata('msg', 'Product has been updated successfully');
-                    redirect(base_url().'product/product_list');
-                    exit();
+                    
                 }
+                $data['where']['product_id'] = $id;
+                $data['table'] = 'product_search';
+                $this->deleteRecords($data);
+                $tags = explode(',',$tags);
+                $data['table'] = 'product_search';
+                
+                foreach($tags as $k => $val){
+                   
+                    $data['insert'] = [
+                                'product_id'=>$id,
+                                'name'=>$val,
+                                'dt_created' =>date('Y-m-d H:i:s'),
+                                'dt_updated' =>date('Y-m-d H:i:s'),
+
+                            ];
+                    $this->insertRecord($data);
+                }
+                redirect(base_url().'product/product_list');
+                exit();
             }
             ## Add Product ##
             else{
