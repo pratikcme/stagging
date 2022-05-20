@@ -72,7 +72,7 @@ public function Product_add_update(){
                                     'dt_created' =>date('Y-m-d H:i:s'),
                                     'dt_updated' =>date('Y-m-d H:i:s'),
 
-                                ]
+                                ];
                         $this->insertRecord($data);
                     }
                     $this->session->set_flashdata('msg', 'Product has been updated successfully');
@@ -138,7 +138,7 @@ public function Product_add_update(){
                                     'dt_created' =>date('Y-m-d H:i:s'),
                                     'dt_updated' =>date('Y-m-d H:i:s'),
 
-                                ]
+                                ];
                         $this->insertRecord($data);
                     }
 
