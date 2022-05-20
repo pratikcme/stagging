@@ -16,6 +16,7 @@ public function Product_add_update(){
             $content = $_POST['content'];
             $supplier_id = $_POST['supplier_id'];
             $gst = $_POST['gst'];
+            $tags = $_POST['tags'];
             
             ## Update Product ##
             if($id != ''){
@@ -58,7 +59,22 @@ public function Product_add_update(){
                     $this->db->where('branch_id',$branch_id);
                     $this->db->where('id',$id);
                     $this->db->update('product',$data);
-               
+
+                    $data['where']['product_id'] = $id;
+                    $data['table'] = 'product_search';
+                    $this->deleteRecords($data);
+                    $tags = explode(',',$tags);
+                    $data['table'] = 'product_search';
+                    foreach($tags => $val){
+                        $data['insert'] = [
+                                    'product_id'=>$id,
+                                    'name'=>$val,
+                                    'dt_created' =>date('Y-m-d H:i:s'),
+                                    'dt_updated' =>date('Y-m-d H:i:s'),
+
+                                ]
+                        $this->insertRecord($data);
+                    }
                     $this->session->set_flashdata('msg', 'Product has been updated successfully');
                     redirect(base_url().'product/product_list');
                     exit();
@@ -112,6 +128,20 @@ public function Product_add_update(){
                     'dt_updated' => strtotime(date('Y-m-d H:i:s'))
                 );
                 $this->db->insert('product',$data);
+                $id = $this->db->insert_id();
+                $tags = explode(',',$tags);
+                    $data['table'] = 'product_search';
+                    foreach($tags => $val){
+                        $data['insert'] = [
+                                    'product_id'=>$id,
+                                    'name'=>$val,
+                                    'dt_created' =>date('Y-m-d H:i:s'),
+                                    'dt_updated' =>date('Y-m-d H:i:s'),
+
+                                ]
+                        $this->insertRecord($data);
+                    }
+
                 $this->session->set_flashdata('msg', 'Product has been added successfully');
                 redirect(base_url().'product/product_list');
                 exit();
