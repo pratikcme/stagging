@@ -17,7 +17,7 @@ public function Product_add_update(){
             $supplier_id = $_POST['supplier_id'];
             $gst = $_POST['gst'];
             $tags = $_POST['tags'];
-            
+            dd($_POST);
             ## Update Product ##
             if($id != ''){
                 $image = time().$_FILES['image_edit']['name'];
