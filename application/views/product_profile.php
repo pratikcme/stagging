@@ -49,7 +49,7 @@ $supply_result = $supply_query->result();
     $search_results = $search_query->result();
     $tags = '';
     if($search_results){
-        foreach($search_results => $val){
+        foreach($search_results as $val){
             $tags .= $val->name.','; 
         }
     }
