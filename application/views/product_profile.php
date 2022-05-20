@@ -45,7 +45,7 @@ $supply_result = $supply_query->result();
     $brand_query = $this->db->query("SELECT * FROM brand WHERE   category_id LIKE '%$category_id%' AND branch_id = '$branch_id'");
     $brand_results = $brand_query->result();
 
-    $search_query = $this->db->query("SELECT * FROM product_search WHERE   product_id = '$id'");
+    $search_query = $this->db->query("SELECT * FROM product_search WHERE product_id = '$id'");
     $search_results = $search_query->result();
     $tags = '';
     if($search_results){
@@ -180,7 +180,7 @@ $supply_result = $supply_query->result();
                                        <input type="text" class="form-control margin_top_input" id="gst" name="gst" placeholder="Product gst" value="<?=($result['gst'] != '0') ? $result['gst'] : '' ?>">
                                     </div>
                                      <div class="form-group">
-                                        <label for="gst" class="margin_top_label">TAG<span class="required" aria-required="true"> * </span></label><input type="text" value="<?=(isset($tags)?$tags:''?>" name="tags" data-role="tagsinput" id="tags" class="form-control">
+                                        <label for="gst" class="margin_top_label">TAG<span class="required" aria-required="true"> * </span></label><input type="text" value="<?=(isset($tags))?$tags:''; ?>" name="tags" data-role="tagsinput" id="tags" class="form-control">
 
                                     </div>
                                 </div>
