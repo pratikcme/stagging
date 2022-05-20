@@ -63,6 +63,7 @@ $supply_result = $supply_query->result();
          }
 </style>
 <!--main content start-->
+<script  src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 <section id="main-content">
     <section class="wrapper">
         <!-- page start-->
@@ -168,6 +169,11 @@ $supply_result = $supply_query->result();
                                         <label for="gst" class="margin_top_label">GST<span class="required" aria-required="true"> * </span></label>
                                        <input type="text" class="form-control margin_top_input" id="gst" name="gst" placeholder="Product gst" value="<?=($result['gst'] != '0') ? $result['gst'] : '' ?>">
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="gst" class="margin_top_label">TAG<span class="required" aria-required="true"> * </span></label><input type="text" value="" data-role="tagsinput" id="tags" class="form-control">
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -190,9 +196,7 @@ $supply_result = $supply_query->result();
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
 <style> label.error { color: red; font-weight: 500; } </style>
-<!-- <script src="<?php echo base_url(); ?>public/js/jquery-1.8.3.min.js"></script>
-<script src="<?php echo base_url(); ?>public/js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script> -->
+
 <script type="text/javascript">
 //$("#divid").hide();
  $("#image").on('change',function(){ 
