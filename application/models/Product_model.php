@@ -65,7 +65,9 @@ public function Product_add_update(){
                     $this->deleteRecords($data);
                     $tags = explode(',',$tags);
                     $data['table'] = 'product_search';
-                    foreach($tags as $val){
+                    // dd($tags);
+                    foreach($tags as $k => $val){
+                        echo $val;die;
                         $data['insert'] = [
                                     'product_id'=>$id,
                                     'name'=>$val,
