@@ -138,7 +138,7 @@ public function Product_add_update(){
                                     'dt_created' =>date('Y-m-d H:i:s'),
                                     'dt_updated' =>date('Y-m-d H:i:s'),
 
-                                ];
+                                ];  
                         $this->insertRecord($data);
                     }
 
