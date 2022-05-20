@@ -1676,7 +1676,7 @@ class Api extends Apiuser_Controller {
                     WHERE p.status != '9' AND br.vendor_id = '$vendor_id' AND w.discount_price != '' AND w.status != '9' AND ( p.name LIKE '%$product_name%' OR c.name LIKE '%$product_name%' OR sb.name LIKE '%$product_name%' OR b.name LIKE '%$product_name%' OR ps.name LIKE '%$product_name%')
                     GROUP BY p.id,c.id,sb.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2)) ASC ");
                 $result = $query->result();
-                lq();
+                
             }
 
             if(isset($branch_id) && $branch_id != ''){
