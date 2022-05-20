@@ -170,7 +170,7 @@ $supply_result = $supply_query->result();
                                        <input type="text" class="form-control margin_top_input" id="gst" name="gst" placeholder="Product gst" value="<?=($result['gst'] != '0') ? $result['gst'] : '' ?>">
                                     </div>
                                      <div class="form-group">
-                                        <label for="gst" class="margin_top_label">TAG<span class="required" aria-required="true"> * </span></label><input type="text" value="" data-role="tagsinput" id="tags" class="form-control">
+                                        <label for="gst" class="margin_top_label">TAG<span class="required" aria-required="true"> * </span></label><input type="text" value="hi,hello" data-role="tagsinput" id="tags" class="form-control">
 
                                     </div>
                                 </div>
