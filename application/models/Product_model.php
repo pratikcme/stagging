@@ -583,8 +583,31 @@ public function Product_add_update(){
 
                 $variant_id = $this->db->insert_id();
 
-                
-                $this->product_image_add_update($_FILES,$product_id,$variant_id);
+                $files = $_FILES;
+                    $path = 'public/images/'.$this->folder.'product_image/';
+                    foreach ($files['userfile']['name'] as $key => $value) {
+                        $_FILES['userfile']['name'] = $files['userfile']['name'][$key]; 
+                        $_FILES['userfile']['type'] = $files['userfile']['type'][$key]; 
+                        $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$key]; 
+                        $_FILES['userfile']['error'] = $files['userfile']['error'][$key]; 
+                        $_FILES['userfile']['size'] = $files['userfile']['size'][$key]; 
+                        $imageData = upload_single_image($_FILES,'product_image',$path);
+                        $image = $imageData['data']['file_name'];
+                        $data['table'] = TABLE_PRODUCT_IMAGE;                     
+                        $product_image = array(
+                            'branch_id'=>$vendor_id,
+                            'product_id'=>$product_id,
+                            'image'=>$image,
+                            'product_variant_id' =>$variant_id,
+                            'status'=>'1',
+                            'dt_added'=>DATE_TIME,
+                            'dt_updated'=>DATE_TIME,
+                        );                      
+                        $data['insert'] = $product_image;
+                        // print_r($product_image);die;
+                        $this->insertRecord($data);                    
+                    }
+                // $this->product_image_add_update($_FILES,$product_id,$variant_id);
 
                 $this->session->set_flashdata('msg', 'Product variant has been added successfully');
                 redirect(base_url() . 'product/product_weight_list?product_id='.$this->utility->encode($product_id));

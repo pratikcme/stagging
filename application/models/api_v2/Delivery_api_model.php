@@ -130,6 +130,21 @@ class Delivery_api_model extends My_model
             $s_lat = $res['s_lat'];
             $s_long = $res['s_long'];
             $i = 0;
+            unset($data);
+
+            $message = "New Order In Your Area";
+            $notification_type = 'new_notification';
+            $data['select'] = ['dd.*'];
+            $data['where'] = ['d.branch_id'=>$branch_id];
+            $data['table'] = 'delivery_user_device as dd';
+            $data['join'] = ['delivery_user as d'=>['d.id = dd.delivery_user_id','left']];
+            $result = $this->selectFromJoin($data);
+            foreach($result as $key =>$val){
+                $this->insert_notification($order_id,$val->delivery_user_id,$message,$branch_id);
+            }
+
+
+
         foreach ($decodeRe as $value) {
           
             if(empty($value)){
@@ -145,14 +160,13 @@ class Delivery_api_model extends My_model
                 $data['join'] = ['delivery_user as d'=>['d.id = dd.delivery_user_id','left']];
                 $result = $this->selectFromJoin($data);
                 // print_r($result);die;
-                $message = "New Order In Your Area";
-                $notification_type = 'new_notification';
+                
                 if(count($result)>0){                    
                     $dataArray = array(
                         'device_id' => $result[0]->token,
                         'type' => $result[0]->type,
                         'message' => $message,
-                         'delivery_notification'=>true
+                        'delivery_notification'=>true
                     );
 
                
@@ -164,7 +178,7 @@ class Delivery_api_model extends My_model
                     $result = $this->api_model->getNotificationKey($branch_id);
                     $this->utility_apiv2->sendNotification($dataArray, $notification_type,$result,NULL,$this->key);
                 
-                    $this->insert_notification($order_id,$value->userId,$message,$branch_id);
+                    
                 }
                 
             }

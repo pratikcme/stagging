@@ -1106,10 +1106,14 @@ Class Product_model extends My_model{
 	public function globalSearch($keyword){
 		
 		$data['table'] = TABLE_PRODUCT.' p';
-		$data['join'] = [TABLE_PRODUCT_WEIGHT.' pw'=>['p.id=pw.product_id','LEFT']];
+		$data['join'] = [
+			TABLE_PRODUCT_WEIGHT.' pw'=>['p.id=pw.product_id','LEFT'],
+			'product_search as ps' =>['ps.product_id = p.id','LEFT']
+		];
 		$data['select'] = ['p.id','p.name'];
 		$data['where'] = ['p.branch_id'=>$this->branch_id,'p.status !='=>'9','pw.status !='=>'9'];
-		$data['like'] = ['p.name',$keyword,'both'];
+		$data["group"]['like'] = ['p.name',$keyword,'both'];
+		$data["group"]['or_like'] = ['ps.name',$keyword,'both'];
 		$data['groupBy'] = 'p.id'; 
 		return $this->selectFromJoin($data);
 		echo $this->db->last_query();die;
