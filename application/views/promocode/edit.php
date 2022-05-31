@@ -30,19 +30,19 @@
                               
                               <div class="form-group">
                                   <label for="name">Name</label>
-                                  <input type="text" id="name" name="name" class="form-control">
-                                  <label for="name" style="color: red" class="error"><?php echo @$editData[0]->name; ?></label>
+                                  <input type="text" value="<?php echo @$editData[0]->name; ?>" id="name" name="name" class="form-control">
+                                  <label for="name" style="color: red" class="error"></label>
                                </div>
 
                               <div class="form-group">
                                   <label for="percentage">Percentage</label>
-                                  <input type="number" id="percentage" name="percentage" class="form-control">
-                                  <label for="percentage" style="color: red" class="error"><?php echo @$editData[0]->percentage; ?></label>
+                                  <input type="number" id="percentage" value="<?php echo @$editData[0]->percentage; ?>" name="percentage"  class="form-control">
+                                  <label for="percentage" style="color: red" class="error"> </label>
                               </div>
                               <div class="form-group">
                                   <label for="max_use">Max Allowed</label>
-                                  <input type="text" id="max_use" name="max_use" class="form-control">
-                                  <label for="max_use" style="color: red" class="error"><?php echo @$editData[0]->max_use; ?></label>
+                                  <input type="text" value="<?php echo @$editData[0]->max_use; ?>" id="max_use" name="max_use" class="form-control">
+                                  <label for="max_use" style="color: red" class="error"> </label>
                               </div>
 
                             
@@ -55,19 +55,19 @@
                              
                                <div class="form-group">
                                   <label for="min_cart">Minimum Cart Amount</label>
-                                  <input type="text" id="min_cart" name="min_cart" class="form-control">
-                                  <label for="min_cart" style="color: red" class="error"><?php echo @$editData[0]->min_cart; ?></label>
+                                  <input type="text" id="min_cart" value="<?php echo @$editData[0]->min_cart; ?>" name="min_cart" class="form-control">
+                                  <label for="min_cart" style="color: red" class="error"> </label>
                                </div>
 
                               <div class="form-group">
                                   <label for="start_date">Start Date</label>
-                                  <input type="date" id="start_date" name="start_date" class="form-control">
-                                  <label for="start_date" style="color: red" class="error"><?php echo @$editData[0]->start_date; ?></label>
+                                  <input type="date" id="start_date" value="<?php echo @$editData[0]->start_date; ?>" name="start_date" class="form-control">
+                                  <label for="start_date" style="color: red" class="error"> </label>
                               </div>
                               <div class="form-group">
                                   <label for="end_date">End Date</label>
-                                  <input type="date" id="end_date" name="end_date" class="form-control">
-                                  <label for="end_date" style="color: red" class="error"><?php echo @$editData[0]->end_date; ?></label>
+                                  <input type="date" id="end_date" value="<?php echo @$editData[0]->end_date; ?>" name="end_date" class="form-control">
+                                  <label for="end_date" style="color: red" class="error"> </label>
                               </div>
 
                             </div>
