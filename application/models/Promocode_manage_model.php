@@ -60,14 +60,13 @@ class Promocode_manage_model extends My_model{
             'min_cart' => $postData['min_cart'],
             'start_date' => date('Y-m-d',strtotime($postData['start_date'])),
             'end_date' => date('Y-m-d',strtotime($postData['end_date'])),
-            'dt_created' => DATE_TIME,
             'dt_updated' => DATE_TIME
         );
         $data['table'] = TABLE_PROMOCODE;
         $data['update'] = $update;
         $data['where'] = ['id'=>$this->id];
-        $offer_id = $this->updateRecords($data);
-      
+        $res = $this->updateRecords($data);
+        
         if($res){
             $jsone_response['status'] = 'success';
             $jsone_response['message'] = 'Data updated success!!!';
