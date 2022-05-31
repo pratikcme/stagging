@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 
-class Promocode_manage extends Admin_Controller
+class Promocode_manage extends Vendor_Controller
 {
      function __construct(){
         parent::__construct();
