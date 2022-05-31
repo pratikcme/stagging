@@ -38,9 +38,9 @@ class Promocode_manage_model extends My_model{
         $data['insert'] = $insert;
         $offer_id = $this->insertRecord($data);
     
-        $this->session->set_flashdata('msg', 'Promocode has added successfully.');
-        redirect(base_url().'offer');
-}
+        $response['success','Promocode has added successfully.']; 
+        return $response; 
+    }
 
 
     public function updateRecord($postData){
