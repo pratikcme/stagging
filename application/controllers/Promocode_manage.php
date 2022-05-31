@@ -31,10 +31,10 @@ class Promocode_manage extends Vendor_Controller
         $this->load->view('promocode/add',$data);
     }
 
-    public function edit($_id){
-        $this->id = $this->utility->decode($_id);
+    public function edit($d_id){
+        $this->id = $this->utility->decode($d_id);
         $data['js'] = array('promocode.js');
-        $data['FormAction'] = base_url().'Promocode_manage/edit/'.$_id;
+        $data['FormAction'] = base_url().'Promocode_manage/edit/'.$d_id;
         dd($data);
             if($this->input->post()){
                
