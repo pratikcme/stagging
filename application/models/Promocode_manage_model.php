@@ -66,7 +66,7 @@ class Promocode_manage_model extends My_model{
         $data['table'] = TABLE_PROMOCODE;
         $data['update'] = $update;
         $data['where'] = ['id'=>$this->id];
-        $offer_id = $this->insertRecord($data);
+        $offer_id = $this->updateRecords($data);
       
         if($res){
             $jsone_response['status'] = 'success';
