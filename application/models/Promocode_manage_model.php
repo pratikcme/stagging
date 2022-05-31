@@ -66,7 +66,7 @@ class Promocode_manage_model extends My_model{
         $data['update'] = $update;
         $data['where'] = ['id'=>$this->id];
         $res = $this->updateRecords($data);
-        
+        lq();
         if($res){
             $jsone_response['status'] = 'success';
             $jsone_response['message'] = 'Data updated success!!!';
