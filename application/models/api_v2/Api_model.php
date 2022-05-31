@@ -2157,7 +2157,7 @@ class Api_model extends My_model {
         return $response;
     }
     public function verify_mobile($postData) {
-        // print_r($postData);
+       
         $user_id = $postData['user_id'];
         $country_code = $postData['country_code'];
         $check_str = str_split($country_code); 
@@ -2165,6 +2165,17 @@ class Api_model extends My_model {
             $country_code = '+'.$country_code;
         }
         $mobile = $postData['phone'];
+
+        $userData['select'] = ['*'];
+        $userData['table'] = 'user';
+        $userData['where'] = ['country_code' => $postData['country_code'],'phone'=>$mobile,'user_id !=' $user_id,'status !=' =>'9'];
+        $userDetail = $this->selectRecords($userData);
+        if(!empty($userDetail) ){
+            $response["success"] = 0;
+            $response["message"] = "This mobile number is linked with another account";
+            return $response;
+        }
+
         $mobile_number = $country_code.''.$mobile;
         $generator = "135792468";
         $otp = rand(1111,9999);
@@ -2172,7 +2183,6 @@ class Api_model extends My_model {
         $data = array('otp' => $otp, 'dt_updated' => strtotime(DATE_TIME),);
         $res = $this->db->update("user", $data, array("id" => $postData['user_id']));;
         // $this->sendOtp($mobile_number,$otp);
-        // print_r($postData);die; 
         
         if ($res) {
             if($_SERVER['SERVER_NAME']=='ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
@@ -2181,6 +2191,9 @@ class Api_model extends My_model {
                 // $mobile_number = '+91'.$mobile;
                 $this->sendOtp($mobile_number,$otp);
             }
+
+            
+
 
             $response = array();
             $response["success"] = 1;
@@ -2241,10 +2254,25 @@ class Api_model extends My_model {
             $verifyOtp = $this->db->get_where('user', array('id' => $postData['user_id'], 'otp' => $postData['otp']))->result();
             if (count($verifyOtp) > 0) {
                 $this->db->update('user', array('phone' => $postData['phone'], 'country_code' => $postData['country_code'], 'otp' => NULL, 'is_verify' => '1'), array('id' => $postData['user_id']));
+
+                // $data['select'] = ['*'];
+                // $data['table'] = 'user';
+                // $data['where'] = ['country_code' => $postData['country_code'],'phone'=>$mobile,'user_id !=' $user_id];
+                // $other = $this->selectRecords($data);
+                // foreach($other as $key => $value){
+                //     unset($data);
+                //     $data['update'] =>['status'=>'9'];
+                //     $data['where'] = ['id'=>$value->id];
+                //     $data['table'] = 'user';
+                //     $this->updateRecords($data); 
+                // }
+
+
                 $userData['select'] = ['*'];
                 $userData['table'] = 'user';
                 $userData['where'] = ['id' => $postData['user_id']];
                 $userDetail = $this->selectRecords($userData);
+
                 $postdata = array('user_id' => $postData['user_id'], 'device_id' => $postData['device_id'],'vendor_id'=>$postData['vendor_id']);
                 $this->set_user_cart($postdata);
                 $total_count = $this->get_total($postdata);

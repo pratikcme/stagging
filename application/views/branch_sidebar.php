@@ -214,3 +214,9 @@
         </li>
     </ul>
 </li>
+<li>
+    <a class="<?php if ($this->uri->segment(1) == 'promocode_manage' ) { ?> active <?php } ?>" href="<?php echo base_url() . 'promocode_manage'; ?>">
+        <i class="fa fa-credit-card" aria-hidden="true"></i>
+        <span>Manage Promocode</span>
+    </a>
+</li>
