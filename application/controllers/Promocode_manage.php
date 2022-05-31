@@ -35,6 +35,7 @@ class Promocode_manage extends Vendor_Controller
         $this->id = $this->utility->decode($_id);
         $data['js'] = array('promocode.js');
         $data['FormAction'] = base_url().'Promocode_manage/edit/'.$_id;
+        dd($data);
             if($this->input->post()){
                
                 $result = $this->this_model->updateRecord($this->input->post());
