@@ -35,17 +35,17 @@ class Promocode_manage extends Vendor_Controller
         $this->id = $this->utility->decode($d_id);
         $data['js'] = array('promocode.js');
         $data['FormAction'] = base_url().'Promocode_manage/edit/'.$d_id;
-        dd($data);
-            if($this->input->post()){
-               
-                $result = $this->this_model->updateRecord($this->input->post());
-                if($result){
-                      $this->utility->setFlashMessage($response['status'], $response['message']);
-                    redirect(base_url().'Promocode_manage');
-                 }
-                
+       
+        if($this->input->post()){
+           
+            $result = $this->this_model->updateRecord($this->input->post());
+            if($result){
+                  $this->utility->setFlashMessage($response['status'], $response['message']);
+                redirect(base_url().'Promocode_manage');
+             }
+            
 
-            }
+        }
         $data['editData'] = $this->this_model->allData($this->id);
         $this->load->view('promocode/edit',$data);
     }

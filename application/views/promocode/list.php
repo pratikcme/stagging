@@ -80,7 +80,7 @@
                                             <td>
                                                 <a href="javascript:;" onclick="single_delete(<?php echo $value->id; ?>)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
                                              
-                                                <a href="<?=base_url().'promocode_manage/edit/'.$value->branch_id.'/'.$this->utility->encode($value->id); ?>" class="btn btn-primary btn-xs"/><i class="fa fa-pencil"></i></a>
+                                                <a href="<?=base_url().'promocode_manage/edit/'.$this->utility->encode($value->id); ?>" class="btn btn-primary btn-xs"/><i class="fa fa-pencil"></i></a>
                                             </td>
                                           </tr>
                                      <?php } ?>
