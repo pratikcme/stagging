@@ -80,7 +80,7 @@
                                             <td>
                                                 <a href="javascript:;" onclick="single_delete(<?php echo $value->id; ?>)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
                                              
-                                                <a href="<?=base_url().'promocode/edit/'.$value->branch_id.'/'.$this->utility->encode($value->id); ?>" class="btn btn-primary btn-xs"/><i class="fa fa-pencil"></i></a>
+                                                <a href="<?=base_url().'promocode_manage/edit/'.$value->branch_id.'/'.$this->utility->encode($value->id); ?>" class="btn btn-primary btn-xs"/><i class="fa fa-pencil"></i></a>
                                             </td>
                                           </tr>
                                      <?php } ?>
@@ -104,7 +104,7 @@
             if (confirmed == true) {
                 var id = value;
                 $.ajax({
-                    url: '<?php echo base_url().'promocode/removeRecord'; ?>' ,
+                    url: '<?php echo base_url().'Promocode_manage/removeRecord'; ?>' ,
                     type:'post',
                     dataType:'json',
                     data: {
@@ -147,7 +147,7 @@
                     ids.push($(this).val());
                 });
                 $.ajax({
-                    url: '<?php echo base_url().'promocode/multipleDelete'; ?>',
+                    url: '<?php echo base_url().'Promocode_manage/multipleDelete'; ?>',
                     dataType:'Json',
                     data: { ids: ids},
                     success: function(data) {

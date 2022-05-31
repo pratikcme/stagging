@@ -19,12 +19,12 @@ class Promocode_manage extends Vendor_Controller
     public function add(){
         $data['page'] = 'promocode/add';
         $data['js'] = array('promocode.js');
-        $data['FormAction'] = base_url().'promocode/add';
+        $data['FormAction'] = base_url().'Promocode_manage/add';
             if($this->input->post()){          
                 $result = $this->this_model->addRecord($this->input->post());
                  if($result){
                     $this->utility->setFlashMessage($result[0],$result[1]);
-                    redirect(base_url().'promocode');
+                    redirect(base_url().'Promocode_manage');
                  }
             }
         
@@ -34,13 +34,13 @@ class Promocode_manage extends Vendor_Controller
     public function edit($id){
         $this->id = $this->utility->decode($id);
         $data['js'] = array('promocode.js');
-        $data['FormAction'] = base_url().'promocode/edit/'.$id;
+        $data['FormAction'] = base_url().'Promocode_manage/edit/'.$id;
             if($this->input->post()){
                
                 $result = $this->this_model->updateRecord($this->input->post());
                 if($result){
                     $this->utility->setFlashMessage($result[0],$result[1]);
-                    redirect(base_url().'promocode');
+                    redirect(base_url().'Promocode_manage');
                  }
                 
 

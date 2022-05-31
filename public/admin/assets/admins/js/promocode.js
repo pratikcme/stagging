@@ -42,7 +42,7 @@ $(document).on('click','.delete',function(){
     var x = confirm("Are you sure you want to delete?");
         if(x){    
             $.ajax({
-                url: url+'admin/about/about_section_two/removeRecord',
+                url: url+'Promocode_manage/removeRecord',
                 type:'post',
                 data:{id:id},
                 success:function(output){
