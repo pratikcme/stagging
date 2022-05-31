@@ -36,10 +36,19 @@ class Promocode_manage_model extends My_model{
         );
         $data['table'] = TABLE_PROMOCODE;
         $data['insert'] = $insert;
-        $offer_id = $this->insertRecord($data);
+        
     
-        $response['success','Promocode has added successfully.']; 
-        return $response; 
+        $res = $this->insertRecord($data);
+            
+        if($res){
+            $jsone_response['status'] = 'success';
+            $jsone_response['message'] = 'Data added success!!!';
+        }else{
+            $jsone_response['status'] = 'danger';
+            $jsone_response['message'] = DEFAULT_MESSAGE;
+        }   
+    
+         return $jsone_response;
     }
 
 
@@ -59,8 +68,15 @@ class Promocode_manage_model extends My_model{
         $data['where'] = ['id'=>$this->id];
         $offer_id = $this->insertRecord($data);
       
-        $this->session->set_flashdata('msg', 'Promocode has been updated successfully.');
-        redirect(base_url().'offer'); 
+        if($res){
+            $jsone_response['status'] = 'success';
+            $jsone_response['message'] = 'Data updated success!!!';
+        }else{
+            $jsone_response['status'] = 'danger';
+            $jsone_response['message'] = DEFAULT_MESSAGE;
+        }   
+    
+         return $jsone_response;
 
         
     }
@@ -71,7 +87,9 @@ class Promocode_manage_model extends My_model{
         $data['where']['id'] = $id;
         $return =  $this->deleteRecords($data);
            
-        
+        $jsone_response['status'] = 'success';
+        $jsone_response['message'] = 'Data updated success!!!';
+        return $jsone_response;
             
     }
 

@@ -23,7 +23,7 @@ class Promocode_manage extends Vendor_Controller
             if($this->input->post()){          
                 $result = $this->this_model->addRecord($this->input->post());
                  if($result){
-                    $this->utility->setFlashMessage($result[0],$result[1]);
+                    $this->utility->setFlashMessage($response['status'], $response['message']);
                     redirect(base_url().'Promocode_manage');
                  }
             }
@@ -39,7 +39,7 @@ class Promocode_manage extends Vendor_Controller
                
                 $result = $this->this_model->updateRecord($this->input->post());
                 if($result){
-                    $this->utility->setFlashMessage($result[0],$result[1]);
+                      $this->utility->setFlashMessage($response['status'], $response['message']);
                     redirect(base_url().'Promocode_manage');
                  }
                 
