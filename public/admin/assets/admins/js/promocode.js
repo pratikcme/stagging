@@ -34,6 +34,7 @@ $('#frmAddEdit').validate({
 
 });
 
+$('.table').DataTable();
 
     
 $(document).on('click','.delete',function(){
