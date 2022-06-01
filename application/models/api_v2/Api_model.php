@@ -1860,7 +1860,7 @@ class Api_model extends My_model {
         unset($data);
         $my_cart_result = $this->getCartTotal($user_id);
         $my_cart_result = $my_cart_result[0];
-       
+        $sub_total = number_format((float)$my_cart_result['sub_total'], 2, '.', '');
         $total_price = number_format((float)$sub_total, 2, '.', '');
 
         if($promocode[0]->min_cart < $total_price){
