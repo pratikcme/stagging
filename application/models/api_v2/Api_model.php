@@ -1928,19 +1928,16 @@ class Api_model extends My_model {
         if (isset($_POST['payment_type']) && isset($_POST['branch_id']) && isset($_POST['time_slot_id'])) {
             if (isset($_POST['user_id'])) {
 
-                $this->db->query('LOCK TABLES my_cart as mc WRITE,`order` WRITE,`order_details` WRITE,product_weight as pw WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE,`order_log` WRITE;');
+                $this->db->query('LOCK TABLES my_cart as mc WRITE,`order` WRITE,`order_details` WRITE,product_weight as pw WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE,`order_log` WRITE,`promocode` WRITE,`order_promocode` WRITE;');
                 
                 sleep(0.751);
 
 
-               $my_cart_result = $this->getCartTotal($user_id);
-
+                $my_cart_result = $this->getCartTotal($user_id);
                 $my_cart_result = $my_cart_result[0];
-
                 $sub_total = number_format((float)$my_cart_result['sub_total'], 2, '.', '');
                 $total_savings = number_format((float)$my_cart_result['total_savings'], 2, '.', '');
                 $total_item = $my_cart_result['total_item'];
-
                 $total_price = number_format((float)$sub_total, 2, '.', '');
 
                 if (isset($_POST['user_address_id']) && $_POST['user_address_id'] != '') {
@@ -1952,7 +1949,21 @@ class Api_model extends My_model {
                     $address = 'self pick';
                     $user = $this->getUserDetails($_POST['user_id']);
                 }
-              
+                $promocode_amount = 0;
+
+                
+                if(isset($postdata['promocode']) && $postdata['promocode'] !=''){
+                    unset($data);
+                    $data['where'] = ['branch_id'=>$branch_id,'name'=>$postdata['promocode']];
+                    $data['table'] = TABLE_PROMOCODE;
+                    $promocodeData = $this->selectRecords($data);
+
+                    if(!empty($promocodeData)){
+                        $promocode_amount =  ($total_price / 100 ) * $promocodeData[0]->percentage;
+                    }
+                }
+                
+
                 /*Generate Order Number*/
                 function random_orderNo($length = 10) {
                     $chars = "1234567890";
@@ -1986,12 +1997,12 @@ class Api_model extends My_model {
                             'user_address_id' => $user_address_id, 
                             'time_slot_id' => $time_slot_id, 
                             'payment_type' => $payment_type, 
-                            'total_saving' => $total_savings, 
+                            'total_saving' => $total_savings + $promocode_amount, 
                             'total_item' => $total_item, 
                             'sub_total' => $sub_total,
                             'delivery_charge' => $delivery_charge,
                             'total' => $total_price,
-                            'payable_amount' => $total_price + $delivery_charge,
+                            'payable_amount' => $total_price + $delivery_charge + $promocode_amount,
                             'order_no' => $iOrderNo,
                             'orderId_payment_gateway'=>$refundTxnId,
                             'user_gst_number' => $user_gst_number,
@@ -2003,6 +2014,7 @@ class Api_model extends My_model {
                             'name' => (isset($userDetails) && !empty($userDetails)) ? $userDetails[0]->name : $user[0]->fname, 
                             'mobile' => (isset($userDetails) && !empty($userDetails)) ? $userDetails[0]->phone : $user[0]->phone, 
                             'delivered_address' => $address, 
+                            'promocode_used'=> ($promocode_amount > 0)?1:0,
                             'dt_added' => strtotime(DATE_TIME), 
                             'dt_updated' => strtotime(DATE_TIME)
                         ];
@@ -2052,6 +2064,28 @@ class Api_model extends My_model {
                        
                         
                     }
+
+                 if(isset($postdata['promocode']) && $postdata['promocode'] !=''){
+                    
+                    if(!empty($promocodeData)){
+                        $promocode_id = $promocodeData[0]->id;
+                        $promocode_name = $promocodeData[0]->name;
+                        $promocode_percentage = $promocodeData[0]->percentage;
+                        unset($data);
+                        $data['insert'] =[
+                                            'order_id'=>$last_insert_id,
+                                            'promocode_id'=>$promocode_id,
+                                            'promocode_name'=>$promocode_name,
+                                            'percentage'=>$promocode_percentage,
+                                            'amount'=>$promocode_amount,
+                                            'dt_created'=>DATE_TIME,
+                                            'dt_updated'=>DATE_TIME
+                                        ];
+                        $data['table'] = TABLE_ORDER_PROMOCODE;
+                        $this->insertRecord($data);
+                    }
+                }
+
 
                     /*Remove From My Cart*/
                     $this->db->query('UNLOCK TABLES;');
