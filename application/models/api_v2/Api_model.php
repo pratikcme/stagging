@@ -1951,7 +1951,7 @@ class Api_model extends My_model {
                 }
                 $promocode_amount = 0;
 
-                
+
                 if(isset($postdata['promocode']) && $postdata['promocode'] !=''){
                     unset($data);
                     $data['where'] = ['branch_id'=>$branch_id,'name'=>$postdata['promocode']];
@@ -2002,7 +2002,7 @@ class Api_model extends My_model {
                             'sub_total' => $sub_total,
                             'delivery_charge' => $delivery_charge,
                             'total' => $total_price,
-                            'payable_amount' => $total_price + $delivery_charge + $promocode_amount,
+                            'payable_amount' => $total_price + $delivery_charge - $promocode_amount,
                             'order_no' => $iOrderNo,
                             'orderId_payment_gateway'=>$refundTxnId,
                             'user_gst_number' => $user_gst_number,
