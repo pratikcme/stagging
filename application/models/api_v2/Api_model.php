@@ -1830,6 +1830,76 @@ class Api_model extends My_model {
         return $this->updateRecords($data);
     }
 
+    function valicate_promocode($postData){
+        $user_id = $postData['user_id'];
+        $promocode = $postData['promocode'];
+        $branch_id = $postData['branch_id'];
+        $date = date('Y-m-d'); 
+        $data['where'] = ['branch_id'=>$branch_id,'name'=>$promocode];
+        $data['table'] = TABLE_PROMOCODE;
+        $promocode = $this->selectRecords($data);
+
+        if(empty($promocode)){
+            $response["success"] = 0;
+            $response["message"] = "No Promocode Found";   
+            return $response;
+        }
+
+        if($promocode[0]->start_date < $date){
+            $response["success"] = 0;
+            $response["message"] = "Promocode is not started yet";   
+            return $response;
+        }
+
+        if($promocode[0]->end_date > $date){
+            $response["success"] = 0;
+            $response["message"] = "Promocode is expiered";   
+            return $response;
+        }
+
+        unset($data);
+        $my_cart_result = $this->getCartTotal($user_id);
+        $my_cart_result = $my_cart_result[0];
+       
+        $total_price = number_format((float)$sub_total, 2, '.', '');
+
+        if($promocode[0]->min_cart < $total_price){
+            $response["success"] = 0;
+            $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';   
+            return $response;
+        }
+
+        unset($data);
+        $data['select'] = ['count(*) as count'];
+        $data['where'] = ['promocode_id' => $promocode_id];
+        $data['table'] = TABLE_ORDER_PROMOCODE;
+        $order_promocode = $this->selectRecords($data); 
+
+        if($promocode[0]->max_use >= $order_promocode[0]->count){
+            $response["success"] = 0;
+            $response["message"] = "Promocode is reached limit";   
+            return $response;
+        }
+
+        $calculate = ($total_price / 100 ) * $promocode[0]->percentage;
+
+        $response["success"] = 1;
+        $response["message"] = "Promocode applied";   
+        $response["data"] = $calculate;   
+        return $response;
+
+
+
+    }
+
+    function getCartTotal($user_id){
+        $data['join'] = ['product_weight as pw' =>['pw.id = mc.product_weight_id','INNER']];       
+        $data['table'] = 'my_cart as mc';
+        $data['select'] = ['sum(pw.discount_price * mc.quantity ) AS sub_total','sum((pw.price - pw.discount_price) * mc.quantity) AS total_savings', 'count(mc.id) AS cart_items','COUNT(*) as total_item'];
+        $data['where'] = ['mc.status !='=>'9','mc.user_id'=>$user_id];
+        return $this->selectFromJoin($data,true);
+    }
+
     function checkout($postdata){
         $user_id = $_POST['user_id'];
         $postdata['user_id'] = $user_id;
@@ -1863,11 +1933,7 @@ class Api_model extends My_model {
                 sleep(0.751);
 
 
-                $data['join'] = ['product_weight as pw' =>['pw.id = mc.product_weight_id','INNER']];       
-                $data['table'] = 'my_cart as mc';
-                $data['select'] = ['sum(pw.discount_price * mc.quantity ) AS sub_total','sum((pw.price - pw.discount_price) * mc.quantity) AS total_savings', 'count(mc.id) AS cart_items','COUNT(*) as total_item'];
-                $data['where'] = ['mc.status !='=>'9','mc.user_id'=>$user_id];
-                $my_cart_result = $this->selectFromJoin($data,true);
+               $my_cart_result = $this->getCartTotal($user_id);
 
                 $my_cart_result = $my_cart_result[0];
 
