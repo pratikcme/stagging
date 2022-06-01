@@ -1871,7 +1871,7 @@ class Api_model extends My_model {
 
         unset($data);
         $data['select'] = ['count(*) as count'];
-        $data['where'] = ['promocode_id' => $promocode_id];
+        $data['where'] = ['promocode_id' => $promocode[0]->id];
         $data['table'] = TABLE_ORDER_PROMOCODE;
         $order_promocode = $this->selectRecords($data); 
 
