@@ -31,18 +31,14 @@ class Checkout extends User_Controller {
 
 
   public function index(){
-    // $this->session->unset_userdata('My_cart');
-    // echo "<pre>";
-    // print_r($_SESSION);
-    // die;
+   
 
     if(empty($_SESSION['My_cart']) && $this->cartCount == 0){
       $this->utility->setFlashMessage('danger','Your cart is empty');
       redirect($_SERVER['HTTP_REFERER']);
     }
     $defaultCartValue = $this->this_model->getCartValue();
-    // echo $this->db->last_query();
-    // print_r($defaultCartValue);die;
+ 
     $myCartValue = 0;
     $total_gst = 0;
     if($this->session->userdata('user_id') == '' ){
@@ -55,7 +51,7 @@ class Checkout extends User_Controller {
         
       }
     }else{
-       $my_cart = $this->product_model->getMyCart(); //return value of mycart and product_wieght;
+       $my_cart = $this->product_model->getMyCart(); //return value of mycart and 
        foreach ($my_cart as $key => $value) {
           $myCartValue += $value->discount_price * $value->quantity;
           $this->load->model('api_model');
@@ -66,7 +62,7 @@ class Checkout extends User_Controller {
     }
     $data['TotalGstAmount'] = number_format((float)$total_gst,'2','.','');    
     $data['AmountWithoutGst'] = number_format((float)($myCartValue-$gst_amount),'2','.','');
-    // print_r($myCartValue);die;
+  
 
     if($myCartValue < $defaultCartValue ){
       $this->utility->setFlashMessage_cartValue('danger','Minimum cart value should be greater than '.$this->session->userdata('de_currency').' '.$defaultCartValue );
@@ -81,7 +77,7 @@ class Checkout extends User_Controller {
     $data['country'] = GetDialcodelist();
     $this->load->model($this->myvalues->productFrontEnd['model'],'product_model'); 
       $result = $this->this_model->getUserAddressLatLong();
-      // print_r($result);die;
+     
       if(!isset($_SESSION['isSelfPickup']) || $_SESSION['isSelfPickup'] == '0'){
         if(empty($result)){
         //  $this->utility->setFlashMessage('danger','Please enter your address');
@@ -102,9 +98,7 @@ class Checkout extends User_Controller {
           }
 
       if($data['calc_shiping'] == 'notInRange'){
-        //  $this->utility->setFlashMessage('danger','Product Not Delivered on Your Location');
-        //  redirect(base_url().'frontend/product/cart_item');
-        //  exit();
+        
         $data['AddressNotInRange'] = '0';
       }else{
         $data['AddressNotInRange'] = '1';
@@ -133,8 +127,7 @@ class Checkout extends User_Controller {
       if($userdata[0]->is_verify == '1'){
          $data['is_verify'] = '1';
       }
-    // print_r($data['get_address']);die;
-    // print_r($getActivePaymentMethod);die;
+   
     $publish_key = $getActivePaymentMethod[0]->publish_key; 
     $scret_key = $getActivePaymentMethod[0]->secret_key;
 

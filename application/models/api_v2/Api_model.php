@@ -2168,7 +2168,7 @@ class Api_model extends My_model {
 
         $userData['select'] = ['*'];
         $userData['table'] = 'user';
-        $userData['where'] = ['country_code' => $postData['country_code'],'phone'=>$mobile,'user_id !=' $user_id,'status !=' =>'9'];
+        $userData['where'] = ['country_code' => $postData['country_code'],'phone'=>$mobile,'id !=' => $user_id,'status !=' =>'9'];
         $userDetail = $this->selectRecords($userData);
         if(!empty($userDetail) ){
             $response["success"] = 0;

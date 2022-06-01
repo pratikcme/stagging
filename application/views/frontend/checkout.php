@@ -549,11 +549,16 @@ label.error.mobile_verfication{
                            </div>
                         </div>
                      </li>
+
                      <?php if(totalSaving() > '0.00'){ ?>
                      <li class="saving">
                         <p>You will save <span id='totalSaving'><?=$this->siteCurrency.' '.totalSaving()?></span>  on this order</p>
                      </li>
                      <?php } ?>
+                       <li class="saving">
+                        <input type="text" name="promocode" id="promocode">
+                     </li>
+
                      <li class="saving">
                         <h6> <img src="<?=base_url().'public/frontend/'?>assets/images/shield.png"> 100% Genuine Products</h6>
                      </li>
