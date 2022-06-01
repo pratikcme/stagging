@@ -1875,7 +1875,7 @@ class Api_model extends My_model {
         $data['table'] = TABLE_ORDER_PROMOCODE;
         $order_promocode = $this->selectRecords($data); 
 
-        if($promocode[0]->max_use >= $order_promocode[0]->count){
+        if($order_promocode[0]->count >= $promocode[0]->max_use){
             $response["success"] = 0;
             $response["message"] = "Promocode is reached limit";   
             return $response;
