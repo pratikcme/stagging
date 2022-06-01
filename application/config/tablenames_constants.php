@@ -33,6 +33,7 @@ define('TABLE_BANNERS', 'banners');
 define('TABLE_OFFER', 'offer');
 define('TABLE_OFFER_DETAIL', 'offer_detail');
 define('TABLE_PROMOCODE', 'promocode');
+define('TABLE_ORDER_PROMOCODE', 'order_promocode');
 
 
 // ADMIN CONSTANT
