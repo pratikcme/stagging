@@ -556,7 +556,7 @@ label.error.mobile_verfication{
                      </li>
                      <?php } ?>
                        <li class="saving">
-                        <input type="text" name="promocode" id="promocode">
+                        <input type="text" name="promocode" id="promocode" placeholder="Enter Promocode">
                      </li>
 
                      <li class="saving">
