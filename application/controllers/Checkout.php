@@ -89,8 +89,10 @@ class Checkout extends User_Controller {
         //  exit();
         }
       }
+      if(!empty($result)){
          $userLat = $result[0]->latitude; 
          $userLong = $result[0]->longitude; 
+       }
 
           $otpForSelfPickup = '';
           $data['calc_shiping'] = '0';
