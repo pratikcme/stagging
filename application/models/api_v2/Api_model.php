@@ -1851,7 +1851,7 @@ class Api_model extends My_model {
             return $response;
         }
 
-        if($promocode[0]->end_date > $date){
+        if($date > $promocode[0]->end_date){
             $response["success"] = 0;
             $response["message"] = "Promocode is expiered";   
             return $response;
