@@ -137,7 +137,7 @@ label.error.mobile_verfication{
                     </label>
                 </div>
                 <?php } ?>
-                <?php if($userAddress[0]->user_gst_number != ''){ ?>
+                <?php if(!empty($userAddress) && $userAddress[0]->user_gst_number != ''){ ?>
                   <div class="address-chk-box dn-btn">
                     <label> Use GST Number
                     <input type="checkbox" id="user_gst_number" class="default_check" value="<?=($userAddress[0]->user_gst_number != '') ? $userAddress[0]->user_gst_number : "" ?>">
