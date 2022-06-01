@@ -10,18 +10,18 @@ $('#frmAddEdit').validate({
     rules: {
        
         name:{required:true},
-        percentage:{required:true},
-        max_use:{required:true},
-        min_cart:{required:true},
+        percentage:{required:true,number:true},
+        max_use:{required:true,number:true},
+        min_cart:{required:true,number:true},
         start_date:{required:true},
         end_date:{required:true},
     },
     messages : {
       
         name:{required:"Please enter name"},
-        percentage:{required:"Please enter percentage"},
-        max_use:{required:"Please enter max use"},
-        min_cart:{required:"Please enter minimum cart"},
+        percentage:{required:"Please enter percentage",number:"Please enter valid number"},
+        max_use:{required:"Please enter max use",number:"Please enter valid number"},
+        min_cart:{required:"Please enter minimum cart",number:"Please enter valid number"},
         start_date:{required:"Please enter start date"},
         end_date:{required:"Please enter end date"},
     }, 
