@@ -1845,7 +1845,7 @@ class Api_model extends My_model {
             return $response;
         }
 
-        if($promocode[0]->start_date < $date){
+        if($date < $promocode[0]->start_date){
             $response["success"] = 0;
             $response["message"] = "Promocode is not started yet";   
             return $response;
