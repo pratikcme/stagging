@@ -1863,7 +1863,7 @@ class Api_model extends My_model {
         $sub_total = number_format((float)$my_cart_result['sub_total'], 2, '.', '');
         $total_price = number_format((float)$sub_total, 2, '.', '');
 
-        if($promocode[0]->min_cart < $total_price){
+        if($total_price < $promocode[0]->min_cart){
             $response["success"] = 0;
             $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';   
             return $response;
