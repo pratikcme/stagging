@@ -27,7 +27,7 @@
                             <div id="example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                 <div class="panel-body padding-zero" style="float: right">
                                     <a href="<?=base_url().'promocode_manage/add'?>" class="btn btn-primary">Add </a>
-                                    <a href="#" id="delete_user" class="btn btn-danger">Delete </a>
+                                  
                                 </div>
                                 <table class="display table table-bordered table-striped dataTable" id=""
                                        aria-describedby="example_info">
