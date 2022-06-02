@@ -6131,5 +6131,9 @@ margin-top: 20px;
     border: none;
     background-color: transparent;
     color: var(--primary-color);
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+    width: auto;
 }
 </style>

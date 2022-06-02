@@ -38,7 +38,7 @@
           </div>
 
           <label for="otp" class="varify-error error"></label>
-          <label id="resetcounter"></label>
+          <label id="resetcounter">Didn't get the code? </label>
           <button type="button" id="resend" disabled>Resend OTP</button>
           </div>
           <div id="completeProfile" style="display:none">

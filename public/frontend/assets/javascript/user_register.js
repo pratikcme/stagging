@@ -69,7 +69,7 @@ $("#frmBtn").click(function(){
                         that.addClass("varify");
                         that.html("varify otp");
                         $("#completeOTP").show();
-                        onTimer()
+                      
                   }
                 }
             })
@@ -84,7 +84,7 @@ $("#frmBtn").click(function(){
                 dataType:'json',
                 success:function(res){
                   if(res.success==1){
-                    clearTimeout(myTimeout);
+                   
                     $("#resend").hide();
                     $("#resetcounter").hide();
 
@@ -131,20 +131,3 @@ $("#frmBtn").click(function(){
     }
 })
 
-i = 60;
-function onTimer() {
-  i--;
-  var j = i
-  if(i<10){
-     j = '0'+i;
-  }
-  document.getElementById('resetcounter').innerHTML = '00:'+j;
-  if (i <= 0) {
-    $("#resend").attr("disabled",false);
-    $("#country_code").attr('disabled',false);
-    $("#phone").attr('disabled',false);
-  }
-  else {
-    myTimeout =  setTimeout(onTimer, 1000);
-  }
-}
