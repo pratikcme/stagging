@@ -140,9 +140,9 @@ Class Order_model extends My_model{
        }
 
        if(isset($branch_id)){
-         $this->db->query('LOCK TABLES my_cart WRITE,`order` WRITE,`order_details` WRITE,product_weight as pw WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE,`order_log` WRITE,`promocode` WRITE,`order_promocode` WRITE;');
+         $this->db->query('LOCK TABLES my_cart WRITE,`order` WRITE,`order_details` WRITE,product_weight WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE,`order_log` WRITE,`promocode` WRITE,`order_promocode` WRITE;');
 
-        sleep(0.751);
+        // sleep(0.751);
 
         /*$delivery_charge_query = $this->db->query("SELECT price FROM setting WHERE title = 'delivery_charge' AND vendor_id = '$vendor_id'");
 
@@ -186,7 +186,7 @@ Class Order_model extends My_model{
 
         $my_order_result = $this->product_model->getMyCartOrder();
             // echo "<pre>";
-        print_r($my_order_result);die;
+        // print_r($my_order_result);die;
 
 
           if(isset($promocode) && $promocode !=''){
