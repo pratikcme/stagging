@@ -98,7 +98,7 @@ var CHECKOUT = function(){
 
         var paymentOption = '-1';
     $(document).on('click','#payBtn',function(){
-        updatePaymentSetup();
+        
 
         if($('#credit').checked = true){
 
@@ -188,7 +188,7 @@ var CHECKOUT = function(){
                 }
             })
         }else if(paymentOption == 1){ 
-          
+        updatePaymentSetup();
         checkProductAvailability();
         reserve_quantity();
         CheckSelfPickUpEnable();  // this function check current status of selfpickup enable or not
@@ -254,7 +254,7 @@ var CHECKOUT = function(){
                  rzp.open();
                  // e.preventDefault();
         }else if(paymentOption == 2){ 
-            
+            updatePaymentSetup();
             checkProductAvailability();
 
             CheckSelfPickUpEnable();
@@ -269,6 +269,7 @@ var CHECKOUT = function(){
         }else if(paymentOption == 3){
             /*Paytm gateway*/
              // $('.loader-main').removeClass('d-none');
+             updatePaymentSetup();
              if(checkProductAvailability() == true){
                 setTimeout(function(){
 
@@ -314,6 +315,7 @@ var CHECKOUT = function(){
 
                 $('#razerData').attr('data-json',output.data);
                 $('#paytm').attr('data-json',output.paytm);
+                $('.stripe-amount').attr('data-json',output.amount);
             }
         })
   }
@@ -421,8 +423,7 @@ var CHECKOUT = function(){
             data: {promocode:promocode},
             dataType : "json",
             success: function(response) {
-                console.log(shipping_charge)
-                console.log(response.orderAmount)
+               
                 $('#promo_err').html(response.message);
                 if(response.success == '1'){
                     var orderAmount = parseFloat(response.orderAmount);

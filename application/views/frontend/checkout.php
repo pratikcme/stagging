@@ -613,6 +613,8 @@ label.error.mobile_verfication{
     <input type="hidden" name="razorpay_signature"  id="razorpay_signature" >
    </form>
 <?php }elseif ($GatewayType == '2') { ?>
+    <input type="hidden" name="publishableKey" id="publishableKey">
+   
   <form id="stipeForm" action="<?php echo base_url().'checkout/stripepost';?>" method="post">
      <script
         src="https://checkout.stripe.com/checkout.js" class="stripe-button" 
