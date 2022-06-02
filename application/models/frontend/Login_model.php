@@ -34,6 +34,7 @@ class Login_model extends My_model{
        $data['table'] = 'user';
        $data['select'] = ['*'];
        $data['where']['phone'] = $postData['phone'];
+	   $data['where']['country_code'] = $postData['country_code'];
        $data['where']['vendor_id'] = $this->vendor_id;
        $re = $this->selectRecords($data,true);
       

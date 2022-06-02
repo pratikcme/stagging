@@ -30,7 +30,25 @@ $('#Register_Form').validate({
     }
 });
 $("#resend").click(function(){
-
+  var country_code = $('#country_code').val();
+    var phone     = $('#phone').val();   
+    $.ajax({
+        url:url+'login/sendOtpLogin',
+        data:{country_code:country_code,phone:phone},
+        type:'post',
+        dataType:'json',
+        success:function(res){
+          if(res.success==1){
+                $("#country_code").attr('disabled',true);
+                $("#phone").attr('disabled',true);
+                that.removeClass("send");
+                that.addClass("varify");
+                that.html("varify otp");
+                $("#completeOTP").show();
+                onTimer()
+          }
+        }
+    })
 })
 $("#frmBtn").click(function(){
     if($('#Register_Form').valid()){
@@ -70,6 +88,9 @@ $("#frmBtn").click(function(){
                 success:function(res){
                   if(res.success==1){
                     clearTimeout(myTimeout);
+                    $("#resend").hide();
+                    $("#resetcounter").hide();
+
                     if(res.fname!=''){
                         window.location.href = window.location.href; 
                         return true;
