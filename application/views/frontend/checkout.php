@@ -557,7 +557,8 @@ label.error.mobile_verfication{
                      <?php } ?>
                        <li class="saving">
                         <input type="text" name="promocode" id="promocode" placeholder="Enter Promocode">
-                        <button id="checkPromocode" type="button">Apply</button>
+                        <button id="checkPromocode" class="btn btn-primary" type="button">Apply</button>
+                        <span class="error" id="promo_err"></span>
                      </li>
 
                      <li class="saving">

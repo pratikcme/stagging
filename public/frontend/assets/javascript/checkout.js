@@ -1,5 +1,5 @@
 var CHECKOUT = function(){
-   alert(0);
+   
     var url = $('#url').val();
     var address_checked = false;
     $('.default_check').each(function( index, element ) {
@@ -380,6 +380,28 @@ var CHECKOUT = function(){
             $('#mobileModal').modal({ backdrop: 'static', keyboard: false });
     })
 
+
+    $("#checkPromocode").click(function){
+        var promocode = $("#promocode").val();
+
+        if(promocode==''){
+            $('#promo_err').html('Please enter promocode');
+        }
+
+          $.ajax({
+                url: base_url+'checkout/valicate_promocode',
+                type: 'post',
+                data: {promocode:promocode},
+                dataType : "json",
+                success: function(response) {
+                    $('#promo_err').html(response.messages);
+                    if(response.success == '1'){
+                        
+                    }
+                }            
+            });
+
+    }
       $('#mobileNumber').validate({
             rules : {
                 phoneNumber : { 

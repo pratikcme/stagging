@@ -381,6 +381,68 @@ Class Checkout_model extends My_model{
         return $otp;
     }
 
+    function valicate_promocode($postData){
+        $user_id = $this->session->userdata('user_id');
+        $promocode = $postData['promocode'];
+        $branch_id = $this->session->userdata('branch_id');
+        $date = date('Y-m-d'); 
+        $data['where'] = ['branch_id'=>$branch_id,'name'=>$promocode];
+        $data['table'] = TABLE_PROMOCODE;
+        $promocode = $this->selectRecords($data);
+
+        if(empty($promocode)){
+            $response["success"] = 0;
+            $response["message"] = "No Promocode Found";   
+            return $response;
+        }
+
+        if($date < $promocode[0]->start_date){
+            $response["success"] = 0;
+            $response["message"] = "Promocode is not started yet";   
+            return $response;
+        }
+
+        if($date > $promocode[0]->end_date){
+            $response["success"] = 0;
+            $response["message"] = "Promocode is expiered";   
+            return $response;
+        }
+
+        unset($data);
+      
+        $getMycartSubtotal = getMycartSubtotal();
+        $sub_total = number_format((float)$getMycartSubtotal, 2, '.', '');
+        $total_price = number_format((float)$sub_total, 2, '.', '');
+
+        if($total_price < $promocode[0]->min_cart){
+            $response["success"] = 0;
+            $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';   
+            return $response;
+        }
+
+        unset($data);
+        $data['select'] = ['count(*) as count'];
+        $data['where'] = ['promocode_id' => $promocode[0]->id];
+        $data['table'] = TABLE_ORDER_PROMOCODE;
+        $order_promocode = $this->selectRecords($data); 
+
+        if($order_promocode[0]->count >= $promocode[0]->max_use){
+            $response["success"] = 0;
+            $response["message"] = "Promocode is reached limit";   
+            return $response;
+        }
+
+        $calculate = ($total_price / 100 ) * $promocode[0]->percentage;
+
+        $response["success"] = 1;
+        $response["message"] = "Promocode applied";   
+        $response["data"] = $calculate;   
+        return $response;
+
+
+
+    }
+
 
 }
 
