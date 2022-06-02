@@ -383,7 +383,9 @@ var CHECKOUT = function(){
 
     $("#checkPromocode").click(function(){
         var promocode = $("#promocode").val();
-
+        $('#promoAmount').html('0');                        
+        $('.promocode-applied').hide();
+        $('#promo_err').html('');
         if(promocode==''){
             $('#promo_err').html('Please enter promocode');
         }
@@ -396,7 +398,8 @@ var CHECKOUT = function(){
                 success: function(response) {
                     $('#promo_err').html(response.message);
                     if(response.success == '1'){
-                        
+                        $('#promoAmount').html(response.data);                        
+                        $('.promocode-applied').show();
                     }
                 }            
             });

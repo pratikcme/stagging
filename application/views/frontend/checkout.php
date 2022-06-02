@@ -555,6 +555,18 @@ label.error.mobile_verfication{
                         <p>You will save <span id='totalSaving'><?=$this->siteCurrency.' '.totalSaving()?></span>  on this order</p>
                      </li>
                      <?php } ?>
+
+                     <li class="total-wrap promocode-applied" style="display:none;">
+                        <div class="total-count">
+                           <h6>Promocode Discount</h6>
+                           <div class="price-seperator">
+                              <span class="seperator">:</span>
+                              <p><span><?=$this->siteCurrency?></span> <span id="promoAmount"></span></p>
+                           </div>
+                        </div>
+                     </li>
+
+
                        <li class="saving">
                         <input type="text" name="promocode" id="promocode" placeholder="Enter Promocode">
                         <button id="checkPromocode" class="btn btn-primary" type="button">Apply</button>
