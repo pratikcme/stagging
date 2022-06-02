@@ -4734,5 +4734,14 @@ right: 15px;
     font-family: "OpenSans-Regular";
     margin-bottom: 0px;
 } 
+
+/*=====resend button======*/
+
+#resend {
+    border: none;
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
 </style>
 
