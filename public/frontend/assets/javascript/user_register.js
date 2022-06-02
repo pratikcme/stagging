@@ -29,7 +29,9 @@ $('#Register_Form').validate({
        
     }
 });
-
+$("#resend").click(function(){
+    
+})
 $("#frmBtn").click(function(){
     if($('#Register_Form').valid()){
         var that     = $(this);   
@@ -52,7 +54,7 @@ $("#frmBtn").click(function(){
                         that.addClass("varify");
                         that.html("varify otp");
                         $("#completeOTP").show();
-
+                        onTimer()
                   }
                 }
             })
@@ -109,3 +111,15 @@ $("#frmBtn").click(function(){
         }
     }
 })
+
+i = 60;
+function onTimer() {
+  document.getElementById('mycounter').innerHTML = i;
+  i--;
+  if (i <= 0) {
+    $("#resend").attr("disabled",false);
+  }
+  else {
+    setTimeout(onTimer, 1000);
+  }
+}

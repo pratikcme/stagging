@@ -38,9 +38,9 @@
           </div>
 
           <label for="otp" class="varify-error error"></label>
-
+          <button id="resend" disabled>Resend OTP</button>
           </div>
-          <div id="completeProfile">
+          <div id="completeProfile" style="display:none">
             <div class="input-wrapper">
               <span><i class="fas fa-user"></i></span>
               <input type="text" id="fname" placeholder="First Name*" required>

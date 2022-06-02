@@ -2289,7 +2289,7 @@ class Api_model extends My_model {
                 $this->send_otp_int($mobile_number,$otp);
             }else{
                 // $mobile_number = '+91'.$mobile;
-                $this->sendOtp($mobile_number,$otp);
+                //$this->sendOtp($mobile_number,$otp);
             }
 
             
