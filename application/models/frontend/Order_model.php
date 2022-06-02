@@ -51,8 +51,8 @@ Class Order_model extends My_model{
 
 
     public function makeOrder($fromStripe = ''){
-    	// echo "<pre>";
-     //    print_r($_POST);die;
+    	echo "<pre>";
+        print_r($_POST);die;
       $user_id = $this->session->userdata('user_id');
       $branch_id = $this->session->userdata('branch_id');
       $vendor_id = $this->session->userdata('vendor_id');
@@ -88,6 +88,9 @@ Class Order_model extends My_model{
         }
         if(isset($_REQUEST['delivery_date'])){
             $delivery_date = $_POST['delivery_date'];
+        }
+        if(isset($_REQUEST['user_gst_number'])){
+            $user_gst_number = $_POST['user_gst_number'];
         }
         if(isset($_REQUEST['user_gst_number'])){
             $user_gst_number = $_POST['user_gst_number'];
@@ -176,9 +179,7 @@ Class Order_model extends My_model{
         }
 
         
-        /*Order Details*/
-        // $my_order_query = $this->db->query("SELECT * FROM my_cart WHERE status != '9' AND  user_id = '$user_id' AND branch_id = '$branch_id'");
-        // $my_order_result = $my_order_query->result();
+       
 
         $my_order_result = $this->product_model->getMyCartOrder();
             // echo "<pre>";
