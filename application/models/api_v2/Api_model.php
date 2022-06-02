@@ -2282,7 +2282,7 @@ class Api_model extends My_model {
         
         $data = array('otp' => $otp, 'dt_updated' => strtotime(DATE_TIME));
         $res = $this->db->update("user", $data, array("id" => $postData['user_id']));;
-        // $this->sendOtp($mobile_number,$otp);
+        $this->sendOtp($mobile_number,$otp);
         
         if ($res) {
             if($_SERVER['SERVER_NAME']=='ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
