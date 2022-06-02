@@ -381,7 +381,7 @@ var CHECKOUT = function(){
     })
 
 
-    $("#checkPromocode").click(function){
+    $("#checkPromocode").click(function(){
         var promocode = $("#promocode").val();
 
         if(promocode==''){
@@ -401,7 +401,7 @@ var CHECKOUT = function(){
                 }            
             });
 
-    }
+    })
       $('#mobileNumber').validate({
             rules : {
                 phoneNumber : { 
