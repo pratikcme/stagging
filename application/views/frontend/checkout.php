@@ -601,7 +601,7 @@ label.error.mobile_verfication{
          </div>
       </div>
       <input type="hidden" name="" id="s_charge" value="<?=$this->utility->safe_b64encode($calc_shiping)?>">
-      <input type="hidden" name="" id="shipping_charge" value="<?=$calc_shiping?>">
+      <input type="hidden" name="" id="shipping_charge" value="<?=number_format($calc_shiping,2,'.','')?>">
       <input type="hidden" name="" id="AddressNotInRange" value="<?=$AddressNotInRange?>">
       <input type="hidden" name="" id="checkAddress" value="<?=(!empty($userAddress) ? "1" : "0")?>">
       <input type="hidden" name="" id="CheckisSelfPickup" value="<?=($this->session->userdata('isSelfPickup') == '' || $this->session->userdata('isSelfPickup') == '0') ? "0" : "1"?>">
