@@ -6127,4 +6127,9 @@ margin-top: 20px;
 	
 }
 */
+#resend {
+    border: none;
+    background-color: transparent;
+    color: var(--primary-color);
+}
 </style>
