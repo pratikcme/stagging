@@ -390,7 +390,7 @@ Class Checkout_model extends My_model{
         $data['table'] = TABLE_PROMOCODE;
         $promocode = $this->selectRecords($data);
 
-
+         $getMycartSubtotal = getMycartSubtotal();
         $sub_total = number_format((float)$getMycartSubtotal, 2, '.', '');
         $total_price = number_format((float)$sub_total, 2, '.', '');
 
@@ -418,7 +418,7 @@ Class Checkout_model extends My_model{
 
         unset($data);
       
-        $getMycartSubtotal = getMycartSubtotal();
+       
        
 
         if($total_price < $promocode[0]->min_cart){
