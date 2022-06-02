@@ -59,7 +59,7 @@ function getMycartSubtotal(){
     }
 
   }
-  $total = number_format((float)$total,2,'.','');
+  $total = number_format($total,2,'.','');
   return $total;
 }
 
