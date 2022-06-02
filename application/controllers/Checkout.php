@@ -592,7 +592,7 @@ public function prepareData($amount,$razorpayOrderId,$publish_key){
        }
 
         $otpForSelfPickup = '';
-        $calc_shiping = = '0';
+        $calc_shiping =  '0';
         if(!isset($_SESSION['isSelfPickup']) || $_SESSION['isSelfPickup'] == '0'){
            $calc_shiping = $this->this_model->getDeliveryCharge($userLat,$userLong,$this->session->userdata('branch_id'));
    
