@@ -186,7 +186,7 @@ Class Order_model extends My_model{
 
         $my_order_result = $this->product_model->getMyCartOrder();
             // echo "<pre>";
-//         print_r($my_order_result);die;
+        print_r($my_order_result);die;
 
 
           if(isset($promocode) && $promocode !=''){
