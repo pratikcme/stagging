@@ -414,7 +414,7 @@ var CHECKOUT = function(){
         if(shipping_charge=='notInRange'){
             shipping_charge = 0;
         }
-        shipping_charge = parseFloat(shipping_charge);
+       
  
                     console.log(shipping_charge)
 
