@@ -265,6 +265,17 @@ margin-bottom: 0px;
 .rotate-open{
     transform:rotate(-180deg);
 }
+
+
+/*=====resend button======*/
+
+#resend {
+    border: none;
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
+
 /*=====BREADCRUMB======*/
 .breadcrumb-menu{
     background-image: url(../images/breadcrumb.png);
