@@ -430,10 +430,10 @@ var CHECKOUT = function(){
                     $('#promo_err').html(response.message);
                     if(response.success == '1'){
                         $('#promoAmount').html(response.data);
-                        $('#checkout_final').html(parseFloat(response.orderAmount+shipping_charge - response.data).toFixed(2))                        
+                        $('#checkout_final').html(parseFloat(response.orderAmount)+parseFloat(shipping_charge) - parseFloat(response.data).toFixed(2))                        
                         $('.promocode-applied').show();
                     }else{
-                        $('#checkout_final').html(parseFloat(response.orderAmount+shipping_charge).toFixed(2))
+                        $('#checkout_final').html(parseFloat(response.orderAmount)+parseFloat(shipping_charge).toFixed(2))
                     }
                 }            
             });
