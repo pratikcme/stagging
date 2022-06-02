@@ -414,6 +414,7 @@ var CHECKOUT = function(){
         if(checkType=='string'){
             shipping_charge = 0;
         }
+        console.log(shipping_charge);
 
           $.ajax({
                 url: base_url+'checkout/valicate_promocode',
