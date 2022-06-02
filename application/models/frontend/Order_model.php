@@ -140,7 +140,7 @@ Class Order_model extends My_model{
        }
 
        if(isset($branch_id)){
-         $this->db->query('LOCK TABLES my_cart as mc WRITE,`order` WRITE,`order_details` WRITE,product_weight as pw WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE,`order_log` WRITE,`promocode` WRITE,`order_promocode` WRITE;');
+         $this->db->query('LOCK TABLES my_cart WRITE,`order` WRITE,`order_details` WRITE,product_weight as pw WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE,`order_log` WRITE,`promocode` WRITE,`order_promocode` WRITE;');
 
         sleep(0.751);
 
@@ -185,10 +185,8 @@ Class Order_model extends My_model{
        
 
         $my_order_result = $this->product_model->getMyCartOrder();
-        
-        dd($my_order_result);
-            echo "<pre>";
-        print_r($my_order_result);die;
+            // echo "<pre>";
+//         print_r($my_order_result);die;
 
 
           if(isset($promocode) && $promocode !=''){
