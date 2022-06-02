@@ -390,6 +390,10 @@ var CHECKOUT = function(){
             $('#promo_err').html('Please enter promocode');
         }
         var shipping_charge = $('#shipping_charge').val();
+        var checkType = typeof shipping_charge;
+        if(checkType=='string'){
+            shipping_charge = 0;
+        }
 
           $.ajax({
                 url: base_url+'checkout/valicate_promocode',
