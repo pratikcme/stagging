@@ -410,8 +410,8 @@ var CHECKOUT = function(){
             $('#promo_err').html('Please enter promocode');
         }
         var shipping_charge = $('#shipping_charge').val();
-        var checkType = typeof shipping_charge;
-        if(checkType=='string'){
+      
+        if(checkType=='notInRange'){
             shipping_charge = 0;
         }
         console.log(shipping_charge);
