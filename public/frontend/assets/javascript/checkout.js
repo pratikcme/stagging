@@ -394,7 +394,7 @@ var CHECKOUT = function(){
                 data: {promocode:promocode},
                 dataType : "json",
                 success: function(response) {
-                    $('#promo_err').html(response.messages);
+                    $('#promo_err').html(response.message);
                     if(response.success == '1'){
                         
                     }
