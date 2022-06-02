@@ -40,9 +40,9 @@ $("#resend").click(function(){
         dataType:'json',
         success:function(res){
           if(res.success==1){
-                $("#country_code").attr('disabled',true);
-                $("#phone").attr('disabled',true);
-                onTimer()
+               // $("#country_code").attr('disabled',true);
+              //  $("#phone").attr('disabled',true);
+             
           }
         }
     })
@@ -63,8 +63,8 @@ $("#frmBtn").click(function(){
                 dataType:'json',
                 success:function(res){
                   if(res.success==1){
-                        $("#country_code").attr('disabled',true);
-                        $("#phone").attr('disabled',true);
+                        //$("#country_code").attr('disabled',true);
+                        //$("#phone").attr('disabled',true);
                         that.removeClass("send");
                         that.addClass("varify");
                         that.html("varify otp");
