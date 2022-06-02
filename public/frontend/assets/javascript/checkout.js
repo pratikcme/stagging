@@ -411,10 +411,9 @@ var CHECKOUT = function(){
         }
         var shipping_charge = $('#shipping_charge').val();
       
-        if(checkType=='notInRange'){
+        if(shipping_charge=='notInRange'){
             shipping_charge = 0;
         }
-        console.log(shipping_charge);
 
           $.ajax({
                 url: base_url+'checkout/valicate_promocode',
