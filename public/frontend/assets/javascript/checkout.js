@@ -99,7 +99,7 @@ var CHECKOUT = function(){
         var paymentOption = '-1';
     $(document).on('click','#payBtn',function(){
         updatePaymentSetup();
-        return false;
+
         if($('#credit').checked = true){
 
             $('#paytm-checkoutjs').addClass('test');
@@ -311,6 +311,9 @@ var CHECKOUT = function(){
                 if(output.response == 0){
                    window.location.reload();
                 }
+
+                $('#razerData').attr('data-json',output.data);
+                $('#paytm').attr('data-json',output.paytm);
             }
         })
   }
