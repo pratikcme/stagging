@@ -2014,7 +2014,7 @@ class Api_model extends My_model {
                             'name' => (isset($userDetails) && !empty($userDetails)) ? $userDetails[0]->name : $user[0]->fname, 
                             'mobile' => (isset($userDetails) && !empty($userDetails)) ? $userDetails[0]->phone : $user[0]->phone, 
                             'delivered_address' => $address, 
-                            'promocode_used'=> ($promocode_amount > 0)?1:0,
+                            'promocode_used'=> (isset($promocode_amount) && $promocode_amount > 0)?1:0,
                             'dt_added' => strtotime(DATE_TIME), 
                             'dt_updated' => strtotime(DATE_TIME)
                         ];

@@ -236,7 +236,7 @@ Class Order_model extends My_model{
                     'delivered_address'=>$address,
                     'status' => '1',
                     'order_status' => '1',
-                    'promocode_used'=> ($promocode_amount > 0)?1:0,
+                    'promocode_used'=> (isset($promocode_amount) && $promocode_amount > 0)?1:0,
                     'dt_added' => strtotime(date('Y-m-d H:i:s')),
                     'dt_updated' => strtotime(date('Y-m-d H:i:s')),
                 );
