@@ -416,6 +416,7 @@ var CHECKOUT = function(){
         }
         shipping_charge = parseFloat(shipping_charge);
  
+                    console.log(shipping_charge)
 
           $.ajax({
                 url: base_url+'checkout/valicate_promocode',
@@ -423,6 +424,9 @@ var CHECKOUT = function(){
                 data: {promocode:promocode},
                 dataType : "json",
                 success: function(response) {
+                    console.log(shipping_charge)
+                    console.log(response.orderAmount)
+                    console.log(response.orderAmount+shipping_charge)
                     $('#promo_err').html(response.message);
                     if(response.success == '1'){
                         $('#promoAmount').html(response.data);
