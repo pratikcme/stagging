@@ -69,6 +69,7 @@ $("#frmBtn").click(function(){
                 dataType:'json',
                 success:function(res){
                   if(res.success==1){
+                    clearTimeout(myTimeout);
                     if(res.fname!=''){
                         window.location.href = window.location.href; 
                         return true;
@@ -115,11 +116,17 @@ $("#frmBtn").click(function(){
 i = 60;
 function onTimer() {
   i--;
-  document.getElementById('resetcounter').innerHTML = '00:'+i;
+  var j = i
+  if(i<10){
+     j = '0'+i;
+  }
+  document.getElementById('resetcounter').innerHTML = '00:'+j;
   if (i <= 0) {
     $("#resend").attr("disabled",false);
+    $("#country_code").attr('disabled',false);
+    $("#phone").attr('disabled',false);
   }
   else {
-    setTimeout(onTimer, 1000);
+    myTimeout =  setTimeout(onTimer, 1000);
   }
 }
