@@ -390,33 +390,41 @@ Class Checkout_model extends My_model{
         $data['table'] = TABLE_PROMOCODE;
         $promocode = $this->selectRecords($data);
 
+
+        $sub_total = number_format((float)$getMycartSubtotal, 2, '.', '');
+        $total_price = number_format((float)$sub_total, 2, '.', '');
+
+
         if(empty($promocode)){
             $response["success"] = 0;
-            $response["message"] = "No Promocode Found";   
+            $response["message"] = "No Promocode Found"; 
+            $response["orderAmount"] = $total_price;   
             return $response;
         }
 
         if($date < $promocode[0]->start_date){
             $response["success"] = 0;
-            $response["message"] = "Promocode is not started yet";   
+            $response["message"] = "Promocode is not started yet";  
+            $response["orderAmount"] = $total_price;  
             return $response;
         }
 
         if($date > $promocode[0]->end_date){
             $response["success"] = 0;
-            $response["message"] = "Promocode is expiered";   
+            $response["message"] = "Promocode is expiered"; 
+            $response["orderAmount"] = $total_price;   
             return $response;
         }
 
         unset($data);
       
         $getMycartSubtotal = getMycartSubtotal();
-        $sub_total = number_format((float)$getMycartSubtotal, 2, '.', '');
-        $total_price = number_format((float)$sub_total, 2, '.', '');
+       
 
         if($total_price < $promocode[0]->min_cart){
             $response["success"] = 0;
-            $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';   
+            $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';
+            $response["orderAmount"] = $total_price;      
             return $response;
         }
 
@@ -429,6 +437,7 @@ Class Checkout_model extends My_model{
         if($order_promocode[0]->count >= $promocode[0]->max_use){
             $response["success"] = 0;
             $response["message"] = "Promocode is reached limit";   
+            $response["orderAmount"] = $total_price;   
             return $response;
         }
 
