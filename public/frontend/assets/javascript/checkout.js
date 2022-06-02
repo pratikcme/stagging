@@ -410,10 +410,12 @@ var CHECKOUT = function(){
             $('#promo_err').html('Please enter promocode');
         }
         var shipping_charge = $('#shipping_charge').val();
-      
+      console.log(shipping_charge);
         if(shipping_charge=='notInRange'){
             shipping_charge = 0;
         }
+
+      console.log(shipping_charge);
 
           $.ajax({
                 url: base_url+'checkout/valicate_promocode',
