@@ -414,7 +414,7 @@ var CHECKOUT = function(){
         if(shipping_charge=='notInRange'){
             shipping_charge = 0;
         }
-       
+       shipping_charge = shipping_charge.toFixed(1);
  
                     console.log(shipping_charge)
 
@@ -429,8 +429,9 @@ var CHECKOUT = function(){
                     console.log(response.orderAmount+shipping_charge)
                     $('#promo_err').html(response.message);
                     if(response.success == '1'){
+                        var orderAmount = parseFloat(response.orderAmount).toFixed(1);
                         $('#promoAmount').html(response.data);
-                        $('#checkout_final').html(parseFloat(response.orderAmount)+parseFloat(shipping_charge) - parseFloat(response.data).toFixed(2))                        
+                        $('#checkout_final').html(orderAmount+shipping_charge - parseFloat(response.data).toFixed(2))                        
                         $('.promocode-applied').show();
                     }else{
                         $('#checkout_final').html(parseFloat(response.orderAmount)+parseFloat(shipping_charge).toFixed(2))
