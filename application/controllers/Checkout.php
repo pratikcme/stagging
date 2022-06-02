@@ -136,7 +136,8 @@ class Checkout extends User_Controller {
       $scret_key = $getActivePaymentMethod[0]->test_secret_key;
     }
 
-
+    $getMycartSubtotal = getMycartSubtotal();
+    $data['getMycartSubtotal'] = $getMycartSubtotal;
     $data['array'] = [];
     $data['data'] = json_encode([]);
 
@@ -153,7 +154,7 @@ class Checkout extends User_Controller {
     if(isset($getActivePaymentMethod[0]->type) && $getActivePaymentMethod[0]->type == 1){ // razor payment
 
         $api = new Api($publish_key,$scret_key);
-        $amt =  getMycartSubtotal() + $data['calc_shiping'];
+        $amt =  $getMycartSubtotal + $data['calc_shiping'];
         $razorpayOrder = $api->order->create(array(
             'receipt'         => rand(),
             'amount'          => $amt * 100, // 2000 rupees in paise
@@ -168,7 +169,7 @@ class Checkout extends User_Controller {
     }
     if(isset($getActivePaymentMethod[0]->type) && $getActivePaymentMethod[0]->type == 2){ /*stripe*/
          
-          $amt =  getMycartSubtotal() + $data['calc_shiping'];
+          $amt =  $getMycartSubtotal + $data['calc_shiping'];
           $data['amount'] = $amt *100;
           $data['user_email'] = $this->session->userdata('user_email');
           $data['publishableKey'] = $publish_key;
@@ -194,7 +195,7 @@ class Checkout extends User_Controller {
           // $MID = 'oxzjXy66674454941399'; 
           // $MKY = 'IysGgZ_ro05LoFIo'; 
           // print_r($MID);die;
-          $amt =  getMycartSubtotal() + $data['calc_shiping'];
+          $amt =  $getMycartSubtotal + $data['calc_shiping'];
           $amt = number_format($amt,2,'.','');  
           $custId = "CUST_".time(); 
           $callbackUrl = base_url()."checkout/paytm_checkout";

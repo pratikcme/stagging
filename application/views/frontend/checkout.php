@@ -510,7 +510,7 @@ label.error.mobile_verfication{
                            <h6>Sub total<br>(Inc. Tax)</h6>
                            <div class="price-seperator">
                               <span class="seperator">:</span>
-                              <p><span><?=$this->siteCurrency?></span> <span id="checkout_subtotal"><?=getMycartSubtotal()?></span></p>
+                              <p><span><?=$this->siteCurrency?></span> <span id="checkout_subtotal"><?=$getMycartSubtotal?></span></p>
                            </div>
                         </div>
                      </li>
@@ -540,9 +540,9 @@ label.error.mobile_verfication{
                               <p><span><?=$this->siteCurrency?></span> 
                                <span id="checkout_final">
                                  <?php if(isset($calc_shiping) && is_numeric($calc_shiping)) {
-                                 echo  number_format((float)getMycartSubtotal()+$calc_shiping,2,'.','');
+                                 echo  number_format((float)$getMycartSubtotal+$calc_shiping,2,'.','');
                                  }else{ 
-                                     echo getMycartSubtotal()+'0.00';
+                                     echo number_format($getMycartSubtotal,2);
                                  } ?> 
                                </span>
                            </p>
@@ -557,6 +557,7 @@ label.error.mobile_verfication{
                      <?php } ?>
                        <li class="saving">
                         <input type="text" name="promocode" id="promocode" placeholder="Enter Promocode">
+                        <button id="checkPromocode" type="button">Apply</button>
                      </li>
 
                      <li class="saving">

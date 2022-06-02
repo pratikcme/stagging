@@ -1,5 +1,5 @@
 var CHECKOUT = function(){
-   
+   alert(0);
     var url = $('#url').val();
     var address_checked = false;
     $('.default_check').each(function( index, element ) {

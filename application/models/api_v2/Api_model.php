@@ -2268,7 +2268,7 @@ class Api_model extends My_model {
 
         $userData['select'] = ['*'];
         $userData['table'] = 'user';
-        $userData['where'] = ['country_code' => $postData['country_code'],'phone'=>$mobile,'id !=' => $user_id,'status !=' =>'9'];
+        $userData['where'] = ['country_code' => $postData['country_code'],'phone'=>$mobile,'id !=' => $user_id,'status !=' =>'9','vendor_id'=>$postData['vendor_id']];
         $userDetail = $this->selectRecords($userData);
         if(!empty($userDetail) ){
             $response["success"] = 0;
@@ -2280,7 +2280,7 @@ class Api_model extends My_model {
         $generator = "135792468";
         $otp = rand(1111,9999);
         
-        $data = array('otp' => $otp, 'dt_updated' => strtotime(DATE_TIME),);
+        $data = array('otp' => $otp, 'dt_updated' => strtotime(DATE_TIME));
         $res = $this->db->update("user", $data, array("id" => $postData['user_id']));;
         // $this->sendOtp($mobile_number,$otp);
         
@@ -3473,6 +3473,7 @@ class Api_model extends My_model {
        $data['table'] = 'user';
        $data['select'] = ['*'];
        $data['where']['phone'] = $postData['phone'];
+       $data['where']['country_code'] = $postData['country_code'];
        $data['where']['vendor_id'] = $postData['vendor_id'];
        $re = $this->selectRecords($data,true);
        unset($data);
