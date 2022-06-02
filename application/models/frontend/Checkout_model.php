@@ -70,7 +70,7 @@ Class Checkout_model extends My_model{
 		// echo $this->db->last_query();die;
       
         if (count($get_range)) {
-            return $get_range[0]->price;
+            return numberFormat($get_range[0]->price,2);
         } else {
             $r = 'notInRange';
             return $r;
