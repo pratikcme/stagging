@@ -31,7 +31,8 @@ $('#Register_Form').validate({
 });
 $("#resend").click(function(){
   var country_code = $('#country_code').val();
-    var phone     = $('#phone').val();   
+    var phone     = $('#phone').val();  
+    i = 60; 
     $.ajax({
         url:url+'login/sendOtpLogin',
         data:{country_code:country_code,phone:phone},
