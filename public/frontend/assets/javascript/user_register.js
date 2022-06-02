@@ -30,7 +30,7 @@ $('#Register_Form').validate({
     }
 });
 $("#resend").click(function(){
-    
+
 })
 $("#frmBtn").click(function(){
     if($('#Register_Form').valid()){
@@ -114,8 +114,8 @@ $("#frmBtn").click(function(){
 
 i = 60;
 function onTimer() {
-  document.getElementById('mycounter').innerHTML = i;
   i--;
+  document.getElementById('resetcounter').innerHTML = '00:'+i;
   if (i <= 0) {
     $("#resend").attr("disabled",false);
   }
