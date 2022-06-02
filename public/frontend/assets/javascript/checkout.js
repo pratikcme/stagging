@@ -427,10 +427,10 @@ var CHECKOUT = function(){
                 if(response.success == '1'){
                     var orderAmount = parseFloat(response.orderAmount);
                     $('#promoAmount').html(response.data);
-                    $('#checkout_final').html(orderAmount+parseFloat(shipping_charge) - parseFloat(response.data)).toFixed(2)                        
+                    $('#checkout_final').html((orderAmount+parseFloat(shipping_charge) - parseFloat(response.data)).toFixed(2))                        
                     $('.promocode-applied').show();
                 }else{
-                    $('#checkout_final').html(parseFloat(response.orderAmount)+parseFloat(shipping_charge)).toFixed(2)
+                    $('#checkout_final').html((parseFloat(response.orderAmount)+parseFloat(shipping_charge)).toFixed(2))
                 }
             }            
         });
