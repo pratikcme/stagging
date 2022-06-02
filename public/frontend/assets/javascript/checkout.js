@@ -154,6 +154,8 @@ var CHECKOUT = function(){
             }
          }
 
+       var promocode = $("#applied_promo").val();
+
              // alert('All services are disabled');
              // return false;
         if(paymentOption == 0){ 
@@ -163,6 +165,7 @@ var CHECKOUT = function(){
                 url: url+'orders/makeorder',
                 data:{
                     time_slot_id : time_slot_id, 
+                    promocode :promocode,
                     paymentOption: paymentOption,
                     delivery_date:delivery_date,
                     user_gst_number : user_gst_number
@@ -212,6 +215,7 @@ var CHECKOUT = function(){
                 dataType:'json',
                 data: {
                     razorpay_payment_id:razorpay_payment_id,
+                    promocode:promocode,
                     razorpay_order_id:razorpay_order_id,
                     razorpay_signature : razorpay_signature,
                     payment_type : payment_type,
@@ -264,6 +268,7 @@ var CHECKOUT = function(){
             $('#stipeForm').append('<input type="hidden" name="delivery_date" value="'+delivery_date+'" />');
             $('#stipeForm').append('<input type="hidden" name="time_slot_id" value="'+time_slot_id+'" />');
             $('#stipeForm').append('<input type="hidden" name="user_gst_number" value="'+user_gst_number+'" />');
+            $('#stipeForm').append('<input type="hidden" name="promocode" value="'+promocode+'" />');
             $('.stripe-button-el').trigger('click');
         
         }else if(paymentOption == 3){
@@ -283,6 +288,7 @@ var CHECKOUT = function(){
                         dataType:'json',
                         data: {
                             time_slot_id  : time_slot_id,
+                            promocode  : promocode,
                             delivery_date : delivery_date,
                             user_gst_number : user_gst_number
                         },
@@ -301,7 +307,10 @@ var CHECKOUT = function(){
     })
 
   function updatePaymentSetup(){
-     var promocode = $("#promocode").val();
+     var promocode = $("#applied_promo").val();
+     if(promocode==''){
+        return true;
+     }
     $.ajax({
             url: url+'checkout/paymentSetup',
             method:"post", 
@@ -405,6 +414,7 @@ var CHECKOUT = function(){
 
     $("#checkPromocode").click(function(){
         var promocode = $("#promocode").val();
+        $("#applied_promo").val('');
         $('#promoAmount').html('0');                        
         $('.promocode-applied').hide();
         $('#promo_err').html('');
@@ -430,7 +440,9 @@ var CHECKOUT = function(){
                     $('#promoAmount').html(response.data);
                     $('#checkout_final').html((orderAmount+parseFloat(shipping_charge) - parseFloat(response.data)).toFixed(2))                        
                     $('.promocode-applied').show();
+                    $("#applied_promo").val(promocode);
                 }else{
+                    $("#applied_promo").val('');
                     $('#checkout_final').html((parseFloat(response.orderAmount)+parseFloat(shipping_charge)).toFixed(2))
                 }
             }            

@@ -51,8 +51,8 @@ Class Order_model extends My_model{
 
 
     public function makeOrder($fromStripe = ''){
-    	echo "<pre>";
-        print_r($_POST);die;
+    	// echo "<pre>";
+     //    print_r($_POST);die;
       $user_id = $this->session->userdata('user_id');
       $branch_id = $this->session->userdata('branch_id');
       $vendor_id = $this->session->userdata('vendor_id');
@@ -94,6 +94,9 @@ Class Order_model extends My_model{
         }
         if(isset($_REQUEST['user_gst_number'])){
             $user_gst_number = $_POST['user_gst_number'];
+        }
+        if(isset($_REQUEST['promocode'])){
+            $promocode = $_POST['promocode'];
         }
         
         /*start  payment from strpe*/
@@ -184,6 +187,20 @@ Class Order_model extends My_model{
         $my_order_result = $this->product_model->getMyCartOrder();
             // echo "<pre>";
 //         print_r($my_order_result);die;
+
+
+          if(isset($promocode) && $promocode !=''){
+                    unset($data);
+                    $data['where'] = ['branch_id'=>$branch_id,'name'=>$promocode];
+                    $data['table'] = TABLE_PROMOCODE;
+                    $promocodeData = $this->selectRecords($data);
+
+                    if(!empty($promocodeData)){
+                        $promocode_amount =  ($total_price / 100 ) * $promocodeData[0]->percentage;
+                    }
+                }
+                
+
         if(!empty($my_order_result)){
             foreach ($my_order_result as $my_order) {
                 $var_id = $my_order->product_weight_id;
@@ -219,6 +236,7 @@ Class Order_model extends My_model{
                     'delivered_address'=>$address,
                     'status' => '1',
                     'order_status' => '1',
+                    'promocode_used'=> ($promocode_amount > 0)?1:0,
                     'dt_added' => strtotime(date('Y-m-d H:i:s')),
                     'dt_updated' => strtotime(date('Y-m-d H:i:s')),
                 );
@@ -268,6 +286,27 @@ Class Order_model extends My_model{
                 $this->insert_profit($last_insert_id,$last_order_d_id,$my_order->branch_id,$total_profit);
             //  $this->this_model->update_quantity($my_order->product_weight_id,$my_order->quantity);
             }
+             if(isset($promocode) && $promocode !=''){
+                    
+                    if(!empty($promocodeData)){
+                        $promocode_id = $promocodeData[0]->id;
+                        $promocode_name = $promocodeData[0]->name;
+                        $promocode_percentage = $promocodeData[0]->percentage;
+                        unset($data);
+                        $data['insert'] =[
+                                            'order_id'=>$last_insert_id,
+                                            'promocode_id'=>$promocode_id,
+                                            'promocode_name'=>$promocode_name,
+                                            'percentage'=>$promocode_percentage,
+                                            'amount'=>$promocode_amount,
+                                            'dt_created'=>DATE_TIME,
+                                            'dt_updated'=>DATE_TIME
+                                        ];
+                        $data['table'] = TABLE_ORDER_PROMOCODE;
+                        $this->insertRecord($data);
+                    }
+                }
+
         }else{
             $response = array();
             $response ["success"] = 0;

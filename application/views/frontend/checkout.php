@@ -392,6 +392,7 @@ label.error.mobile_verfication{
                      </div>
                       
                       <?php }?>
+                      <input type="hidden" id="applied_promo">
                   </div>
                   <div class="debit-wrapper">
                      <form>
