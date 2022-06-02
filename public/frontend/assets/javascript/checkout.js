@@ -186,7 +186,7 @@ var CHECKOUT = function(){
                         // console.log(output);
                         window.location.href = url+'checkout';
                     }else{
-                        // window.location.href = url+'home';
+                        window.location.href = url+'home';
                     }
                 }
             })
