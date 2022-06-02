@@ -185,6 +185,7 @@ Class Order_model extends My_model{
        
 
         $my_order_result = $this->product_model->getMyCartOrder();
+        lq();
             echo "<pre>";
         print_r($my_order_result);die;
 
