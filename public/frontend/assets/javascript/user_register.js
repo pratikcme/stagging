@@ -41,10 +41,6 @@ $("#resend").click(function(){
           if(res.success==1){
                 $("#country_code").attr('disabled',true);
                 $("#phone").attr('disabled',true);
-                that.removeClass("send");
-                that.addClass("varify");
-                that.html("varify otp");
-                $("#completeOTP").show();
                 onTimer()
           }
         }
