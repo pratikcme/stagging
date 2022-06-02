@@ -109,7 +109,9 @@ label.error.mobile_verfication{
    </div>
 </section>  
 <!--=================BREADCRUMB SECTION=================  -->
+<?php if(isset($Host)){ ?>
 <script type="application/javascript" src="<?=$Host.'/merchantpgpui/checkoutjs/merchants/'.$MID ?>.js"></script>
+<?php } ?>
 <section class="breadcrumb-menu breadcrumb-cart">
    <div class="container">
       <nav aria-label="breadcrumb">
@@ -542,7 +544,7 @@ label.error.mobile_verfication{
                            </div>
                         </div>
                      </li>
-                     
+
                      <li class="total-wrap">
                         <div class="total-count">
                            <h6> total</h6>

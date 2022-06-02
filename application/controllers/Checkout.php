@@ -32,7 +32,7 @@ class Checkout extends User_Controller {
 
   public function index(){
    
-
+    $this->load->model('api_model');
     if(empty($_SESSION['My_cart']) && $this->cartCount == 0){
       $this->utility->setFlashMessage('danger','Your cart is empty');
       redirect($_SERVER['HTTP_REFERER']);
@@ -44,7 +44,7 @@ class Checkout extends User_Controller {
     if($this->session->userdata('user_id') == '' ){
       foreach ($_SESSION['My_cart'] as $key => $value) {
         $myCartValue += $value['total'];
-        $this->load->model('api_model');
+        
         $gst = $this->api_model->getProductGst($value['product_id']);
         $gst_amount = ($value['discount_price'] * $gst)/100;
         $total_gst += $gst_amount * $value['quantity'];
@@ -54,7 +54,7 @@ class Checkout extends User_Controller {
        $my_cart = $this->product_model->getMyCart(); //return value of mycart and 
        foreach ($my_cart as $key => $value) {
           $myCartValue += $value->discount_price * $value->quantity;
-          $this->load->model('api_model');
+       
           $gst = $this->api_model->getProductGst($value->product_id);
           $gst_amount = ($value->discount_price * $gst)/100;
           $total_gst += $gst_amount * $value->quantity; 
@@ -92,18 +92,22 @@ class Checkout extends User_Controller {
 
           $otpForSelfPickup = '';
           $data['calc_shiping'] = '0';
+          $calc_shiping = 0;
+
           if(!isset($_SESSION['isSelfPickup']) || $_SESSION['isSelfPickup'] == '0'){
-             $data['calc_shiping'] = $this->this_model->getDeliveryCharge($userLat,$userLong,$this->session->userdata('branch_id'));
-          // print_r($data['calc_shiping']);die;
+             $calc_shiping = $this->this_model->getDeliveryCharge($userLat,$userLong,$this->session->userdata('branch_id'));
+            $data['calc_shiping'] = $calc_shiping;
+
+     
           }
 
       if($data['calc_shiping'] == 'notInRange'){
-        
+        $calc_shiping = 0;
         $data['AddressNotInRange'] = '0';
       }else{
         $data['AddressNotInRange'] = '1';
       }
-      // print_r($data['calc_shiping']);die;
+  
     $this->load->model($this->myvalues->usersAccount['model'],'that_model');
     $data['get_address'] = $this->that_model->getUserAddress();
     $data['time_slot'] = $this->this_model->getTimeSlot();
@@ -142,19 +146,18 @@ class Checkout extends User_Controller {
     $data['data'] = json_encode([]);
 
     /*Load Api Model*/
-    $this->load->model('api_model');
+   
     $user_id = $this->session->userdata('user_id');
     $data['selfPickEnable'] = $this->this_model->checkSelfPickUpEnabled();
     $checkCurrencyCode = $this->this_model->checkCurrencyCode();
-    // echo "<pre>";
-    // print_r($checkCurrencyCode);die;  
+     
     $currency_code = $checkCurrencyCode[0]->currency_code;
     $data['currency_code'] = $currency_code; 
 
     if(isset($getActivePaymentMethod[0]->type) && $getActivePaymentMethod[0]->type == 1){ // razor payment
 
         $api = new Api($publish_key,$scret_key);
-        $amt =  $getMycartSubtotal + $data['calc_shiping'];
+        $amt =  $getMycartSubtotal + $calc_shiping;
         $razorpayOrder = $api->order->create(array(
             'receipt'         => rand(),
             'amount'          => $amt * 100, // 2000 rupees in paise
@@ -166,16 +169,16 @@ class Checkout extends User_Controller {
           $_SESSION['razorpay_order_id'] = $razorpayOrderId;
           $d = $this->prepareData($amount,$razorpayOrderId,$publish_key);
           $data['data'] = json_encode($d);
-    }
+    }else
     if(isset($getActivePaymentMethod[0]->type) && $getActivePaymentMethod[0]->type == 2){ /*stripe*/
          
-          $amt =  $getMycartSubtotal + $data['calc_shiping'];
+          $amt =  $getMycartSubtotal + $calc_shiping;
           $data['amount'] = $amt *100;
           $data['user_email'] = $this->session->userdata('user_email');
           $data['publishableKey'] = $publish_key;
           $data['payment_type'] = $getActivePaymentMethod[0]->type;
         }
-    if(isset($getActivePaymentMethod[0]->type) && $getActivePaymentMethod[0]->type == 3){ /*paytm*/
+    else if(isset($getActivePaymentMethod[0]->type) && $getActivePaymentMethod[0]->type == 3){ /*paytm*/
 
       function clean($string) {
          $string = str_replace('-', '', $string); // Replaces all spaces with hyphens.
@@ -192,10 +195,8 @@ class Checkout extends User_Controller {
           $on = "PYTM_ORDR_".$on;
           $MID = trim($publish_key); 
           $MKY = trim($scret_key); 
-          // $MID = 'oxzjXy66674454941399'; 
-          // $MKY = 'IysGgZ_ro05LoFIo'; 
-          // print_r($MID);die;
-          $amt =  $getMycartSubtotal + $data['calc_shiping'];
+        
+          $amt =  $getMycartSubtotal + $calc_shiping;
           $amt = number_format($amt,2,'.','');  
           $custId = "CUST_".time(); 
           $callbackUrl = base_url()."checkout/paytm_checkout";
@@ -215,14 +216,6 @@ class Checkout extends User_Controller {
               "custId"  => $custId,
             ),
           );
-
-
-          // $ip = $this->input->ip_address();
-          // if($ip == '106.214.114.203'){
-          //   echo "<pre>";
-          //   print_r($paytmParams);die;
-          // }
-
         /*
         * Generate checksum by parameters we have in body
         * Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
@@ -239,7 +232,7 @@ class Checkout extends User_Controller {
         /* for Production */
         $url = 'https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid='.$MID.'&orderId='.$on.'';
         $data['Host'] = 'https://securegw.paytm.in'; // production
-        // print_r($getActivePaymentMethod[0]->IsTestOrLive);die;
+
         if($getActivePaymentMethod[0]->IsTestOrLive == 0){
         /* for Staging */
           $url = 'https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid='.$MID.'&orderId='.$on.'';
@@ -257,7 +250,7 @@ class Checkout extends User_Controller {
         $array = ['txnToken'=>$res->body->txnToken,'amount'=>$amt,'orderId'=>$on];
         $data['paytm'] = json_encode($array); 
         $data['MID'] = $publish_key;
-        // exit;
+       
     }
       $data['GatewayType'] = $getActivePaymentMethod[0]->type;
       $data['selfPickupTimeChart'] = $this->this_model->getSelfPickupTimeChart();
@@ -549,6 +542,167 @@ public function prepareData($amount,$razorpayOrderId,$publish_key){
 
     }
 
+  }
+
+
+  function paymentSetup(){
+    $promoDiscount = 0;
+    $getMycartSubtotal = getMycartSubtotal();
+    if($this->input->post('promocode') && $this->input->post('promocode')!=''){
+      $promo = $this->this_model->valicate_promocode($this->input->post());
+      if($promo['success']=='1'){
+        $promoDiscount = $promo['data'];
+        $getMycartSubtotal = $promo['orderAmount'] - $promoDiscount;
+      }else{
+          echo json_encode(['response'=>'0']);die;
+      }
+    }
+    
+    $data['response']='1';
+    $getActivePaymentMethod = $this->this_model->ActivePaymentMethod();
+    $data['payment_option'] = $getActivePaymentMethod[0]->type; 
+
+    $publish_key = $getActivePaymentMethod[0]->publish_key; 
+    $scret_key = $getActivePaymentMethod[0]->secret_key;
+
+    if($getActivePaymentMethod[0]->IsTestOrLive == '0'){
+      $publish_key = $getActivePaymentMethod[0]->test_publish_key; 
+      $scret_key = $getActivePaymentMethod[0]->test_secret_key;
+    }
+
+    
+    $data['getMycartSubtotal'] = $getMycartSubtotal;
+    $data['array'] = [];
+    $data['data'] = json_encode([]);
+
+    /*Load Api Model*/
+   
+    $user_id = $this->session->userdata('user_id');
+    
+    $checkCurrencyCode = $this->this_model->checkCurrencyCode();
+     
+    $currency_code = $checkCurrencyCode[0]->currency_code;
+    $data['currency_code'] = $currency_code; 
+
+
+      $result = $this->this_model->getUserAddressLatLong();
+      if(!empty($result)){
+         $userLat = $result[0]->latitude; 
+         $userLong = $result[0]->longitude; 
+       }
+
+        $otpForSelfPickup = '';
+        $data['calc_shiping'] = '0';
+        if(!isset($_SESSION['isSelfPickup']) || $_SESSION['isSelfPickup'] == '0'){
+           $calc_shiping = $this->this_model->getDeliveryCharge($userLat,$userLong,$this->session->userdata('branch_id'));
+   
+        }
+
+        if($calc_shiping == 'notInRange'){
+          $calc_shiping = 0;
+        }
+
+    if(isset($getActivePaymentMethod[0]->type) && $getActivePaymentMethod[0]->type == 1){ // razor payment
+
+        $api = new Api($publish_key,$scret_key);
+        $amt =  $getMycartSubtotal + $calc_shiping;
+        $razorpayOrder = $api->order->create(array(
+            'receipt'         => rand(),
+            'amount'          => $amt * 100, // 2000 rupees in paise
+            'currency'        => $currency_code,
+            'payment_capture' => 1 // auto capture
+          ));
+          $amount = $razorpayOrder['amount'];
+          $razorpayOrderId = $razorpayOrder['id'];
+          $_SESSION['razorpay_order_id'] = $razorpayOrderId;
+          $d = $this->prepareData($amount,$razorpayOrderId,$publish_key);
+          $data['data'] = json_encode($d);
+    }else
+    if(isset($getActivePaymentMethod[0]->type) && $getActivePaymentMethod[0]->type == 2){ /*stripe*/
+         
+          $amt =  $getMycartSubtotal + $calc_shiping;
+          $data['amount'] = $amt *100;
+          $data['user_email'] = $this->session->userdata('user_email');
+          $data['publishableKey'] = $publish_key;
+          $data['payment_type'] = $getActivePaymentMethod[0]->type;
+        }
+    else if(isset($getActivePaymentMethod[0]->type) && $getActivePaymentMethod[0]->type == 3){ /*paytm*/
+
+      function clean($string) {
+         $string = str_replace('-', '', $string); // Replaces all spaces with hyphens.
+          return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+        }
+         /*Generate Order Number*/
+         function random_orderNo( $length = 10 ) {
+            $chars = "1234567890";
+            $order = substr( str_shuffle( $chars ), 0, $length );
+            return $order;
+          }
+          $od = 'Order #'; 
+          $on = time();
+          $on = "PYTM_ORDR_".$on;
+          $MID = trim($publish_key); 
+          $MKY = trim($scret_key); 
+        
+          $amt =  $getMycartSubtotal + $calc_shiping;
+          $amt = number_format($amt,2,'.','');  
+          $custId = "CUST_".time(); 
+          $callbackUrl = base_url()."checkout/paytm_checkout";
+          $currency = $currency_code;
+          
+          $paytmParams["body"] = array(
+            "requestType"  => "Payment",
+            "mid"      => $MID,
+            "websiteName"  => clean($this->siteTitle),
+            "orderId"    => $on,
+            "callbackUrl"  => $callbackUrl,
+            "txnAmount"   => array(
+              "value"   => $amt,
+              "currency" => trim($currency),
+            ),
+            "userInfo"   => array(
+              "custId"  => $custId,
+            ),
+          );
+        /*
+        * Generate checksum by parameters we have in body
+        * Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
+        */
+        $checksum = PaytmChecksum::generateSignature(json_encode($paytmParams["body"], JSON_UNESCAPED_SLASHES), $MKY);
+
+
+        $paytmParams["head"] = array(
+          "signature" => $checksum
+        );
+
+        $post_data = json_encode($paytmParams, JSON_UNESCAPED_SLASHES);
+
+        /* for Production */
+        $url = 'https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid='.$MID.'&orderId='.$on.'';
+        $data['Host'] = 'https://securegw.paytm.in'; // production
+
+        if($getActivePaymentMethod[0]->IsTestOrLive == 0){
+        /* for Staging */
+          $url = 'https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid='.$MID.'&orderId='.$on.'';
+          $data['Host'] = 'https://securegw-stage.paytm.in'; // staging
+        }
+
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json")); 
+        $response = curl_exec($ch);
+        $res = json_decode($response);
+        $array = ['txnToken'=>$res->body->txnToken,'amount'=>$amt,'orderId'=>$on];
+        $data['paytm'] = json_encode($array); 
+       
+    }
+      $data['GatewayType'] = $getActivePaymentMethod[0]->type;
+
+      echo  json_encode($data);
+      
   }
 
 }

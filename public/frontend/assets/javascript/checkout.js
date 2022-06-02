@@ -98,7 +98,8 @@ var CHECKOUT = function(){
 
         var paymentOption = '-1';
     $(document).on('click','#payBtn',function(){
-
+        updatePaymentSetup();
+        return false;
         if($('#credit').checked = true){
 
             $('#paytm-checkoutjs').addClass('test');
@@ -297,6 +298,22 @@ var CHECKOUT = function(){
 
         }
     })
+
+  function updatePaymentSetup(){
+     var promocode = $("#promocode").val();
+    $.ajax({
+            url: url+'checkout/paymentSetup',
+            method:"post", 
+            dataType:"JSON",
+            data: {promocode:promocode},
+            async : false,
+            success:function(output){
+                if(output.response == 0){
+                   window.location.reload();
+                }
+            }
+        })
+  }
 
     function CheckSelfPickUpEnable(){
            $.ajax({
