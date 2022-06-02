@@ -532,6 +532,17 @@ label.error.mobile_verfication{
                            </div>
                         </div>
                      </li>
+
+                      <li class="total-wrap promocode-applied" style="display:none;">
+                        <div class="total-count">
+                           <h6>Promocode Discount</h6>
+                           <div class="price-seperator">
+                              <span class="seperator">:</span>
+                              <p><span><?=$this->siteCurrency?></span> <span id="promoAmount"></span></p>
+                           </div>
+                        </div>
+                     </li>
+                     
                      <li class="total-wrap">
                         <div class="total-count">
                            <h6> total</h6>
@@ -556,15 +567,7 @@ label.error.mobile_verfication{
                      </li>
                      <?php } ?>
 
-                     <li class="total-wrap promocode-applied" style="display:none;">
-                        <div class="total-count">
-                           <h6>Promocode Discount</h6>
-                           <div class="price-seperator">
-                              <span class="seperator">:</span>
-                              <p><span><?=$this->siteCurrency?></span> <span id="promoAmount"></span></p>
-                           </div>
-                        </div>
-                     </li>
+                    
 
 
                        <li class="saving">

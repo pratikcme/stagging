@@ -389,6 +389,7 @@ var CHECKOUT = function(){
         if(promocode==''){
             $('#promo_err').html('Please enter promocode');
         }
+        var shipping_charge = $('#shipping_charge').val();
 
           $.ajax({
                 url: base_url+'checkout/valicate_promocode',
@@ -398,7 +399,8 @@ var CHECKOUT = function(){
                 success: function(response) {
                     $('#promo_err').html(response.message);
                     if(response.success == '1'){
-                        $('#promoAmount').html(response.data);                        
+                        $('#promoAmount').html(response.data);
+                        $('#checkout_final').html(response.orderAmount+shipping_charge)                        
                         $('.promocode-applied').show();
                     }
                 }            
