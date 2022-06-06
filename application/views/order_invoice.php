@@ -192,6 +192,13 @@
 
               <tr>
                 <td colspan="3"></td>
+                <td colspan="1"><strong>Sub Total</strong></td>
+                <td><strong><?=$getcurrency['value'].' '.$order_detail->sub_total;
+            ?> </strong></td>
+              </tr>
+
+              <tr>
+                <td colspan="3"></td>
                 <td colspan="1"><strong>Total Tax Amount :</strong></td>
                 <td><strong><?php
                 echo $getcurrency['value'].' '.$total_gst;
