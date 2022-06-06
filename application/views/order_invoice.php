@@ -182,6 +182,12 @@
                 <td colspan="1"><strong>Tax 25%</strong></td>
                 <td><strong>$1,300.00</strong></td>
               </tr> -->
+               <tr>
+                <td colspan="3"></td>
+                <td colspan="1"><strong>Sub Total</strong></td>
+                <td><strong><?=$getcurrency['value'].' '.$order_detail->sub_total;
+            ?> </strong></td>
+              </tr>
                  <tr>
                 <td colspan="3"></td>
                 <td colspan="1"><strong>Promocode Amount : <?=($order_detail->percentage!='')?$order_detail->percentage.' %':''; ?></strong></td>
@@ -190,12 +196,7 @@
             ?> </strong></td>
               </tr>
 
-              <tr>
-                <td colspan="3"></td>
-                <td colspan="1"><strong>Sub Total</strong></td>
-                <td><strong><?=$getcurrency['value'].' '.$order_detail->sub_total;
-            ?> </strong></td>
-              </tr>
+             
 
               <tr>
                 <td colspan="3"></td>
