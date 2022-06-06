@@ -186,7 +186,7 @@
                 <td colspan="3"></td>
                 <td colspan="1"><strong>Promocode Amount</strong></td>
                 <td><strong><?php
-              echo $getcurrency['value'].' '.($order_detail->promocodeAmount!='')?$order_detail->promocodeAmount:0;
+              echo ($order_detail->promocodeAmount!='')?$getcurrency['value'].' '.$order_detail->promocodeAmount:$getcurrency['value'].''.'0';
             ?> </strong></td>
               </tr>
 
