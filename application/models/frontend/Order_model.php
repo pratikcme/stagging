@@ -131,10 +131,10 @@ Class Order_model extends My_model{
             $userlat = $userAddressLatLong[0]->latitude;
             $userlong = $userAddressLatLong[0]->longitude;
             $delivery_charge = $this->getDeliveryCharge($userlat,$userlong,$branch_id);
-            echo "<das>";
+
         }
 
-            dd($delivery_charge);die;
+          
 
         $profit_per = 0;
         $get_persentage = $this->get_profit_per();
