@@ -128,9 +128,9 @@ Class Order_model extends My_model{
         $delivery_charge = 0;
 
         if(!isset($_SESSION['isSelfPickup']) || $_SESSION['isSelfPickup'] == '0'){
-           echo $userlat = $userAddressLatLong[0]->latitude;
-           echo '<br>';
-          echo  $userlong = $userAddressLatLong[0]->longitude;
+            $userlat = $userAddressLatLong[0]->latitude;
+
+            $userlong = $userAddressLatLong[0]->longitude;
             $delivery_charge = $this->getDeliveryCharge($userlat,$userlong,$branch_id);
         }
         echo "<pre>";
@@ -410,7 +410,7 @@ Class Order_model extends My_model{
 		        $data['table'] = TABLE_BRANCH;
 		        $data['where'] = ['id' => $branch_id];
 		        $get_vandor_address = $this->selectRecords($data);
-    	
+    	   lq();
 		        $getkm = $this->circle_distance($lat, $long, $get_vandor_address[0]->latitude, $get_vandor_address[0]->longitude);
 		        $getkm = round($getkm);
                 echo $getkm;die;
