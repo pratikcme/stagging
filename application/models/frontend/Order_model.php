@@ -133,7 +133,7 @@ Class Order_model extends My_model{
             $delivery_charge = $this->getDeliveryCharge($userlat,$userlong,$branch_id);
         }
 
-            echo $delivery_charge;die;
+            dd($delivery_charge);die;
 
         $profit_per = 0;
         $get_persentage = $this->get_profit_per();
