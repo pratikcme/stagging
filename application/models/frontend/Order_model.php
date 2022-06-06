@@ -126,10 +126,11 @@ Class Order_model extends My_model{
         $branch_id = $this->session->userdata('branch_id');
         $userAddressLatLong = $this->getUserAddressLatLong();
         $delivery_charge = 0;
-        dd($_SESSION);
+
         if(!isset($_SESSION['isSelfPickup']) || $_SESSION['isSelfPickup'] == '0'){
-            $userlat = $userAddressLatLong[0]->latitude;
-            $userlong = $userAddressLatLong[0]->longitude;
+           echo $userlat = $userAddressLatLong[0]->latitude;
+           echo '<br>';
+          echo  $userlong = $userAddressLatLong[0]->longitude;
             $delivery_charge = $this->getDeliveryCharge($userlat,$userlong,$branch_id);
         }
         echo "<pre>";
