@@ -4,21 +4,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Users_model extends My_model {
 
 	public function varifiy_password($postData)
-	{
+    {
         // print_r($postData);die;
-			$data['table'] = TABLE_USER;
+            $data['table'] = TABLE_USER;
             $data['update']['fname'] = $postData['fname'];
             $data['update']['lname'] = $postData['lname'];
-            $data['update']['phone'] = $postData['phone'];
+           
+            $data['update']['email'] = $postData['email'];
             $data['update']['user_gst_number'] =  $postData['user_gst_number'];
-			$data['where']['id'] =  $this->session->userdata('user_id');
-				/*$response =*/ $this->updateRecords($data);
+            $data['where']['id'] =  $this->session->userdata('user_id');
+                /*$response =*/ $this->updateRecords($data);
+
+        if(isset($postData['otp']) && $postData['otp']!=''){
+            unset($data);
+            $data['select'] = ['*'];
+            $data['table'] = 'user';
+            $data['where']['otp'] = $postData['otp'];
+            $data['where']['id'] = $this->session->userdata('user_id');
+            $data['where']['status !='] = '9';
+            $re = $this->selectRecords($data);
+            if(!empty($re)){
+                 $data['update']['phone'] = $postData['phone'];
+                 $data['update']['country_code'] = $postData['country_code'];
+                 $this->updateRecords($data);
+                $_SESSION['user_phone'] = $postData['phone'];
+
+            }else{
+                return false;
+            }
+        }
+
+
+
             $_SESSION['user_name'] = $postData['fname'];
             $_SESSION['user_lname'] = $postData['lname'];
-            $_SESSION['user_phone'] = $postData['phone'];
-		    return  true;
+            return  true;
 
-	}
+    }
 
     public function update_password($postData) {
               $data['table'] = TABLE_USER;
@@ -356,6 +378,41 @@ class Users_model extends My_model {
                         'status !=' => '9',
                      ];
         return $this->selectRecords($data); 
+    }
+
+        public function sendOtpAccount($postData){
+
+
+        $userData['select'] = ['*'];
+        $userData['table'] = 'user';
+        $userData['where'] = ['country_code' => $postData['country_code'],'phone'=>$postData['phone'],'id !=' => $this->session->userdata('user_id'),'status !=' =>'9','vendor_id'=>$this->session->userdata('vendor_id')];
+        $userDetail = $this->selectRecords($userData);
+        if(!empty($userDetail) ){
+            $response["success"] = 0;
+            $response["message"] = "This mobile number is linked with another account";
+            return $response;
+        }
+        $otp = rand(1111,9999);
+
+        $country_code = $postData['country_code'];
+        $check_str = str_split($country_code); 
+        if($check_str[0] != '+'){
+            $country_code = '+'.$country_code;
+        }
+        $mobile = $postData['phone'];
+        $mobile_number = $country_code.''.$mobile;
+        $this->api_model->sendOtp($mobile_number,$otp);
+
+        $data['update'] = ['otp'=>$otp];
+        $data['where'] =['id'=>$this->session->userdata('user_id')];
+        $data['table'] = 'user';
+        $this->updateRecords($data);
+        
+        $response["success"] = 1;
+        $response["message"] = "successfully sent otp on your mobile";
+        $response['data'] = $otp;
+        return $response;
+
     }
 }
 ?>

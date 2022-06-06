@@ -54,7 +54,7 @@ class Users extends User_Controller {
 					$this->utility->setFlashMessage('success','Profile updated successfully');
 					redirect(base_url().'users_account/users/account?name=my_account');
 				}else{
-					$this->utility->setFlashMessage('danger','Something went wrong');
+					$this->utility->setFlashMessage('danger','OTP is wrong');
 					redirect(base_url().'users_account/users/account?name=my_account');
 				}
 			}else{
@@ -226,4 +226,12 @@ class Users extends User_Controller {
 			$this->this_model->removeItemFromWishlist($this->input->post());
 		}
 	}
+
+public function sendOtpAccount(){
+		$this->load->model('api_v2/api_model','api_model');
+     	$post = $this->input->post();
+      $response = $this->this_model->sendOtpAccount($post);   
+      echo json_encode($response);die;       
+ 	}
+
 }

@@ -9,6 +9,15 @@
       justify-content: flex-end;
       padding: 10px 0px;
    }
+.input-wrapper.country-code select{
+    padding:0px;
+    border:0px;
+    background:transparent;
+    margin-bottom:0px !important;
+    width: 100%;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
 </style>
 <!--=================BREADCRUMB SECTION=================  -->
 <section class="breadcrumb-menu p-100">
@@ -91,15 +100,34 @@
                                  <input type="text" name="user_gst_number" placeholder="Gst number" value="<?=$userDetails[0]->user_gst_number?>" readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','')">
                               </div>
                            </div>
-                           <div class="col-md-12">
-                              <div class="input-wrapper">
-                                 <span><i class="far fa-file"></i></span>
-                                 <input type="text" name="phone" placeholder=" Mobile Number" class="phone" value="<?=$userDetails[0]->phone?>" onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','')">
+                           <div class="col-lg-6">
+                              <div class="input-wrapper country-code">
+                                 <span><i class="fas fa-globe"></i></span>
+                               <select name="country_code" id="country_code" class="input-wrapper">
+                                  <?php foreach(GetDialcodelist() as $key => $value){ ?>
+                                       <option <?=($key==$userDetails[0]->country_code)?'selected':'';?> value="<?=$key;?>"><?=$value;?></option>
+                                 <?php } ?>             
+                              </select>
                               </div>
-                              <label for="phone" class="error"><?=form_error('phone')?></label>
+                                
+                           </div>
+                           <input type="hidden" id="exiting_country" value="<?=$userDetails[0]->country_code?>">
+                           <input type="hidden" id="exiting_phone" value="<?=$userDetails[0]->phone?>">
+                           <div class="col-lg-6">
+                              <div class="input-wrapper">
+                                 <span><i class="fas fa-mobile-alt"></i></span>
+                                 <input type="text" name="phone" placeholder=" Mobile Number" class="phone" id="phone" value="<?=$userDetails[0]->phone?>" >
+                              </div>
+                              <label for="phone" id="mobileErr" class="error"><?=form_error('phone')?></label>
+                           </div>
+                            <div class="col-md-12 varification" style="display: none;">
+                              <div class="input-wrapper">
+                                 <span><i class="far fa-envelope"></i></span>
+                                 <input type="text" id="otp" name="otp" placeholder="otp">
+                              </div>
                            </div>
                            <div class="col-md-12 mt-4 ">
-                              <button type="submit" id="btnSubmit" class="btn">Save</button>
+                              <button type="submit" id="btnAccSubmit" class="btn">Save</button>
                            </div>
                         </div>
                      </form>

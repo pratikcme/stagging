@@ -240,13 +240,13 @@ var ADDPRODUCT = function(){
                 var qnt = 1;
                 that.parent().next('div').find('.quantity-wrap').addClass('d-none');
                 that.parent().next('div').find('.order-btn').find('a:first').removeClass('d-none');
-                that.parent().next('div').find('.quantity-wrap .decqnt').attr('data-product_weight_id',product_varient_id);
-                that.parent().next('div').find('.quantity-wrap .incqnt').attr('data-product_weight_id',product_varient_id);
+                that.parent().next('div').find('.quantity-wrap .decqnt').attr('data-product_weight_id',output.product_weight_id);
+                that.parent().next('div').find('.quantity-wrap .incqnt').attr('data-product_weight_id',output.product_weight_id);
               }else{
                 that.parent().next('div').find('.quantity-wrap').removeClass('d-none');
                 that.parent().next('div').find('.order-btn').find('a:first').addClass('d-none');
-                that.parent().next('div').find('.quantity-wrap .decqnt').attr('data-product_weight_id',product_varient_id);
-                that.parent().next('div').find('.quantity-wrap .incqnt').attr('data-product_weight_id',product_varient_id);
+                that.parent().next('div').find('.quantity-wrap .decqnt').attr('data-product_weight_id',output.product_weight_id);
+                that.parent().next('div').find('.quantity-wrap .incqnt').attr('data-product_weight_id',output.product_weight_id);
                 var qnt = output.cartProductQuantity;
               }
                $('#qnt').val(qnt);

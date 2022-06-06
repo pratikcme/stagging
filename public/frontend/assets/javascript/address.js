@@ -26,6 +26,73 @@ $(document).on('click','.details',function () {
         }
     })
 })
+
+$('#country_code').on('change',function() {
+    checkNumber();
+})
+$('#phone').on('blur',function() {
+
+    checkNumber();
+})
+
+
+function checkNumber(){
+
+   var exiting_country = $('#exiting_country').val()
+   var exiting_phone =  $('#exiting_phone').val();
+   
+   var country_code = $('#country_code').val();
+   var phone = $('#phone').val()
+   if( (country_code != exiting_country)  || (exiting_phone != phone) ){ 
+        $("#btnAccSubmit").html('Send OTP');
+        $("#btnAccSubmit").addClass('otp');
+        $("#btnAccSubmit").attr('type','button');
+        console.log('yes')
+    }else{
+        $("#btnAccSubmit").html('Save');
+        $("#btnAccSubmit").removeClass('otp');
+        $("#btnAccSubmit").attr('type','submit');
+    }
+   
+}
+$(document).on('click','#btnAccSubmit',function(){
+     var url = $('#url').val();
+    if($(this).hasClass('otp')){
+        $('#country_code').prop('readonly',true);
+        $('#phone').prop('readonly',true);
+        var country_code = $('#country_code').val();
+        var phone     = $('#phone').val();  
+       
+        $.ajax({
+            url:url+'users_account/users/sendOtpAccount',
+            data:{country_code:country_code,phone:phone},
+            type:'post',
+            dataType:'json',
+            success:function(res){
+                if(res.success==1){
+                    alert(res.data);
+                    $('.varification').show();
+            
+                    $("#frmBtn").html('varify otp');
+
+                    $("#btnAccSubmit").html('Save');
+                    $("#btnAccSubmit").removeClass('otp');
+                    $("#btnAccSubmit").attr('type','submit');
+                }else{
+                    $('#mobileErr').show()
+                    $('#mobileErr').html(res.message)
+                    $('#country_code').prop('readonly',false);
+                    $('#phone').prop('readonly',false);
+                    
+                }
+
+                
+            }
+        })
+    }
+
+});
+
 var ADDRESS = function(){
 	// $(document).ready(function(){
  //    $('.alert').fadeOut(5000);
