@@ -105,6 +105,7 @@ $("#frmBtn").click(function(){
                   }else{
                     $('.varify-error').show();
                     $('.varify-error').html('Invalid OTP');
+                     that.html("varify otp");
                   }
                 }
             })

@@ -44,13 +44,13 @@
           <div id="completeProfile" style="display:none">
             <div class="input-wrapper">
               <span><i class="fas fa-user"></i></span>
-              <input type="text" id="fname" placeholder="First Name*" required>
+              <input type="text" name="fname" id="fname" placeholder="First Name*" required>
             </div>
             <label for="fname" class="error"></label>
 
             <div class="input-wrapper">
               <span><i class="fas fa-user"></i></span>
-              <input type="text" id="lname" placeholder="Last Name*" required>
+              <input type="text" name="lname" id="lname" placeholder="Last Name*" required>
             </div>
             <label for="lname" class="error"></label>
 

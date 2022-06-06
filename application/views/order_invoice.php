@@ -182,6 +182,14 @@
                 <td colspan="1"><strong>Tax 25%</strong></td>
                 <td><strong>$1,300.00</strong></td>
               </tr> -->
+                 <tr>
+                <td colspan="3"></td>
+                <td colspan="1"><strong>Promocode Amount</strong></td>
+                <td><strong><?php
+              echo $getcurrency['value'].' '.($order_detail->promocodeAmount!='')?$order_detail->promocodeAmount:0;
+            ?> </strong></td>
+              </tr>
+
               <tr>
                 <td colspan="3"></td>
                 <td colspan="1"><strong>Total Tax Amount :</strong></td>
@@ -196,6 +204,7 @@
            echo $getcurrency['value'].' '.$order_detail->delivery_charge;
             ?> </strong></td>
               </tr>
+           
               <tr>
                 <td colspan="3"></td>
                 <td colspan="1"><strong>Grand Total</strong></td>

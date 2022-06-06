@@ -2022,6 +2022,20 @@ class Api extends Apiuser_Controller {
     }
 
 
+    public function delete_user(){
+        $post = $this->input->post();
+        $req = array('user_id','vendor_id');
+        $response = $this->checkRequiredField($post, $req);
+        if ($response['status'] == 1) {
+            $post = $this->input->post();
+            $response = $this->this_model->delete_user($post);
+            $response = array('responsedata' => $response);
+        }
+       $this->response($response);
+    }
+
+
+
 }
 
 ?>

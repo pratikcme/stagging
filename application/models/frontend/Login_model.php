@@ -60,6 +60,7 @@ class Login_model extends My_model{
                                         [
                                         'user_id'=>$user_id,
                                         'country_code'=>$postData['country_code'],
+                                        'vendor_id'=>$this->vendor_id,
                                         'phone'=>$postData['phone']
                                         ]
                                     );
@@ -89,32 +90,34 @@ class Login_model extends My_model{
                 $data['where'] = ['id'=>$re[0]['id']];
                 $data['table'] = 'user';
                 $this->updateRecords($data);
+                if($re[0]['fname']!=''){
 
-            	$login_data = array(
-		 			'user_id' => $re[0]['id'],
-                    'user_name' => $re[0]['fname'],
-                    'user_lname' => $re[0]['lname'],
-		 			'user_email' => $re[0]['email'],
-                    'user_phone' => $re[0]['phone'],
-		 			'logged_in' => TRUE
-		 		); 
+	            	$login_data = array(
+			 			'user_id' => $re[0]['id'],
+	                    'user_name' => $re[0]['fname'],
+	                    'user_lname' => $re[0]['lname'],
+			 			'user_email' => $re[0]['email'],
+	                    'user_phone' => $re[0]['phone'],
+			 			'logged_in' => TRUE
+			 		); 
 
-				$this->session->set_userdata($login_data);
-				if($this->session->userdata('user_id') != ''){	
-					$this->manageCartItem();
-					if(isset($_SESSION['My_cart'][0]['branch_id'])){
-						$branch_id = $_SESSION['My_cart'][0]['branch_id'];
-						$this->load->model('frontend/vendor_model','vendor');
-						$branch = $this->vendor->getVendorName($branch_id);
-						$branch_name = $branch[0]->name;
-						$vendor = array(
-							'branch_id'=>$branch_id,
-							'vendor_name'=>$branch_name,
-						);
-						$this->session->set_userdata($vendor);
+					$this->session->set_userdata($login_data);
+					if($this->session->userdata('user_id') != ''){	
+						$this->manageCartItem();
+						if(isset($_SESSION['My_cart'][0]['branch_id'])){
+							$branch_id = $_SESSION['My_cart'][0]['branch_id'];
+							$this->load->model('frontend/vendor_model','vendor');
+							$branch = $this->vendor->getVendorName($branch_id);
+							$branch_name = $branch[0]->name;
+							$vendor = array(
+								'branch_id'=>$branch_id,
+								'vendor_name'=>$branch_name,
+							);
+							$this->session->set_userdata($vendor);
+						}
+						unset($_SESSION['My_cart']);
 					}
-					unset($_SESSION['My_cart']);
-				}
+                }
 
 				$response["success"] = 1;
         		$response["message"] = "OTP varified";
@@ -138,19 +141,40 @@ class Login_model extends My_model{
 
                             ];
         if(isset($postData['email'])){
-            $data['email'] = $postData['email'];
+            $data['update']['email'] = $postData['email'];
         }
         $data['table'] = 'user';
         $data['where']['vendor_id'] = $this->vendor_id;    
         $data['where']['id'] = $postData['user_id'];
-        $re = $this->updateRecords($data);
+        $this->updateRecords($data);
+        $re = $this->selectRecords($data,true);
 
       
-        $userData = $this->session->userdata();
-        $userData['user_name'] = $postData['fname'];
-        $userData['user_lname'] = $postData['lname'];
-        $userData['user_email'] = $postData['email'];
-		$this->session->set_userdata($userData);
+        $login_data = array(
+			 			'user_id' => $re[0]['id'],
+	                    'user_name' => $re[0]['fname'],
+	                    'user_lname' => $re[0]['lname'],
+			 			'user_email' => $re[0]['email'],
+	                    'user_phone' => $re[0]['phone'],
+			 			'logged_in' => TRUE
+			 		); 
+
+		$this->session->set_userdata($login_data);
+		if($this->session->userdata('user_id') != ''){	
+			$this->manageCartItem();
+			if(isset($_SESSION['My_cart'][0]['branch_id'])){
+				$branch_id = $_SESSION['My_cart'][0]['branch_id'];
+				$this->load->model('frontend/vendor_model','vendor');
+				$branch = $this->vendor->getVendorName($branch_id);
+				$branch_name = $branch[0]->name;
+				$vendor = array(
+					'branch_id'=>$branch_id,
+					'vendor_name'=>$branch_name,
+				);
+				$this->session->set_userdata($vendor);
+			}
+			unset($_SESSION['My_cart']);
+		}
 				
 
 

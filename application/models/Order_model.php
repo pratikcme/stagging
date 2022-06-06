@@ -66,10 +66,11 @@ class Order_model extends My_model
     }
 
     public function orderDetails($order_id){
-        $data['table'] = 'order';
-        $data['select'] = ['payable_amount','order_status','order_no','delivery_charge'];
-        $data['where'] = ['id'=>$order_id];
-        $result =  $this->selectRecords($data);
+        $data['table'] = 'order as o';
+        $data['select'] = ['o.payable_amount','o.order_status','o.order_no','o.delivery_charge','op.percentage','op.amount as promocodeAmount'];
+        $data['where'] = ['o.id'=>$order_id];
+        $dat['join'] = [TABLE_ORDER_PROMOCODE.' as op' =>['op.order_id = o.id','left']];
+        $result =  $this->selectFromJoin($data);
         return $result[0];
     }
 
