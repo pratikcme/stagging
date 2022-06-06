@@ -3594,7 +3594,7 @@ class Api_model extends My_model {
         }
 
         $data['update'] = ['status'=>'9'];
-        $data['where'] = ['id'=>$postData['user_id']  =>$postData['user_id'] ];
+        $data['where'] = ['id'=>$postData['user_id'] ];
         $data['table'] = TABLE_USER;
         $this->updateRecords($data);
         $response["success"] = 1;
