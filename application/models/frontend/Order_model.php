@@ -412,6 +412,7 @@ Class Order_model extends My_model{
     	
 		        $getkm = $this->circle_distance($lat, $long, $get_vandor_address[0]->latitude, $get_vandor_address[0]->longitude);
 		        $getkm = round($getkm);
+                echo $getkm;die;
 		 unset($data);
         $data['select'] = ['price'];
         $data['table'] = 'delivery_charge';
