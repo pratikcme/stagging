@@ -184,7 +184,7 @@
               </tr> -->
                  <tr>
                 <td colspan="3"></td>
-                <td colspan="1"><strong>Promocode Amount:<?=($order_detail->percentage!='')?$order_detail->percentage.' %':''; ?></strong></td>
+                <td colspan="1"><strong>Promocode Amount : <?=($order_detail->percentage!='')?$order_detail->percentage.' %':''; ?></strong></td>
                 <td><strong><?php
               echo ($order_detail->promocodeAmount!='')?$getcurrency['value'].' '.$order_detail->promocodeAmount:$getcurrency['value'].''.'0';
             ?> </strong></td>
