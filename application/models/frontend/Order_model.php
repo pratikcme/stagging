@@ -129,12 +129,10 @@ Class Order_model extends My_model{
 
         if(!isset($_SESSION['isSelfPickup']) || $_SESSION['isSelfPickup'] == '0'){
             $userlat = $userAddressLatLong[0]->latitude;
-
             $userlong = $userAddressLatLong[0]->longitude;
             $delivery_charge = $this->getDeliveryCharge($userlat,$userlong,$branch_id);
         }
-        echo "<pre>";
-            print_r($delivery_charge);die;
+        
         $profit_per = 0;
         $get_persentage = $this->get_profit_per();
         if($get_persentage > 0){
@@ -397,34 +395,35 @@ Class Order_model extends My_model{
     	return $this->selectRecords($data);
 	}
 	
-	  public function getUserAddressLatLong(){
-    	$data['table'] = TABLE_USER_ADDRESS;
-    	$data['select'] = ['latitude','longitude'];
-    	$data['where'] = ['user_id'=>$this->session->userdata('user_id'),'status'=>'1'];
-    	return $this->selectRecords($data);
+	 public function getUserAddressLatLong(){
+        $data['table'] = TABLE_USER_ADDRESS;
+        $data['select'] = ['latitude','longitude'];
+        $data['where'] = ['user_id'=>$this->session->userdata('user_id'),'status'=>'1'];
+        return $this->selectRecords($data);
     }
 
-     public function getDeliveryCharge($lat,$long,$branch_id){
 
-    		  	$data['select'] = ['latitude', 'longitude'];
-		        $data['table'] = TABLE_BRANCH;
-		        $data['where'] = ['id' => $branch_id];
-		        $get_vandor_address = $this->selectRecords($data);
-    	
-		        $getkm = $this->circle_distance($lat, $long, $get_vandor_address[0]->latitude, $get_vandor_address[0]->longitude);
-		        $getkm = round($getkm);
-
-               
-		 unset($data);
+    public function getDeliveryCharge($lat,$long,$branch_id){
+        $data['select'] = ['latitude', 'longitude'];
+        $data['table'] = TABLE_BRANCH;
+        $data['where'] = ['id' => $branch_id];
+        $get_vandor_address = $this->selectRecords($data);
+        $getkm = $this->circle_distance($lat, $long, $get_vandor_address[0]->latitude, $get_vandor_address[0]->longitude);
+        $getkm = round($getkm);
+        // print_r($getkm);die;
+         unset($data);
         $data['select'] = ['price'];
         $data['table'] = 'delivery_charge';
-        $data['where'] = ['start_range <=' => $getkm, 'end_range >=' => $getkm,'vendor_id'=>$this->session->userdata('vendor_id')];
+        $data['where'] = ['start_range <=' => $getkm, 'end_range >=' => $getkm];
         $get_range = $this->selectRecords($data);
-         echo $this->db->last_query();exit;
+        // print_r($get_range);die;
+        // echo $this->db->last_query();die;
+      
         if (count($get_range)) {
             return $get_range[0]->price;
         } else {
-            return '500';
+            $r = 'notInRange';
+            return $r;
         }
     }
 
@@ -434,6 +433,7 @@ Class Order_model extends My_model{
 
         return acos(sin($lat2 * ($rad)) * sin($lat1 * $rad) + cos($lat2 * $rad) * cos($lat1 * $rad) * cos($lon2 * $rad - $lon1 * $rad)) * 6371;
     }
+
 
      //check profit persentage %%
     function get_profit_per()
