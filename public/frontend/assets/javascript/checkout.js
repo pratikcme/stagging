@@ -437,8 +437,9 @@ var CHECKOUT = function(){
                 $('#promo_err').html(response.message);
                 if(response.success == '1'){
                     var orderAmount = parseFloat(response.orderAmount);
+
                     $('#promoAmount').html(response.data);
-                    $('#checkout_final').html((orderAmount+parseFloat(shipping_charge) - parseFloat(response.data)).toFixed(2))                        
+                    $('#checkout_final').html(orderAmount + parseFloat(shipping_charge) - parseFloat(response.data)).toFixed(2)                        
                     $('.promocode-applied').show();
                     $("#applied_promo").val(promocode);
                 }else{
