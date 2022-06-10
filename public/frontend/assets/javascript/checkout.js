@@ -422,7 +422,7 @@ var CHECKOUT = function(){
             $('#promo_err').html('Please enter promocode');
         }
         var shipping_charge = $('#shipping_charge').val();
-        console.log("shipping_charge",shipping_charge)
+        console.log(shipping_charge,shipping_charge);
         if(shipping_charge=='notInRange'){
             shipping_charge = 0;
         }
@@ -437,7 +437,8 @@ var CHECKOUT = function(){
                 $('#promo_err').html(response.message);
                 if(response.success == '1'){
                     var orderAmount = parseFloat(response.orderAmount);
-                    finalAmount = (orderAmount + parseFloat(shipping_charge) - parseFloat(response.data)).toFixed(2)
+                    // finalAmount = (orderAmount + parseFloat(shipping_charge) - parseFloat(response.data)).toFixed(2)
+                    finalAmount = (orderAmount + 0 - parseFloat(response.data)).toFixed(2)
                     console.log("orderAmount ====" ,orderAmount ,  parseFloat(shipping_charge) ,  parseFloat(response.data))
                     $('#promoAmount').html(response.data);
                     $('#checkout_final').html(finalAmount)                        
