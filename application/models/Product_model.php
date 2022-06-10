@@ -245,16 +245,22 @@ public function Product_add_update(){
     # Product Single Delete ##
     public function single_delete_product(){
         $id = $_GET['id'];
-        $data = array( 'status' => '9','dt_updated' => strtotime(date('Y-m-d H:i:s')));
 
+        $data = array( 'status' => '9','dt_updated' => strtotime(date('Y-m-d H:i:s')));
         $this->db->where('id', $id);
         $this->db->update('product', $data);
         
-        //Product Delete Form Cart 
-        $data['where'] = ['product_id'=>$id];
-        $data['table'] = 'my_cart';
-        $this->deleteRecords($data);
+        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['select'] = ['id'];
+        $data['where']['product_id'] = $id;
+        $varient_ids = $this->selectRecords($data);
         unset($data);
+        //Product Delete Form Cart 
+        foreach ($varient_ids as $key => $value) {
+            $data['where'] = ['product_weight_id'=>$value->id];
+            $data['table'] = 'my_cart';
+            $this->deleteRecords($data);
+        }
         
         ob_get_clean();
         header('Access-Control-Allow-Origin: *');
@@ -268,22 +274,21 @@ public function Product_add_update(){
         ## Product Multi Delete ##
     public function multi_delete_product()
     {
+        // dd($_SESSION);
         $ids = $_GET['ids'];
         // print_r($ids);die;
         $id = explode(",", $ids);
         $a = [];
+        $branch_id = $this->session->userdata('id');
         foreach ($id as $key => $value) {
-
-            $branch_id = $this->session->userdata('id');
             $data['table'] = 'order as o';
             $data['select'] = ['p.*'];
             $data['join'] = [ 
                 'order_details as od'=>['od.order_id=o.id','LEFT'],
                 'product as p'=>['p.id = od.product_id','LEFT']
             ];
-            $data['where'] = ['o.branch_id'=>$branch_id,'p.id'=>$value,'o.status !='=>'9'];
+            $data['where'] = ['o.branch_id'=>$branch_id, 'p.id'=>$value,'o.status !='=>'9'];
             $re = $this->selectFromJoin($data);
-    
             if(count($re) > 0 ){
 
                 ob_get_clean();
@@ -297,24 +302,37 @@ public function Product_add_update(){
         }
 
         // delete Product from cart
+        unset($data);
         foreach ($id as $k => $v) {
+
+            $data['table'] = TABLE_PRODUCT_WEIGHT;
+            $data['select'] = ['id'];
+            $data['where']['product_id'] = $v;
+            $varient_ids = $this->selectRecords($data);
+            unset($data);
+            
             $data['where'] = ['id'=>$v];
             $data['table'] = 'product';
             $this->deleteRecords($data);
+            
             unset($data); 
-        //Product Delete Form Cart 
-            $data['where'] = ['product_id'=>$v];
-            $data['table'] = 'my_cart';
-            $this->deleteRecords($data);
-            unset($data); 
-        }
 
-        ob_get_clean();
-        header('Access-Control-Allow-Origin: *');
-        header('Content-Type: application/json');
-        echo json_encode(['status'=>1]);
-        exit;
+            //Product Delete Form Cart 
+            foreach ($varient_ids as $key => $value) {
+                $data['where'] = ['product_weight_id'=>$value->id];
+                $data['table'] = 'my_cart';
+                $this->deleteRecords($data);
+            }
+
+            unset($data);
+            
+            ob_get_clean();
+            header('Access-Control-Allow-Origin: *');
+            header('Content-Type: application/json');
+            echo json_encode(['status'=>1]);
+            exit;
     }
+}
 
     private function set_upload_options_product_image()
     {
@@ -653,7 +671,7 @@ public function Product_add_update(){
         $data['where'] = ['product_weight_id'=>$id];
         $data['table'] = 'my_cart';
         $this->deleteRecords($data);
-        
+        lq();
         ob_get_clean();
         header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
@@ -926,15 +944,25 @@ public  $order_column_weight_list = array("p.product_name","pw.quantity","pw.dis
 
     public function parmanentDeleteProduct(){
         $id = $_GET['id'];
+        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['select'] = ['id'];
+        $data['where']['product_id'] = $id;
+        $varient_ids = $this->selectRecords($data);
+        
+        unset($data);
+
         $data['where'] = ['id'=>$id];
         $data['table'] = 'product';
         $this->deleteRecords($data);
 
-        //Product Delete Form Cart 
-        $data['where'] = ['product_id'=>$id];
-        $data['table'] = 'my_cart';
-        $this->deleteRecords($data);
         unset($data);
+        
+        //Product Delete Form Cart 
+        foreach ($varient_ids as $key => $value) {
+            $data['where'] = ['product_weight_id'=>$value->id];
+            $data['table'] = 'my_cart';
+            $this->deleteRecords($data);
+        }
         
         ob_get_clean();
         header('Access-Control-Allow-Origin: *');

@@ -1071,7 +1071,7 @@ Class Product_model extends My_model{
 	}
 
 	
-	public function getRelatedProduct($cat_id,$varient_id){
+	public function getRelatedProduct($cat_id,$varient_ids){
 
 			
 			$data['table'] = TABLE_PRODUCT . " as p";
@@ -1088,7 +1088,7 @@ Class Product_model extends My_model{
 				'p.branch_id'=>$this->branch_id,
 				'pw.id !=' => $this->utility->safe_b64decode($varient_id),
 			];		
-			
+			$data['where_not_in']=	['pw.id' => $varient_ids];
 			$data['order'] = 'pw.quantity DESC';
 			$data['groupBy'] =['p.id'];
 			$data['limit'] = '40';

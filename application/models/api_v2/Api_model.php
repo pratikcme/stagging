@@ -1830,7 +1830,7 @@ class Api_model extends My_model {
         return $this->updateRecords($data);
     }
 
-    function valicate_promocode($postData){
+    function validate_promocode($postData){
         $user_id = $postData['user_id'];
         $promocode = $postData['promocode'];
         $branch_id = $postData['branch_id'];

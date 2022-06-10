@@ -108,7 +108,7 @@ $(document).on('click','.remove_item',function(){
 					dataType: 'json',
 					data : {product_id:product_id,weight_id:weight_id,product_weight_id:product_weight_id},
 					success:function(output){
-						// window.location.reload();
+						window.location.reload();
 						var currnt  = window.location.href;
 						var segments = currnt.split( '/' );
 						if(segments[4] == 'productDetails'){

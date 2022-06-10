@@ -2010,13 +2010,13 @@ class Api extends Apiuser_Controller {
        $this->response($response);
     }
 
-    public function valicate_promocode(){
+    public function validate_promocode(){
         $post = $this->input->post();
         $req = array('user_id','promocode','branch_id');
         $response = $this->checkRequiredField($post, $req);
         if ($response['status'] == 1) {
             $post = $this->input->post();
-            $response = $this->this_model->valicate_promocode($post);
+            $response = $this->this_model->validate_promocode($post);
             $response = array('responsedata' => $response);
         }
        $this->response($response);
