@@ -437,11 +437,13 @@ var CHECKOUT = function(){
                 $('#promo_err').html(response.message);
                 if(response.success == '1'){
                     var orderAmount = parseFloat(response.orderAmount);
-                    finalAmount = orderAmount + parseFloat(shipping_charge) - parseFloat(response.data).toFixed(2)
+                    finalAmount = (orderAmount + parseFloat(shipping_charge) - parseFloat(response.data)).toFixed(2)
+                    console.log("orderAmount ====" ,orderAmount ,  parseFloat(shipping_charge) ,  parseFloat(response.data))
                     $('#promoAmount').html(response.data);
                     $('#checkout_final').html(finalAmount)                        
                     $('.promocode-applied').show();
                     $("#applied_promo").val(promocode);
+
                 }else{
                     $("#applied_promo").val('');
                     $('#checkout_final').html((parseFloat(response.orderAmount)+parseFloat(shipping_charge)).toFixed(2))
