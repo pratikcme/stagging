@@ -83,7 +83,7 @@ class Products extends User_Controller {
 		for ($i=0; $i < 6 ; $i++) { 
 			$data['countPriceWise'][$i] = $this->this_model->countProductPriceWise($i);
 		}
-		for ($i=0; $i < 7 ; $i++) { 
+		for ($i=0; $i < 8 ; $i++) { 
 			$data['countDiscoutWise'][$i] = $this->this_model->countProductDiscountWise($i);
 		}
 		
@@ -733,6 +733,7 @@ class Products extends User_Controller {
 	public function backend_script(){
 		$keyword = $this->input->get('term');
 		$res = $this->this_model->globalSearch($keyword);
+		// lq();
 		$tutorialData = [];
 		$h = '';
 		foreach ($res as $key => $value) {

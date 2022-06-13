@@ -166,6 +166,13 @@ var ADDRESS = function(){
             //   }
             // }
     });
+      errorNone();
+     function errorNone(){
+       $('label.error').css('display','none');
+        // $('.error ').each(function () {
+        //     $(this).css('display','none');
+        // })
+     }
 
      $(document).on('click','.edit_address',function(){
         var id = $(this).attr('data-id');
@@ -220,6 +227,7 @@ var ADDRESS = function(){
           $('.error').each(function () {
               $(this).html("");
           })
+        errorNone();
     })
      $(document).on('click','.add_form_action',function (){
         $('#RegisterForm')[0].reset();

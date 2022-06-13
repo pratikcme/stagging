@@ -200,34 +200,38 @@
                        <ul class="brand-list">
                       <li>
                         <input type="checkbox" name="filter_discount"  value="0" class="discount">
-                        <label> 5-10% <span><?=$countDiscoutWise[0]?></span></label><br>
+                        <label> 0-5% <span><?=$countDiscoutWise[0]?></span></label><br>
                       </li>
                       <li>
                         <input type="checkbox" name="filter_discount"  value="1" class="discount">
-                        <label> 10-15% <span><?=$countDiscoutWise[1]?></span> </label><br>
+                        <label> 5-10% <span><?=$countDiscoutWise[1]?></span></label><br>
                       </li>
                       <li>
                         <input type="checkbox" name="filter_discount"  value="2" class="discount">
-                        <label>15-20% <span><?=$countDiscoutWise[2]?></span> </label><br>
+                        <label> 10-15% <span><?=$countDiscoutWise[2]?></span> </label><br>
                       </li>
                       <li>
                         <input type="checkbox" name="filter_discount"  value="3" class="discount">
-                        <label> 20-25%  <span><?=$countDiscoutWise[3]?></span> </label><br>
+                        <label>15-20% <span><?=$countDiscoutWise[3]?></span> </label><br>
                       </li>
-
-                       <li>
+                      <li>
                         <input type="checkbox" name="filter_discount"  value="4" class="discount">
-                        <label> 25-30%<span><?=$countDiscoutWise[4]?></span> </label><br>
+                        <label> 20-25%  <span><?=$countDiscoutWise[4]?></span> </label><br>
                       </li>
 
                        <li>
                         <input type="checkbox" name="filter_discount"  value="5" class="discount">
-                        <label> 30-35% <span><?=$countDiscoutWise[5]?></span> </label><br>
+                        <label> 25-30%<span><?=$countDiscoutWise[5]?></span> </label><br>
                       </li>
 
                        <li>
                         <input type="checkbox" name="filter_discount"  value="6" class="discount">
-                        <label>more than 35% <span><?=$countDiscoutWise[6]?></span> </label><br>
+                        <label> 30-35% <span><?=$countDiscoutWise[6]?></span> </label><br>
+                      </li>
+
+                       <li>
+                        <input type="checkbox" name="filter_discount"  value="7" class="discount">
+                        <label>more than 35% <span><?=$countDiscoutWise[7]?></span> </label><br>
                       </li>
                     </ul>
                   </div>

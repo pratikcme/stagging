@@ -531,7 +531,7 @@ label.error.mobile_verfication{
                            <h6>Delivery Charges</h6>
                            <div class="price-seperator">
                               <span class="seperator">:</span>
-                              <p><span><?=$this->siteCurrency?></span> <?=(isset($calc_shiping) && $calc_shiping != 'NotInRange') ? number_format((float)$calc_shiping,2,'.','') : '0.00' ?></p>
+                              <p><span><?=$this->siteCurrency?></span> <?=(isset($calc_shiping) && is_numeric($calc_shiping)) ? number_format((float)$calc_shiping,2,'.','') : '0.00' ?></p>
                            </div>
                         </div>
                      </li>

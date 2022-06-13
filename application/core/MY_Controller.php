@@ -73,7 +73,6 @@ class Admin_Controller extends MY_Controller
 
     function __construct(){ 
         parent::__construct();
-        // print_r($_SESSION);die;
         
         if($this->session->userdata('vendor_admin') != '1' ){
                 redirect(base_url().'admin/dashboard');

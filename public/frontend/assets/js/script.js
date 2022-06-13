@@ -257,6 +257,7 @@ $(function() {
             // alert(rangeArray);
             var discountArray = get_filter('discount');
             var brandArray = get_filter('brand');
+            var slider = '1';
             $.ajax({  
                 url : url+'products/subcategory/'+page,
                 data:{
@@ -266,7 +267,8 @@ $(function() {
                   start_price:start_price,
                   end_price : end_price,
                   discountArray:discountArray,
-                  page:page,getCatByURL:getCatByURL
+                  page:page,getCatByURL:getCatByURL,
+                  slider : slider
                 },
                 method:'post',
                 dataType:'json',
