@@ -111,7 +111,7 @@
             }
 
           ?>
-          <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center add-after-wrapper">
             <div class="quantity-wrap <?=$d_show?>">
               <button class="dec cart-qty-minus decqnt" data-product_weight_id="<?=$varientDetails[0]->id?>"><span class="minus"><i class="fa fa-minus"></i></span></button>
               <input class="qty" id="qnt" type="" name="" data-product_id = "<?= $this->utility->safe_b64decode($product_id)?>" value="<?=($cartQuantityForVarient != '') ? $cartQuantityForVarient : 1 ?>" readonly>
