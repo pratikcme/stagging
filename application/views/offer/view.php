@@ -1,4 +1,4 @@
-view.php<?php $this->load->view('header.php'); ?>
+<?php $this->load->view('header.php'); ?>
 <section id="main-content">
     <section class="wrapper">
         <!-- page start-->
