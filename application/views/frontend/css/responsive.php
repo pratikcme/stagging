@@ -69,6 +69,13 @@ RESPONSIVE CSS FOR 375 PX
   border-radius: 10px;
 
 	}
+	/*.owl-carousel .owl-stage-outer{
+		padding: 0px 15px;
+	}*/
+
+	.category-wrapper{
+		margin-bottom: 10px;
+	}
 }
 
 @media (max-width: 1140px){
@@ -80,6 +87,12 @@ RESPONSIVE CSS FOR 375 PX
 
 /*-----RESPONSIVE CSS FOR 992 PX-----*/
 @media (max-width: 992px){
+
+.user-profile{
+	right: 20px;
+}
+
+
 .zoom_fade_ic {
 	display: none !important;
 }
@@ -185,9 +198,9 @@ footer ul{
     max-width: 155px;
     width: 150px;
 }
-.radio-container.mb-0 {
+/*.radio-container.mb-0 {
     margin-bottom: 10px !important;
-}
+}*/
 .radio-wrap{
 	text-align: center;
 	margin-top: 15px;
@@ -204,6 +217,14 @@ footer ul{
 
 .product-detail-wrapper {
     margin-top: 40px;
+}
+
+.p-100 {
+    padding: 50px 0px;
+}
+.section-title h1 {
+    line-height: 30px;
+    font-size: 26px;
 }
 
 }
@@ -226,7 +247,7 @@ footer ul{
 		display: none;
 	}
 	.category-wrapper{
-		margin: 0px 18px;
+		margin: 10px 18px;
 	}
 	.section-title h1{
 		font-size: 26px;
@@ -317,6 +338,10 @@ footer ul{
 		height:45px;
 	}
 
+	.mobile-login-user_without_login{
+			width: 45px;
+			height:45px;
+	}
 	.mobile-login-user  {
 		width: 45px;
 		height: 45px;
@@ -466,6 +491,16 @@ footer ul{
 	.main a {
 		height: 0 !important;
 	}
+	.client-wrapper {
+		width: 425px;
+    	margin: 0 auto;
+	}
+	.user-profile{
+		top: 65px;
+	}
+	#RegisterForm #addAddress{
+		margin-bottom: 15px;
+	}
 }
 
 
@@ -490,6 +525,12 @@ footer ul{
 	}
 }
 
+
+@media (max-width: 525px){
+	.pay-btn{
+		text-align: center;
+	}
+}
 
 /*-----RESPONSIVE CSS FOR 500 PX-----*/
 @media (max-width: 500px){
@@ -550,6 +591,10 @@ footer ul{
 	.cart-total-wrap .cart-total-innerbox{
 		height: 100%;
 	}
+	.client-wrapper {
+		width: 400px;
+    	margin: 0 auto;
+	}
 }
 
 /*-----RESPONSIVE CSS FOR 450 PX-----*/
@@ -593,6 +638,9 @@ footer ul{
 @media (max-width: 425px){
 	header .header-top-nav ul li{
 		    padding: 0px 10px;
+	}
+	#LoginForm .input-wrapper span{
+		margin-right: 10px;
 	}
 	.menu-bar div {
     margin: 0px 3px;
@@ -663,6 +711,16 @@ footer ul{
 	    margin-bottom: 10px !important;
 	    display: inline-block;	
     }
+    .client-wrapper {
+		width: 300px;
+    	margin: 0 auto;
+	}
+	.user-profile{
+		width: 320px;
+	}
+	.address-wrapper .user-detail{
+		padding-left: 0px;
+	}
 }
 
 
@@ -700,6 +758,19 @@ footer ul{
 		align-items: flex-start;
 	}*/
 
+	 .add-after-wrapper{
+		flex-direction:column
+	}
+	.add-after-wrapper .quantity-wrap{
+		margin-top:0px;
+	}
+	.add-after-wrapper .order-btn {
+		margin: 0px;
+		width: 188px;
+		margin-bottom: 20px;
+	} 
+
+
 }
 
 @media (max-width: 350px){
@@ -710,6 +781,12 @@ footer ul{
     top: inherit;
     right: 0;
     transform: inherit;
+	}
+	.user-profile {
+   	 width: 300px;
+   	 right: 0px;
+   	 left: 0px;
+   	 margin: 0 auto !important;
 	}
 }
 </style>

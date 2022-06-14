@@ -16,7 +16,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-12">
-        <div class="cart-table-wrapper">
+        <div class="cart-table-wrapper cart-item-table-wrapper">
           <table class="table cart-table table-reponsive">
             <thead>
               <tr>
@@ -139,7 +139,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-12">
-        <div class="cart-table-wrapper">
+        <div class="cart-table-wrapper cart-item-table-wrapper">
           <table class="table cart-table table-reponsive">
             <thead>
               <tr>

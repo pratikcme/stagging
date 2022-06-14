@@ -47,7 +47,7 @@
                <a class="nav-link <?=($action_name == 'wishlist') ? 'active' : ''?> " id="v-pills-whislist-tab" data-toggle="pill" href="#v-pills-whislist" role="tab" aria-controls="v-pills-whislist" aria-selected="<?=($action_name == 'wishlist') ? 'true' : 'false'?>" style="display: none;"> <span><i class="fas fa-heart"></i></span>My Wishlist</a>
                <a class="nav-link <?=($action_name == 'my_address') ? 'active' : ''?> " id="v-pills-address-tab" data-toggle="pill" href="#v-pills-address" role="tab" aria-controls="v-pills-address" aria-selected="<?=($action_name == 'my_address') ? 'true' : 'Your Wishlist'?>"><span><i class="fas fa-address-book"></i></span>My address</a>
 
-               <a class="nav-link <?=($action_name == 'change') ? 'active' : ''?> " id="v-pills-change-tab" data-toggle="pill" href="#v-pills-change" role="tab" aria-controls="v-pills-change" aria-selected="<?=($action_name == 'change') ? 'true' : 'false'?>"><span><i class="fas fa-info-circle"></i></span>Change Password</a>
+               <a class="nav-link <?=($action_name == 'change') ? 'active' : ''?> " id="v-pills-change-tab" data-toggle="pill" href="#v-pills-change" role="tab" aria-controls="v-pills-change" aria-selected="<?=($action_name == 'change') ? 'true' : 'false'?>"><span><i class="fas fa-lock"></i></span>Change Password</a>
 
                <a style="display: none;" class="nav-link <?=($action_name == 'faq') ? 'active' : ''?> " id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="<?=($action_name == 'faq') ? 'true' : 'false'?>"><span><i class="fas fa-info-circle"></i></span>FAQ</a>
 
@@ -57,9 +57,13 @@
          <div class="col-lg-9 col-md-8">
             <div class="tab-content" id="v-pills-tabContent">
                <div class="tab-pane fade <?=($action_name == 'my_account') ? 'active show' : '' ?> " id="v-pills-myaccount" role="tabpanel" aria-labelledby="v-pills-myaccount-tab">
-                  <div class="account-form-wrapper bg-white">
-                     <div class="page-title">
-                        <h1>Account Details</h1>
+                  <div class="wihslist-wrapper address-wrapper bg-white">
+                    <!--  <div class="page-title">
+                        <h1>Account Detailssss</h1>
+                     </div> -->
+                     <div class="your-order-header address-header" id="address-header">
+                        <h4><span><i class="fas fa-user"></i></span>Account Details </h4>
+                     
                      </div>
                      <form id='ChangePass' action="<?=base_url().'users_account/users/account'?>" method="post" class="account-form">
                         <!-- <div class="profile-image">
@@ -460,11 +464,11 @@
                </div>
 
                <div class="tab-pane fade <?=($action_name == 'change') ? 'active show' : '' ?> " id="v-pills-change" role="tabpanel" aria-labelledby="v-pills-change-tab">
-                  <div class="account-form-wrapper bg-white">
-                     <div class="page-title">
-                        <h1>Change password</h1>
-                     </div>
-                     <form id='ChangeUserPass' action="<?=base_url().'users_account/users/update_password'?>" method="post" class="account-form">
+                  <div class="wihslist-wrapper address-wrapper bg-white">
+                                          <div class="your-order-header address-header" id="address-header">
+                        <h4><span><i class="fas fa-lock"></i></span>Change Password </h4>
+                     
+                     </div>                     <form id='ChangeUserPass' action="<?=base_url().'users_account/users/update_password'?>" method="post" class="account-form">
                         <div class="row">
                            <div class="col-md-12">
                               <div class="input-wrapper">

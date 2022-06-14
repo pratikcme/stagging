@@ -192,7 +192,7 @@
 
                       <li>
                       <a href="<?=base_url().'users_account/users/account?name=change'?>">
-                        <span><i class="fas fa-address-book"></i></span>
+                        <span><i class="fas fa-lock"></i></span>
                         Change Password
                       </a>   
                      </li>
@@ -268,7 +268,7 @@
 
                      <li>
                       <a href="<?=base_url().'users_account/users/account?name=change'?>">
-                        <span><i class="fas fa-address-book"></i></span>
+                        <span><i class="fas fa-lock"></i></span>
                         Change Password
                       </a>   
                      </li>
