@@ -3217,11 +3217,12 @@ class Api_model extends My_model {
                     $data['user_gst_number'] = $user_gst_number;
                 }
                 $emailTemplate = $this->load->view('emailTemplate/customer_template_', $data, true);
-                // dd($emailTemplate);
                 if($i == 1){
                     $pdf = $this->load->view('emailTemplate/pdf_customer_template', $data, true);
+
                     require_once 'vendor/autoload.php';
                     $mpdf = new \Mpdf\Mpdf();
+                    // dd($mpdf);
                     $mpdf->WriteHTML($pdf);
                     $file_name = 'order'.time();
                     // Saves file on the server as 'filename.pdf'
