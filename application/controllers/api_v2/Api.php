@@ -2,6 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("HTTP/1.1 200 OK");
+
 class Api extends Apiuser_Controller {
     function __construct() {
         parent::__construct();
@@ -1056,6 +1057,18 @@ class Api extends Apiuser_Controller {
                 array_push($response["data"], $data);
                 $counter++;
             }
+            $branch_id = $result[0]->branch_id;
+            unset($data);
+            $response['offer_list'] = $this->this_model->get_offer($branch_id);
+            // lq();
+            $type = '1';
+            foreach ($response['offer_list'] as $key => $value) {
+                $s = $this->this_model->check($value->id);
+                if(count($s) > 1){
+                 $type = '2';   
+                }
+               $value->type = $type;        
+            }
             echo $output = json_encode(array('responsedata' => $response));
         } else {
             $response = array();
@@ -2009,13 +2022,13 @@ class Api extends Apiuser_Controller {
        $this->response($response);
     }
 
-    public function valicate_promocode(){
+    public function validate_promocode(){
         $post = $this->input->post();
         $req = array('user_id','promocode','branch_id');
         $response = $this->checkRequiredField($post, $req);
         if ($response['status'] == 1) {
             $post = $this->input->post();
-            $response = $this->this_model->valicate_promocode($post);
+            $response = $this->this_model->validate_promocode($post);
             $response = array('responsedata' => $response);
         }
        $this->response($response);
@@ -2029,6 +2042,18 @@ class Api extends Apiuser_Controller {
         if ($response['status'] == 1) {
             $post = $this->input->post();
             $response = $this->this_model->delete_user($post);
+            $response = array('responsedata' => $response);
+        }
+       $this->response($response);
+    }
+
+    public function get_offer_varient_listing(){
+            $post = $this->input->post();
+            $req = array('offer_id');
+            $response = $this->checkRequiredField($post, $req);
+        if ($response['status'] == 1) {
+            $post = $this->input->post();
+            $response = $this->this_model->get_offer_varient_listing($post);
             $response = array('responsedata' => $response);
         }
        $this->response($response);

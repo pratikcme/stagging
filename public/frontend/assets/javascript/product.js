@@ -25,7 +25,17 @@ $(document).on("click",".sub_cat_link",function(){
 //     $(this).parent().prev('div').css('pointer-events','none');
 //    }  
 // });
-
+urlCategory_id();
+function urlCategory_id(){
+    var cat_id =  $('#getBycatID').val();
+    $('.category_id').each(function(){
+        var selected_cat = $(this).attr('data-cat_id');
+        if(cat_id == selected_cat){
+            var catname = $(this).text();
+            $('#dropDownBtn').html(catname+'<span><i class="fas fa-angle-down"></i></span>');
+        }
+    })
+}
 
     function get_filter(class_name){
        var  rangeArray = []; 
@@ -272,7 +282,7 @@ $(document).on("click",".sub_cat_link",function(){
             dataType:'json',
             // async : false,
             success:function(res){
-              $('#dropDownBtn').html(res.name);
+              $('#dropDownBtn').html(res.name+'<span><i class="fas fa-angle-down"></i></span>');
             }
           });
         onload(page,sub_id,cat_id);
@@ -280,6 +290,8 @@ $(document).on("click",".sub_cat_link",function(){
 
      $(document).on('click','.cate_id',function(){
        var cat_id = $(this).attr('data-cate_id');
+
+
        $('.cate_id').removeClass('active');
        $(this).addClass('active');
         $('#cat_id').val(cat_id);
@@ -287,7 +299,16 @@ $(document).on("click",".sub_cat_link",function(){
         sub_id ='';
         $('#search').attr('data-search_val','');
         $('.search').val('');
-        $('#dropDownBtn').html("Categories");
+       $('.category_id').each(function () {
+            var selected_cat = $(this).attr('data-cat_id');
+            if(selected_cat == cat_id){
+                var catName  = $(this).text();
+                // alert(catName);
+                $('#dropDownBtn').html(catName+' <span><i class="fas fa-angle-down"></i></span>');
+            }
+
+       })
+        // $('#dropDownBtn').html('Categories <span><i class="fas fa-angle-down"></i></span>');
         onload(page,sub_id,cat_id);
     });
 

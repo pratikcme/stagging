@@ -61,6 +61,8 @@ Class Offer_model extends My_model{
             'branch_id' => $postData['branch_id'],
             'image' => $offer_image,
             'offer_title' => $postData['offer_title'],
+            'offer_percent' => $postData['offer_percent'],
+            'offer_percent' => ($postData['offer_percent'] && $postData['offer_percent'] != '') ? : NULL,
             'dt_created' => DATE_TIME,
             'dt_updated' => DATE_TIME
         );
@@ -97,9 +99,25 @@ Class Offer_model extends My_model{
             $uploadpath = 'public/images/'.$this->folder.'offer_image/';
             $uploadResult = upload_single_image($_FILES,'offer',$uploadpath);
             $offer_image = $uploadResult['data']['file_name'];
+            delete_single_image($uploadpath,$postData['hidden_image']);
         }else{
             $offer_image = $postData['hidden_image'];
         }
+
+        $update = array(
+            'branch_id' => $postData['branch_id'],
+            'image' => $offer_image,
+            'offer_title' => $postData['offer_title'],
+            'offer_percent' => $postData['offer_percent'],
+            'dt_created' => DATE_TIME,
+            'dt_updated' => DATE_TIME
+        );
+        $data['table'] = TABLE_OFFER;
+        $data['where'] = ['id'=>$postData['edit_id']];
+        $data['update'] = $update;
+        $this->updateRecords($data);
+
+        unset($data);
 
         $data['table'] = TABLE_OFFER_DETAIL;
         $data['where'] = ['offer_id'=>$postData['edit_id']];

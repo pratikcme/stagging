@@ -117,6 +117,7 @@
               <input class="qty" id="qnt" type="" name="" data-product_id = "<?= $this->utility->safe_b64decode($product_id)?>" value="<?=($cartQuantityForVarient != '') ? $cartQuantityForVarient : 1 ?>" readonly>
               <button class="inc cart-qty-plus incqnt" data-product_weight_id="<?=$varientDetails[0]->id?>"><span><i class="fa fa-plus"></i></span></button>
             </div>
+            <?php if($isAvailable != '0'){ ?>
             <div class="order-btn ">
               <a href="javascript:" class="<?=$d_none?>">
                 <button class="btn " id="addtocart"><span><i class="fas fa-shopping-basket"></i></span> add to cart
@@ -125,6 +126,7 @@
               <a href="javascript:">
                 <button class="btn hover" id="order_now">order now</button>
               </a>
+            <?php } ?>
                <?php 
               $product_id = $this->uri->segment(3);
               $varient_id = $this->uri->segment(4);

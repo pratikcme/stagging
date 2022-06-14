@@ -160,15 +160,22 @@ var HandleSectionTwo = function () {
 
         $('#frmAddEdit').validate({
             rules: {
-                offer_title: { required: true },
+                offer_title: { 
+                    required: true,
+                },
                 branch: 	{ required: true },
                 offer_image : { 
                 	required : true,
                     accept:"jpg,png,jpeg,gif"
                 },
+                offer_percent : { 
+                    digits : true,
+                    maxlength : 2
+                },
         },
             messages : {
                 offer_title : {required: "Please enter offer title"},
+                offer_percent : {required: "Please enter offer percent"},
                 branch : {required: "Please select branch"},
                 offer_image : {required: 'please select offer image',
                 accept:"Only image type jpg/png/jpeg/gif is allowed"},
@@ -214,6 +221,7 @@ var HandleSectionTwo = function () {
         $('#Edit').validate({
             rules: {
                 offer_title: { required: true },
+                offer_percent: { required: true,  digits : true, maxlength : 2 },
                 branch:     { required: true },
                 offer_image : { 
                     required : {
@@ -226,6 +234,7 @@ var HandleSectionTwo = function () {
         },
             messages : {
                 offer_title : {required: "Please enter offer title"},
+                offer_percent : {required: "Please enter offer percent"},
                 branch : {required: "Please select branch"},
                 offer_image : {required: 'please select offer image',
                 accept:"Only image type jpg/png/jpeg/gif is allowed"},

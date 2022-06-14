@@ -69,24 +69,27 @@ Class Product_model extends My_model{
 	public function countProductDiscountWise($i){
 		 
 		if($i == '0'){
+			$data['where'] = ['pw.discount_per >='=>'1','pw.discount_per <= ' =>'5'];
+		} 
+		if($i == '1'){
 			$data['where'] = ['pw.discount_per >='=>'5','pw.discount_per <= ' =>'10'];
 		}
-		if($i == '1'){
+		if($i == '2'){
 			$data['where'] = ['pw.discount_per >='=>'10','pw.discount_per <= ' =>'15'];
 		}
-		if($i == '2'){
+		if($i == '3'){
 			$data['where'] = ['pw.discount_per >='=>'15','pw.discount_per <='=>'20'];
 		}
-		if($i == '3'){
+		if($i == '4'){
 			$data['where'] = ['pw.discount_per >='=>'20','pw.discount_per <='=> '25'];
 		}
-		if($i == '4'){
+		if($i == '5'){
 			$data['where'] = ['pw.discount_per >='=>'25','pw.discount_per <='=> '30'];
 		}
-		if($i == '5'){
+		if($i == '6'){
 			$data['where'] = ['pw.discount_per >='=>'30','pw.discount_per <='=> '35'];
 		}
-		if($i == '6'){
+		if($i == '7'){
 			$data['where'] = ['pw.discount_per >='=>'35'];
 		}
 		
@@ -243,12 +246,12 @@ Class Product_model extends My_model{
 	// public function productOfSubcategory($limit,$start,$postdata){
 	public function productOfSubcategory($postdata){
 		// print_r($postdata);die;
-		if(isset($postdata['search']) && $postdata['search'] != ''){
-			$data['like'] = ['p.name',$postdata['search'],'match'];
-		}
-
-		
-
+			if(isset($postdata['slider'])){
+				$postdata['getCatByURL'] = $this->utility->safe_b64encode($postdata['getCatByURL']);
+			}
+			if(isset($postdata['search']) && $postdata['search'] != ''){
+				$data['like'] = ['p.name',$postdata['search'],'match'];
+			}
 			if(isset($postdata['sort'])){
 				if($postdata['sort'] == 'high_low'){
 					$data["order"] = 'pw.discount_price DESC , pw.quantity DESC';
@@ -298,23 +301,26 @@ Class Product_model extends My_model{
 				$whereDiscount = "(";
 				foreach ($postdata['discountArray'] as $value){
 						$data['where']['1 ='] = 1;
-					if($value == '0' ){
+					if($value == '0'){
+						$whereDiscount .= "(pw.discount_per > 0 AND pw.discount_per <= 5) OR ";
+					}
+					if($value == '1' ){
 						// $data['where']['pw.discount_per <='] ='5';
 						$whereDiscount .= "(pw.discount_per >= 5 AND pw.discount_per <= 10) OR ";
-					}if($value == '1'){
-						$whereDiscount .= " ( (pw.discount_per >= 10 AND pw.discount_per <= 15) ) OR ";
 					}if($value == '2'){
-						$whereDiscount .= " ( (pw.discount_per >= 15 AND pw.discount_per <= 20) ) OR ";
+						$whereDiscount .= " ( (pw.discount_per >= 10 AND pw.discount_per <= 15) ) OR ";
 					}if($value == '3'){
+						$whereDiscount .= " ( (pw.discount_per >= 15 AND pw.discount_per <= 20) ) OR ";
+					}if($value == '4'){
 						$whereDiscount .= " ( (pw.discount_per >= 20 AND pw.discount_per <= 25) ) OR ";	
 					}
-					if($value == '4'){
+					if($value == '5'){
 						$whereDiscount .= " ( (pw.discount_per >= 25 AND pw.discount_per <= 30) ) OR ";	
 					}
-					if($value == '5'){
+					if($value == '6'){
 						$whereDiscount .= " ( (pw.discount_per >= 30 AND pw.discount_per <= 35) ) OR ";	
 					}
-					if($value == '6'){
+					if($value == '7'){
 						$whereDiscount .= " (pw.discount_per >= 35 ) OR ";
 					}
 
@@ -372,7 +378,7 @@ Class Product_model extends My_model{
 			$data['groupBy'] = 'p.id';
 			$data['limit'] = $page * $limit;
 			$product = $this->selectFromJoin($data);
-			// echo $this->db->last_query();die;
+			// lq();
 			$total_result = $this->countRecords($data);
 			$pages = ceil($total_result/20);
 			if($page < $pages){
@@ -1071,7 +1077,7 @@ Class Product_model extends My_model{
 	}
 
 	
-	public function getRelatedProduct($cat_id,$varient_id){
+	public function getRelatedProduct($cat_id,$varient_ids){
 
 			
 			$data['table'] = TABLE_PRODUCT . " as p";
@@ -1088,7 +1094,7 @@ Class Product_model extends My_model{
 				'p.branch_id'=>$this->branch_id,
 				'pw.id !=' => $this->utility->safe_b64decode($varient_id),
 			];		
-			
+			$data['where_not_in']=	['pw.id' => $varient_ids];
 			$data['order'] = 'pw.quantity DESC';
 			$data['groupBy'] =['p.id'];
 			$data['limit'] = '40';
@@ -1107,13 +1113,12 @@ Class Product_model extends My_model{
 		
 		$data['table'] = TABLE_PRODUCT.' p';
 		$data['join'] = [
-			TABLE_PRODUCT_WEIGHT.' pw'=>['p.id=pw.product_id','LEFT'],
-			'product_search as ps' =>['ps.product_id = p.id','LEFT']
+			TABLE_PRODUCT_WEIGHT.' pw'=>['p.id=pw.product_id','LEFT']
 		];
 		$data['select'] = ['p.id','p.name'];
 		$data['where'] = ['p.branch_id'=>$this->branch_id,'p.status !='=>'9','pw.status !='=>'9'];
 		$data["group"]['like'] = ['p.name',$keyword,'both'];
-		$data["group"]['or_like'] = ['ps.name',$keyword,'both'];
+		$data["group"]['or_like'] = ['p.name',$keyword,'both'];
 		$data['groupBy'] = 'p.id'; 
 		return $this->selectFromJoin($data);
 		echo $this->db->last_query();die;
@@ -1137,6 +1142,7 @@ Class Product_model extends My_model{
 		return $this->selectRecords($data);	
 	}
 
+
 	public function getMyCart($user_id=''){
 
 		if($user_id == ''){
@@ -1145,7 +1151,7 @@ Class Product_model extends My_model{
 
     	$data['table'] = TABLE_MY_CART .' as mc';
     	$data['join'] = [TABLE_PRODUCT_WEIGHT . ' as pw'=>['pw.id=mc.product_weight_id','LEFT']];
-    	$data['select'] = ['mc.*','pw.discount_price','pw.product_id'];
+    	$data['select'] = ['mc.*','pw.discount_price','pw.product_id','pw.price'];
     	$data['where']['mc.user_id'] = $user_id;
     	$data['where']['mc.branch_id'] = $this->branch_id;
     	return $this->selectFromJoin($data);

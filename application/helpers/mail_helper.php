@@ -54,7 +54,6 @@ function getMycartSubtotal(){
     $CI->load->model('frontend/product_model','product_model');
     $my_cart = $CI->product_model->getMyCart();
     foreach ($my_cart as $key => $value) {
-     // $total += $value->calculation_price; 
      $total += $value->discount_price * $value->quantity; 
     }
 
@@ -65,25 +64,25 @@ function getMycartSubtotal(){
 
 function totalSaving(){
   $CI = &get_instance();
-  $total = 0;
-  $saving = number_format((float)0,2,'.','');
+  $actal_price_total = 0;
+  $discount_price_total = number_format((float)0,2,'.','');
   $totalSaving = 0;
 if($CI->session->userdata('user_id') == '' ){
     if(isset($_SESSION['My_cart'])){
       foreach ($_SESSION['My_cart'] as $key => $value) {
-        $total += $value['total'];
-        $saving += $value['product_price'] * $value['quantity'];
+        $actal_price_total += $value['total'];
+        $discount_price_total += $value['product_price'] * $value['quantity'];
       }
-      $totalSaving = $saving-$total; 
+      $totalSaving = $actal_price_total-$discount_price_total; 
     }
   }else{
      $CI->load->model('frontend/product_model','product_model');
      $my_cart = $CI->product_model->getMyCart();
      foreach ($my_cart as $key => $value) {
-        $total += $value->calculation_price;
-        $saving += $value->actual_price * $value->quantity;
+        $actal_price_total += $value->price * $value->quantity;
+        $discount_price_total += $value->discount_price * $value->quantity;
      }
-     $totalSaving = $saving-$total;
+     $totalSaving = $actal_price_total-$discount_price_total;
   }
   $totalSaving = number_format((float)$totalSaving,2,'.','');
   return $totalSaving;

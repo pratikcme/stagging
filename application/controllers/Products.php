@@ -83,7 +83,7 @@ class Products extends User_Controller {
 		for ($i=0; $i < 6 ; $i++) { 
 			$data['countPriceWise'][$i] = $this->this_model->countProductPriceWise($i);
 		}
-		for ($i=0; $i < 7 ; $i++) { 
+		for ($i=0; $i < 8 ; $i++) { 
 			$data['countDiscoutWise'][$i] = $this->this_model->countProductDiscountWise($i);
 		}
 		
@@ -150,7 +150,12 @@ class Products extends User_Controller {
 		$data['js'] = array('addProduct.js');
 		// $data['init'] = array('ADDPRODUCT.init()');
 		$data['productDetail'] = $this->this_model->ProductDetails($product_id);
-		// print_r($data['productDetail']);exit;
+		
+		$data['isAvailable'] = '1';
+		if(empty($data['productDetail'])){
+			$data['isAvailable'] = '0';
+		}
+
 		$this->load->model('frontend/home_model','home_model');
 		$data['productDetail'][0]->rating = $this->home_model->selectStarRatting($product_id);
 		$varient_ids = explode(',',$data['productDetail'][0]->product_variant_id);
@@ -206,7 +211,7 @@ class Products extends User_Controller {
 		$category_name = $this->this_model->getNameCateBrand(TABLE_CATEGORY,$data['productDetail'][0]->category_id);
 		$brand_name = $this->this_model->getNameCateBrand(TABLE_BRAND,$data['productDetail'][0]->brand_id);
 		$data['productDetail'][0]->category_name = $category_name;
-		$related_product = $this->this_model->getRelatedProduct($data['productDetail'][0]->category_id,$var_id);
+		$related_product = $this->this_model->getRelatedProduct($data['productDetail'][0]->category_id,$data['varient']);
 		
 		foreach ($related_product as $key => $value) {
 			// $v_image = $this->this_model->getVarientImage($value->pw_id);
@@ -728,6 +733,7 @@ class Products extends User_Controller {
 	public function backend_script(){
 		$keyword = $this->input->get('term');
 		$res = $this->this_model->globalSearch($keyword);
+		// lq();
 		$tutorialData = [];
 		$h = '';
 		foreach ($res as $key => $value) {

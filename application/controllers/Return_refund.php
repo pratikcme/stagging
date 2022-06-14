@@ -8,7 +8,6 @@ class Return_refund extends User_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->controller = $this->myvalues->returnFrontEnd['controller'];
-		$this->url = SITE_URL . 'frontend/'. $this->controller;
 		$this->load->model($this->myvalues->returnFrontEnd['model'],'this_model');
 		$this->load->model('frontend/vendor_model');
 		if(!isset($_SESSION['vendor_id'])){

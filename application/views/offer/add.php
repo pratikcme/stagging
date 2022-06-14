@@ -55,6 +55,13 @@
                                   <label for="offer_title" style="color: red" class="error"><?php echo @form_error('offer_title'); ?></label>
                                </div>
                             </div>
+                            <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                               <div class="form-group">
+                                  <label for="offer_title">Offer Percent</label>
+                                  <input type="text" id="offer_percent" name="offer_percent" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <label for="offer_percent" style="color: red" class="error"><?php echo @form_error('offer_percent'); ?></label>
+                               </div>
+                            </div>
                          </div>
                      </div>
                      <input type="hidden" name="hidden_varient_id" id='hidden_varient_id'>

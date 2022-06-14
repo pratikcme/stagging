@@ -16,6 +16,7 @@
   };
 }(jQuery));
 var LOGIN = function(){
+    $('label.error').css('display','none');
     var url = $('#url').val();
     // $(document).ready(function(){
     //   $('.alert').fadeOut(5000);

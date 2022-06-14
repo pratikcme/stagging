@@ -1830,7 +1830,7 @@ class Api_model extends My_model {
         return $this->updateRecords($data);
     }
 
-    function valicate_promocode($postData){
+    function validate_promocode($postData){
         $user_id = $postData['user_id'];
         $promocode = $postData['promocode'];
         $branch_id = $postData['branch_id'];
@@ -3458,16 +3458,47 @@ class Api_model extends My_model {
             // return $refunds;
         }
 
-    public function get_offer(){
-        $data['table'] = TABLE_OFFER;
-        $data['select'] = ['*'];
-        $result = $this->selectRecords($data);
+    //Developer : Shahid Abdul Rahman     
+    public function get_offer($branch_id){
+        $data['table'] = TABLE_OFFER .' as o';
+        $data['join'] = [TABLE_OFFER_DETAIL . ' as od'=>['o.id=od.offer_id','LEFT']];
+        $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image'];
+        $data['where'] = ['o.branch_id'=>$branch_id];
+        $data['groupBy'] = 'o.id';
+        $result = $this->selectFromJoin($data);
+        unset($data);
         foreach ($result as $k => $v) {
             $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
+            $data['select'] = ['c.name as category_name','p.category_id','pw.product_id'];
+            $data['table'] = TABLE_PRODUCT_WEIGHT . ' as pw';
+            $data['join'] = [
+                TABLE_PRODUCT .' as p'=>['p.id=pw.product_id','LEFT'],
+                TABLE_CATEGORY . ' as c'=>['c.id = p.category_id','LEFT']
+            ];
+            $data['where'] = ['pw.id'=>$v->product_varient_id,'pw.status !='=> '9'];
+            $res = $this->selectFromJoin($data);
+            $v->category_id = $res[0]->category_id;
+            $v->category_name = $res[0]->category_name;
+            $v->product_id = $res[0]->product_id;
         }
         return $result;
 
     }
+
+    public function check($offer_id){
+        $data['table'] = TABLE_OFFER .' as o';
+        $data['join'] = [
+            TABLE_OFFER_DETAIL . ' as od'=>['o.id=od.offer_id','LEFT'],
+            TABLE_PRODUCT_WEIGHT . ' as pw'=>['pw.id = od.product_varient_id','LEFT'],
+        ];
+        $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image'];
+        $data['where'] = ['o.id'=>$offer_id];
+        $data['groupBy'] = 'pw.product_id';
+        $result = $this->selectFromJoin($data);
+        return $result;
+    }
+
+
     //Developer : Pratik S Shah
     public function sendOtpLogin($postData){
        $data['table'] = 'user';
@@ -3600,6 +3631,24 @@ class Api_model extends My_model {
         $response["success"] = 1;
         $response["message"] = "User Account is permanant deleted";  
         return $response;
+    }
+
+    public function get_offer_varient_listing($postData){
+        $data['table'] = TABLE_OFFER_DETAIL .' as od';
+        $data['join'] = [
+            TABLE_PRODUCT_WEIGHT.' as pw'=>['pw.id=od.product_varient_id','LEFT'],
+            TABLE_PRODUCT.' as p'=>['p.id=pw.product_id','LEFT'],
+            TABLE_WEIGHT.' as w'=>['w.id = pw.weight_id','LEFT'],
+            'package as pkg'=>['pkg.id = pw.package','LEFT'],
+        ];
+        $data['select'] = ['od.*','pw.id as product_varient_id','pw.price','pw.price','pw.discount_price','pw.weight_no','w.name as weight_name','pw.discount_per','pkg.package as package_name','pw.max_order_qty','p.name','pw.product_id'];
+        $data['where'] = ['od.offer_id'=>$postData['offer_id']];
+        $return =  $this->selectFromJoin($data);
+        $response["success"] = 1;
+        $response["message"] = "offer details data";  
+        $response["data"] = $return;  
+        return $response;
+
     }
 
 }

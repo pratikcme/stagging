@@ -52,7 +52,7 @@ class Offer extends Admin_Controller{
 			if($this->input->post()){
 				$validation = $this->serRules();
 				if($validation){
-					// dd($this->input->post());
+					// dd($this->input->	post());
 					$result = $this->this_model->updateRecord($this->input->post());
 					 if($result){
 					 	$this->utility->setFlashMessage($result[0],$result[1]);
