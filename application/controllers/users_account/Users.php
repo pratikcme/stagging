@@ -29,14 +29,24 @@ class Users extends User_Controller {
 		$this->load->model($this->myvalues->orderFrontEnd['model'],'order_model');
 		$data['order'] = $this->this_model->selectOrders();
 		$orderDetais = [];
+		$this->load->model('api_admin_model');
+		$this->load->model('api_v2/api_model','api_v2_model');
 		foreach ($data['order'] as $key => $value) {
-			$this->load->model('api_admin_model');
+
+			if($value->promocode_used == 1){
+				$order_promocode_amount = $this->api_v2_model->get_order_promocode_discount($value->id); 
+				$instance_discount = number_format((float)$order_promocode_amount[0]->amount,'2','.','');
+			}else{
+					$amount = 0;
+					$instance_discount = number_format((float)$amount,'2','.','');
+			}
+			$data['order'][$key]->promocode_discount = $instance_discount;
+
 			$getVendorDetails = $this->this_model->getVendorDetails($value->branch_id);
 			$gst_amount = $this->api_admin_model->getGstAmount($value->id);
 			$data['order'][$key]->TotalGstAmount = number_format((float)$gst_amount,'2','.','') ;
 			$data['order'][$key]->AmountWithoutGst =  number_format((float)($value->total - $gst_amount),'2','.','');
 			$data['order'][$key]->orderDetails = $this->view($value->id);
-
 			$data['order'][$key]->vendorName = $getVendorDetails[0]->name;
 			$data['order'][$key]->vendorAddress = $getVendorDetails[0]->location;
 			if($value->isSelfPickup == '1'){

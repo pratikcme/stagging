@@ -145,21 +145,21 @@
                      date_default_timezone_set('Asia/Kolkata');
                      $date =  date('d M Y, h:i A', $value->dt_updated); 
                      if($value->order_status == '1'){
-                                        $status = 'Processing';
-                                  }elseif($value->order_status == '2'){
-                                      $status = 'Pending';
-                                  }elseif($value->order_status == '3'){
-                                      $status = 'Ready';
-                                  }elseif($value->order_status == '4'){
-                                      $status = 'Pickup';
-                                  }elseif ($value->order_status == '5') {
-                                      $status = 'on the way';
-                                  }elseif ($value->order_status == '8') {
-                                      $status = 'Delivered';
-                                  }else{
-                                      $status = 'Cancel';
-                                  }
-                     ?>
+                         $status = 'Processing';
+                       }elseif($value->order_status == '2'){
+                         $status = 'Pending';
+                      }elseif($value->order_status == '3'){
+                         $status = 'Ready';
+                      }elseif($value->order_status == '4'){
+                         $status = 'Pickup';
+                      }elseif ($value->order_status == '5') {
+                         $status = 'on the way';
+                      }elseif ($value->order_status == '8') {
+                         $status = 'Delivered';
+                      }else{
+                         $status = 'Cancel';
+                      }
+                  ?>
                   
                      <div class="your-order-wrapper bg-white">
                         <div class="your-order-header">
@@ -251,6 +251,15 @@
                                  <div class="price-seperator">
                                     <span class="seperator">:</span>
                                     <p><?=$value->total_item?></p>
+                                 </div>
+                              </div>
+                           </li>
+                           <li class="total-wrap">
+                              <div class="total-count">
+                                 <h6>Promocode Discount</h6>
+                                 <div class="price-seperator">
+                                    <span class="seperator">:</span>
+                                    <p><span><!-- <i class="fas fa-rupee-sign"></i> --> - <?=$this->siteCurrency?></span><?=$value->promocode_discount?></p>
                                  </div>
                               </div>
                            </li>
