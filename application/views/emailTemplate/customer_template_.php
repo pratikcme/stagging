@@ -117,6 +117,12 @@
     </div>  
 </div>
 
+<div style=" padding: 10px 10px;border: 1px solid #d8d8d8; border-top: 0px;">
+  <div style="display: flex;align-items: center;justify-content: space-between;width: 100%">
+           <h6 style="width:50%;color: #000;font-weight: bold;font-size: 16px;margin: 0px;text-transform: capitalize;">Promocode Discount :</h6>
+            <span style="width:50%;font-weight: normal;text-align: right;display:block;width: 50%;color: black"><?=$this->siteCurrency?> <?=$order_details[0]->promocode_discount?></span>
+    </div>  
+</div>
 
 <div style=" padding: 10px 10px;border: 1px solid #d8d8d8; border-top: 0px;">
   <div style="display: flex;align-items: center;justify-content: space-between;width: 100%">

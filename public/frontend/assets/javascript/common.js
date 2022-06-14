@@ -388,6 +388,7 @@ $(document).on('click','.dec',function(){
 							}
 						})
 				} else {
+					that.parent().removeClass('transparent-wrap');
 					that.next('input').val(1);
 				}
 	});

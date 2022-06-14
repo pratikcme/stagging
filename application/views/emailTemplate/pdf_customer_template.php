@@ -96,6 +96,10 @@
       <td style=" border: 1px solid #dddddd;border-left:0px;text-align: right;  padding: 20px 15px;width: 50%;"><?=$order_details[0]->total_item?></td>
     </tr>
     <tr>  
+      <th style=" border: 1px solid #dddddd;border-right:0px;text-align: left;  padding: 20px 15px;width: 50%;">Promocode Discount:</th>
+      <td style=" border: 1px solid #dddddd;border-left:0px;text-align: right;  padding: 20px 15px;width: 50%;"><?=$this->siteCurrency?> <?=$order_details[0]->promocode_discount?></td>
+    </tr>
+    <tr>  
       <th style=" border: 1px solid #dddddd;border-right:0px;text-align: left;  padding: 20px 15px;width: 50%;">Final Total:</th>
       <td style=" border: 1px solid #dddddd;border-left:0px;text-align: right;  padding: 20px 15px;width: 50%;"><?=$this->siteCurrency?> <?=number_format((float)$order_details[0]->payable_amount,2,'.','')?></td>
     </tr>

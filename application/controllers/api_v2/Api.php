@@ -242,7 +242,7 @@ class Api extends Apiuser_Controller {
     }
 
     function emailTemplate_testing(){
-        $this->this_model->emailTemplate_testing(38,1,107);
+        $this->this_model->emailTemplate(9,2,12);
     }
     ## User Register ##
    

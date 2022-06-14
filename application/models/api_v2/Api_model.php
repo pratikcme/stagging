@@ -3158,10 +3158,18 @@ class Api_model extends My_model {
         }
         public function emailTemplate($user_id, $branch_id, $o_id) {
             $data['table'] = TABLE_ORDER;
-            $data['select'] = ['id', 'branch_id', 'user_id', 'user_address_id', 'order_no', 'isSelfPickup', 'delivery_date', 'payment_transaction_id', 'name', 'mobile', 'delivered_address', 'delivery_charge', 'total', 'dt_added', 'delivery_charge', 'order_no', 'delivery_date','total_item','total_saving','payable_amount','user_gst_number'];
+            $data['select'] = ['id', 'branch_id', 'user_id', 'user_address_id', 'order_no', 'isSelfPickup', 'delivery_date', 'payment_transaction_id', 'name', 'mobile', 'delivered_address', 'delivery_charge', 'total', 'dt_added', 'delivery_charge', 'order_no', 'delivery_date','total_item','total_saving','payable_amount','user_gst_number','promocode_used'];
             // $data['join'] = [TABLE_ORDER_DETAILS .' as od'=>['o.id=od.order_id','LEFT']];
             $data['where'] = ['status !=' => '9', 'id' => $o_id];
             $re = $this->selectRecords($data);
+            if($re[0]->promocode_used == '1'){
+                $order_promocode_amount = $this->get_order_promocode_discount($re[0]->id); 
+                $instance_discount = number_format((float)$order_promocode_amount[0]->amount,'2','.','');
+            }else{
+                $amount = 0;
+                $instance_discount = number_format((float)$amount,'2','.','');
+            }
+            $re[0]->promocode_discount = $instance_discount;
             $order_id = $re[0]->id;
             $user_gst_number = $re[0]->user_gst_number;
             unset($data);
@@ -3170,8 +3178,10 @@ class Api_model extends My_model {
             $data['join'] = [TABLE_PRODUCT . ' as p' => ['od.product_id=p.id', 'LEFT']];
             $data['where'] = ['od.status !=' => '9', 'od.order_id' => $order_id];
             $result = $this->selectFromJoin($data);
+
             $re[0]->order_details = $result;
             $total_gst = 0;
+            
             foreach ($result as $key => $value) {
                 $gst = $this->getProductGst($value->product_id);
                 $gst_amount = ($value->discount_price * $gst) / 100;
@@ -3194,6 +3204,7 @@ class Api_model extends My_model {
                 $data['user_address'] = $vendor;
             }
              for ($i = 0;$i < 2;$i++) {
+                
                 if ($i == 0) {
                     $data['email_to'] = $vendor_name;
                     $sendTo = $vendor_email;
@@ -3205,14 +3216,10 @@ class Api_model extends My_model {
                     $data['for_vendor'] = 'user';
                     $data['user_gst_number'] = $user_gst_number;
                 }
-                // if($this->siteLogo == base_url()."public/client_logo/bigbucket_logo.png"){
-                //     $bigbucket_logo = "big_email_logo.png";
-                //     $this->siteLogo = base_url().'public/client_logo/'.$bigbucket_logo;
-                // }
                 $emailTemplate = $this->load->view('emailTemplate/customer_template_', $data, true);
-
+                // dd($emailTemplate);
                 if($i == 1){
-                     $pdf = $this->load->view('emailTemplate/pdf_customer_template', $data, true);
+                    $pdf = $this->load->view('emailTemplate/pdf_customer_template', $data, true);
                     require_once 'vendor/autoload.php';
                     $mpdf = new \Mpdf\Mpdf();
                     $mpdf->WriteHTML($pdf);
@@ -3220,15 +3227,17 @@ class Api_model extends My_model {
                     // Saves file on the server as 'filename.pdf'
                     $file = $mpdf->Output(FCPATH.'public/'.$file_name.'.pdf', \Mpdf\Output\Destination::FILE);
                     $datas['attachment'] = FCPATH.'public/'.$file_name.".pdf";
-                
                 }
+
                 $datas['message'] = $emailTemplate;
                 $datas['subject'] = 'Your Order';
                 $datas["to"] = $sendTo;
                 // $datas["to"] = 'sahid.cmexpertise@gmail.com';
                 $res = $this->sendMailSMTP($datas);
-                @unlink(FCPATH.'public/'.$file_name.".pdf");
-                return true;
+                if($i >= 1){
+                    @unlink(FCPATH.'public/'.$file_name.".pdf");
+                    return true;
+                }
             }
         }
 
@@ -3286,6 +3295,7 @@ class Api_model extends My_model {
                 }
 
                 $emailTemplate = $this->load->view('emailTemplate/customer_template_', $data, true);
+              
                 if($i == 1){
                      $pdf = $this->load->view('emailTemplate/pdf_customer_template', $data, true);
                     require_once 'vendor/autoload.php';
