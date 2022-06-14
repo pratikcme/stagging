@@ -381,7 +381,7 @@ Class Checkout_model extends My_model{
         return $otp;
     }
 
-    function valicate_promocode($postData){
+    function validate_promocode($postData){
         $user_id = $this->session->userdata('user_id');
         $promocode = $postData['promocode'];
         $branch_id = $this->session->userdata('branch_id');
@@ -389,8 +389,7 @@ Class Checkout_model extends My_model{
         $data['where'] = ['branch_id'=>$branch_id,'name'=>$promocode];
         $data['table'] = TABLE_PROMOCODE;
         $promocode = $this->selectRecords($data);
-
-         $getMycartSubtotal = getMycartSubtotal();
+        $getMycartSubtotal = getMycartSubtotal();
         $sub_total = number_format((float)$getMycartSubtotal, 2, '.', '');
         $total_price = number_format((float)$sub_total, 2, '.', '');
 
@@ -448,8 +447,6 @@ Class Checkout_model extends My_model{
         $response["data"] = $calculate;   
         $response["orderAmount"] = floatval($total_price);   
         return $response;
-
-
 
     }
 

@@ -258,8 +258,8 @@ class Checkout extends User_Controller {
       $this->loadView(USER_LAYOUT,$data);
   }
 
-  function valicate_promocode(){
-      $response = $this->this_model->valicate_promocode($this->input->post());
+  function validate_promocode(){
+      $response = $this->this_model->validate_promocode($this->input->post());
       echo json_encode($response);die;
     }
 

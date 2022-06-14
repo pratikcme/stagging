@@ -1433,6 +1433,15 @@ class Api extends Apiuser_Controller {
             
             $order_query = $this->db->query("SELECT * FROM `order` WHERE status != '9' AND user_id = '$user_id' AND id = '$order_id'");
             $order_result = $order_query->row_array();
+            $check_promocode_used = $order_result['promocode_used'];
+            if($check_promocode_used[''] == 1){
+                $order_promocode_amount = $this->this_model->get_order_promocode_discount($_POST['order_id']);
+                $instance_discount = number_format((float)$order_promocode_amount[0]->amount,'2','.','');
+            }else{
+                $amount = 0;
+                $instance_discount = number_format((float)$amount,'2','.','');
+            }
+
             $isSelfPickup = $order_result['isSelfPickup'];
             $total_with_charge = $order_result['payable_amount'];
             $delivery_charge = $order_result['delivery_charge'];
@@ -1501,6 +1510,7 @@ class Api extends Apiuser_Controller {
                     $get_data[] = $data;
                     $counter++;
                 }
+
                 $response['success'] = "1";
                 $response['message'] = "My order details";
                 $response["count"] = $counter;
@@ -1511,6 +1521,7 @@ class Api extends Apiuser_Controller {
                 $response["total_price"] = (string)$actual_price_total;
                 $response["delivery_charge"] = $delivery_charge;
                 $response["discount_price_total"] = $discount_price_total;
+                $response["instance_discount"] = $instance_discount;
                 $response['isSelfPickup'] = $isSelfPickup;
                 $response['verify_otp'] = (isset($self_pick_otp)) ? $self_pick_otp : '1234';
                 $response["data"] = $get_data;

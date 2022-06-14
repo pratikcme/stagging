@@ -3651,6 +3651,13 @@ class Api_model extends My_model {
 
     }
 
+    public function get_order_promocode_discount($order_id){
+        $data['table'] = TABLE_ORDER_PROMOCODE;
+        $data['where'] = ['order_id'=>$order_id];
+        $data['select'] = ['*'];
+        return $this->selectRecords($data);
+     }
+
 }
 
 ?>
