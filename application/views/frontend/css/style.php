@@ -6238,7 +6238,7 @@ margin-top: 20px;
   position: absolute;
   top: 110%;
   right:0px;
-  min-width: 374px;
+width: 374px;
   padding: 0;
   border-radius: 5px;
   box-shadow: 0 1px 1px rgba(50,50,50,0.1); 
@@ -6311,7 +6311,7 @@ margin-top: 20px;
     border-radius: 100%;
 }
     
-.notif ul.dropdown li:last-child{
+/*.notif ul.dropdown li:last-child{
     text-align: center;
     padding: 10px;
     background:#fff;
@@ -6319,12 +6319,79 @@ margin-top: 20px;
     top:100%;
     color:#63CDF5;
     font-weight:bold;
-}  
+}  */
 
+.notif ul.dropdown li:last-child{
+    text-align: center;
+    padding: 10px;
+    background: #fff;
+    position: sticky;
+    /* top: 100%; */
+    color: #63CDF5;
+    font-weight: bold;
+    /* left: 0; */
+    /* right: 0; */
+    bottom: 0;
+    width: 100%;
+}
 
 #promo_err{
     margin: 10px 0px;
     color: var(--primary-color);
+}
+
+
+
+
+/* ============ACCOUNT IMAGE============= */
+
+.group-image{
+    display:inline-block;
+    position: relative;
+    margin-bottom:30px;
+}
+.group-image .profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+ .group-image .file-upload {
+    visibility:hidden;
+    width: 0px;
+} 
+.group-image .circle {
+    border-radius: 100% !important;
+    overflow: hidden;
+    width: 128px;
+    height: 128px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: static;
+    top: 72px;
+}
+/* .group-image img {
+    max-width: 100%;
+    height: auto;
+
+} */
+.group-image .p-image {
+  position: absolute;
+  top: 0px;
+ right: 0px;
+  color: #666666;
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+}
+.group-image .p-image:hover {
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+}
+.group-image .upload-button {
+  font-size: 1.2em;
+  color: var(--primary-color);
+}
+.group-image .upload-button:hover {
+  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+  color: #999;
 }
 
 </style>

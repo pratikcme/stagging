@@ -77,6 +77,17 @@
                               </div>
                            </div>
                         </div> -->
+                        <div class="text-center">
+                        <div class="group-image">
+                           <div class="circle">
+                              <img class="profile-pic" src="https://baiya.cmexpertise.com/public/images/baiya/user_profile/uprofile_1654622944.png">
+                           </div>
+                           <div class="p-image">
+                              <i class="fa fa-camera upload-button"></i>
+                              <input class="file-upload" type="file" name="profileimage" accept="image/*">
+                           </div>
+                        </div>
+                        </div>
                         <div class="row">
                            <div class="col-lg-6 col-md-12">
                               <div class="input-wrapper">
