@@ -3651,11 +3651,33 @@ class Api_model extends My_model {
             TABLE_WEIGHT.' as w'=>['w.id = pw.weight_id','LEFT'],
             'package as pkg'=>['pkg.id = pw.package','LEFT'],
         ];
-        $data['select'] = ['od.*','pw.id as product_varient_id','pw.price','pw.price','pw.discount_price','pw.weight_no','w.name as weight_name','pw.discount_per','pkg.package as package_name','pw.max_order_qty','p.name','pw.product_id'];
+        $data['select'] = ['od.*','pw.id as product_varient_id','pw.price','pw.price','pw.discount_price','pw.weight_no','w.name as weight_name','pw.discount_per','pkg.package as package_name','pw.max_order_qty','p.name','pw.product_id','p.branch_id'];
         $data['where'] = ['od.offer_id'=>$postData['offer_id']];
         $return =  $this->selectFromJoin($data);
+        unset($data);
+        $branch_id = $return[0]->branch_id;
         foreach ($return as $k => $v) {
-           $image = $this->getVarient_image($v->product_varient_id);
+            $data['select'] = ['quantity'];
+            $data['where']['product_weight_id'] = $product_variant_id;
+            $data['where']['status !='] = 9;
+            $data['where']['branch_id'] = $branch_id;
+            if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
+                $data['where']['user_id'] = $postdata['user_id'];
+            } else {
+                if (isset($postdata['device_id'])) {
+                    $data['where']['device_id'] = $postdata['device_id'];
+                    $data['where']['user_id'] = 0;
+                }
+            }
+            $data['table'] = 'my_cart';
+            $result_cart = $this->selectRecords($data);
+            if (count($result_cart) > 0) {
+                $my_cart_quantity = $result_cart[0]->quantity;
+            } else {
+                $my_cart_quantity = '0';
+            }
+            $v->quantity = $my_cart_quantity;
+            $image = $this->getVarient_image($v->product_varient_id);
             $v->image = base_url() . 'public/images/'.$this->folder.'product_image/'.$image[0]->image;
         }
         $response["success"] = 1;
@@ -3677,7 +3699,7 @@ class Api_model extends My_model {
         $data['where'] = ['product_variant_id'=>$varient_id];
         $data['select'] = ['*'];
         return $this->selectRecords($data);
-        
+
      }
     
 
