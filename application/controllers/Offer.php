@@ -37,7 +37,6 @@ class Offer extends Admin_Controller{
 			}
 		$this->load->model('banners_model');
 		$data['branchList'] = $this->banners_model->getBranch();
-		lq();
 		$data['producList'] = [];
 		if($branch_id != ''){
 			$data['producList'] = $this->this_model->getproductVarient($branch_id);
