@@ -1060,6 +1060,7 @@ class Api extends Apiuser_Controller {
             $branch_id = $result[0]->branch_id;
             unset($data);
             $response['offer_list'] = $this->this_model->get_offer($branch_id);
+                lq();
             $type = '1';
             foreach ($response['offer_list'] as $key => $value) {
                 $s = $this->this_model->check($value->id);
