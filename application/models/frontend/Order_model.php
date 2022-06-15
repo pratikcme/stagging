@@ -51,8 +51,7 @@ Class Order_model extends My_model{
 
 
     public function makeOrder($fromStripe = ''){
-    	// echo "<pre>";
-     //    print_r($_POST);die;
+      $this->load->model('api_v2/api_model','api_v2_model');
       $user_id = $this->session->userdata('user_id');
       $branch_id = $this->session->userdata('branch_id');
       $vendor_id = $this->session->userdata('vendor_id');
@@ -191,6 +190,7 @@ Class Order_model extends My_model{
         // echo "<pre>";
         // print_r($my_order_result);die;
 
+        $promocode_amount = 0;
 
           if(isset($promocode) && $promocode !=''){
                     unset($data);
@@ -322,12 +322,23 @@ Class Order_model extends My_model{
         /*Remove From My Cart*/
         $this->db->query("DELETE FROM my_cart WHERE user_id = '$user_id'  AND branch_id = '$branch_id'");
         $this->db->query('UNLOCK TABLES;');
+        $message = 'new order '.$iOrderNo ;
+        $branchNotification = array(
+            'order_id'         =>  $last_insert_id,
+            'branch_id'          =>  $branch_id,
+            'notification_type'=> 'new_order',
+            'message'          => $message,
+            'status'           =>'0',
+            'dt_created'       => DATE_TIME,
+            'dt_updated'       => DATE_TIME
+        );
+        $this->api_v2_model->pushAdminNotification($branchNotification);
         $response = array();
         $response ["success"] = 1;
         $response ["message"] = "Thank you for your order";
         $response ["order_number"] = $iOrderNo;
         $output = json_encode(array('responsedata' => $response));
-        $this->load->model('api_v2/api_model','api_v2_model');
+        
         $this->api_v2_model->send_staff_notification($branch_id,"New Order In Your store");
         $this->api_v2_model->emailTemplate($user_id,$branch_id,$last_insert_id);
         
