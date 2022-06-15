@@ -295,8 +295,10 @@ class Admin extends CI_Controller
 
     ## Check Login  ##
     public function check_login(){   
+        dd($_SERVER);die;
         $email = $_POST['loginemail'];
         $password = md5($_POST['loginpassword']);
+        // $domain_name = 
         $result_login = $this->db->query("SELECT * FROM " .TABLE_BRANCH. " WHERE email='$email' AND password ='$password'"); 
         $row_login = $result_login->row_array();
         if ($result_login->num_rows() > 0) {
@@ -356,7 +358,7 @@ class Admin extends CI_Controller
            $server_name = $_SERVER["SERVER_NAME"];
            $result_login = $this->db->query("SELECT * FROM `vendor` WHERE email='$email' AND password='$password' AND server_name='$server_name'"); 
             $row_login = $result_login->row_array();
-            
+
         if ($result_login->num_rows() > 0) {
            
                 $login_data = array(
