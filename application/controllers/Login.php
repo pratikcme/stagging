@@ -42,6 +42,14 @@ class Login extends User_Controller {
 
 	public function index()
 	{
+		// error_reporting(E_ALL);
+		// 	ini_set('display_errors', 1);
+		$login_type = $this->this_model->checkLoginType();
+		// dd($login_type);
+		if($login_type == '1'){
+			redirect(base_url().'user_register');
+			die;
+		}
 
 		if(isset($this->user_id) && $this->user_id != ''){
 			redirect(base_url());

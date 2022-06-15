@@ -269,7 +269,6 @@ class Api_model extends My_model {
         // $data['where'] = ['id' => '2'];
         $data['where'] = ['server_name' => $server_name];
         $result = $this->selectRecords($data);
-        
         return $result;
         // return (int)$result[0]->approved_branch;
     }
