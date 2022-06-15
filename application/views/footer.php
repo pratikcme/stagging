@@ -459,6 +459,49 @@ chart.data = [
 
 
 }); 
+
+
+  
+// ========== NOTIFICATION ========
+$(function() {
+
+  // Dropdown toggle
+  $('.notify-dropdown').click(function() {
+    $(this).next('.dropdown').toggle( 400 );
+  });
+
+  $(document).click(function(e) {
+    var target = e.target;
+    if (!$(target).is('.notify-dropdown') && !$(target).parents().is('.notify-dropdown')) {
+      $('.notify-drop').hide() ;
+    }
+  });
+
+});
+
+$(document).ready(function() {
+  $(".notification-drop .item").on('click',function() {
+    // $(this).find('ul').toggle();
+    
+    $(this).find('ul').removeClass('d-none');
+    $(this).find('ul').addClass('d-block');
+    setTimeout(() => {
+      $(".notification-list").addClass("open")
+    }, 500);
+
+  });
+});
+
+$('body').click(function(){
+  if($('.notification-list').hasClass('open')){
+  
+     $('.notification-list').addClass('d-none');
+    $('.notification-list').removeClass('d-block');
+    $(".notification-list").removeClass("open")
+  }
+ 
+});
+
 </script>
 
 </body>

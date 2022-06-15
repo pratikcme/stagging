@@ -131,7 +131,7 @@ elseif($_SERVER['SERVER_NAME']=='bmartsupermarket.in' || $_SERVER['SERVER_NAME']
     $navbarColor = "#FFF";
     $cartBtnBackground = "#fff";
     $cartBtnColor = "#373854";
-    $loginBtnBackground = "#ffffff";
+    $loginBtnBackground = "#ffffff";    
     $loginBtnColor = "#373854";
     $loginBtnborder = "#fff";
     // $lightHeaderColor = "fff"; 
@@ -1332,7 +1332,7 @@ margin-bottom: 0px;
     margin: 0px !important;
 }
 .cart-view-wrap .view-cart-btn-wrapper a:last-child{
-border-color:#000 !important;
+border-color:var(--border-color) !important;
 background-color: var(--secondary-color) !important;  
 }
 
