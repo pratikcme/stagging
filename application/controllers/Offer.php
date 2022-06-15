@@ -14,6 +14,7 @@ class Offer extends Admin_Controller{
 		$data['js'] = array('offer.js');
 		$data['init'] = array('OFFER.table()','OFFER.delete()');
 		$data['offer'] = $this->this_model->getOffer();
+		lq();
 		$this->load->view('offer/list',$data);
 	}
 
