@@ -543,6 +543,10 @@ footer ul{
 
 /*-----RESPONSIVE CSS FOR 475 PX-----*/
 @media (max-width: 475px){
+	.notif ul.dropdown{
+		width: 330px !important;
+	
+	}
 	/*.wihslist-wrapper ul li{
 		flex-direction: column;
 		align-items: flex-start;
@@ -554,7 +558,7 @@ footer ul{
 	}
 	.your-order-wrapper {
     padding: 15px 25px;
-    height: 85px;
+    height: 140px;
 	}
 	.your-order-header {
     align-items: flex-start;
@@ -721,12 +725,22 @@ footer ul{
 	.address-wrapper .user-detail{
 		padding-left: 0px;
 	}
+	.your-order-wrapper {
+    	padding: 15px 25px;
+   	 height: 160px;
+	}
+	.notif ul.dropdown{
+		width: 300px !important;
+		margin: 0 auto;
+	
+	}
 }
 
 
 
 /*-----RESPONSIVE CSS FOR 375 PX-----*/
 @media (max-width: 375px){
+
 	header .header-top-nav ul li{
 		    padding: 0px 5px;
 	}
@@ -769,11 +783,19 @@ footer ul{
 		width: 188px;
 		margin-bottom: 20px;
 	} 
-
+	
+.notif ul.dropdown {
+    width: 300px !important;
+    margin: 0 auto;
+    right: -50px;
+}
 
 }
 
 @media (max-width: 350px){
+	.input-wrapper span{
+		margin-right: 10px;
+	}
 	.wihslist-wrapper ul li{
 		padding: 20px 10px;
 	}
@@ -787,6 +809,14 @@ footer ul{
    	 right: 0px;
    	 left: 0px;
    	 margin: 0 auto !important;
+	}
+	.cart-view-wrap {
+    	width: 280px;
+    	right: -75px;
+	}
+	.your-order-wrapper {
+    	padding: 15px 25px;
+    	height: 180px;
 	}
 }
 </style>
