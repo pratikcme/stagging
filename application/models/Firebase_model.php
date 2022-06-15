@@ -37,6 +37,7 @@ Class Firebase_model extends My_model{
             $data['insert']['key_id'] = $postData['key_id'];
             $data['insert']['team_id'] = $postData['team_id'];
             $data['insert']['user_bandle_id'] = $postData['user_bandle_id'];
+            $data['insert']['admin_bandle_id'] = trim($postData['admin_bandle_id']);
             $data['insert']['staff_bandle_id'] = $postData['staff_bandle_id'];
             $data['insert']['delivery_bandle_id'] = $postData['delivery_bandle_id'];
             $data['insert']['facebook_client_id'] = $postData['facebook_client_id'];
@@ -77,6 +78,7 @@ Class Firebase_model extends My_model{
             $data['update']['team_id'] = $postData['team_id'];
             $data['update']['user_bandle_id'] = $postData['user_bandle_id'];
             $data['update']['staff_bandle_id'] = $postData['staff_bandle_id'];
+            $data['update']['admin_bandle_id'] = trim($postData['admin_bandle_id']);
             $data['update']['delivery_bandle_id'] = $postData['delivery_bandle_id'];
             $data['update']['facebook_client_id'] = $postData['facebook_client_id'];
             $data['update']['facebook_secret_id'] = $postData['facebook_secret_id'];

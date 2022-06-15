@@ -134,6 +134,11 @@
                                         <input type="text" id="instagram_link" name="instagram_link" class="form-control" value="<?php echo @$getData[0]->instagram_link != '' ? $getData[0]->instagram_link : @set_value('instagram_link'); ?>">
                                       <label for="instagram_link" class="error"><?php echo @form_error('instagram_link'); ?></label>
                                       </div>
+                                      <div class="form-group">
+                                      <label for="firebase_url" >Admin Bandle Id</label>
+                                        <input type="text" id="admin_bandle_id" name="admin_bandle_id" class="form-control" value="<?php echo @$getData[0]->admin_bandle_id != '' ? $getData[0]->admin_bandle_id : @set_value('admin_bandle_id'); ?>">
+                                      <label for="admin_bandle_id" class="error"><?php echo @form_error('admin_bandle_id'); ?></label>
+                                    </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
                                       <div class="form-group">
@@ -161,8 +166,7 @@
                                       <label for="firebase_url" >Firebase url</label>
                                         <input type="text" id="firebase_url" name="firebase_url" class="form-control" value="<?php echo @$getData[0]->firebase_url != '' ? $getData[0]->firebase_url : @set_value('firebase_url'); ?>" <?=($getData[0]->firebase_url!='')? 'readonly': ''?>>
                                       <label for="firebase_url" class="error"><?php echo @form_error('firebase_url'); ?></label>
-                                      </div>
-                                       
+                                      </div> 
                                 </div>
                             </div>
                              

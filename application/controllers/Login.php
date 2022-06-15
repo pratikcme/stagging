@@ -40,14 +40,10 @@ class Login extends User_Controller {
 	}
 
 
-	public function index()
-	{
-		// error_reporting(E_ALL);
-		// 	ini_set('display_errors', 1);
+	public function index(){
 		$login_type = $this->this_model->checkLoginType();
-		// dd($login_type);
 		if($login_type == '1'){
-			redirect(base_url().'user_register');
+			redirect(base_url().'login/user_register');
 			die;
 		}
 
@@ -248,6 +244,13 @@ class Login extends User_Controller {
 	}
 
 	public function user_register(){
+
+		$login_type = $this->this_model->checkLoginType();
+		if($login_type == '0'){
+			redirect(base_url().'login');
+			die;
+		}
+
 		$data['appLinks'] = $this->common_keys;
 		if(isset($this->user_id) && $this->user_id != ''){
 			redirect(base_url());

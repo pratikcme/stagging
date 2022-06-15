@@ -1948,8 +1948,8 @@ class Api_model extends My_model {
                     $address = 'self pick';
                     $user = $this->getUserDetails($_POST['user_id']);
                 }
-                $promocode_amount = 0;
 
+                $promocode_amount = 0;
 
                 if(isset($postdata['promocode']) && $postdata['promocode'] !=''){
                     unset($data);
@@ -3703,6 +3703,38 @@ class Api_model extends My_model {
         return $this->selectRecords($data);
 
      }
+
+    public function pushAdminNotification($insertData){
+        $data['table'] = 'admin_notification';
+        $data['insert'] = $insertData;
+        $return = $this->insertRecord($data);
+
+        $branch_id = $insertData['branch_id'];
+        $notification_type = $insertData['notification_type'];
+        $message = $insertData['message'];
+
+        $result = $this->getNotificationKey($branch_id);
+        $details = $this->getBranchDeviceData($branch_id); 
+        if(!empty($details)){
+            $type = $details[0]->type;
+            $device_id = $details[0]->token;
+            $deviceToken['message'] = $message;
+            $deviceToken['type'] = $type;
+            $deviceToken['device_id'] = $device_id;
+            // $this->utility_apiv2->sendNotification($deviceToken,$notification_type,$result,$for_id); i have to change tis function
+            // if($notification_status == '1'){
+            // }
+            unset($data);
+        }
+        return true;
+    }
+
+    public function getBranchDeviceData($branch_id){
+        $data['table'] = 'branch_device';
+        $data['branch_id'] = $branch_id;
+        $data['select'] = ['*'];
+        return $this->selectRecords($data);
+    }
     
 
 }
