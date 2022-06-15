@@ -66,17 +66,7 @@
                      
                      </div>
                      <form id='ChangePass' action="<?=base_url().'users_account/users/account'?>" method="post" class="account-form">
-                        <!-- <div class="profile-image">
-                           <div class="image-container">
-                              <img src="<?=base_url()?>public/frontend/assets/images/profile.png">
-                              <div class="camera">
-                                 <label class="filelabel">
-                                 <span class="title"><i class="fas fa-camera"></i></span>
-                                 <input class="FileUpload1" id="FileInput" name="booking_attachment" type="file">
-                                 </label>
-                              </div>
-                           </div>
-                        </div> -->
+                          <input type="hidden" name="hidden_image" value="<?=$userDetails[0]->profileimage?>">
                         <div class="text-center">
                         <div class="group-image">
                            <div class="circle">
