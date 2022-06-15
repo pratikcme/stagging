@@ -199,7 +199,7 @@ class Vendor_Controller extends MY_Controller
                   $my_cart[$key]->image = $product_image[0]->image;
                 }
                 $data['mycart'] = $my_cart;
-                // dd($data['mycart']);die;
+                $data['notification'] = $this->common_model->userNotify();
                 return $this->load->view($layout,$data);
         }
 

@@ -108,6 +108,36 @@ class Home extends User_Controller {
 	
 	}
 
+	public function get_notification(){
+		$this->load->model('common_model');
+		$res = $this->common_model->userNotify();
+		$html = '';
+		foreach ($res as $key => $value) {
+			$html .= '<li>'.$value->notification.'</li>';
+		}
+		if(count($res) == '0'){
+			$html .= '<li>No Notification</li>';
+		}else{
+			$html .='<li id="clear_all">Clear All</li>';
+		}
+		echo json_encode(['notify'=>$html,'count'=>count($res)]);
+	}
+
+	public function haveRead(){
+			$this->load->model('common_model');
+			$res = $this->common_model->makeRead();
+			$html = '';
+			foreach ($res as $key => $value) {
+				$html .= '<li>'.$value->notification.'</li>';
+			}
+			if(count($res) == '0'){
+				$html .= '<li>No Notification</li>';
+			}else{
+				$html .='<li id="clear_all">Clear All</li>';
+			}
+		echo json_encode(['notify'=>$html,'count'=>count($res)]);
+	}
+
 	
 }
 ?>

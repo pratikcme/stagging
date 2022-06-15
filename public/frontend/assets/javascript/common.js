@@ -19,6 +19,45 @@ if($('#cart_value').length){
 	});  
 }
 
+setInterval(get_note, 30000);
+function get_note(){
+	var url = $('#url').val();
+	$.ajax({
+		url : url +'home/get_notification',
+		method: 'post',
+		dataType: 'json',
+		success:function(output){
+			if(output.status > 0){
+				$('#notify_status').addClass('btn__badge');
+			}
+			if(output.count == 0){
+				$('#notification').addClass('ishave');
+			}
+			$('#notification').html(output.notify);
+		}
+	});
+}
+
+$(document).on('click','#clear_all',function(){
+	var url = $('#url').val();
+		$.ajax({
+		url : url +'home/haveRead',
+		method: 'post',
+		dataType: 'JSON',
+		success:function(output){
+			$('#notify_status').removeClass('btn__badge');
+			if(output.status > '0'){
+				$('#notify-dot').addClass('btn__badge');
+			}
+			if(output.count == '0'){
+				$('#notify-dot').removeClass('btn__badge');
+				$('#notification').addClass('ishave');
+			}
+			$('#notification').html(output.notify);
+		}
+	});
+})
+
 $(document).on('click','#logout',function() {
 	var url = $('#url').val();
 	swal({

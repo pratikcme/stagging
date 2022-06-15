@@ -142,23 +142,24 @@
                  </div>
              </div>
              </div>
-                         <div class="notif">
+             <?php if($this->session->userdata('user_id') != ''){ ?> 
+             <div class="notif">
               <div class="btn__badge pulse-button"  id="notify-dot"></div>
-             <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
-          <ul class="dropdown notify-drop"  id="notification">
-              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
-              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
-              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
-              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
-              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
-              <li>No Notification</li>
-          
-             <li id="clear_all">Clear All</li>
-          
-          </ul>
+              <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
+              <ul class="dropdown notify-drop <?=(count($notification) == '0' ) ? "ishave" : "" ?>"  id="notification">
+                <?php foreach ($notification as $key => $value): ?>
+                 <li><?=$value->notification?></li>
+               <?php endforeach ?>
+               <?php 
+               if(count($notification) == "0"){ ?> 
+                <li>No Notification</li>
+              <?php }else{?> 
+               <li id="clear_all">Clear All</li>
+             <?php } ?>
+           </ul>
 
-        </div>
-    
+         </div>
+         <?php } ?>
             <div class="mobile-login">
               <?php if($this->session->userdata('user_id') == ''){ ?>    
                  <div class="mobile-login-user_without_login" >

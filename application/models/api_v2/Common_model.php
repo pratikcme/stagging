@@ -223,6 +223,60 @@ Class Common_model extends My_model{
 		return true;
 	}
 
+	public function userNotify()
+    {
+        $user_id = $this->session->userdata('user_id');
+        $data['table'] = 'notification';
+        $data['select'] = ['*'];
+        $data['where'] = ['user_id'=>$user_id,'status'=>'0'];
+        $data['order'] = 'id desc';
+        return $this->selectRecords($data);
+    }
+
+    public function makeRead()
+    {
+        $user_id = $this->session->userdata('user_id');
+        $data['table']  = 'notification';
+        $data['where']  = ['user_id'=>$user_id];
+        $data['update'] = ['status'=>'1'];
+        $this->updateRecords($data);
+        unset($data);
+        $data['table'] = 'notification';
+        $data['select'] = ['*'];
+        $data['where'] = ['user_id'=>$user_id,'status'=>'0'];
+        $data['order'] = 'id desc';
+        return $this->selectRecords($data);
+    }
+
+    public function getAdminNotification(){
+    	$data['table'] = 'admin_notification';
+        $data['select'] = ['*'];
+        $data['where'] = ['status'=>'0'];
+        $data['order'] = 'id desc';
+        return $this->selectRecords($data);	
+    }
+
+    public function adminNotify()
+    {
+        $data['table'] = 'admin_notification';
+        $data['select'] = ['*'];
+        $data['where'] = ['status'=>'0'];
+        $data['order'] = 'id desc';
+        return $this->selectRecords($data);
+    }
+
+    public function read_all(){
+    	$data['table']  = 'admin_notification';
+        $data['update'] = ['status'=>'1'];
+        $this->updateRecords($data);
+        unset($data);
+        $data['table'] = 'admin_notification';
+        $data['select'] = ['*'];
+        $data['where'] = ['status'=>'0'];
+        $data['order'] = 'id desc';
+        return $this->selectRecords($data);
+    }
+
 
 	
 
