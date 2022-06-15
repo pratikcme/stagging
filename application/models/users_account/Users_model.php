@@ -5,7 +5,17 @@ class Users_model extends My_model {
 
 	public function varifiy_password($postData)
     {
-        // print_r($postData);die;
+        
+        if(isset($_FILES['profileimage']) && $_FILES['profileimage']['error'] == 0){
+            $UploadPath = "public/images/".$this->folder."user_profile/";
+            $uploadImage =  upload_single_image($_FILES,'uprofile',$UploadPath);
+            $uploadImage = $uploadImage['data']['file_name'];   
+            $data['update']['profileimage'] =  $uploadImage;
+            $old_one = $postData['hidden_image'];
+            unlink($UploadPath.$old_one);
+        }
+
+        
             $data['table'] = TABLE_USER;
             $data['update']['fname'] = $postData['fname'];
             $data['update']['lname'] = $postData['lname'];
