@@ -10,11 +10,12 @@ class Offer extends Admin_Controller{
 
 	public function index()
 	{
+		// dd($_SESSION);
 		$data['page'] = 'offer/list';
 		$data['js'] = array('offer.js');
 		$data['init'] = array('OFFER.table()','OFFER.delete()');
 		$data['offer'] = $this->this_model->getOffer();
-		
+
 		$this->load->view('offer/list',$data);
 	}
 
