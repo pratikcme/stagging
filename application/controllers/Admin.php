@@ -295,11 +295,11 @@ class Admin extends CI_Controller
 
     ## Check Login  ##
     public function check_login(){   
-        dd($_SERVER);die;
+        $base_url = base_url();
         $email = $_POST['loginemail'];
         $password = md5($_POST['loginpassword']);
         // $domain_name = 
-        $result_login = $this->db->query("SELECT * FROM " .TABLE_BRANCH. " WHERE email='$email' AND password ='$password'"); 
+        $result_login = $this->db->query("SELECT * FROM " .TABLE_BRANCH. " WHERE email='$email' AND password ='$password' AND domain_name = '$base_url'"); 
         $row_login = $result_login->row_array();
         if ($result_login->num_rows() > 0) {
             $status = $row_login['status'];
