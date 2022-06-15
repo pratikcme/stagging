@@ -3654,6 +3654,10 @@ class Api_model extends My_model {
         $data['select'] = ['od.*','pw.id as product_varient_id','pw.price','pw.price','pw.discount_price','pw.weight_no','w.name as weight_name','pw.discount_per','pkg.package as package_name','pw.max_order_qty','p.name','pw.product_id'];
         $data['where'] = ['od.offer_id'=>$postData['offer_id']];
         $return =  $this->selectFromJoin($data);
+        foreach ($return as $k => $v) {
+           $image = $this->getVarient_image($v->product_varient_id);
+            $v->image = base_url() . 'public/images/'.$this->folder.'product_image/'.$image[0]->image;
+        }
         $response["success"] = 1;
         $response["message"] = "offer details data";  
         $response["data"] = $return;  
@@ -3667,6 +3671,14 @@ class Api_model extends My_model {
         $data['select'] = ['*'];
         return $this->selectRecords($data);
      }
+
+    public function getVarient_image($varient_id){
+        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['where'] = ['product_variant_id'=>$varient_id];
+        $data['select'] = ['*'];
+        return $this->selectRecords($data);
+     }
+    
 
 }
 
