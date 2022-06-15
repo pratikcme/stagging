@@ -3651,7 +3651,7 @@ class Api_model extends My_model {
             TABLE_WEIGHT.' as w'=>['w.id = pw.weight_id','LEFT'],
             'package as pkg'=>['pkg.id = pw.package','LEFT'],
         ];
-        $data['select'] = ['od.*','pw.id as product_varient_id','pw.price','pw.price','pw.discount_price','pw.weight_no','w.name as weight_name','pw.discount_per','pkg.package as package_name','pw.max_order_qty','p.name','pw.product_id','p.branch_id'];
+        $data['select'] = ['od.*','pw.id as product_varient_id','pw.price','pw.price','pw.discount_price','pw.weight_no','w.name as weight_name','pw.discount_per','pkg.package as package_name','pw.max_order_qty','p.name','pw.product_id','p.branch_id','pw.quantity as available_quantity','pw.price as actual_price'];
         $data['where'] = ['od.offer_id'=>$postData['offer_id']];
         $return =  $this->selectFromJoin($data);
         unset($data);
@@ -3676,8 +3676,8 @@ class Api_model extends My_model {
             } else {
                 $my_cart_quantity = '0';
             }
-            
-            $v->quantity = $my_cart_quantity;
+
+            $v->my_cart_quantity = $my_cart_quantity;
             $image = $this->getVarient_image($v->product_varient_id);
             $v->image = base_url() . 'public/images/'.$this->folder.'product_image/'.$image[0]->image;
         }
