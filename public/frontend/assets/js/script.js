@@ -1,3 +1,62 @@
+
+// ========== NOTIFICATION ========
+$(function() {
+
+  // Dropdown toggle
+  $('.notify-dropdown').click(function() {
+    $(this).next('.dropdown').toggle( 400 );
+  });
+
+  $(document).click(function(e) {
+    var target = e.target;
+    if (!$(target).is('.notify-dropdown') && !$(target).parents().is('.notify-dropdown')) {
+      $('.notify-drop').hide() ;
+    }
+  });
+
+});
+
+$(document).ready(function() {
+  $(".notification-drop .item").on('click',function() {
+    // $(this).find('ul').toggle();
+    
+    $(this).find('ul').removeClass('d-none');
+    $(this).find('ul').addClass('d-block');
+    setTimeout(() => {
+      $(".notification-list").addClass("open")
+    }, 500);
+
+  });
+});
+
+$('body').click(function(){
+  if($('.notification-list').hasClass('open')){
+  
+     $('.notification-list').addClass('d-none');
+    $('.notification-list').removeClass('d-block');
+    $(".notification-list").removeClass("open")
+  }
+ 
+});
+
+
+
+
+// check out payment option of self
+$(document).ready(function() {
+  $(".self-group-main .option-1").click(function() {
+    if ($(this).find(".groupChk").is(":checked")){
+      $(".group-name-select-wrap").removeClass("d-none");
+      $(".billing-btns.payment-option.active").next().css("minHeight","450px");  
+      
+    }else{
+      $(".group-name-select-wrap").addClass("d-none");
+      $(".billing-btns.payment-option.active").next().css("minHeight","375px");  
+    }
+  });
+});
+
+
 // ======== VENDOR DEFAULT CHECKBOX CSS===
 
 $(".vendor-chk").click(function() {

@@ -142,6 +142,22 @@
                  </div>
              </div>
              </div>
+                         <div class="notif">
+              <div class="btn__badge pulse-button"  id="notify-dot"></div>
+             <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
+          <ul class="dropdown notify-drop"  id="notification">
+              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
+              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
+              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
+              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
+              <li>Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum </li>
+              <li>No Notification</li>
+          
+             <li id="clear_all">Clear All</li>
+          
+          </ul>
+
+        </div>
     
             <div class="mobile-login">
               <?php if($this->session->userdata('user_id') == ''){ ?>    

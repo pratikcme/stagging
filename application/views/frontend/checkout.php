@@ -575,8 +575,9 @@ label.error.mobile_verfication{
 
                        <li class="saving">
                         <input type="text" name="promocode" id="promocode" placeholder="Enter Promocode">
-                        <button id="checkPromocode" class="btn btn-primary" type="button">Apply</button>
                         <span class="error" id="promo_err"></span>
+                        <button id="checkPromocode" class="btn btn-primary" type="button">Apply</button>
+                        
                      </li>
 
                      <li class="saving">
@@ -602,7 +603,7 @@ label.error.mobile_verfication{
          </div>
       </div>
       <input type="hidden" name="" id="s_charge" value="<?=$this->utility->safe_b64encode($calc_shiping)?>">
-      <input type="hidden" name="" id="shipping_charge" value="<?=number_format($calc_shiping,2,'.','')?>">
+      <input type="hidden" name="" id="shipping_charge" value="<?=(isset($calc_shiping) && $calc_shiping != '' ) ? number_format((float)$calc_shiping,2,'.','') : '0.00'?>">
       <input type="hidden" name="" id="AddressNotInRange" value="<?=$AddressNotInRange?>">
       <input type="hidden" name="" id="checkAddress" value="<?=(!empty($userAddress) ? "1" : "0")?>">
       <input type="hidden" name="" id="CheckisSelfPickup" value="<?=($this->session->userdata('isSelfPickup') == '' || $this->session->userdata('isSelfPickup') == '0') ? "0" : "1"?>">

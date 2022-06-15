@@ -417,6 +417,11 @@ if (!empty($init)) {
  $("table").rtResponsiveTables({
     containerBreakPoint: 360
     });
+
+
+
+
+ 
 </script>
 
 

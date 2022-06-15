@@ -4099,7 +4099,7 @@ cursor: pointer;
 
 .order-summary-box ul li.saving p {
     margin-bottom: 0px;
-    color: #f55d2c;
+    color: var(--primary-color);
     font-size: 14px;
     font-family: "OpenSans-SemiBold";
 }

@@ -4619,7 +4619,9 @@ cursor: pointer;
     width: 100%;
     height: 45px;
     padding: 0px 10px;
-    margin-bottom: 10px;
+    border: 1px solid #999999;
+    border-radius: 5px;
+
 }
 
 
@@ -4628,10 +4630,15 @@ cursor: pointer;
     height: 45px;
     /*padding: 0px 10px;*/
 }
+.order-summary-box ul li.saving button:active,.order-summary-box ul li.saving button:focus{
+    background-color: var(--primary-color) !important;
+       border-color: var(--primary-color) !important;
+       color: #fff !important;
+}
 
 .order-summary-box ul li.saving p {
     margin-bottom: 0px;
-    color: #f55d2c;
+    color: var(--primary-color);
     font-size: 14px;
     font-family: "OpenSans-SemiBold";
 }
@@ -6218,5 +6225,106 @@ margin-top: 20px;
     height: 100%;
 }
 
+
+/* ======= NOTIFICATION ======== */
+
+
+.notif{
+     padding:10px;
+     position: relative;
+   }
+   .notif ul.dropdown {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right:0px;
+  min-width: 374px;
+  padding: 0;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px rgba(50,50,50,0.1); 
+  background:#fff;
+  z-index: 22;
+  height: 300px;
+  overflow:auto;
+   
+}
+.notif ul.dropdown.ishave{
+    height:45px;
+}
+.notif .fa-bell {
+  color:var(--primary-color);
+  font-size:18px;
+}
+.notif .dropdown-toggle::after {
+  display:none;
+}
+
+.notif ul.dropdown::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #fff;
+}
+
+.notif ul.dropdown::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: #fff;
+}
+
+.notif ul.dropdown::-webkit-scrollbar-thumb
+{
+    background-color: var(--primary-color);
+    border-radius: 10px;
+}
+
+
+ 
+.notif ul.dropdown li {
+  padding: 10px;
+  list-style-type: none;
+  border-top: 1px solid lightgrey;
+  cursor: pointer;
+}   
+ 
+.notif ul.dropdown li:hover{
+  background-color: #eee;
+}
+    
+.notif ul.dropdown li:first-child {
+  list-style-type: none;
+  border-top: none;    
+  
+}
+    
+.notif ul.dropdown .fa-circle{
+    font-size: 15px;
+    color: rgba(115, 187, 22, 1);  
+} 
+    
+
+/*View All Notification*/
+.notif ul.dropdown .fa-list{
+    font-size: 15px;
+    padding:5px;
+    color: rgba(115, 187, 22, 1); 
+    border: 2px solid rgba(115, 187, 22, 1);
+    border-radius: 100%;
+}
+    
+.notif ul.dropdown li:last-child{
+    text-align: center;
+    padding: 10px;
+    background:#fff;
+    position: sticky;
+    top:100%;
+    color:#63CDF5;
+    font-weight:bold;
+}  
+
+
+#promo_err{
+    margin: 10px 0px;
+    color: var(--primary-color);
+}
 
 </style>
