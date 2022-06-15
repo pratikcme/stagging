@@ -3676,6 +3676,7 @@ class Api_model extends My_model {
             } else {
                 $my_cart_quantity = '0';
             }
+            
             $v->quantity = $my_cart_quantity;
             $image = $this->getVarient_image($v->product_varient_id);
             $v->image = base_url() . 'public/images/'.$this->folder.'product_image/'.$image[0]->image;
