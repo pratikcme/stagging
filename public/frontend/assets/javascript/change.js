@@ -71,6 +71,9 @@ var CHANGE = function(){
 
         $('#ChangePass').validate({
             rules : {
+                profileimage:{
+                    accept:"jpg,png,jpeg,gif"
+                },
                 fname : {required : true },
                 lname : {required : true },
                 // old_pass : { required : true},
@@ -92,6 +95,9 @@ var CHANGE = function(){
                 }
             },
             messages : {
+                profileimage:{
+                    accept:"Only image type jpg/png/jpeg/gif is allowed",
+                },
                 fname : { required : "Please enter first name"},
                 lname : {required : "Please enter last name" },
                  old_pass : { 

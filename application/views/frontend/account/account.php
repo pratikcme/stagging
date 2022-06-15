@@ -78,6 +78,7 @@
                            </div>
                         </div>
                         </div>
+                         <label for="profileimage" class="error profileimage"></label>
                         <div class="row">
                            <div class="col-lg-6 col-md-12">
                               <div class="input-wrapper">
