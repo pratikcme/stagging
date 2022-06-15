@@ -3677,6 +3677,7 @@ class Api_model extends My_model {
         $data['where'] = ['product_variant_id'=>$varient_id];
         $data['select'] = ['*'];
         return $this->selectRecords($data);
+        
      }
     
 
