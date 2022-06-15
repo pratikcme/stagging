@@ -13,7 +13,7 @@ Class Offer_model extends My_model{
         }
         $data['table'] = TABLE_OFFER.' as of';
         $data['select'] = ['of.*','b.name as branch_name'];
-        $data['join'] = [TABLE_BRANCH .' as b'=>['b.id = of.branch_id','LEFT']];
+        $data['join'] = ['branch as b'=>['b.id = of.branch_id','LEFT']];
         $data['where']['b.vendor_id'] = $this->vendor_id;
         $data['order'] = 'id desc';
         return $this->selectFromJoin($data);        
