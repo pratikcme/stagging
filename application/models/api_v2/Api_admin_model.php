@@ -63,7 +63,6 @@ class Api_admin_model extends My_model {
         $data['where'] = ['branch_id' =>$branch_id];
         $res = $this->selectRecords($data);
         unset($data);
-        dd($res);
         if(count($res) > 0){
             if($res[0]->device_id != $postData['device_id']){
                 $data['table'] = 'branch_device';
