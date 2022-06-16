@@ -3588,27 +3588,40 @@ class Api_model extends My_model {
         return $response;
     }
 
-    function completeProfile($postData){  
-        $data['update'] = [
-                            'fname' => $postData['fname'],
-                            'lname' => $postData['lname'],
-                            'dt_updated'=>strtotime(DATE_TIME),
+  
+    public function completeProfile($postData){
+        $user_id = $postData['user_id'];
+        $fname = $postData['fname'];
+        $lname = $postData['lname'];
+        $email = $postData['email'];
+        $user_gst_number = $postData['user_gst_number'];
 
-                            ];
-        if(isset($postData['email'])){
-            $data['email'] = $postData['email'];
+        if(isset($_FILES['profileimage']) && $_FILES['profileimage']['error'] == 0){
+            $UploadPath = "public/images/".$this->folder."user_profile/";
+            $uploadImage =  upload_single_image($_FILES,'uprofile',$UploadPath);
+            $uploadImage = $uploadImage['data']['file_name'];   
+            $data['update']['profileimage'] =  $uploadImage;
         }
-        $data['table'] = 'user';
-        $data['where']['vendor_id'] = $postData['vendor_id'];    
-        $data['where']['id'] = $postData['user_id'];
-        $re = $this->updateRecords($data);
+        $path = base_url().'public/images/'.$this->folder.'user_profile/';
+        $data['table'] = TABLE_USER;
+        $data['update']['fname'] = $fname;
+        $data['update']['lname'] = $lname;
+        $data['update']['email'] = $email;
+        $data['update']['user_gst_number'] = $user_gst_number;
+        $data['update']['dt_updated'] = strtotime(DATE_TIME);
+        $data['where'] = ['id'=>$user_id];
+
+        $result = $this->updateRecords($data);
         unset($data);
-        if($re){
+        if($result){
+            $data['table'] = TABLE_USER;
+            $data['select'] = ['*'];
+            $data['where'] = ['id'=>$user_id];
+            $r = $this->selectRecords($data,true);
             $response["success"] = 1;
             $response["message"] = "Profile Updated";  
-        }else{
-            $response["success"] = 0;
-            $response["message"] = "Error to update profile";                
+            // $response["user_data"] = $r[0];  
+            $response =  $this->sendLoginResponse($r[0],$postData,true);
         }
         return $response;
     }

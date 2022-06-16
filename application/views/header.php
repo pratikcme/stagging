@@ -307,17 +307,23 @@ $vendor_id = $this->session->userdata('id');
                                 <i class="fa fa-key"></i> LogOut</a></li>
                     </ul>
                 </li>
-                <li>
-                    <div class="notif">
-              <div class=" pulse-button" id="notify-dot"></div>
-             <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
-              <ul class="dropdown notify-drop ishave" id="notification">
-                              
-                  <li>No Notification</li>
-                             </ul>
-
-           </div>        
-                </li>
+                <?php if(isset($_SESSION['id']) && $_SESSION['id'] > '0' ){ ?> 
+                    <li>
+                        <div class="notif">
+                            <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
+                            <ul class="dropdown notify-drop <?=(count($this->adminNotification) == "0") ? 'ishave' : ''   ?>"  id="admin_notification">
+                                <?php foreach ($this->adminNotification as $key => $value): ?>
+                                 <li><?=$value->message?></li>
+                             <?php endforeach ?>
+                             <?php if(count($this->adminNotification) == "0"){ ?> 
+                              <li>No Notification</li>
+                          <?php }else{ ?> 
+                           <li id="clear_all">Clear All</li>
+                       <?php } ?>
+                   </ul>
+               </div>      
+           </li>
+                <?php } ?>
 
                 <!-- user login dropdown end -->
             </ul>

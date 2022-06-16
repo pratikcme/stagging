@@ -84,7 +84,41 @@ if (@$myhidejs != 1) { ?>
         }
       })
     }
+  });
+if($('#admin_notification').length){
+  setInterval(get_note,30000);
+}
+function get_note(){
+  var url = $('#url').val();
+  $.ajax({
+    url : url +'admin/admin_notification',
+    method: 'post',
+    dataType: 'json',
+    success:function(output){
+      if(output.count <= 0){
+        $('#admin_notification').addClass('ishave');
+      }else{
+        $('#admin_notification').removeClass('ishave')
+      }
+      $('#admin_notification').html(output.notify);
+    }
+  });
+}
+
+  $(document).on('click','#clear_all',function (){
+    var url = $('#url').val();
+      $.ajax({
+        url: url+"admin/read_all",
+        type:'post',
+        dataType : "json",
+        success:function(output){
+          $('#admin_notification').html(output.notify);
+        }
+      });
   })
+
+
+
 </script>
 
 <?php
