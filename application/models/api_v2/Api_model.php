@@ -3687,7 +3687,6 @@ class Api_model extends My_model {
             }
             $data['table'] = 'my_cart';
             $result_cart = $this->selectRecords($data);
-            lq();
             if (count($result_cart) > 0) {
                 $my_cart_quantity = $result_cart[0]->quantity;
             } else {
