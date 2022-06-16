@@ -2593,7 +2593,7 @@ class Api_model extends My_model {
             $data['select'] = ['id','fname','lname','phone','email','country_code','login_type','is_verify','email_verify','status','user_gst_number','notification_status','dt_added','dt_updated','is_verify','profileimage'];
             $data['where'] = ['id'=>$user_id];
             $result = $this->selectRecords($data);
-            
+
             if($result[0]->profileimage != '' || $result[0]->profileimage != NULL){
                 $result[0]->profileimage = base_url().'public/images/'.$this->folder.'user_profile/'.$result[0]->profileimage;
             }else{
@@ -2605,7 +2605,8 @@ class Api_model extends My_model {
             $row_count = $result_count->result();
             // echo $this->db->last_query();die;
             $total_count = $row_count[0]->total;
-            $result[0]->cart_item = $total_count;           
+            $result[0]->cart_item = $total_count; 
+            dd($result[0]);die;          
             return $result[0];
        } 
 
