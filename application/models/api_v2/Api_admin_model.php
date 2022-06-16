@@ -14,6 +14,7 @@ class Api_admin_model extends My_model {
         if($row_login['status'] != '0'){
             if ($result_login->num_rows() > 0) {
                 $token = $this->update_token($row_login['id']);
+                $this->addAdminDevice($postData,$row_login['id']);
                 $status = $row_login['status'];
                 if ($status == '1') {
                     $login_data = array(
@@ -54,6 +55,38 @@ class Api_admin_model extends My_model {
         }
 
         return $res;
+    }
+
+    public function addAdminDevice($postData,$branch_id){
+        $data['table'] = 'branch_device';
+        $data['select'] = ['*'];
+        $data['where'] = ['branch_id' =>$branch_id,'device_id'=>$postData['device_id']];
+        $res = $this->selectRecords($data);
+        unset($data);
+        if(count($res) == 0){
+            $data['table'] = 'branch_device';
+            $data['insert'] = [
+                'branch_id'=>$branch_id,
+                'device_id'=>$postData['device_id'],
+                'token'=>$postData['token'],
+                'type'=>$postData['type'],
+                'dt_created'=>DATE_TIME,
+                'dt_updated'=>DATE_TIME
+            ];
+            // $data['where'] = ['branch_id' =>$branch_id,'device_id'=>$postData['device_id']];
+            $this->insertRecord($data);
+        }else{
+            $data['table'] = 'branch_device';
+            $data['update'] = [
+                'device_id'=>$postData['device_id'],
+                'token'=>$postData['token'],
+                'type'=>$postData['type'],
+                'dt_created'=>DATE_TIME,
+                'dt_updated'=>DATE_TIME
+            ];
+            $data['where'] = ['branch_id' =>$branch_id,'device_id'=>$res[0]->device_id,'token'=>$res[0]->token];
+        }
+        return true;
     }
 
 

@@ -160,13 +160,15 @@ class Api_model extends My_model {
 
         $total_count = $this->get_total($postdata);
         $notification_status = $this->notification_status($userdata['id']);
-
+        $path = base_url().'public/images/'.$this->folder.'user_profile/';
         $data = array(
                         'id' => $userdata['id'], 
                         'fname' => $userdata['fname'], 
                         'lname' => $userdata['lname'], 
-                        'email' => $userdata['email'], 
+                        'email' => $userdata['email'],
+                        'country_code' => $userdata['country_code'],
                         'phone' => $userdata['phone'], 
+                        'profileimage' => ($userdata['profileimage']!='')?$path.$userdata['profileimage']:'',
                         'user_gst_number' => ($userdata['user_gst_number'] == null) ? "" : $userdata['user_gst_number'], 
                         'login_type' => $login_type, 
                         'cart_item' => $total_count[0]->cart_items, 
@@ -2022,6 +2024,7 @@ class Api_model extends My_model {
                     $last_insert_id = $this->insertRecord($data);
             
                     $otpForSelfPickup = '';
+                    
                     if (isset($_POST['isSelfPickup']) && $_POST['isSelfPickup'] == '1') {
                         $otpForSelfPickup = rand(1000, 9999);
                         $this->selfPickUp_otp($last_insert_id, $user_id, $otpForSelfPickup);

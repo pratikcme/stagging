@@ -47,7 +47,7 @@ class Api_admin extends Api_Controller {
     }
     public function check_login() {
         $post = $this->input->post();
-        $req = array('email', 'password');
+        $req = array('email', 'password','device_id','type','token');
         $required = $this->checkRequiredField($post, $req);
      
         if ($required['status'] == 1) {
