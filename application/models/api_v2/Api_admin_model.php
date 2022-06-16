@@ -57,13 +57,13 @@ class Api_admin_model extends My_model {
     }
 
     public function addAdminDevice($postData,$branch_id){
-        dd($postData);
+        // dd($postData);
         $data['table'] = 'branch_device';
         $data['select'] = ['*'];
         $data['where'] = ['branch_id' =>$branch_id];
         $res = $this->selectRecords($data);
         unset($data);
-        // dd($res);
+        dd($res);
         if(count($res) > 0){
             if($res[0]->device_id != $postData['device_id']){
                 $data['table'] = 'branch_device';
