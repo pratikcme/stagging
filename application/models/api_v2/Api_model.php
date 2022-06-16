@@ -3613,7 +3613,7 @@ class Api_model extends My_model {
         $data['update']['dt_updated'] = strtotime(DATE_TIME);
         $data['where'] = ['id'=>$user_id];
         $result = $this->updateRecords($data);
-        
+
         unset($data);
         if($result){
             $data['table'] = TABLE_USER;
@@ -3670,9 +3670,9 @@ class Api_model extends My_model {
         $data['where'] = ['od.offer_id'=>$postData['offer_id']];
         $return =  $this->selectFromJoin($data);
         unset($data);
-        $product_variant_id = $return[0]->product_varient_id;
         $branch_id = $return[0]->branch_id;
         foreach ($return as $k => $v) {
+            $product_variant_id = $v->product_varient_id;
             $data['select'] = ['quantity'];
             $data['where']['product_weight_id'] = $product_variant_id;
             $data['where']['status !='] = 9;
