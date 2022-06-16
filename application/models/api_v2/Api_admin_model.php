@@ -60,31 +60,27 @@ class Api_admin_model extends My_model {
     public function addAdminDevice($postData,$branch_id){
         $data['table'] = 'branch_device';
         $data['select'] = ['*'];
-        $data['where'] = ['branch_id' =>$branch_id,'device_id'=>$postData['device_id']];
+        $data['where'] = ['branch_id' =>$branch_id];
         $res = $this->selectRecords($data);
         unset($data);
-        if(count($res) == 0){
-            $data['table'] = 'branch_device';
-            $data['insert'] = [
-                'branch_id'=>$branch_id,
-                'device_id'=>$postData['device_id'],
-                'token'=>$postData['token'],
-                'type'=>$postData['type'],
-                'dt_created'=>DATE_TIME,
-                'dt_updated'=>DATE_TIME
-            ];
-            // $data['where'] = ['branch_id' =>$branch_id,'device_id'=>$postData['device_id']];
-            $this->insertRecord($data);
-        }else{
-            $data['table'] = 'branch_device';
-            $data['update'] = [
-                'device_id'=>$postData['device_id'],
-                'token'=>$postData['token'],
-                'type'=>$postData['type'],
-                'dt_created'=>DATE_TIME,
-                'dt_updated'=>DATE_TIME
-            ];
-            $data['where'] = ['branch_id' =>$branch_id,'device_id'=>$res[0]->device_id];
+        // dd($res);
+        if(count($res) > 0){
+            if($res[0]->device_id != $postData['device_id']){
+                $data['table'] = 'branch_device';
+                $data['where'] = ['id' =>$res[0]->id];
+                $this->deleteRecords($data);
+                unset($data);
+                $data['table'] = 'branch_device';
+                $data['insert'] = [
+                    'branch_id'=>$branch_id,
+                    'device_id'=>$postData['device_id'],
+                    'token'=>$postData['token'],
+                    'type'=>$postData['type'],
+                    'dt_created'=>DATE_TIME,
+                    'dt_updated'=>DATE_TIME
+                ];
+                $this->insertRecord($data);
+            }
         }
         return true;
     }
