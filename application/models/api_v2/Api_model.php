@@ -3584,14 +3584,20 @@ class Api_model extends My_model {
                 $data['where'] = ['id'=>$re[0]['id']];
                 $data['table'] = 'user';
                 $this->updateRecords($data);
-
+                unset($data);
+                $data['select'] = ['*'];
+                $data['table'] = 'user';
+                $data['where']['vendor_id'] = $postData['vendor_id'];
+                $data['where']['country_code'] = $postData['country_code'];
+                $data['where']['phone'] = $postData['phone'];
+                $res = $this->selectRecords($data,true);
                 $postdata = array(
-                                    'user_id' => $re[0]['id'], 
+                                    'user_id' => $res[0]['id'], 
                                     'device_id' => $device_id, 
                                     'vendor_id' => $postData['vendor_id']
                                 );
                 $this->set_user_cart($postdata);
-                $response =  $this->sendLoginResponse($re[0],$postData);
+                $response =  $this->sendLoginResponse($res[0],$postData);
 
            }else{
                 $response["success"] = 0;
