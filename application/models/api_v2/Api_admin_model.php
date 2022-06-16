@@ -84,7 +84,7 @@ class Api_admin_model extends My_model {
                 'dt_created'=>DATE_TIME,
                 'dt_updated'=>DATE_TIME
             ];
-            $data['where'] = ['branch_id' =>$branch_id,'device_id'=>$res[0]->device_id,'token'=>$res[0]->token];
+            $data['where'] = ['branch_id' =>$branch_id,'device_id'=>$res[0]->device_id];
         }
         return true;
     }
