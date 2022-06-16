@@ -2605,8 +2605,7 @@ class Api_model extends My_model {
             $row_count = $result_count->result();
             // echo $this->db->last_query();die;
             $total_count = $row_count[0]->total;
-            $result[0]->cart_item = $total_count; 
-            dd($result[0]);die;          
+            $result[0]->cart_item = $total_count;           
             return $result[0];
        } 
 
