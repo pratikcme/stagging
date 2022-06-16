@@ -2590,9 +2590,14 @@ class Api_model extends My_model {
        public function userInfo($postdata){
             $user_id = $postdata['user_id'];
             $data['table'] = TABLE_USER;
-            $data['select'] = ['id','fname','lname','phone','email','country_code','login_type','is_verify','email_verify','status','user_gst_number','notification_status','dt_added','dt_updated','is_verify'];
+            $data['select'] = ['id','fname','lname','phone','email','country_code','login_type','is_verify','email_verify','status','user_gst_number','notification_status','dt_added','dt_updated','is_verify','profileimage'];
             $data['where'] = ['id'=>$user_id];
             $result = $this->selectRecords($data);
+            if($result[0]->profileimage != '' || $result[0]->profileimage != NULL){
+                $result[0]->profileimage = base_url().'public/images/'.$this->folder.'user_profile/'.$result[0]->profileimage;
+            }else{
+                $result[0]->profileimage = "";
+            }
             $result[0]->mobile_verify = $result[0]->is_verify;
 
             $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart as mc WHERE  mc.user_id= '$user_id' AND mc.status != '9' ORDER BY mc.id DESC");
