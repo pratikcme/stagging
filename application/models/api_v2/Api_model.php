@@ -3590,7 +3590,6 @@ class Api_model extends My_model {
 
   
     public function completeProfile($postData){
-        dd($_FILES);
         $user_id = $postData['user_id'];
         $fname = $postData['fname'];
         $lname = $postData['lname'];
