@@ -3579,23 +3579,26 @@ class Api_model extends My_model {
 
                 $data['update'] = [
                             'otp' => '',
-                            'mobile_verify' => '1'
+                            'is_verify' => '1'
                             ];
                 $data['where'] = ['id'=>$re[0]['id']];
                 $data['table'] = 'user';
-                $this->updateRecords($data);
+                $d = $this->updateRecords($data);
+                if($d){
+                    $re[0]['is_verify'] = '1';
+                }
                 unset($data);
-                $data['select'] = ['*'];
-                $data['table'] = 'user';
-                $data['where']['id'] = $re[0]['id'];
-                $res = $this->selectRecords($data,true);
+                // $data['select'] = ['*'];
+                // $data['table'] = 'user';
+                // $data['where']['id'] = $re[0]['id'];
+                // $res = $this->selectRecords($data,true);
                 $postdata = array(
-                                    'user_id' => $res[0]['id'], 
+                                    'user_id' => $re[0]['id'], 
                                     'device_id' => $device_id, 
                                     'vendor_id' => $postData['vendor_id']
                                 );
                 $this->set_user_cart($postdata);
-                $response =  $this->sendLoginResponse($res[0],$postData);
+                $response =  $this->sendLoginResponse($re[0],$postData);
 
            }else{
                 $response["success"] = 0;
