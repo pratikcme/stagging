@@ -550,6 +550,10 @@ body::-webkit-scrollbar-thumb {
 
     }
 */
+.error.profileimage {
+    display: block;
+    text-align: center;
+}
 
 *{
     padding: 0px;
