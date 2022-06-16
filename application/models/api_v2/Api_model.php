@@ -2379,7 +2379,14 @@ class Api_model extends My_model {
                 $this->set_user_cart($postdata);
                 $total_count = $this->get_total($postdata);
                 $notification_status = $this->notification_status($postData['user_id']);
-                $datass = array('id' => $userDetail[0]->id, 'fname' => $userDetail[0]->fname, 'lname' => $userDetail[0]->lname, 'email' => $userDetail[0]->email, 'phone' => $userDetail[0]->phone, 'user_gst_number' => ($userDetail[0]->user_gst_number == null) ? "" : $userDetail[0]->user_gst_number, 'login_type' => $userDetail[0]->login_type, 'cart_item' => $total_count[0]->cart_items, 'notification_status' => $notification_status, 'mobile_verify' => $userDetail[0]->is_verify);
+                if($userDetail[0]->profileimage != '' ||  $userDetail[0]->profileimage != NULL){
+                    $userDetail[0]->profileimage = base_url().'public/images'.$this->folder.'user_profile/'.$userDetail[0]->profileimage; 
+                }else{
+                    $userDetail[0]->profileimage =  "";
+                }
+
+                $datass = array('id' => $userDetail[0]->id, 'fname' => $userDetail[0]->fname, 'lname' => $userDetail[0]->lname, 'email' => $userDetail[0]->email, 'phone' => $userDetail[0]->phone, 'user_gst_number' => ($userDetail[0]->user_gst_number == null) ? "" : $userDetail[0]->user_gst_number, 'login_type' => $userDetail[0]->login_type, 'cart_item' => $total_count[0]->cart_items, 'notification_status' => $notification_status, 'mobile_verify' => $userDetail[0]->is_verify,'profileimage'=>$userDetail[0]->profileimage);
+                
                 $response["success"] = 1;
                 $response["message"] = "otp is verifired";
                 $response["user_data"] = $datass;
