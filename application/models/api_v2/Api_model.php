@@ -3596,7 +3596,9 @@ class Api_model extends My_model {
         $lname = $postData['lname'];
         $email = $postData['email'];
         $user_gst_number = $postData['user_gst_number'];
-
+        if (!file_exists("public/images/".$this->folder."user_profile/")) {
+            mkdir("public/images/".$this->folder."user_profile/", 0777, true);
+        }
         if(isset($_FILES['profileimage']) && $_FILES['profileimage']['error'] == 0){
             $UploadPath = "public/images/".$this->folder."user_profile/";
             $uploadImage =  upload_single_image($_FILES,'uprofile',$UploadPath);
