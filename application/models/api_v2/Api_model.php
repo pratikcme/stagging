@@ -3677,11 +3677,11 @@ class Api_model extends My_model {
             $data['where']['product_weight_id'] = $product_variant_id;
             $data['where']['status !='] = 9;
             $data['where']['branch_id'] = $branch_id;
-            if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
-                $data['where']['user_id'] = $postdata['user_id'];
+            if (isset($postData['user_id']) && $postData['user_id'] != '') {
+                $data['where']['user_id'] = $postData['user_id'];
             } else {
-                if (isset($postdata['device_id'])) {
-                    $data['where']['device_id'] = $postdata['device_id'];
+                if (isset($postData['device_id'])) {
+                    $data['where']['device_id'] = $postData['device_id'];
                     $data['where']['user_id'] = 0;
                 }
             }
