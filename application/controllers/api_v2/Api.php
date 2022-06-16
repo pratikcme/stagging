@@ -2027,7 +2027,7 @@ class Api extends Apiuser_Controller {
         if ($response['status'] == 1) {
             $post = $this->input->post();
             $response = $this->this_model->completeProfile($post);
-            // $response = array('responsedata' => $response);
+            $response = array('responsedata' => $response);
         }
        $this->response($response);
     }
