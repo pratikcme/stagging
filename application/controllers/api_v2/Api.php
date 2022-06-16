@@ -157,6 +157,7 @@ class Api extends Apiuser_Controller {
     }
     public function vendor_list() {
         $return = $this->this_model->vendor_list();
+        dd($return);
         // $this->this_model->CategoryCount();
         echo json_encode($return);
         exit;
