@@ -2594,6 +2594,7 @@ class Api_model extends My_model {
             $data['where'] = ['id'=>$user_id];
             $result = $this->selectRecords($data);
             dd($result);
+            
             if($result[0]->profileimage != '' || $result[0]->profileimage != NULL){
                 $result[0]->profileimage = base_url().'public/images/'.$this->folder.'user_profile/'.$result[0]->profileimage;
             }else{
