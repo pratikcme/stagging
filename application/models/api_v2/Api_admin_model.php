@@ -8,7 +8,7 @@ class Api_admin_model extends My_model {
         $result_login = $this->db->query("SELECT * FROM branch WHERE email='$email' AND password='$password'");
         $row_login = $result_login->row_array();
         $branch_id = $row_login['vendor_id'];
-        // print_r($branch_id);die();
+        print_r($branch_id);die();
         $getDefault = $this->db->query("SELECT value FROM set_default WHERE request_id = '3' AND vendor_id = '$branch_id'");
         $row_default = $getDefault->row_array();
         if($row_login['status'] != '0'){
