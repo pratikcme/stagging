@@ -81,6 +81,18 @@ class Api_admin_model extends My_model {
                 ];
                 $this->insertRecord($data);
             }
+        }else{
+            unset($data);
+            $data['table'] = 'branch_device';
+            $data['insert'] = [
+                'branch_id'=>$branch_id,
+                'device_id'=>$postData['device_id'],
+                'token'=>$postData['token'],
+                'type'=>$postData['type'],
+                'dt_created'=>DATE_TIME,
+                'dt_updated'=>DATE_TIME
+            ];
+            $this->insertRecord($data);
         }
         return true;
     }
