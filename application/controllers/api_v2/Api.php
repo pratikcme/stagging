@@ -91,6 +91,11 @@ class Api extends Apiuser_Controller {
         $response = $this->checkRequiredField($post, $req);
         if ($response['status'] == 1) {
             $result = $this->this_model->user_info($post);
+            if($result[0]->profileimage != '' || $result[0]->profileimage != NULL){
+                $result[0]->profileimage = base_url().'public/images/'.$this->folder.'user_profile/'.$result[0]->profileimage;
+            }else{
+                $result[0]->profileimage = "";
+            }
             $result[0]->mobile_verify = $result[0]->is_verify;
 
             $user_id = $post['user_id'];
