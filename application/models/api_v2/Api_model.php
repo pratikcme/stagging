@@ -3610,8 +3610,8 @@ class Api_model extends My_model {
         $data['update']['user_gst_number'] = $user_gst_number;
         $data['update']['dt_updated'] = strtotime(DATE_TIME);
         $data['where'] = ['id'=>$user_id];
-
         $result = $this->updateRecords($data);
+        lq();
         unset($data);
         if($result){
             $data['table'] = TABLE_USER;
