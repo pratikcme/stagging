@@ -3587,9 +3587,7 @@ class Api_model extends My_model {
                 unset($data);
                 $data['select'] = ['*'];
                 $data['table'] = 'user';
-                $data['where']['vendor_id'] = $postData['vendor_id'];
-                $data['where']['country_code'] = $postData['country_code'];
-                $data['where']['phone'] = $postData['phone'];
+                $data['where']['id'] = $re[0]['id'];
                 $res = $this->selectRecords($data,true);
                 $postdata = array(
                                     'user_id' => $res[0]['id'], 
