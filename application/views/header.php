@@ -179,7 +179,7 @@ $vendor_id = $this->session->userdata('id');
     
 .notif ul.dropdown .fa-circle{
     font-size: 15px;
-    color: rgba(115, 187, 22, 1);  
+    color: rgba(115, 187, 22, 1);
 } 
     
 
