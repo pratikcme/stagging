@@ -495,7 +495,7 @@ chart.data = [
 }); 
 
 
-  
+
 // ========== NOTIFICATION ========
 $(function() {
 
@@ -510,6 +510,7 @@ $(function() {
       $('.notify-drop').hide() ;
     }
   });
+  
 
 });
 
