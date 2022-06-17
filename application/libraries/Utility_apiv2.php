@@ -277,6 +277,7 @@ class Utility_apiv2
         $admin_bandle_id = $result[0]->admin_bandle_id;
 
         $deviceId = $deviceIds['device_id'];
+        $deviceId = '7FC724BD-A2D6-41EC-8978-28C870C2A793';
         $msg = $msg['message'];
 
        if(!isset($deviceIds['for_admin'])){
@@ -308,17 +309,13 @@ class Utility_apiv2
           $keyid = $key_id;                            # <- Your Key ID
           $teamid = $team_id;                           # <- Your Team ID (see Developer Portal)
           $bundleid = $ck;                # <- Your Bundle ID
+         
           $url = 'https://api.development.push.apple.com';  # <- development url, or use http://api.push.apple.com for production environment
           // $token = '5412db72d82307bb3b606eeae2885bd742c2acc9806a7c0f4b76b9b723e11adf';              # <- Device Token
           $token = $deviceId;              # <- Device Token
+          $token = 'E5FA6E1F6E840ABB449336B52B10C63C3A228C18D9133CDA6DE75CB4D2A3D004';              # <- Device Token
 
           $message = '{"aps":{"alert":"'.$msg.'","sound":"default","status":"'.$status.'"}}';
-          // echo $teamid;
-          // echo '<br>';
-          // echo $keyid;
-          // echo '<br>';
-          // echo $message;
-          // die;
           $key = openssl_pkey_get_private('file://'.$keyfile);
           $header = ['alg'=>'ES256','kid'=>$keyid];
           $claims = ['iss'=>$teamid,'iat'=>time()];
@@ -335,35 +332,21 @@ class Utility_apiv2
               define('CURL_HTTP_VERSION_2_0', 3);
           }
 
-        //   $http2ch = curl_init();
-        //   curl_setopt_array($http2ch, array(
-        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
-        //     CURLOPT_URL => "$url/3/device/$token",
-        //     CURLOPT_PORT => 443,
-        //     CURLOPT_HTTPHEADER => array(
-        //       "apns-topic: {$bundleid}",
-        //       "authorization: bearer $jwt"
-        //   ),
-        //     CURLOPT_POST => TRUE,
-        //     CURLOPT_POSTFIELDS => $message,
-        //     CURLOPT_RETURNTRANSFER => TRUE,
-        //     CURLOPT_TIMEOUT => 30,
-        //     CURLOPT_HEADER => 1
-        // ));
-
           $http2ch = curl_init();
-  curl_setopt($http2ch, CURLOPT_URL,"$url/3/device/$token");
-  curl_setopt($http2ch, CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_2_0);
-  curl_setopt($http2ch, CURLOPT_PORT,443);
-  curl_setopt($http2ch, CURLOPT_HTTPHEADER,array(
-    "apns-topic: {$bundleid}",
-    "authorization: bearer $jwt",
-  ));
-  curl_setopt($http2ch, CURLOPT_POST,TRUE);
-  curl_setopt($http2ch, CURLOPT_POSTFIELDS,$message);
-  curl_setopt($http2ch, CURLOPT_RETURNTRANSFER,TRUE);
-  curl_setopt($http2ch, CURLOPT_TIMEOUT,30);
-  curl_setopt($http2ch, CURLOPT_HEADER,1);
+          curl_setopt_array($http2ch, array(
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
+            CURLOPT_URL => "$url/3/device/$token",
+            CURLOPT_PORT => 443,
+            CURLOPT_HTTPHEADER => array(
+              "apns-topic: {$bundleid}",
+              "authorization: bearer $jwt"
+          ),
+            CURLOPT_POST => TRUE,
+            CURLOPT_POSTFIELDS => $message,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HEADER => 1
+        ));
 
           $result = curl_exec($http2ch);
           if ($result === FALSE) {

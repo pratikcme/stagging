@@ -545,7 +545,7 @@ Class Order_model extends My_model{
             );
             $this->load->model('api_v2/api_model','api_v2_model');
             $this->api_v2_model->pushAdminNotification($branchNotification);    
-            
+            die;
             $this->cancle_order_quntity_reset($order_id);
             unset($data);
             $date = strtotime(DATE_TIME);
