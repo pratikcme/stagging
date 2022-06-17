@@ -362,7 +362,7 @@ class Utility_apiv2
     
     function notificationForAndroid($deviceId,$msg,$jsonData,$type , $unread,$key,$result) {
         
-        print_r($result);die;
+        // print_r($result);die;
         // $firebase_key = $result[0]->user_firebase_key;
         // print_r($firebase_key);die;
         $message = $msg;
@@ -382,7 +382,7 @@ class Utility_apiv2
             // echo $key;exit;
         $fields_json = json_encode($fields);
         if(!isset($deviceIds['for_admin'])){
-
+            echo '1';
             if(isset($deviceId['delivery_notification'])){
             // echo '1';die;
                 $headers = array(
