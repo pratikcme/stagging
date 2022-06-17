@@ -415,8 +415,8 @@ class Utility_apiv2
             'Content-Type: application/json'
         );
     } 
-        print_r($headers);die;
-                echo $key;exit;
+        // print_r($headers);die;
+        //         echo $key;exit;
         
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
