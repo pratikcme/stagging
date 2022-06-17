@@ -277,7 +277,7 @@ class Utility_apiv2
         $admin_bandle_id = $result[0]->admin_bandle_id;
 
         $deviceId = $deviceIds['device_id'];
-        // $deviceId = '7FC724BD-A2D6-41EC-8978-28C870C2A793';
+        $deviceId = '7FC724BD-A2D6-41EC-8978-28C870C2A793';
         $msg = $msg['message'];
 
        if(!isset($deviceIds['for_admin'])){
