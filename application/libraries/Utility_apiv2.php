@@ -378,7 +378,7 @@ class Utility_apiv2
             'to' => $deviceId['device_id'],                
             'data' => $body
         );
-        
+        dd($deviceIds);
             // echo $key;exit;
         $fields_json = json_encode($fields);
         if(!isset($deviceIds['for_admin'])){
