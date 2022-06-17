@@ -315,7 +315,7 @@ class Utility_apiv2
           $message = '{"aps":{"alert":"'.$msg.'","sound":"default","status":"'.$status.'"}}';
           echo $teamid;
           echo '<br>';
-          echo $keyId;
+          echo $keyid;
           echo '<br>';
           echo $message;
           die;
