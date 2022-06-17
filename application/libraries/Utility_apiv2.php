@@ -378,10 +378,10 @@ class Utility_apiv2
             'to' => $deviceId['device_id'],                
             'data' => $body
         );
-        dd($deviceIds);
+        dd($result);
             // echo $key;exit;
         $fields_json = json_encode($fields);
-        if(!isset($deviceIds['for_admin'])){
+        if(!isset($result['for_admin'])){
             echo '1';
             if(isset($deviceId['delivery_notification'])){
             // echo '1';die;
