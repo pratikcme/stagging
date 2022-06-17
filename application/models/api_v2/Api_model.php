@@ -3745,7 +3745,7 @@ class Api_model extends My_model {
     public function pushAdminNotification($insertData){
         $data['table'] = 'admin_notification';
         $data['insert'] = $insertData;
-        // $return = $this->insertRecord($data);
+        $return = $this->insertRecord($data);
 
         $branch_id = $insertData['branch_id'];
         $notification_type = $insertData['notification_type'];
@@ -3761,7 +3761,7 @@ class Api_model extends My_model {
             $deviceToken['type'] = $type;
             $deviceToken['device_id'] = $device_id;
             $deviceToken['for_admin'] = true;
-            $this->utility_apiv2->sendNotification($deviceToken,$notification_type,$result,$for_id);
+            $this->utility_apiv2->sendNotification($deviceToken,$notification_type,$result);
 
             // if($notification_status == '1'){
             // }
