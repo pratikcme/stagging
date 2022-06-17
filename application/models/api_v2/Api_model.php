@@ -3745,13 +3745,14 @@ class Api_model extends My_model {
     public function pushAdminNotification($insertData){
         $data['table'] = 'admin_notification';
         $data['insert'] = $insertData;
-        $return = $this->insertRecord($data);
+        // $return = $this->insertRecord($data);
 
         $branch_id = $insertData['branch_id'];
         $notification_type = $insertData['notification_type'];
         $message = $insertData['message'];
 
         $result = $this->getNotificationKey($branch_id);
+        // lq();
         $details = $this->getBranchDeviceData($branch_id); 
         if(!empty($details)){
             $type = $details[0]->type;
@@ -3759,7 +3760,9 @@ class Api_model extends My_model {
             $deviceToken['message'] = $message;
             $deviceToken['type'] = $type;
             $deviceToken['device_id'] = $device_id;
-            // $this->utility_apiv2->sendNotification($deviceToken,$notification_type,$result,$for_id); i have to change tis function
+            $deviceToken['for_admin'] = true;
+            $this->utility_apiv2->sendNotification($deviceToken,$notification_type,$result,$for_id);
+
             // if($notification_status == '1'){
             // }
             unset($data);

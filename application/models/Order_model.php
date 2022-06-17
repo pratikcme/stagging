@@ -152,10 +152,12 @@ class Order_model extends My_model
     public function change_order_status()
     {
         $order_id = $_POST['order_id'];
-        $data['select'] = ['order_status','payment_type','paymentMethod'];
+        $data['select'] = ['branch_id','order_status','payment_type','paymentMethod','order_no'];
         $data['where'] = ['id' => $order_id];
         $data['table'] = 'order';
         $results = $this->selectRecords($data);
+        $branch_id = $results[0]->branch_id; 
+        $order_no = $results[0]->order_no; 
          $this->order_logs($_POST); // insert Order logs;
 
         if (count($results) > 0) {
@@ -185,6 +187,30 @@ class Order_model extends My_model
                 $respons = $this->refundPaymentStripe($order_id);   
             } 
         }
+        if($status=='9' || $status=='8'){
+            if ($status == '8') {
+                $send_status = 'Delivered';
+                $type = 'order_delivered';
+            }
+            if ($status == '9') {
+                $send_status = 'Cancelled';
+                $type = 'order_cancelled';
+            }
+           $this->load->model('api_v2/api_model','api_v2_model');
+           $message = $order_no .' is '.$send_status;
+           $branchNotification = array(
+            'order_id'         =>  $order_id,
+            'branch_id'          =>  $branch_id,
+            'notification_type'=> $type,
+            'message'          => $message,
+            'status'           =>'0',
+            'dt_created'       => DATE_TIME,
+            'dt_updated'       => DATE_TIME
+        );
+           $this->api_v2_model->pushAdminNotification($branchNotification);    
+       }
+
+
 
         $date = strtotime(DATE_TIME);
 

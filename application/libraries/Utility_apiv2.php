@@ -274,20 +274,25 @@ class Utility_apiv2
         $user_bandle_id = $result[0]->user_bandle_id;
         $staff_bandle_id = $result[0]->staff_bandle_id;
         $delivery_bandle_id = $result[0]->delivery_bandle_id;
+        $admin_bandle_id = $result[0]->admin_bandle_id;
 
         $deviceId = $deviceIds['device_id'];
         $msg = $msg['message'];
-       
-        if(isset($deviceIds['for_staff'])){
-            $ck = $staff_bandle_id;
-        }else{
-            
-            if($key==NULL){
-                $ck = $user_bandle_id;
+       if(!isset($deviceIds['for_admin'])){
+
+            if(isset($deviceIds['for_staff'])){
+                $ck = $staff_bandle_id;
             }else{
-                $ck = $delivery_bandle_id;
+                
+                if($key==NULL){
+                    $ck = $user_bandle_id;
+                }else{
+                    $ck = $delivery_bandle_id;
+                }
             }
-        }
+       }else{
+            $ck = $admin_bandle_id;
+       }
 
         $payload = array(
             'iss' => $team_id,
@@ -347,6 +352,9 @@ class Utility_apiv2
         }
 
         $status = curl_getinfo($http2ch, CURLINFO_HTTP_CODE);
+          // error_reporting(E_ALL);
+          // ini_set('display_errors', 1);
+          // dd($result);
     }
 
         function base64($data) {

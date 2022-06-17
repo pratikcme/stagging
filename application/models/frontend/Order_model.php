@@ -519,33 +519,54 @@ Class Order_model extends My_model{
     }
 
     function cancle_order($postdata) {
-            $order_id = $postdata['order_id'];
-            $data['select'] = ['order_status'];
-            $data['where'] = ['id' => $order_id];
-            $data['table'] = 'order';
-            $get = $this->selectRecords($data);
-            if(count($get)>0){
-                if($get[0]->order_status=='8'){
-                    return false;
-                }
-                $this->cancle_order_quntity_reset($order_id);
-                unset($data);
-                $date = strtotime(DATE_TIME);
-                $data['update'] = ['order_status' => '9', 'dt_updated' => $date];
-                $data['where'] = ['id' => $order_id];
-                $data['table'] = 'order';
-                $this->updateRecords($data);
-                unset($data);
-                $data['where'] = ['order_id' => $order_id];
-                $data['table'] = 'delivery_order';
-                $this->deleteRecords($data);
-                $data['table'] = 'selfPickup_otp';
-                $this->deleteRecords($data);
-                return true;
-            }else{
+        $order_id = $postdata['order_id'];
+        $data['select'] = ['branch_id','order_status','order_no'];
+        $data['where'] = ['id' => $order_id];
+        $data['table'] = 'order';
+        $get = $this->selectRecords($data);
+        $branch_id = $get[0]->branch_id;
+        $order_no = $get[0]->order_no;
+        if(count($get)>0){
+            if($get[0]->order_status=='8'){
                 return false;
             }
+            
+            $send_status = 'Cancelled';
+            $type = 'order_cancelled';
+            $message = $order_no .' is '.$send_status;
+            $branchNotification = array(
+                'order_id'         =>  $order_id,
+                'branch_id'          =>  $branch_id,
+                'notification_type'=> $type,
+                'message'          => $message,
+                'status'           =>'0',
+                'dt_created'       => DATE_TIME,
+                'dt_updated'       => DATE_TIME
+            );
+            $this->load->model('api_v2/api_model','api_v2_model');
+            $this->api_v2_model->pushAdminNotification($branchNotification);    
+            echo '1';
+
+
+
+            $this->cancle_order_quntity_reset($order_id);
+            unset($data);
+            $date = strtotime(DATE_TIME);
+            $data['update'] = ['order_status' => '9', 'dt_updated' => $date];
+            $data['where'] = ['id' => $order_id];
+            $data['table'] = 'order';
+            $this->updateRecords($data);
+            unset($data);
+            $data['where'] = ['order_id' => $order_id];
+            $data['table'] = 'delivery_order';
+            $this->deleteRecords($data);
+            $data['table'] = 'selfPickup_otp';
+            $this->deleteRecords($data);
+            return true;
+        }else{
+            return false;
         }
+    }
         
     function cancle_order_quntity_reset($order_id){
         
