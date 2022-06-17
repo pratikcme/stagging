@@ -3755,7 +3755,7 @@ class Api_model extends My_model {
         $details = $this->getBranchDeviceData($branch_id); 
         if(!empty($details)){
             $type = $details[0]->type;
-            $device_id = $details[0]->token;
+            $device_id = $details[0]->device_id;
             $deviceToken['message'] = $message;
             $deviceToken['type'] = $type;
             $deviceToken['device_id'] = $device_id;
