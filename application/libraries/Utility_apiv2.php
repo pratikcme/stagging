@@ -361,13 +361,8 @@ class Utility_apiv2
     }
     
     function notificationForAndroid($deviceId,$msg,$jsonData,$type , $unread,$key,$result) {
-        //  $CI = &get_instance();
-        // $CI->load->model('common_model');        
-        // $result = $CI->common_model->getNotificationKey();
-        // if(empty($result)){
-        //     return true;
-        // }
-        // print_r($result);die;
+        
+        print_r($result);die;
         // $firebase_key = $result[0]->user_firebase_key;
         // print_r($firebase_key);die;
         $message = $msg;
@@ -406,7 +401,7 @@ class Utility_apiv2
                     'Authorization: key= '.$result[0]->user_firebase_key,
                     'Content-Type: application/json'
                 );
-                   
+
                }else{
                 $headers = array(
                     'Authorization: key= '.$result[0]->staff_firebase_key,
