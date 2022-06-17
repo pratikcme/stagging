@@ -335,21 +335,35 @@ class Utility_apiv2
               define('CURL_HTTP_VERSION_2_0', 3);
           }
 
+        //   $http2ch = curl_init();
+        //   curl_setopt_array($http2ch, array(
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
+        //     CURLOPT_URL => "$url/3/device/$token",
+        //     CURLOPT_PORT => 443,
+        //     CURLOPT_HTTPHEADER => array(
+        //       "apns-topic: {$bundleid}",
+        //       "authorization: bearer $jwt"
+        //   ),
+        //     CURLOPT_POST => TRUE,
+        //     CURLOPT_POSTFIELDS => $message,
+        //     CURLOPT_RETURNTRANSFER => TRUE,
+        //     CURLOPT_TIMEOUT => 30,
+        //     CURLOPT_HEADER => 1
+        // ));
+
           $http2ch = curl_init();
-          curl_setopt_array($http2ch, array(
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
-            CURLOPT_URL => "$url/3/device/$token",
-            CURLOPT_PORT => 443,
-            CURLOPT_HTTPHEADER => array(
-              "apns-topic: {$bundleid}",
-              "authorization: bearer $jwt"
-          ),
-            CURLOPT_POST => TRUE,
-            CURLOPT_POSTFIELDS => $message,
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HEADER => 1
-        ));
+  curl_setopt($http2ch, CURLOPT_URL,"$url/3/device/$token");
+  curl_setopt($http2ch, CURLOPT_HTTP_VERSION,CURL_HTTP_VERSION_2_0);
+  curl_setopt($http2ch, CURLOPT_PORT,443);
+  curl_setopt($http2ch, CURLOPT_HTTPHEADER,array(
+    "apns-topic: {$bundleid}",
+    "authorization: bearer $jwt",
+  ));
+  curl_setopt($http2ch, CURLOPT_POST,TRUE);
+  curl_setopt($http2ch, CURLOPT_POSTFIELDS,$message);
+  curl_setopt($http2ch, CURLOPT_RETURNTRANSFER,TRUE);
+  curl_setopt($http2ch, CURLOPT_TIMEOUT,30);
+  curl_setopt($http2ch, CURLOPT_HEADER,1);
 
           $result = curl_exec($http2ch);
           if ($result === FALSE) {
