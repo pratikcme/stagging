@@ -3773,7 +3773,7 @@ class Api_model extends My_model {
     public function pushAdminNotification($insertData){
         $data['table'] = 'admin_notification';
         $data['insert'] = $insertData;
-        // $return = $this->insertRecord($data);
+        $return = $this->insertRecord($data);
 
         $branch_id = $insertData['branch_id'];
         $notification_type = $insertData['notification_type'];
