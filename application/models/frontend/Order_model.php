@@ -546,19 +546,19 @@ Class Order_model extends My_model{
             $this->load->model('api_v2/api_model','api_v2_model');
             $this->api_v2_model->pushAdminNotification($branchNotification);    
             
-            // $this->cancle_order_quntity_reset($order_id);
-            // unset($data);
-            // $date = strtotime(DATE_TIME);
-            // $data['update'] = ['order_status' => '9', 'dt_updated' => $date];
-            // $data['where'] = ['id' => $order_id];
-            // $data['table'] = 'order';
-            // $this->updateRecords($data);
-            // unset($data);
-            // $data['where'] = ['order_id' => $order_id];
-            // $data['table'] = 'delivery_order';
-            // $this->deleteRecords($data);
-            // $data['table'] = 'selfPickup_otp';
-            // $this->deleteRecords($data);
+            $this->cancle_order_quntity_reset($order_id);
+            unset($data);
+            $date = strtotime(DATE_TIME);
+            $data['update'] = ['order_status' => '9', 'dt_updated' => $date];
+            $data['where'] = ['id' => $order_id];
+            $data['table'] = 'order';
+            $this->updateRecords($data);
+            unset($data);
+            $data['where'] = ['order_id' => $order_id];
+            $data['table'] = 'delivery_order';
+            $this->deleteRecords($data);
+            $data['table'] = 'selfPickup_otp';
+            $this->deleteRecords($data);
             return true;
         }else{
             return false;
