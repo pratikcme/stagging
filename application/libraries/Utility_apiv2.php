@@ -313,7 +313,7 @@ class Utility_apiv2
           $url = 'https://api.development.push.apple.com';  # <- development url, or use http://api.push.apple.com for production environment
           // $token = '5412db72d82307bb3b606eeae2885bd742c2acc9806a7c0f4b76b9b723e11adf';              # <- Device Token
           $token = $deviceId;              # <- Device Token
-          $token = 'E5FA6E1F6E840ABB449336B52B10C63C3A228C18D9133CDA6DE75CB4D2A3D004';              # <- Device Token
+          // $token = 'E5FA6E1F6E840ABB449336B52B10C63C3A228C18D9133CDA6DE75CB4D2A3D004';              # <- Device Token
 
           $message = '{"aps":{"alert":"'.$msg.'","sound":"default","status":"'.$status.'"}}';
           $key = openssl_pkey_get_private('file://'.$keyfile);
