@@ -368,7 +368,7 @@ class Utility_apiv2
         //     return true;
         // }
         // print_r($result);die;
-        $firebase_key = $result[0]->user_firebase_key;
+        // $firebase_key = $result[0]->user_firebase_key;
         // print_r($firebase_key);die;
         $message = $msg;
 
