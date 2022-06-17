@@ -277,6 +277,7 @@ class Utility_apiv2
         $admin_bandle_id = $result[0]->admin_bandle_id;
 
         $deviceId = $deviceIds['device_id'];
+        // $deviceId = '7FC724BD-A2D6-41EC-8978-28C870C2A793';
         $msg = $msg['message'];
 
        if(!isset($deviceIds['for_admin'])){
@@ -312,7 +313,6 @@ class Utility_apiv2
           $url = 'https://api.development.push.apple.com';  # <- development url, or use http://api.push.apple.com for production environment
           // $token = '5412db72d82307bb3b606eeae2885bd742c2acc9806a7c0f4b76b9b723e11adf';              # <- Device Token
           $token = $deviceId;              # <- Device Token
-          // $token = 'E5FA6E1F6E840ABB449336B52B10C63C3A228C18D9133CDA6DE75CB4D2A3D004';              # <- Device Token
           $token = 'E5FA6E1F6E840ABB449336B52B10C63C3A228C18D9133CDA6DE75CB4D2A3D004';              # <- Device Token
 
           $message = '{"aps":{"alert":"'.$msg.'","sound":"default","status":"'.$status.'"}}';
@@ -331,7 +331,7 @@ class Utility_apiv2
           if (!defined('CURL_HTTP_VERSION_2_0')) {
               define('CURL_HTTP_VERSION_2_0', 3);
           }
-          
+
           $http2ch = curl_init();
           curl_setopt_array($http2ch, array(
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,

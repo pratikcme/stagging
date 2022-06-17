@@ -3756,7 +3756,6 @@ class Api_model extends My_model {
         if(!empty($details)){
             $type = $details[0]->type;
             $device_id = $details[0]->token;
-            echo $device_id;die;
             $deviceToken['message'] = $message;
             $deviceToken['type'] = $type;
             $deviceToken['device_id'] = $device_id;
