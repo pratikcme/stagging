@@ -277,7 +277,7 @@ class Utility_apiv2
         $admin_bandle_id = $result[0]->admin_bandle_id;
 
         $deviceId = $deviceIds['device_id'];
-        $deviceId = 'E5FA6E1F6E840ABB449336B52B10C63C3A228C18D9133CDA6DE75CB4D2A3D004';
+        // $deviceId = 'E5FA6E1F6E840ABB449336B52B10C63C3A228C18D9133CDA6DE75CB4D2A3D004';
         $msg = $msg['message'];
 
        if(!isset($deviceIds['for_admin'])){
