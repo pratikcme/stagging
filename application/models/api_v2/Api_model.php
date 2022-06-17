@@ -228,6 +228,7 @@ class Api_model extends My_model {
                 $res['update_date'] = date('d-M', $res['update_date']);
             }
         }
+
         if ($res) {
             $response = array('success' => '1', 'message' => 'success', 'data' => $res);
         } else {
@@ -2090,10 +2091,21 @@ class Api_model extends My_model {
 
 
                     /*Remove From My Cart*/
-                    $this->db->query('UNLOCK TABLES;');
-                    
                     $this->deleteUserCart($user_id);
-                  
+                    $this->db->query('UNLOCK TABLES;');
+                    /*Admin Notification*/
+                    $message = 'new order '.$iOrderNo ;
+                    $branchNotification = array(
+                        'order_id'         =>  $last_insert_id,
+                        'branch_id'          =>  $branch_id,
+                        'notification_type'=> 'new_order',
+                        'message'          => $message,
+                        'status'           =>'0',
+                        'dt_created'       => DATE_TIME,
+                        'dt_updated'       => DATE_TIME
+                    );
+                    $this->pushAdminNotification($branchNotification);
+                    /* End Admin Notification*/
                     $response = array();
                     $gettotal = $this->get_total($postdata);
                     $response["cart_count"] = (int)$gettotal[0]->cart_items;
@@ -2423,14 +2435,29 @@ class Api_model extends My_model {
         }
         function cancle_order($postdata) {
             $order_id = $postdata['order_id'];
-            $data['select'] = ['order_status'];
+            $data['select'] = ['branch_id','order_status','order_no'];
             $data['where'] = ['id' => $order_id];
             $data['table'] = 'order';
             $get = $this->selectRecords($data);
+            $branch_id = $get[0]->branch_id;
+            $order_no = $get[0]->order_no;
             if(count($get)>0){
                 if($get[0]->order_status=='8'){
                     return false;
                 }
+                $send_status = 'Cancelled';
+                $type = 'order_cancelled';
+                $message = $order_no .' is '.$send_status;
+                $branchNotification = array(
+                    'order_id'         =>  $order_id,
+                    'branch_id'          =>  $branch_id,
+                    'notification_type'=> $type,
+                    'message'          => $message,
+                    'status'           =>'0',
+                    'dt_created'       => DATE_TIME,
+                    'dt_updated'       => DATE_TIME
+                );
+                $this->pushAdminNotification($branchNotification); 
                 $this->cancle_order_quntity_reset($order_id);
                 unset($data);
                 $date = strtotime(DATE_TIME);
@@ -3742,6 +3769,7 @@ class Api_model extends My_model {
 
      }
 
+     /*Developer : Shahid abdul Rahman */
     public function pushAdminNotification($insertData){
         $data['table'] = 'admin_notification';
         $data['insert'] = $insertData;

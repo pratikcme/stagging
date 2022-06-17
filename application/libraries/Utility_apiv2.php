@@ -395,6 +395,8 @@ class Utility_apiv2
                 );
             // print_r($headers);die;
         }else{
+
+           if(!isset($deviceIds['for_admin'])){
             if($key==NULL){
                 // $headers = array(
                 //     'Authorization: key= AAAAN7pGzqM:APA91bGjSoksYAJHdxtvBaNqt2VCqKuNiBzJiYsMwvNVuyGAJ8Iuj1HNEClo_VkzgdGuTHWoHp7O9FYP7Et_l2eI_iNNEEePeao3Q5qlVNNMIsp93_60xvxAAPMvIspLzQ3nsFM6_9n7',
@@ -411,6 +413,13 @@ class Utility_apiv2
                     'Content-Type: application/json'
                 );
             }
+           }else{
+            $admin_firebase_key = 'AAAAYmVu0RM:APA91bGMSKZnWRlSZrDilKghySf-ywPbiyRgT5C0Gnfa4-TQRI-Bz7-RiKL6FbL632rbX7mNIszlDnJ1dAogf4GFOBaSRAi5NcxnRlOdXbAxhDVoVOjXiqfICuHPCpnlGysK4_Ygitx9';
+             $headers = array(
+                    'Authorization: key= '.$admin_firebase_key,
+                    'Content-Type: application/json'
+             );
+           } 
         }
         // print_r($headers);die;
                 // echo $key;exit;
