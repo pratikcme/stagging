@@ -293,7 +293,7 @@ class Utility_apiv2
        }else{
             $ck = $admin_bandle_id;
        }
-
+       
         $payload = array(
             'iss' => $team_id,
             'iat' => time()
@@ -314,7 +314,6 @@ class Utility_apiv2
           $message = '{"aps":{"alert":"'.$msg.'","sound":"default","status":"'.$status.'"}}';
 
           $key = openssl_pkey_get_private('file://'.$keyfile);
-
           $header = ['alg'=>'ES256','kid'=>$keyid];
           $claims = ['iss'=>$teamid,'iat'=>time()];
 
@@ -352,9 +351,6 @@ class Utility_apiv2
         }
 
         $status = curl_getinfo($http2ch, CURLINFO_HTTP_CODE);
-          // error_reporting(E_ALL);
-          // ini_set('display_errors', 1);
-          // dd($result);
     }
 
         function base64($data) {
