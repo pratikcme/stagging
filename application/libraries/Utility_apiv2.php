@@ -313,12 +313,12 @@ class Utility_apiv2
           $token = $deviceId;              # <- Device Token
 
           $message = '{"aps":{"alert":"'.$msg.'","sound":"default","status":"'.$status.'"}}';
-          echo $teamid;
-          echo '<br>';
-          echo $keyid;
-          echo '<br>';
-          echo $message;
-          die;
+          // echo $teamid;
+          // echo '<br>';
+          // echo $keyid;
+          // echo '<br>';
+          // echo $message;
+          // die;
           $key = openssl_pkey_get_private('file://'.$keyfile);
           $header = ['alg'=>'ES256','kid'=>$keyid];
           $claims = ['iss'=>$teamid,'iat'=>time()];
