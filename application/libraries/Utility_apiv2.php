@@ -362,7 +362,7 @@ class Utility_apiv2
     
     function notificationForAndroid($deviceId,$msg,$jsonData,$type , $unread,$key,$result) {
         
-        // print_r($result);die;
+        print_r($deviceId);die;
         // $firebase_key = $result[0]->user_firebase_key;
         // print_r($firebase_key);die;
         $message = $msg;
