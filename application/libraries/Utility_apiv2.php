@@ -421,8 +421,8 @@ class Utility_apiv2
              );
            } 
         }
-        // print_r($headers);die;
-                // echo $key;exit;
+        print_r($headers);die;
+                echo $key;exit;
         
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
