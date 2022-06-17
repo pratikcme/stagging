@@ -278,6 +278,7 @@ class Utility_apiv2
 
         $deviceId = $deviceIds['device_id'];
         $msg = $msg['message'];
+
        if(!isset($deviceIds['for_admin'])){
 
             if(isset($deviceIds['for_staff'])){
@@ -293,7 +294,7 @@ class Utility_apiv2
        }else{
             $ck = $admin_bandle_id;
        }
-       
+
         $payload = array(
             'iss' => $team_id,
             'iat' => time()
@@ -312,7 +313,12 @@ class Utility_apiv2
           $token = $deviceId;              # <- Device Token
 
           $message = '{"aps":{"alert":"'.$msg.'","sound":"default","status":"'.$status.'"}}';
-
+          echo $teamid;
+          echo '<br>';
+          echo $keyId;
+          echo '<br>';
+          echo $message;
+          die;
           $key = openssl_pkey_get_private('file://'.$keyfile);
           $header = ['alg'=>'ES256','kid'=>$keyid];
           $claims = ['iss'=>$teamid,'iat'=>time()];
