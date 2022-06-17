@@ -381,7 +381,7 @@ class Utility_apiv2
             // echo $key;exit;
         $fields_json = json_encode($fields);
         if(!isset($deviceId['for_admin'])){
-            echo '1';
+          
             if(isset($deviceId['delivery_notification'])){
             // echo '1';die;
                 $headers = array(
