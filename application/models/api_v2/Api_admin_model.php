@@ -1330,10 +1330,12 @@ class Api_admin_model extends My_model {
     public function change_order_status($postData) {
         $order_id = $postData['order_id'];
 
-        $data['select'] = ['order_status'];
+        $data['select'] = ['order_status','branch_id','order_no'];
         $data['where'] = ['id' => $order_id];
         $data['table'] = 'order';
         $results = $this->selectRecords($data);
+        $branch_id = $results[0]->branch_id; 
+        $order_no = $results[0]->order_no; 
 
         $this->order_logs($_POST); // insert Order logs;
 
@@ -1344,12 +1346,37 @@ class Api_admin_model extends My_model {
             }
         }
         $status = $postData['status'];
+        
+        if($status=='9' || $status=='8'){
+            if ($status == '8') {
+                $send_status = 'Delivered';
+                $type = 'order_delivered';
+            }
+            if ($status == '9') {
+                $send_status = 'Cancelled';
+                $type = 'order_cancelled';
+            }
+           $message = $order_no .' is '.$send_status;
+           $branchNotification = array(
+            'order_id'         =>  $order_id,
+            'branch_id'          =>  $branch_id,
+            'notification_type'=> $type,
+            'message'          => $message,
+            'status'           =>'0',
+            'dt_created'       => DATE_TIME,
+            'dt_updated'       => DATE_TIME
+        );
+           $this->load->model('api_v2/api_model','api_v2_model');
+           $this->api_v2_model->pushAdminNotification($branchNotification);    
+       }
+
         $date = strtotime(DATE_TIME);
 
         $this->db->query("UPDATE `order` SET order_status = '$status',dt_updated = '$date' WHERE id = '$order_id'");
         if ($status == '4') {
             $this->db->query("UPDATE `order_details` SET delevery_status = '1',dt_updated = '$date' WHERE order_id = '$order_id'");
         }
+
         $this->send_notificaion($order_id);
         $return = ['status' => 1, 'message' => 'Status Updated'];
         return $return;

@@ -196,7 +196,6 @@ class Order_model extends My_model
                 $send_status = 'Cancelled';
                 $type = 'order_cancelled';
             }
-           $this->load->model('api_v2/api_model','api_v2_model');
            $message = $order_no .' is '.$send_status;
            $branchNotification = array(
             'order_id'         =>  $order_id,
@@ -207,6 +206,7 @@ class Order_model extends My_model
             'dt_created'       => DATE_TIME,
             'dt_updated'       => DATE_TIME
         );
+           $this->load->model('api_v2/api_model','api_v2_model');
            $this->api_v2_model->pushAdminNotification($branchNotification);    
        }
 
