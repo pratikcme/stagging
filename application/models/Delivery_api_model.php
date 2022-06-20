@@ -82,8 +82,7 @@ class Delivery_api_model extends My_model
         }
     }
     public function send_notification($order_id){
-            error_reporting(E_ALL);
-            ini_set('display_errors', 1);
+
         $path = '/'.$this->firebaseNode.'/';
         // print_r($path);die;
         // echo $this->token;exit;
@@ -106,9 +105,10 @@ class Delivery_api_model extends My_model
         $res = $this->selectFromjoin($data,true);
         // print_r($res);die;
 
-        if($res[0]->isSelfPickup == '1'){
+        if($res[0]['isSelfPickup'] == '1'){
             return true;
         }
+
         $res = $res[0];
 
         $b_add = explode(',',$res['b_address']);
