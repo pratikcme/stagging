@@ -65,8 +65,7 @@ Class Offer_model extends My_model{
             'dt_created' => DATE_TIME,
             'dt_updated' => DATE_TIME
         );
-        dd($insert);die;
-
+        
         $data['table'] = TABLE_OFFER;
         $data['insert'] = $insert;
         $offer_id = $this->insertRecord($data);
