@@ -84,7 +84,7 @@ class Delivery_api_model extends My_model
         $data['table'] = 'order as o';
         $res = $this->selectFromjoin($data,true);
 
-        dd($res[0]['isSelfPickup']);
+        // dd($res[0]['isSelfPickup']);
 
         $branch_id = $res[0]['branch_id']; 
         $vendor_id = $res[0]['vendor_id']; 
@@ -141,6 +141,7 @@ class Delivery_api_model extends My_model
             $data['table'] = 'delivery_user_device as dd';
             $data['join'] = ['delivery_user as d'=>['d.id = dd.delivery_user_id','left']];
             $result = $this->selectFromJoin($data);
+            dd($result);
             foreach($result as $key =>$val){
                 $this->insert_notification($order_id,$val->delivery_user_id,$message,$branch_id);
             }
