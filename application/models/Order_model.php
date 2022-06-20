@@ -251,7 +251,8 @@ class Order_model extends My_model
 
     public function send_notificaion($order_id)
     {
-
+        error_reporting(E_ALL);
+            ini_set('display_errors', 1);
 
         $data['select'] = ['o.user_id', 'd.token', 'd.type', 'd.device_id', 'u.notification_status', 'o.order_status', 'o.order_no','o.branch_id'];
         $data['where'] = ['o.id' => $order_id];
