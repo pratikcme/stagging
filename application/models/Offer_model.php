@@ -61,11 +61,12 @@ Class Offer_model extends My_model{
             'branch_id' => $postData['branch_id'],
             'image' => $offer_image,
             'offer_title' => $postData['offer_title'],
-            'offer_percent' => $postData['offer_percent'],
-            'offer_percent' => ($postData['offer_percent'] && $postData['offer_percent'] != '') ? : NULL,
+            'offer_percent' => ($postData['offer_percent'] && $postData['offer_percent'] != '') ? $postData['offer_percent'] : NULL,
             'dt_created' => DATE_TIME,
             'dt_updated' => DATE_TIME
         );
+        dd($insert);die;
+
         $data['table'] = TABLE_OFFER;
         $data['insert'] = $insert;
         $offer_id = $this->insertRecord($data);

@@ -134,7 +134,7 @@
                      <div class="col-md-12 col-sm-12 col-xs-12">
                         <!-- <span class="panel-body padding-zero" > -->
                         <a href="<?=base_url().'offer'?>" style="float: right; margin-right: 10px;" id="delete_user" class="btn btn-danger">Cancel</a>
-                        <input type="submit" class="btn btn-info pull-right margin_top_label" value="<?php echo @$getData[0]->created_at != '' ? 'Update' : 'Add'; ?>" id="btnSubmit" name="submit">
+                        <input type="submit" class="btn btn-info pull-right margin_top_label" value="Update" id="btnSubmit" name="submit">
                         <!-- </span> -->
                      </div>
                   </div>
