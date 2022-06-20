@@ -217,11 +217,11 @@ class Order_model extends My_model
 
         $date = strtotime(DATE_TIME);
 
-         // $this->db->query("UPDATE `order` SET order_status = '$status',dt_updated = '$date' WHERE id = '$order_id'");
+         $this->db->query("UPDATE `order` SET order_status = '$status',dt_updated = '$date' WHERE id = '$order_id'");
 
         // echo $this->db->last_query();die;
         if ($status == '4') {
-            // $this->db->query("UPDATE `order_details` SET delevery_status = '1',dt_updated = '$date' WHERE order_id = '$order_id'");
+            $this->db->query("UPDATE `order_details` SET delevery_status = '1',dt_updated = '$date' WHERE order_id = '$order_id'");
         }
 
        
@@ -251,7 +251,7 @@ class Order_model extends My_model
 
     public function send_notificaion($order_id)
     {
-        error_reporting(E_ALL);
+            error_reporting(E_ALL);
             ini_set('display_errors', 1);
 
         $data['select'] = ['o.user_id', 'd.token', 'd.type', 'd.device_id', 'u.notification_status', 'o.order_status', 'o.order_no','o.branch_id'];
@@ -276,15 +276,11 @@ class Order_model extends My_model
         if ($order_status == '2') {
             $send_status = 'Pending for Ready';
         }
-        $order_status = '3';
         if ($order_status == '3') {
             
             $send_status = 'Ready For Deliver';
-             error_reporting(E_ALL);
-            ini_set('display_errors', 1);
             $this->load->model('api_v2/delivery_api_model','api_v2_delivery');
             $this->api_v2_delivery->send_notification($order_id);
-            die;
         }
         if ($order_status == '4') {
             $send_status = 'Pick Up';
