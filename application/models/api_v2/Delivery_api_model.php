@@ -84,6 +84,8 @@ class Delivery_api_model extends My_model
         $data['table'] = 'order as o';
         $res = $this->selectFromjoin($data,true);
 
+        dd($res);
+
         $branch_id = $res[0]['branch_id']; 
         $vendor_id = $res[0]['vendor_id']; 
 
