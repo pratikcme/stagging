@@ -2026,10 +2026,10 @@ class Api_model extends My_model {
             
                     $otpForSelfPickup = '';
                     
-                    if (isset($_POST['isSelfPickup']) && $_POST['isSelfPickup'] == '1') {
+                    // if (isset($_POST['isSelfPickup']) && $_POST['isSelfPickup'] == '1') {
                         $otpForSelfPickup = rand(1000, 9999);
                         $this->selfPickUp_otp($last_insert_id, $user_id, $otpForSelfPickup);
-                    }
+                    // }
 
                     $this->load->model('api_v2/api_admin_model');
                     $order_log_data = array('order_id' => $last_insert_id, 'status'=>'1' );

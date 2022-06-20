@@ -1450,12 +1450,12 @@ class Api extends Apiuser_Controller {
             $isSelfPickup = $order_result['isSelfPickup'];
             $total_with_charge = $order_result['payable_amount'];
             $delivery_charge = $order_result['delivery_charge'];
-            if ($isSelfPickup == 1) {
+            // if ($isSelfPickup == 1) {
                 $self_pick = $this->db->query("SELECT * FROM `selfPickup_otp` WHERE order_id = '$order_id' AND user_id = '$user_id'");
                 $self_otp = $self_pick->row_array();
                
                 $self_pick_otp = $self_otp['otp'];
-            }
+            // }
             $my_order_price_query = $this->db->query("SELECT SUM(calculation_price) as total_price from order_details WHERE status != '9' AND order_id = '$order_id' AND user_id = '$user_id'");
             $my_order_price_result = $my_order_price_query->row_array();
             $branch_id = $result[0]->branch_id;
@@ -1528,7 +1528,7 @@ class Api extends Apiuser_Controller {
                 $response["discount_price_total"] = $discount_price_total;
                 $response["instance_discount"] = $instance_discount;
                 $response['isSelfPickup'] = $isSelfPickup;
-                $response['verify_otp'] = (isset($self_pick_otp)) ? $self_pick_otp : '1234';
+                $response['verify_otp'] = (isset($self_pick_otp)) ? $self_pick_otp : '';
                 $response["data"] = $get_data;
                 echo $output = json_encode(array('responsedata' => $response));
                 die;
