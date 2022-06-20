@@ -54,7 +54,10 @@ class Order_model extends My_model
         $data['where'] = ['order_id'=>$order_id];
         $data['select'] = ['status'];
         $result = $this->selectRecords($data);
-        return $result[0]->status;   
+        if(!empty($result)){
+            return $result[0]->status;   
+        }
+        return 0;
     }
 
     public function vendorDetail($vendor_id){
