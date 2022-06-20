@@ -103,8 +103,8 @@ class Delivery_api_model extends My_model
         $data['where'] = ['o.id'=>$order_id];
         $data['table'] = 'order as o';
         $res = $this->selectFromjoin($data,true);
-        print_r($res);die;
 
+        
         if($res[0]['isSelfPickup'] == '1'){
             return true;
         }
