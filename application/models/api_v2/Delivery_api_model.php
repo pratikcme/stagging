@@ -83,7 +83,7 @@ class Delivery_api_model extends My_model
         $data['where'] = ['o.id'=>$order_id];
         $data['table'] = 'order as o';
         $res = $this->selectFromjoin($data,true);
-        dd($res);
+
         $branch_id = $res[0]['branch_id']; 
         $vendor_id = $res[0]['vendor_id']; 
 
@@ -113,7 +113,7 @@ class Delivery_api_model extends My_model
 
         // print_r($res);die;
 
-        if($res['isSelfPickup'] == '1'){
+        if($res[0]['isSelfPickup'] == '1'){
             return true;
         }
         $res = $res[0];
