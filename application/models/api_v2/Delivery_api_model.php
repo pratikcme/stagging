@@ -178,7 +178,7 @@ class Delivery_api_model extends My_model
                 
                     $this->load->model('api_v2/api_model');
                     $result = $this->api_model->getNotificationKey($branch_id);
-                    dd($result);
+                    // dd($result);
                     $this->utility_apiv2->sendNotification($dataArray, $notification_type,$result,NULL,$this->key);
                 
                     
