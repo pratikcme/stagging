@@ -1439,7 +1439,7 @@ class Api extends Apiuser_Controller {
             $order_query = $this->db->query("SELECT * FROM `order` WHERE status != '9' AND user_id = '$user_id' AND id = '$order_id'");
             $order_result = $order_query->row_array();
             $check_promocode_used = $order_result['promocode_used'];
-            if($check_promocode_used[''] == 1){
+            if($check_promocode_used == 1){
                 $order_promocode_amount = $this->this_model->get_order_promocode_discount($_POST['order_id']);
                 $instance_discount = number_format((float)$order_promocode_amount[0]->amount,'2','.','');
             }else{
