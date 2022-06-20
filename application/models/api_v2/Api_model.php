@@ -2091,8 +2091,8 @@ class Api_model extends My_model {
 
 
                     /*Remove From My Cart*/
-                    $this->deleteUserCart($user_id);
                     $this->db->query('UNLOCK TABLES;');
+                    $this->deleteUserCart($user_id);
                     /*Admin Notification*/
                     $message = 'new order '.$iOrderNo ;
                     $branchNotification = array(
