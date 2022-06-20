@@ -224,8 +224,8 @@ class Order_model extends My_model
             $this->db->query("UPDATE `order_details` SET delevery_status = '1',dt_updated = '$date' WHERE order_id = '$order_id'");
         }
 
-        // error_reporting(E_ALL);
-        //     ini_set('display_errors', 1);
+        error_reporting(E_ALL);
+            ini_set('display_errors', 1);
         $this->send_notificaion($order_id);
 
         ob_get_clean();
