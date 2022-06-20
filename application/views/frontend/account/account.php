@@ -284,7 +284,7 @@
                                     </div>
                                  </div>
                               </li>
-                           <!-- <?php } ?> -->
+                           <!-- <?php } ?> -->  
                            <div class="order-cancle-btn">
                            <?php if($value->order_status != '8' && $value->order_status != '9'){ ?> 
                             <a href="javescript:;" data-href="<?=base_url().'orders/cancle_order/'.$this->utility->safe_b64encode($value->id)?>" class="cncOrder btn btn-orange">Cancel Order</a>

@@ -116,7 +116,7 @@ class Delivery_api_model extends My_model
         if($res[0]['isSelfPickup'] == '1'){
             return true;
         }
-        
+
         $res = $res[0];
 
         $b_add = explode(',',$res['b_address']);
