@@ -105,7 +105,7 @@ class Delivery_api_model extends My_model
         $res = $this->selectFromjoin($data,true);
 
         
-        if($res[0]['isSelfPickup'] == '1'){
+        if($res['isSelfPickup'] == '1'){
             return true;
         }
 
