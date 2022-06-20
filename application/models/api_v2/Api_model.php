@@ -1867,7 +1867,7 @@ class Api_model extends My_model {
 
         if($total_price < $promocode[0]->min_cart){
             $response["success"] = 0;
-            $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';   
+            $response["message"] = "Cart Minimum ".$promocode[0]->min_cart.' amount is required';   
             return $response;
         }
 

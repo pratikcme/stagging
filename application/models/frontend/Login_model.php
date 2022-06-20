@@ -8,12 +8,14 @@ class Login_model extends My_model{
 	}
 
 	public function register_user($postData){
+		// dd($postData);
 		$insertData = array(
 				'fname' => $postData['fname'],
 				'lname' => $postData['lname'],
 				'email' => $postData['email'],
 				'password' => md5($postData['password']),
 				'phone' => $postData['phone'],
+				'country_code' => $postData['country_code'],
 				'vendor_id' => $this->vendor_id,
 				'login_type' => '0',
 				'status' => '1',

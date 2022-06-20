@@ -26,15 +26,21 @@
             <input type="text" name="lname" placeholder="Last Name*" required>
           </div>
           <label for="lname" class="error"></label>
-
-
+          
+          <div class="">
+            <select name="country_code" id="country_code" class="input-wrapper">
+                <option value="">Select country code</option>
+              <?php foreach(GetDialcodelist() as $key => $value){ ?>
+                 <option value="<?=$key;?>"><?=$value;?></option>
+               <?php } ?>             
+            </select>
+          </div>
+          
           <div class="input-wrapper">
             <span><i class="fas fa-mobile"></i></span>
             <input type="text" name="phone"  class="mob_no" placeholder="Mobile Number*" required>
           </div>
           <label for="phone" class="error"></label>
-
-
 
           <div class="input-wrapper">
             <span><i class="fas fa-envelope"></i></span>

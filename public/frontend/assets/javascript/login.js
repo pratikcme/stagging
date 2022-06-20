@@ -53,6 +53,7 @@ var LOGIN = function(){
                 rules: {
                     fname: { required: true,},
                     lname: { required: true,},
+                    country_code : { required : true },
                     phone: { required: true,
                              number: true,
                              minlength: 6,
@@ -96,6 +97,7 @@ var LOGIN = function(){
                         minlength: 'Please enter minimum 6 digits',
                         maxlength: "Please enter maximum 15 digits",
                     },
+                    country_code : { required : 'Please select country code'},
                     password:{  required: "Please enter password",
                                 minlength:"Please enter at least 6 character",
                                 maxlength:"Please select less-than 10 character"
