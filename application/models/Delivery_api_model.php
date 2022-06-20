@@ -82,7 +82,8 @@ class Delivery_api_model extends My_model
         }
     }
     public function send_notification($order_id){
-
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
         $path = '/'.$this->firebaseNode.'/';
         // print_r($path);die;
         // echo $this->token;exit;

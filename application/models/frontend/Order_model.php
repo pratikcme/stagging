@@ -247,11 +247,11 @@ Class Order_model extends My_model{
                 $this->db->insert('order', $data);
                 $last_insert_id = $this->db->insert_id();
                 $otpForSelfPickup = '';
-                if(isset($_SESSION['isSelfPickup']) && $_SESSION['isSelfPickup'] == '1'){
+                // if(isset($_SESSION['isSelfPickup']) && $_SESSION['isSelfPickup'] == '1'){
                     $otpForSelfPickup = rand(1000,9999);
                     $this->load->model('api_v2/api_model','api_v2_model');
                     $this->api_v2_model->selfPickUp_otp($last_insert_id,$user_id,$otpForSelfPickup);
-                }
+                // }
 
                 $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
                 $order_log_data = array('order_id' => $last_insert_id,'branch_id'=>$branch_id,'status'=>'1');
