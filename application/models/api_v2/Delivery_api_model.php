@@ -84,8 +84,6 @@ class Delivery_api_model extends My_model
         $data['table'] = 'order as o';
         $res = $this->selectFromjoin($data,true);
 
-        // dd($res[0]['isSelfPickup']);
-
         $branch_id = $res[0]['branch_id']; 
         $vendor_id = $res[0]['vendor_id']; 
 
@@ -118,6 +116,7 @@ class Delivery_api_model extends My_model
         if($res[0]['isSelfPickup'] == '1'){
             return true;
         }
+        
         $res = $res[0];
 
         $b_add = explode(',',$res['b_address']);
