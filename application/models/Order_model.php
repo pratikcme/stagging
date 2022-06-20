@@ -217,15 +217,14 @@ class Order_model extends My_model
 
         $date = strtotime(DATE_TIME);
 
-        // $this->db->query("UPDATE `order` SET order_status = '$status',dt_updated = '$date' WHERE id = '$order_id'");
+         $this->db->query("UPDATE `order` SET order_status = '$status',dt_updated = '$date' WHERE id = '$order_id'");
 
         // echo $this->db->last_query();die;
         if ($status == '4') {
-            // $this->db->query("UPDATE `order_details` SET delevery_status = '1',dt_updated = '$date' WHERE order_id = '$order_id'");
+            $this->db->query("UPDATE `order_details` SET delevery_status = '1',dt_updated = '$date' WHERE order_id = '$order_id'");
         }
 
-        error_reporting(E_ALL);
-            ini_set('display_errors', 1);
+       
         $this->send_notificaion($order_id);
 
         ob_get_clean();
@@ -279,7 +278,8 @@ class Order_model extends My_model
         if ($order_status == '3') {
             
             $send_status = 'Ready For Deliver';
-
+             error_reporting(E_ALL);
+            ini_set('display_errors', 1);
             $this->load->model('api_v2/delivery_api_model','api_v2_delivery');
             $this->api_v2_delivery->send_notification($order_id);
             die;
