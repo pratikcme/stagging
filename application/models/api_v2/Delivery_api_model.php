@@ -141,7 +141,6 @@ class Delivery_api_model extends My_model
             $data['table'] = 'delivery_user_device as dd';
             $data['join'] = ['delivery_user as d'=>['d.id = dd.delivery_user_id','left']];
             $result = $this->selectFromJoin($data);
-            dd($result);
             foreach($result as $key =>$val){
                 $this->insert_notification($order_id,$val->delivery_user_id,$message,$branch_id);
             }
