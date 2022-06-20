@@ -113,7 +113,7 @@ class Delivery_api_model extends My_model
 
         // print_r($res);die;
 
-        if($res[0]->isSelfPickup == '1'){
+        if($res['isSelfPickup'] == '1'){
             return true;
         }
         $res = $res[0];
