@@ -277,7 +277,6 @@ class Order_model extends My_model
             $send_status = 'Pending for Ready';
         }
         $order_status = '3';
-        echo $order_status ; die;
         if ($order_status == '3') {
             
             $send_status = 'Ready For Deliver';
