@@ -547,7 +547,9 @@ public function Product_add_update(){
                     $files = $_FILES;
                     $path = 'public/images/'.$this->folder.'product_image/';
                     foreach ($files['userfile']['name'] as $key => $value) {
-                        $_FILES['userfile']['name'] = $files['userfile']['name'][$key]; 
+
+                        $_FILES['userfile']['name'] = str_replace(' ', '',$files['userfile']['name'][$key]); 
+                        dd($_FILES['userfile']['name']);
                         $_FILES['userfile']['type'] = $files['userfile']['type'][$key]; 
                         $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$key]; 
                         $_FILES['userfile']['error'] = $files['userfile']['error'][$key]; 
