@@ -3746,6 +3746,7 @@ class Api_model extends My_model {
             $v->my_cart_quantity = $my_cart_quantity;
             $image = $this->getVarient_image($v->product_varient_id);
             $v->image = base_url() . 'public/images/'.$this->folder.'product_image/'.$image[0]->image;
+            $v->image = str_replace(' ', '%20', $v->image);
         }
         $response["success"] = 1;
         $response["message"] = "offer details data";  
