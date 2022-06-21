@@ -98,12 +98,15 @@ class staff_api_model extends my_model {
         $currecy = $this->get_currency();
         $branch_id = $postdata['branch_id'];
         $data['select'] = ['o.id as orderid', 'o.order_no', 'o.dt_added', 'pi.image', 'o.order_status', 'o.total_item', 'o.payable_amount', 'p.package', 'o.user_id', 'o.isSelfPickup', 'o.delivery_charge'];
-        $data['where'] = ['o.branch_id' => $branch_id, 'o.status !=' => '9','pi.status !=' => '9'];
+        $data['where'] = ['o.branch_id' => $branch_id, 'o.status !=' => '9'];
         $data['table'] = 'order AS o';
+        
         $data['join'] = ['order_details  AS d' => ['o.id = d.order_id', 'LEFT', ], 'product_image  AS pi' => ['pi.product_variant_id = d.product_weight_id', 'LEFT', ], 'product_weight  AS p' => ['p.id =  d.product_weight_id', 'LEFT', ], ];
+        
         $data['groupBy'] = ['o.id'];
         $data['order'] = 'o.dt_updated DESC';
         $result = $this->selectFromJoin($data);
+
         // echo $this->db->last_query();die;
         if (count($result) > 0) {
             foreach ($result as $key => $value) {
