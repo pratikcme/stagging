@@ -44,6 +44,7 @@ Class Offer_model extends My_model{
 
   ## Add Update ##
     public function addRecord($postData){
+        // dd($postData);
          $varient_ids = explode(',',$postData['hidden_varient_id']);
         if($_FILES['offer_image']['error'] == 0){
             ## Image Upload ##
@@ -62,11 +63,15 @@ Class Offer_model extends My_model{
             'image' => $offer_image,
             'offer_title' => $postData['offer_title'],
             'offer_percent' => ($postData['offer_percent'] && $postData['offer_percent'] != '') ? $postData['offer_percent'] : NULL,
+            'start_date' => date("Y-m-d", strtotime($postData['start_date'])),
+            'end_date' => date("Y-m-d", strtotime($postData['end_date'])),
+            'start_time' => $postData['start_time'],
+            'end_time' => $postData['end_time'],
             'dt_created' => DATE_TIME,
             'dt_updated' => DATE_TIME
         );
         
-        $data['table'] = TABLE_OFFER;
+        $data['table'] = TABLE_OFFER;       
         $data['insert'] = $insert;
         $offer_id = $this->insertRecord($data);
         unset($data);
@@ -75,6 +80,8 @@ Class Offer_model extends My_model{
             $offer_details = array(
                 'offer_id' => $offer_id,
                 'product_varient_id' => $id,
+                'old_percentage' => $postData['exiting_discount_per'][$key],
+                'new_percentage' => $postData['update_discount'][$key],
                 'dt_created' => DATE_TIME,
                 'dt_updated' => DATE_TIME
             );
@@ -89,6 +96,7 @@ Class Offer_model extends My_model{
 
 
     public function updateRecord($postData){
+        // dd($postData);
         $varient_ids = explode(',',$postData['hidden_varient_id']);
         if($_FILES['offer_image']['error'] == 0){
             ## Image Upload ##
@@ -109,6 +117,10 @@ Class Offer_model extends My_model{
             'image' => $offer_image,
             'offer_title' => $postData['offer_title'],
             'offer_percent' => $postData['offer_percent'],
+            'start_date' => date("Y-m-d", strtotime($postData['start_date'])),
+            'end_date' => date("Y-m-d", strtotime($postData['end_date'])),
+            'start_time' => $postData['start_time'],
+            'end_time' => $postData['end_time'],
             'dt_created' => DATE_TIME,
             'dt_updated' => DATE_TIME
         );
@@ -128,6 +140,8 @@ Class Offer_model extends My_model{
             $offer_details = array(
                 'offer_id' => $postData['edit_id'],
                 'product_varient_id' => $id,
+                'old_percentage' => $postData['exiting_discount_per'][$key],
+                'new_percentage' => $postData['update_discount'][$key],
                 'dt_created' => DATE_TIME,
                 'dt_updated' => DATE_TIME
             );

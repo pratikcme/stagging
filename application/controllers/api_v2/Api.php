@@ -767,6 +767,11 @@ class Api extends Apiuser_Controller {
                         }
                         $img = [];
                         foreach ($product_image_result as $pro_image) {
+                            if(!file_exists('public/images/'.$this->folder.'product_image/'.$pro_image->image) || $pro_image->image == ''){
+                                $this->load->model('common_model');
+                                $default_product_image =$this->common_model->default_product_image();
+                                $pro_image->image =  $default_product_image;
+                            }
                             $pro_image->image = str_replace(' ', '%20', $pro_image->image);
                             $img[] = array('id' => $pro_image->id, 'product_id' => $pro_image->product_id, 'weight_id' => $pro_weight->weight_id, 'image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $pro_image->image, 'thumb_image' => base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $pro_image->image,);
                         }

@@ -80,6 +80,7 @@ class Vendor extends CI_Controller
       @$id = $this->utility->decode($_GET['id']);
        if($id != ''){
           $data['result'] = $this->this_model->vendorById($id);
+          // dd($data['result']);die;
       }else{
        $vendor = $this->this_model->AvailableVendorAndApprovedBranch(ADMIN,'id',$this->session->userdata['vendor_admin_id']);
        $branch = $this->this_model->AvailableVendorAndApprovedBranch(TABLE_BRANCH,'vendor_id',$this->session->userdata['vendor_admin_id']);

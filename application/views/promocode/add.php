@@ -33,6 +33,11 @@
                                   <input type="text" id="name" name="name" class="form-control">
                                   <label for="name" style="color: red" class="error"><?php echo @form_error('name'); ?></label>
                                </div>
+                              <div class="form-group">
+                                  <label for="max_cart">Maximum Cart Amount</label>
+                                  <input type="text" id="max_cart" name="max_cart" class="form-control">
+                                  <label for="max_cart" style="color: red" class="error"><?php echo @form_error('max_cart'); ?></label>
+                               </div>
 
                               <div class="form-group">
                                   <label for="percentage">Percentage</label>
@@ -44,6 +49,7 @@
                                   <input type="text" id="max_use" name="max_use" class="form-control">
                                   <label for="max_use" style="color: red" class="error"><?php echo @form_error('max_use'); ?></label>
                               </div>
+
 
                             
                                

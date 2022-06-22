@@ -7,7 +7,7 @@ class vendor_model extends My_model{
     }
 
        public function new_vendor_register(){
-      
+        
         if(isset($_POST['submit1'])){
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
@@ -19,7 +19,7 @@ class vendor_model extends My_model{
                     if($_FILES['image_edit']['name'] != ''){
                        
 
-                        $query = $this->db->query("SELECT image FROM vendor WHERE id = '$id'");
+                        $query = $this->db->query("SELECT image FROM branch WHERE id = '$id'");
                         $result = $query->row_array();
                         $old_image = $result['image'];
                         $url = './public/images/vendor_shop/'.$old_image;                    
@@ -29,15 +29,16 @@ class vendor_model extends My_model{
                         // print_r($uploadResponse);exit;  
                         $image = $uploadResponse['data']['file_name'];
                     }else{
-                        $query = $this->db->query("SELECT image FROM vendor WHERE id = '$id'");
+                        $query = $this->db->query("SELECT image FROM branch WHERE id = '$id'");
                         $result = $query->row_array();
                         $image = $result['image'];
                     }
 
+
                     if($_FILES['logo_image_edit']['name'] != ''){
                        
 
-                        $query = $this->db->query("SELECT logo_image FROM vendor WHERE id = '$id'");
+                        $query = $this->db->query("SELECT logo_image FROM branch WHERE id = '$id'");
                         $result = $query->row_array();
                         $old_image = $result['logo_image'];
                         $url = './public/images/'.$this->folder.'vendor_logo_image/'.$old_image;                    
@@ -47,7 +48,7 @@ class vendor_model extends My_model{
                         // print_r($uploadResponse);exit;  
                         $logo = $uploadLogoResponse['data']['file_name'];
                     }else{
-                        $query = $this->db->query("SELECT logo_image FROM vendor WHERE id = '$id'");
+                        $query = $this->db->query("SELECT logo_image FROM branch WHERE id = '$id'");
                         $res = $query->row_array();
                         $logo = $res['logo_image'];
                     }
@@ -67,8 +68,8 @@ class vendor_model extends My_model{
                     'dt_updated' => date('Y-m-d H:i:s'),
                     );
                     $this->db->where('id',$id);
-                    $this->db->update('vendor', $dataupdate);
-                    $this->session->set_flashdata('msg', 'Vendor updated successfully');
+                    $this->db->update('branch', $dataupdate);
+                    $this->session->set_flashdata('msg', 'Branch updated successfully');
                 }else{
                     $vendor = $this->AvailableVendorAndApprovedBranch(ADMIN,'id',$this->session->userdata['vendor_admin_id']);
                     $branch = $this->AvailableVendorAndApprovedBranch(TABLE_BRANCH,'vendor_id',$this->session->userdata['vendor_admin_id']);
@@ -600,7 +601,7 @@ class vendor_model extends My_model{
     }
 
     public function vendorById($id){
-        $data['table'] = 'vendor';
+        $data['table'] = 'branch';
         $data['select'] = ['*'];
         $data['where'] = ['id' => $id];
         $return = $this->selectRecords($data,true);

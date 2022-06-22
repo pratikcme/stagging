@@ -1,4 +1,40 @@
 <?php $this->load->view('header.php')?>
+<style type="text/css">
+    caption{
+    font-size: 25px;
+    color: #000;
+}
+table{
+    width: 100%;
+    text-align: center;
+}
+thead{
+    text-align: center;
+}
+table,th,td{
+    border-collapse: collapse;
+    border: 1px solid;
+    padding: 10px;
+}
+
+input{
+    border: 1px solid #000 !important;
+    border-radius: 0 !important;
+    outline: 0;
+}
+input[type="text"]:focus{
+    box-shadow: none;
+    outline: 0;
+}
+.last-td{
+    text-align: right;
+    border: 0;
+}
+.btn{
+    padding: 10px 30px;
+    border: none;
+}
+</style>
 <section id="main-content">
    <?php if($this->session->flashdata('myMessage') != '' ){
       echo $this->session->flashdata('myMessage');
@@ -22,7 +58,7 @@
                   Add
                </header>
                <form id="frmAddEdit" method="post" enctype="multipart/form-data" action="<?=$FormAction?>">
-                <input type="hidden" name="branch_id" value="<?=$this->uri->segment(3)?>">
+                <input type="hidden" name="branch_id" id="branch_id" value="<?=$this->uri->segment(3)?>">
                   <div class="panel-body">
                      <div class="row">
                          <div class="col-md-6 col-sm-12 col-xs-12 padding-zero">
@@ -58,8 +94,40 @@
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="offer_title">Offer Percent</label>
-                                  <input type="text" id="offer_percent" name="offer_percent" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
-                                  <label for="offer_percent" style="color: red" class="error"><?php echo @form_error('offer_percent'); ?></label>
+                                  <input type="text" name="offer_percent" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <label for="offer_percent" class="error"></label>
+                               </div>
+                            </div>
+                         </div>
+                          <div class="col-md-6 col-sm-12 col-xs-12 padding-zero">
+                            <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                               <div class="form-group">
+                                  <label for="start_date"> Start date</label>
+                                  <input type="text" id="start_date" name="start_date" class="form-control datetime" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <label for="start_date" style="color: red" class="error"><?php echo @form_error('start_date'); ?></label>
+                               </div>
+                            </div>
+                            <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                               <div class="form-group">
+                                  <label for="end_date">End date</label>
+                                  <input type="text" id="end_date" name="end_date" class="form-control datetime_end" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <label for="end_date" style="color: red" class="error"><?php echo @form_error('end_date'); ?></label>
+                               </div>
+                            </div>
+                         </div>
+                         <div class="col-md-6 col-sm-12 col-xs-12 padding-zero">
+                            <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                               <div class="form-group">
+                                  <label for="start_time">Start time</label>
+                                  <input type="time" id="start_time" name="start_time" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <label for="start_time" style="color: red" class="error"><?php echo @form_error('start_time'); ?></label>
+                               </div>
+                            </div>
+                            <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                               <div class="form-group">
+                                  <label for="end_time">End time</label>
+                                  <input type="time" id="end_time" name="end_time" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <label for="end_time" style="color: red" class="error"><?php echo @form_error('end_time'); ?></label>
                                </div>
                             </div>
                          </div>
@@ -131,11 +199,42 @@
                      <div class="col-md-12 col-sm-12 col-xs-12">
                         <!-- <span class="panel-body padding-zero" > -->
                         <a href="<?=base_url().'offer'?>" style="float: right; margin-right: 10px;" id="delete_user" class="btn btn-danger">Cancel</a>
-                        <input type="submit" class="btn btn-info pull-right margin_top_label" value="<?php echo @$getData[0]->created_at != '' ? 'Update' : 'Add'; ?>" id="btnSubmit" name="submit">
+                        <!-- <input type="submit" class="btn btn-info pull-right margin_top_label" value="Add" id="btnSubmit" name="submit"> -->
+                        <input type="button" class="btn btn-info pull-right margin_top_label" id="add" value="Add">
                         <!-- </span> -->
                      </div>
                   </div>
                   <input type="hidden" name="url" id="base_url" value="<?=base_url()?>">
+                   <div class="modal-wrapper">
+                    <div class="container">
+                       <!--  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <table>
+                                                <caption>Selected Product</caption>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Discount</th>
+                                                        <th>Price</th>
+                                                        <th>Varient</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id='append_selected_varient'>
+                                                    <tr >
+                                                        <td colspan="4" class="last-td"><button type="submit" class="btn">Add</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
                </form>
             </section>
          </div>

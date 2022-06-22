@@ -33,6 +33,11 @@
                                   <input type="text" value="<?php echo @$editData[0]->name; ?>" id="name" name="name" class="form-control">
                                   <label for="name" style="color: red" class="error"></label>
                                </div>
+                               <div class="form-group">
+                                  <label for="max_cart">Maximum Cart Amount</label>
+                                  <input type="text" id="max_cart" name="max_cart" class="form-control"value="<?php echo @$editData[0]->max_cart; ?>">
+                                  <label for="max_cart" style="color: red" class="error"><?php echo @form_error('max_cart'); ?></label>
+                               </div>
 
                               <div class="form-group">
                                   <label for="percentage">Percentage</label>

@@ -246,6 +246,7 @@ $vendor_id = $this->session->userdata('id');
 
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyB-nS3x_SS2JjPSrbq772nwf4QEHRSK1y4"
             type="text/javascript"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 </head>
 <body>
 <?php $vendor_id = $this->session->userdata['id']; ?>

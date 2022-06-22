@@ -211,7 +211,8 @@ Class Common_model extends My_model{
 		if($return[0]->product_default_image != ''){
 			$image =  $return[0]->product_default_image;
 		}else{
-			$image =  'defualt.png';
+			// $image =  'defualt.png';
+			$image =  'http://www.ddexim.org/assets/images/img-dummy-product.jpg';
 		}
 		return $image; 
 	}

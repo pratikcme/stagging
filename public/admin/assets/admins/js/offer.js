@@ -4,8 +4,28 @@ var OFFER = function(){
         $('.alert').fadeOut(5000);
      });
 
+  function isNotEmptyValidation(){
+            var val = 0; 
+            var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+            $('.discount_per').each(function () {
+                var ni = $(this).val();
+                if(ni == ''){
+                    $(this).next('div').find('label').html('Please enter correct value');
+                    val = 1; 
+                }else 
+                if((numberRegex.test(ni) == false) || ni.length > 2){
+                    $(this).next('div').find('label').html('Only 2 digits number in allowed');
+                    val = 1;
+                }else{
+                     $(this).next('div').find('label').html(' ');
+                }
 
-     var HandleTable = function(){
+            })
+            return val;
+        }
+
+
+    var HandleTable = function(){
 
     $(document).on('change','#branch',function () {
         // alert();
@@ -72,7 +92,6 @@ var OFFER = function(){
 
         checked = [];
         $(document).on('click','.checked_id',function () {
-            console.log(checked);
             var id =  $(this).val();
             if( $(this).is(':checked') ){
                 checked.push(id);
@@ -83,7 +102,7 @@ var OFFER = function(){
                 // checked.push(id);
                 // checked.splice( $.inArray(id, checked),id);
             }
-            console.log(checked);
+            // console.log(checked);
             $('#hidden_varient_id').val(checked);
         })
      }
@@ -143,11 +162,10 @@ var OFFER = function(){
                 accept:"Only image type jpg/png/jpeg/gif is allowed"},
             }, 
             submitHandler: function (form) {
-
-                $('body').attr('disabled','disabled');
-                $('#btnSubmit').attr('disabled','disabled');
-                $('#btnSubmit').value('please wait');
-                    $(form).submit();
+                    $('body').attr('disabled','disabled');
+                    $('#btnSubmit').attr('disabled','disabled');
+                    $('#btnSubmit').value('please wait');
+                        $(form).submit();
             }
         
         });
@@ -156,7 +174,45 @@ var OFFER = function(){
 
 
 var HandleSectionTwo = function () {	
+      var varient_id = [];
+      $(document).on('click','.checkbox_user',function(){
+        $(this).each(function(){
+            var id = $(this).val();
 
+            if( $(this).is(':checked') ){
+                varient_id.push(id);
+            }else{
+                varient_id = jQuery.grep(varient_id, function(value) {
+                    return value != id;
+                });
+            } 
+        })
+        console.log(varient_id);
+    })  
+
+      $(document).on('click','#add',function (){
+            // $('.checked_id').
+            var branch_id = $('#branch_id').val();
+            var checkedNum = $('input[type=checkbox]:checked').length;
+            if(checkedNum == 0 && varient_id.length === 0){
+                alert('please select varient');
+                return false;
+            }else{
+                console.log(varient_id);
+                $.ajax({
+                    url: url+'offer/getselectedVarient',
+                    type:'post',
+                    data:{branch_id:branch_id,varient_ids:varient_id},
+                    dataType : "Json",
+                    success:function(output){
+                        $('#append_selected_varient').html(output.html);
+                        $('#myModal').modal('show');
+                    }
+                })
+            }
+
+
+        })
 
         $('#frmAddEdit').validate({
             rules: {
@@ -169,24 +225,50 @@ var HandleSectionTwo = function () {
                     accept:"jpg,png,jpeg,gif"
                 },
                 offer_percent : { 
+                    required : true,
                     digits : true,
                     maxlength : 2
                 },
+                start_date: {
+                    required : true,
+                    date : true
+                },
+                end_date: {
+                    required : true,
+                    date : true
+                },
+                start_time: {
+                    required : true,
+                },
+                end_time: {
+                    required : true,
+                }
         },
             messages : {
                 offer_title : {required: "Please enter offer title"},
-                offer_percent : {required: "Please enter offer percent"},
                 branch : {required: "Please select branch"},
-                offer_image : {required: 'please select offer image',
-                accept:"Only image type jpg/png/jpeg/gif is allowed"},
+                offer_image : { required: 'please select offer image',
+                                accept:"Only image type jpg/png/jpeg/gif is allowed"
+                            },
+                offer_percent : { required: "Please enter offer percent" },
+                start_date : { required : "Please select start date" },
+                end_date : { required : "Please select end date" },
+                start_time : { required : "Please select start time" },
+                end_time : { required : "Please select end time" },
 
             }, 
             submitHandler: function (form) {
-
-                $('body').attr('disabled','disabled');
-                $('#btnSubmit').attr('disabled','disabled');
-                $('#btnSubmit').value('please wait');
-                $(form).submit();
+            // bootbox.confirm("Are you sure you want to delete ?" , function (confirmed) {
+            //      if (confirmed == true) {
+                var check = isNotEmptyValidation();
+                if(check == '0'){
+                    $('body').attr('disabled','disabled');
+                    $('#btnSubmit').attr('disabled','disabled');
+                    $('#btnSubmit').value('please wait');
+                    $(form).submit();
+                }
+            //     }
+            // });
             }
         
         });
@@ -213,11 +295,52 @@ var HandleSectionTwo = function () {
 
 
     var HandleSectionTwoEdit = function () {
+        var varient_ids = [];
+        $('.checkbox_user').each(function(){
+            if( $(this).is(':checked') ){
+                varient_ids.push($(this).val());
+            }
+        })
+        console.log(varient_ids);
+      $(document).on('click','.checkbox_user',function(){
+        $(this).each(function(){
+            var id = $(this).val();
 
-        var inString = $('#hidden_varient_id').val();
-        checked = inString.split(',');
-      console.log(checked);
-        $('#hidden_varient_id').val(checked);
+            if( $(this).is(':checked') ){
+                varient_ids.push(id);
+                $('#hidden_varient_id').val(varient_ids);
+            }else{
+                varient_ids = jQuery.grep(varient_ids, function(value) {
+                    return value != id;
+                });
+            } 
+        })
+        console.log(varient_ids);
+    })  
+        $(document).on('click','#add',function (){
+            var branch_id = $('#branch_id').val();
+            // var varient_id = [];
+            var checkedNum = $('input[type=checkbox]:checked').length;
+            if(checkedNum == 0 && varient_ids.length === 0){
+                alert('please select varient');
+                return false;
+            }else{
+                $.ajax({
+                    url: url+'offer/getselectedVarient',
+                    type:'post',
+                    data:{branch_id:branch_id,varient_ids:varient_ids},
+                    dataType : "Json",
+                    success:function(output){
+                        $('#append_selected_varient').html(output.html);
+                        $('#myModal').modal('show');
+                    }
+                })
+            }
+
+
+        })
+
+
         $('#Edit').validate({
             rules: {
                 offer_title: { required: true },
@@ -231,6 +354,20 @@ var HandleSectionTwo = function () {
                     },
                     accept:"jpg,png,jpeg,gif"
                 },
+                start_date: {
+                    required : true,
+                    date : true
+                },
+                end_date: {
+                    required : true,
+                    date : true
+                },
+                start_time: {
+                    required : true,
+                },
+                end_time: {
+                    required : true,
+                }
         },
             messages : {
                 offer_title : {required: "Please enter offer title"},
@@ -238,14 +375,20 @@ var HandleSectionTwo = function () {
                 branch : {required: "Please select branch"},
                 offer_image : {required: 'please select offer image',
                 accept:"Only image type jpg/png/jpeg/gif is allowed"},
+                start_date : { required : "Please select start date" },
+                end_date : { required : "Please select end date" },
+                start_time : { required : "Please select start time" },
+                end_time : { required : "Please select end time" },
 
             }, 
             submitHandler: function (form) {
-
+                var check = isNotEmptyValidation();
+                if(check=='0'){
                 $('body').attr('disabled','disabled');
                 $('#btnSubmit').attr('disabled','disabled');
                 $('#btnSubmit').value('please wait');
                 $(form).submit();
+                }
             }
         
         });
