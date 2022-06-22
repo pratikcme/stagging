@@ -153,7 +153,7 @@ class vendor_model extends My_model{
                         }
 
                     }
-                    $this->utility->setFlashMessage('success','Vendor added successfully');
+                    $this->utility->setFlashMessage('success','Branch added successfully');
                     // $this->session->set_flashdata('msg', );
                 }
                 // echo 1;exit;

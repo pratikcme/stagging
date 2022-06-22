@@ -296,6 +296,9 @@ var HandleSectionTwo = function () {
 
     var HandleSectionTwoEdit = function () {
         var varient_ids = [];
+        var ids = $('#hidden_varient_id').val();
+            varient_ids = ids.split(',');
+        console.log(varient_ids);
         $('.checkbox_user').each(function(){
             if( $(this).is(':checked') ){
                 varient_ids.push($(this).val());
