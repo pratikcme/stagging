@@ -34,6 +34,11 @@ input[type="text"]:focus{
     padding: 10px 30px;
     border: none;
 }
+.modal-header{
+    background: transparent !important;
+    color: black!important;
+}
+
 </style>
 <section id="main-content">
    <?php if($this->session->flashdata('myMessage') != '' ){
@@ -225,7 +230,7 @@ input[type="text"]:focus{
                                                 </thead>
                                                 <tbody id='append_selected_varient'>
                                                     <tr >
-                                                        <td colspan="4" class="last-td"><button type="submit" class="btn">Add</button></td>
+                                                        <td colspan="4" class="last-td"><button type="submit" class="btn ">Add</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

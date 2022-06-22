@@ -14,7 +14,7 @@ var OFFER = function(){
                     val = 1; 
                 }else 
                 if((numberRegex.test(ni) == false) || ni.length > 2){
-                    $(this).next('div').find('label').html('Only 2 digits number in allowed');
+                    $(this).next('div').find('label').html('Only 2 digits number is allowed');
                     val = 1;
                 }else{
                      $(this).next('div').find('label').html(' ');

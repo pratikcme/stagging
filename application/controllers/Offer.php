@@ -186,14 +186,14 @@ class Offer extends Admin_Controller{
 			$html = '';
 			foreach ($productVarientList as $key => $value) {
 				if(in_array($value->id,$variant_ids)){
-				$html .= '<tr><td>'.$value->product_name.'</td><td><input type="text" name="update_discount[]" value="'.$value->discount_per.'" class="form-control discount_per">
-				<div><label class"error_sp text-danger" style="color:red"> </label></div>
+				$html .= ' <tr><td>'.$value->product_name.'</td><td><input type="text" name="update_discount[]" value="'.$value->discount_per.'" class="form-control discount_per">
+				<div><label class"error_sp text-danger" style="color:red;font-size: 11px;float: left;"> </label></div>
 				</td><td>'.$value->price.'</td><td>'.$value->weight_no.' '.$value->weight_name.' '.$value->package.'</td></tr>';
 				$html .= '<input type="hidden" name="exiting_discount_per[]" value="'.$value->discount_per.'"';
 				}
 			}
 
-			$html .= '<tr ><td colspan="4" class="last-td"><button type="submit" id="btnSubmit" class="btn">Add</button></td></tr>';
+			$html .= '<tr ><td colspan="4" class="last-td"><button type="submit" id="btnSubmit" class="btn btn-danger">Add</button></td></tr>';
 		}
 		echo json_encode(['html'=>$html]);
 	}

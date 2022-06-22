@@ -34,6 +34,11 @@ input[type="text"]:focus{
     padding: 10px 30px;
     border: none;
 }
+.modal-header{
+    background: transparent !important;
+    color: black!important;
+}
+
 </style>
 <section id="main-content">
    <?php if($this->session->flashdata('myMessage') != '' ){
