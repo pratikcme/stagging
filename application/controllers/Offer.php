@@ -187,7 +187,7 @@ class Offer extends Admin_Controller{
 			foreach ($productVarientList as $key => $value) {
 				if(in_array($value->id,$variant_ids)){
 				$html .= '<tr><td>'.$value->product_name.'</td><td><input type="text" name="update_discount[]" value="'.$value->discount_per.'" class="form-control discount_per">
-				<div><label class"error"> </label></div>
+				<div><label class"error_sp text-danger" style="color:red"> </label></div>
 				</td><td>'.$value->price.'</td><td>'.$value->weight_no.' '.$value->weight_name.' '.$value->package.'</td></tr>';
 				$html .= '<input type="hidden" name="exiting_discount_per[]" value="'.$value->discount_per.'"';
 				}
