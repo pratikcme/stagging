@@ -110,11 +110,11 @@ Class Offer_model extends My_model{
             }
             $this->load->library('upload');
             $uploadpath = 'public/images/'.$this->folder.'offer_image/';
-            // $uploadResult = upload_single_image($_FILES,'offer',$uploadpath);
+            $uploadResult = upload_single_image($_FILES,'offer',$uploadpath);
             $offer_image = $uploadResult['data']['file_name'];
-            // delete_single_image($uploadpath,$postData['hidden_image']);
+            delete_single_image($uploadpath,$postData['hidden_image']);
         }else{
-            // $offer_image = $postData['hidden_image'];
+            $offer_image = $postData['hidden_image'];
         }
 
         $update = array(
@@ -132,7 +132,7 @@ Class Offer_model extends My_model{
         $data['table'] = TABLE_OFFER;
         $data['where'] = ['id'=>$postData['edit_id']];
         $data['update'] = $update;
-        // $this->updateRecords($data);
+        $this->updateRecords($data);
 
         unset($data);
         $st_array = date('H:i',strtotime($postData['start_time']."-1 minutes"));
@@ -154,7 +154,7 @@ Class Offer_model extends My_model{
             unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
             file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1' . PHP_EOL);
-            exec('chmod -R 755 /home1/a1630btr/repositories/stagging/crontab_final.txt');
+            exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
         }
 
