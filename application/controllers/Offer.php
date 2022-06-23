@@ -197,6 +197,37 @@ class Offer extends Admin_Controller{
 		}
 		echo json_encode(['html'=>$html]);
 	}
+
+
+	public function applied_offer_bycron(){
+		$res = $this->this_model->getOfferForApplied();
+		foreach ($res as $key => $value) {
+			$product_varient_id = $value->product_varient_id;
+			$new_discount = $value->new_percentage;
+			$product_varient = $this->this_model->getProductVarientById($product_varient_id);
+			// if($key == 1){
+			// dd($product_varient);
+				
+			// }
+			$price = $product_varient[0]->price;
+			$discount = ($price/100)*$new_discount;
+			$discount_price = $price - $discount;
+			$this->this_model->updateProductVarientById($product_varient_id,$new_discount,$discount_price);
+		}
+	}
+
+	public function rollback_offer_bycron(){
+		$rollback = $this->this_model->getOfferForApplied(true);
+		foreach ($rollback as $key => $value) {
+			$product_varient_id = $value->product_varient_id;
+			$old_discount = $value->old_percentage;
+			$product_varient = $this->this_model->getProductVarientById($product_varient_id);
+			$price = $product_varient[0]->price;
+			$discount = ($price/100)* $old_discount;
+			$discount_price = $price - $discount;
+			$this->this_model->updateProductVarientById($product_varient_id,$old_discount,$discount_price);
+		}
+	}
 	
 
 

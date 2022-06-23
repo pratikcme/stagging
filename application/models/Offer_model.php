@@ -296,7 +296,41 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
         $this->db->where($where);
         return $this->db->count_all_results(); 
            // echo $this->db->last_query();
-    }   
+    }
+
+    public function getOfferForApplied($for=''){
+        // $date = '2022-06-21';
+        // $time = '11:59:00';
+        if($for != ''){
+            $time =  date("h:i:00",strtotime("-1 minutes"));
+            $date = date('Y-m-d');
+            $data['where'] = ['end_date'=>$date,'end_time'=>$time];
+        }else{
+            $time =  date("h:i:00",strtotime("+1 minutes"));
+            $date = date('Y-m-d');
+            $data['where'] = ['start_date'=>$date,'start_time'=>$time];
+        }
+        $data['table'] = TABLE_OFFER .' of';
+        $data['select'] = ['ofd.*'];
+        $data['join'] = [TABLE_OFFER_DETAIL .' ofd'=>['of.id=ofd.offer_id','LEFT']];
+        $return =  $this->selectFromJoin($data);
+        return $return;
+    } 
+
+    public function getProductVarientById($v_id){
+        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$v_id];
+        return $this->selectRecords($data);
+    }
+
+    public function updateProductVarientById($v_id,$discount,$discount_price){
+        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['update']['discount_per'] = $discount;
+        $data['update']['discount_price'] = $discount_price;
+        $data['where'] = ['id'=>$v_id];
+        return $this->updateRecords($data);
+    }
 }
 
 ?>
