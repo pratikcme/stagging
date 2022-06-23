@@ -198,6 +198,9 @@ class Offer extends Admin_Controller{
 		echo json_encode(['html'=>$html]);
 	}
 
+	public function test(){
+		$this->this_model->test();
+	}
 
 	public function applied_offer_bycron(){
 		$res = $this->this_model->getOfferForApplied();
@@ -205,10 +208,6 @@ class Offer extends Admin_Controller{
 			$product_varient_id = $value->product_varient_id;
 			$new_discount = $value->new_percentage;
 			$product_varient = $this->this_model->getProductVarientById($product_varient_id);
-			// if($key == 1){
-			// dd($product_varient);
-				
-			// }
 			$price = $product_varient[0]->price;
 			$discount = ($price/100)*$new_discount;
 			$discount_price = $price - $discount;

@@ -7,8 +7,6 @@ Class Offer_model extends My_model{
         $request_schema = $_SERVER['REQUEST_SCHEME'];
         $server_name = $_SERVER['SERVER_NAME'];
         $this->crone_url = $request_schema.'://'.$server_name."/offer/applied_offer_bycron";
-        echo $this->crone_url;die;
-        
     }
 
 
@@ -110,9 +108,9 @@ Class Offer_model extends My_model{
             }
             $this->load->library('upload');
             $uploadpath = 'public/images/'.$this->folder.'offer_image/';
-            $uploadResult = upload_single_image($_FILES,'offer',$uploadpath);
+            // $uploadResult = upload_single_image($_FILES,'offer',$uploadpath);
             $offer_image = $uploadResult['data']['file_name'];
-            delete_single_image($uploadpath,$postData['hidden_image']);
+            // delete_single_image($uploadpath,$postData['hidden_image']);
         }else{
             $offer_image = $postData['hidden_image'];
         }
@@ -132,19 +130,23 @@ Class Offer_model extends My_model{
         $data['table'] = TABLE_OFFER;
         $data['where'] = ['id'=>$postData['edit_id']];
         $data['update'] = $update;
-        $this->updateRecords($data);
+        // $this->updateRecords($data);
 
         unset($data);
         $st_array = explode(':',$postData['start_time']);
-        $st_hr = $st_array[0];
-        $st_min = $st_array[1];
+        // $st_hr = $st_array[0];
+        // $st_min = $st_array[1];
         // dd( $st_array);
+        $st_hr = 3;
+        $st_min = 45;
 
-        unlink('/var/www/html/crontab_final.txt');
-        exec('sudo crontab -u apache -r');
-        file_put_contents('/var/www/html/crontab_final.txt', $st_hr . ' ' . $st_min . '   * * * curl --silent '.$this->crone_url.'/crone/connect >> /var/www/html/cronlog.log 2>&1' . PHP_EOL);
-        exec('crontab /var/www/html/crontab_final.txt 2>&1', $ext);
+        unlink('/var/www/html/stagging/crontab_final.txt');
+        // exit;
+        exec('sudo crontab -u  apache -r');
+        file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /var/www/html/cronlog.log 2>&1' . PHP_EOL);
+        exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
 
+        dd($ext);
         $data['table'] = TABLE_OFFER_DETAIL;
         $data['where'] = ['offer_id'=>$postData['edit_id']];
         $isDelete = $this->deleteRecords($data);
@@ -345,6 +347,13 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
         $data['update']['discount_per'] = $discount;
         $data['update']['discount_price'] = $discount_price;
         $data['where'] = ['id'=>$v_id];
+        return $this->updateRecords($data);
+    }
+    public function test(){
+        $data['table'] = TABLE_USER;
+        $data['select'] = ['*'];
+        $data['update'] = ['login_type'=>'1'];
+        $data['where'] = ['id'=>'265'];
         return $this->updateRecords($data);
     }
 }
