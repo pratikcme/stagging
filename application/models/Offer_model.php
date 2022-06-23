@@ -360,7 +360,6 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
     }
     public function test(){
         $data['table'] = TABLE_USER;
-        $data['select'] = ['*'];
         $data['update'] = ['login_type'=>'1'];
         $data['where'] = ['id'=>'265'];
         return $this->updateRecords($data);
