@@ -138,7 +138,7 @@ Class Offer_model extends My_model{
         // $st_min = $st_array[1];
         // dd( $st_array);
         $st_hr = 4;
-        $st_min = 15;
+        $st_min = 20;
 
         if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
             unlink('/var/www/html/stagging/crontab_final.txt');
@@ -154,7 +154,7 @@ Class Offer_model extends My_model{
             exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
         }
 
-        dd($ext);
+        // dd($ext);
         $data['table'] = TABLE_OFFER_DETAIL;
         $data['where'] = ['offer_id'=>$postData['edit_id']];
         $isDelete = $this->deleteRecords($data);
