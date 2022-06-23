@@ -138,13 +138,21 @@ Class Offer_model extends My_model{
         // $st_min = $st_array[1];
         // dd( $st_array);
         $st_hr = 4;
-        $st_min = 5;
+        $st_min = 15;
 
-        unlink('/repositories/stagging/crontab_final.txt');
-        // exit;
-        exec('sudo crontab -u  apache -r');
-        file_put_contents('/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /repositories/stagging/cronlog.log 2>&1' . PHP_EOL);
-        exec('crontab /repositories/stagging/crontab_final.txt 2>&1', $ext);
+        if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
+            unlink('/var/www/html/stagging/crontab_final.txt');
+            // exit;
+            exec('sudo crontab -u  apache -r');
+            file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /var/www/html/cronlog.log 2>&1' . PHP_EOL);
+            exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
+        }else{
+            unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
+            // exit;
+            exec('sudo crontab -u  apache -r');
+            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1' . PHP_EOL);
+            exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
+        }
 
         dd($ext);
         $data['table'] = TABLE_OFFER_DETAIL;
