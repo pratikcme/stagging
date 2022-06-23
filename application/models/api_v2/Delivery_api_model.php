@@ -412,10 +412,33 @@ class Delivery_api_model extends My_model
         $this->updateRecords($data);
         unset($data);
         $data['where'] = ['order_id' =>$order_id];
-            $data['table'] = 'delivery_notification';
-            $this->deleteRecords($data);
+        $data['table'] = 'delivery_notification';
+        $this->deleteRecords($data);
+
+        /*order_delieverd logs*/
+        $logs = ['branch_id'=>$order_data[0]->branch_id,'order_id'=>$order_id,'order_status'=>'Order is delivered','dt_created'=>DATE_TIME];
+        $this->order_logs($logs);
+        /*end order_delieverd logs*/
         return true;
 
+    }
+
+      public function order_logs($postData){
+
+            $branch_id = '';
+            if (isset($postData['branch_id'])) {
+                $branch_id = $postData['branch_id'];
+            }
+            $data['table'] = 'order_log';
+            $insertData = array(
+                'order_id' => $postData['order_id'],
+                'branch_id'=> $branch_id,
+                'order_status'=> $postData['status'],
+                'dt_created'=>DATE_TIME
+            );
+            $data['insert'] = $insertData;
+            $this->insertRecord($data);
+            return true; 
     }
 
     public function delivered_order_list($postdata){

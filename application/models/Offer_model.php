@@ -4,6 +4,8 @@ Class Offer_model extends My_model{
 
     function __construct(){
      $this->vendor_id = $this->session->userdata('vendor_admin_id');
+        dd($_SERVER);
+     $this->crone_url = "https://bigbucket.launchestore.com/offer/edit/5/10"
     }
 
 
@@ -130,6 +132,15 @@ Class Offer_model extends My_model{
         $this->updateRecords($data);
 
         unset($data);
+        $st_array = explode(':',$postData['start_time']);
+        $st_hr = $st_array[0];
+        $st_min = $st_array[1];
+        // dd( $st_array);
+
+        unlink('/var/www/html/crontab_final.txt');
+        exec('sudo crontab -u apache -r');
+        file_put_contents('/var/www/html/crontab_final.txt', $st_hr . ' ' . $st_min . '   * * * curl --silent '.$this->crone_url.'/crone/connect >> /var/www/html/cronlog.log 2>&1' . PHP_EOL);
+        exec('crontab /var/www/html/crontab_final.txt 2>&1', $ext);
 
         $data['table'] = TABLE_OFFER_DETAIL;
         $data['where'] = ['offer_id'=>$postData['edit_id']];
@@ -299,21 +310,23 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
     }
 
     public function getOfferForApplied($for=''){
-        // $date = '2022-06-21';
-        // $time = '11:59:00';
+
         if($for != ''){
             $time =  date("h:i:00",strtotime("-1 minutes"));
             $date = date('Y-m-d');
-            $data['where'] = ['end_date'=>$date,'end_time'=>$time];
+            $data['where'] = ['of.end_date'=>$date,'of.end_time'=>$time];
         }else{
             $time =  date("h:i:00",strtotime("+1 minutes"));
             $date = date('Y-m-d');
-            $data['where'] = ['start_date'=>$date,'start_time'=>$time];
+            $data['where'] = ['of.start_date'=>$date,'of.start_time'=>$time];
         }
+
         $data['table'] = TABLE_OFFER .' of';
         $data['select'] = ['ofd.*'];
         $data['join'] = [TABLE_OFFER_DETAIL .' ofd'=>['of.id=ofd.offer_id','LEFT']];
+
         $return =  $this->selectFromJoin($data);
+
         return $return;
     } 
 
@@ -332,5 +345,8 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
         return $this->updateRecords($data);
     }
 }
+
+
+ 
 
 ?>
