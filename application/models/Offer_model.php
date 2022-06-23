@@ -110,11 +110,11 @@ Class Offer_model extends My_model{
             }
             $this->load->library('upload');
             $uploadpath = 'public/images/'.$this->folder.'offer_image/';
-            $uploadResult = upload_single_image($_FILES,'offer',$uploadpath);
+            // $uploadResult = upload_single_image($_FILES,'offer',$uploadpath);
             $offer_image = $uploadResult['data']['file_name'];
-            delete_single_image($uploadpath,$postData['hidden_image']);
+            // delete_single_image($uploadpath,$postData['hidden_image']);
         }else{
-            $offer_image = $postData['hidden_image'];
+            // $offer_image = $postData['hidden_image'];
         }
 
         $update = array(
@@ -132,21 +132,21 @@ Class Offer_model extends My_model{
         $data['table'] = TABLE_OFFER;
         $data['where'] = ['id'=>$postData['edit_id']];
         $data['update'] = $update;
-        $this->updateRecords($data);
+        // $this->updateRecords($data);
 
         unset($data);
-        $st_array = explode(':',$postData['start_time']);
-        // $st_hr = $st_array[0];
-        // $st_min = $st_array[1];
-        // dd( $st_array)   ;
-        $st_hr = 17;
-        $st_min = 56;
+        $st_array = date('H:i',strtotime($postData['start_time']."-1 minutes"));
+        $st_array = explode(':',$st_array);
+        // dd($st_array);
+        $st_hr = $st_array[0];
+        $st_min = $st_array[1];
+        // dd( $st_array);
+        // $st_hr = 18;
+        // $st_min = 36;
 
         if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
             unlink('/var/www/html/stagging/crontab_final.txt');
-            // exit;
             exec('sudo crontab -u php -r');
-
             file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url_local.'/crone/connect >> /var/www/html/stagging/cronlog.log 2>&1' . PHP_EOL);
             exec('chmod -R 777 /var/www/html/stagging/crontab_final.txt');
             exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
