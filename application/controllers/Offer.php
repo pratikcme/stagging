@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Offer extends Admin_Controller{
+class Offer extends CI_Controller{
 
 	function __construct(){
 		parent::__construct();
@@ -199,7 +199,7 @@ class Offer extends Admin_Controller{
 	}
 
 	public function test(){
-		$this->this_model->test();
+		$this->this_model->test();lq();
 	}
 
 	public function applied_offer_bycron(){
