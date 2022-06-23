@@ -137,8 +137,8 @@ Class Offer_model extends My_model{
         // $st_hr = $st_array[0];
         // $st_min = $st_array[1];
         // dd( $st_array);
-        $st_hr = 3;
-        $st_min = 45;
+        $st_hr = 4;
+        $st_min = 5;
 
         unlink('/var/www/html/stagging/crontab_final.txt');
         // exit;
