@@ -109,9 +109,9 @@ Class Offer_model extends My_model{
             }
             $this->load->library('upload');
             $uploadpath = 'public/images/'.$this->folder.'offer_image/';
-            // $uploadResult = upload_single_image($_FILES,'offer',$uploadpath);
+            $uploadResult = upload_single_image($_FILES,'offer',$uploadpath);
             $offer_image = $uploadResult['data']['file_name'];
-            // delete_single_image($uploadpath,$postData['hidden_image']);
+            delete_single_image($uploadpath,$postData['hidden_image']);
         }else{
             $offer_image = $postData['hidden_image'];
         }
@@ -131,15 +131,15 @@ Class Offer_model extends My_model{
         $data['table'] = TABLE_OFFER;
         $data['where'] = ['id'=>$postData['edit_id']];
         $data['update'] = $update;
-        // $this->updateRecords($data);
+        $this->updateRecords($data);
 
         unset($data);
         $st_array = explode(':',$postData['start_time']);
         // $st_hr = $st_array[0];
         // $st_min = $st_array[1];
-        // dd( $st_array);
+        // dd( $st_array)   ;
         $st_hr = 4;
-        $st_min = 26;
+        $st_min = 30;
 
         if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
             unlink('/var/www/html/stagging/crontab_final.txt');
@@ -158,7 +158,7 @@ Class Offer_model extends My_model{
         // dd($ext);
         $data['table'] = TABLE_OFFER_DETAIL;
         $data['where'] = ['offer_id'=>$postData['edit_id']];
-        // $isDelete = $this->deleteRecords($data);
+        $isDelete = $this->deleteRecords($data);
         unset($data);
         if($isDelete){
             foreach ($varient_ids as $key => $id) {
@@ -172,7 +172,7 @@ Class Offer_model extends My_model{
             );
                 $data['table'] = TABLE_OFFER_DETAIL;
                 $data['insert'] = $offer_details;
-                // $this->insertRecord($data);
+                $this->insertRecord($data);
             }
         }
         $this->session->set_flashdata('msg', 'Offer have been update successfully.');
