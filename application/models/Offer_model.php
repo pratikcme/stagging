@@ -140,11 +140,11 @@ Class Offer_model extends My_model{
         $st_hr = 4;
         $st_min = 5;
 
-        unlink('/var/www/html/stagging/crontab_final.txt');
+        unlink('/var/www/html/repositories/stagging/crontab_final.txt');
         // exit;
         exec('sudo crontab -u  apache -r');
-        file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /var/www/html/cronlog.log 2>&1' . PHP_EOL);
-        exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
+        file_put_contents('/var/www/html/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /var/www/html/cronlog.log 2>&1' . PHP_EOL);
+        exec('crontab /var/www/html/repositories/stagging/crontab_final.txt 2>&1', $ext);
 
         dd($ext);
         $data['table'] = TABLE_OFFER_DETAIL;
