@@ -1909,8 +1909,7 @@ class Api_model extends My_model {
     }
 
     function checkout($postdata){
-        error_reporting(E_ALL);
-            ini_set('display_errors', 1);
+        
         $user_id = $_POST['user_id'];
         $postdata['user_id'] = $user_id;
         if (isset($_POST['user_address_id'])) {

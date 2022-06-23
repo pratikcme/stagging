@@ -167,7 +167,6 @@ class Delivery_api extends CI_Controller
     public function order_delivered()
     {
         $postdata = $this->input->post();
-        // dd($postdata);
         if (isset($postdata['order_id'])) {
 
             $result = $this->this_model->order_delivered($postdata);
