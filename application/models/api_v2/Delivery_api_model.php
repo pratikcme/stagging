@@ -375,6 +375,12 @@ class Delivery_api_model extends My_model
         $order_id = $postdata['order_id'];
         $user_id = $postdata['user_id'];
 
+        $data['select'] = ['*'];
+        $data['where'] = ['order_id'=>$order_id,'user_id'=>$user_id];
+        $data['table'] = 'selfPickup_otp';
+        $verification = $this->selectRecords($data);
+        dd($verification);
+
         $data['update']= ['order_status'=> '8','dt_updated'=> strtotime(date('Y-m-d h:i:s'))];
         $data['where'] = ['id'=>$order_id];
         $data['table'] = 'order';
