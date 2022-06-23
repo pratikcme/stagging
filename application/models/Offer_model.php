@@ -5,7 +5,7 @@ Class Offer_model extends My_model{
     function __construct(){
      $this->vendor_id = $this->session->userdata('vendor_admin_id');
         dd($_SERVER);
-     $this->crone_url = "https://bigbucket.launchestore.com/offer/edit/5/10"
+     $this->crone_url = "https://bigbucket.launchestore.com/offer/edit/5/10";
     }
 
 
