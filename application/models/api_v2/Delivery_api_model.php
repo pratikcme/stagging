@@ -371,8 +371,7 @@ class Delivery_api_model extends My_model
     }
 
     public function order_delivered($postdata){
-        error_reporting(E_ALL);
-            ini_set('display_errors', 1);
+     
         $order_id = $postdata['order_id'];
         $user_id = $postdata['user_id'];
         $otp = $postdata['otp'];

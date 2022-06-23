@@ -167,6 +167,7 @@ class Delivery_api extends CI_Controller
     public function order_delivered()
     {
         $postdata = $this->input->post();
+        
         if (isset($postdata['order_id'])) {
 
             $result = $this->this_model->order_delivered($postdata);
@@ -175,11 +176,14 @@ class Delivery_api extends CI_Controller
 
                 $response['success'] = 1;
                 $response['message'] = "Order delivered";
+            }else{
+                $response['success'] = 0;
+                $response['message'] = "invalid otp";
             }
         }
         else {
             $response['success'] = 0;
-            $response['message'] = "invalid otp";
+            $response['message'] = "invalid input";
         }
         echo json_encode($response);
     }
