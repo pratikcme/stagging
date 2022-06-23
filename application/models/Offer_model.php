@@ -139,7 +139,7 @@ Class Offer_model extends My_model{
         // $st_min = $st_array[1];
         // dd( $st_array);
         $st_hr = 4;
-        $st_min = 23;
+        $st_min = 26;
 
         if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
             unlink('/var/www/html/stagging/crontab_final.txt');
