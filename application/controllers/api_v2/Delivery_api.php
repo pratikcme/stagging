@@ -180,7 +180,7 @@ class Delivery_api extends CI_Controller
         }
         else {
             $response['success'] = 0;
-            $response['message'] = "invalid input";
+            $response['message'] = "invalid otp";
         }
         echo json_encode($response);
     }
