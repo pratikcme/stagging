@@ -157,7 +157,7 @@ Class Offer_model extends My_model{
         // dd($ext);
         $data['table'] = TABLE_OFFER_DETAIL;
         $data['where'] = ['offer_id'=>$postData['edit_id']];
-        $isDelete = $this->deleteRecords($data);
+        // $isDelete = $this->deleteRecords($data);
         unset($data);
         if($isDelete){
             foreach ($varient_ids as $key => $id) {
@@ -171,7 +171,7 @@ Class Offer_model extends My_model{
             );
                 $data['table'] = TABLE_OFFER_DETAIL;
                 $data['insert'] = $offer_details;
-                $this->insertRecord($data);
+                // $this->insertRecord($data);
             }
         }
         $this->session->set_flashdata('msg', 'Offer have been update successfully.');
