@@ -7,7 +7,8 @@ Class Offer_model extends My_model{
         $request_schema = $_SERVER['REQUEST_SCHEME'];
         $server_name = $_SERVER['SERVER_NAME'];
         // $this->crone_url = $request_schema.'://'.$server_name."/offer/applied_offer_bycron";
-        $this->crone_url = $request_schema.'://'.$server_name."/offer/test";
+        $this->crone_url = $request_schema.'://'.$server_name."/stagging/offer/test";
+        $this->crone_url_local = $request_schema.'://'.$server_name."/stagging/offer/test";
     }
 
 
@@ -138,19 +139,21 @@ Class Offer_model extends My_model{
         // $st_hr = $st_array[0];
         // $st_min = $st_array[1];
         // dd( $st_array)   ;
-        $st_hr = 16;
-        $st_min = 58;
+        $st_hr = 17;
+        $st_min = 50;
 
         if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
             unlink('/var/www/html/stagging/crontab_final.txt');
             // exit;
-            exec('sudo crontab -u  apache -r');
-            file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /var/www/html/cronlog.log 2>&1' . PHP_EOL);
+            exec('sudo crontab -u php -r');
+
+            file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url_local.'/crone/connect >> /var/www/html/stagging/cronlog.log 2>&1' . PHP_EOL);
+            exec('chmod -R 777 /var/www/html/stagging/crontab_final.txt');
             exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
         }else{
             unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             // exit;
-            exec('sudo crontab -u  apache -r');
+            exec('sudo crontab -u a1630btr -r');
             file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1' . PHP_EOL);
             exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
         }
@@ -361,7 +364,11 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
     public function test(){
         $data['table'] = TABLE_USER;
         $data['update'] = ['login_type'=>'1'];
+        if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){  
+        $data['where'] = ['id'=>'9'];
+    }else{
         $data['where'] = ['id'=>'265'];
+    }
         return $this->updateRecords($data);
     }
 }
