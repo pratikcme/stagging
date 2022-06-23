@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Offer extends CI_Controller{
+class Offer extends Admin_Controller{
 
 	function __construct(){
 		parent::__construct();
