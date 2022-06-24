@@ -626,9 +626,9 @@ function getAjaxPriceList($TableData){
                 $sub_array[] = $row->payable_amount; 
                 $sub_array[] = $payment_type;  
                 $sub_array[] = $order_status;  
-                $sub_array[] = '<input type="button" class="otp btn btn-info" '.$otpAttr.' data-is_self_pickup='.$row->isSelfPickup.' data-id='.$row->id.' value='.$otpValue.' >'; 
+                $sub_array[] = '<input type="button" class="otp btn btn-info btn-xs" '.$otpAttr.' data-is_self_pickup='.$row->isSelfPickup.' data-id='.$row->id.' value='.$otpValue.' >'; 
                 $sub_array[] = '<button type="button" class="btn btn-primary order_log btn-xs" data-order_id = '.$row->id.' data-toggle="modal" data-target="#order-status">OrderLog</button>';
-                $sub_array[] = '<input type="button" class="btn btn-success refund" value='.$val.' '.$isRefunded.' data-payment_method='.$row->paymentMethod.' data-id='.$row->id.'>';  
+                $sub_array[] = '<input type="button" class="btn btn-success refund btn-xs" value='.$val.' '.$isRefunded.' data-payment_method='.$row->paymentMethod.' data-id='.$row->id.'>';  
                 $data[] = $sub_array;  
            }  
            $output = array(  
