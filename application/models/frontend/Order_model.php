@@ -320,8 +320,8 @@ Class Order_model extends My_model{
         }
 
         /*Remove From My Cart*/
-        $this->db->query("DELETE FROM my_cart WHERE user_id = '$user_id'  AND branch_id = '$branch_id'");
         $this->db->query('UNLOCK TABLES;');
+        $this->db->query("DELETE FROM my_cart WHERE user_id = '$user_id'  AND branch_id = '$branch_id'");
         $message = 'new order '.$iOrderNo ;
         $branchNotification = array(
             'order_id'         =>  $last_insert_id,

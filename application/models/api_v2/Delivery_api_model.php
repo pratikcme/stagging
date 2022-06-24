@@ -373,7 +373,11 @@ class Delivery_api_model extends My_model
     public function order_delivered($postdata){
         $order_id = $postdata['order_id'];
         $user_id = $postdata['user_id'];
-        $otp = $postdata['otp'];
+        if(isset($postdata['verify_otp'])){
+            $otp = $postdata['verify_otp'];    
+        }else{
+             $otp = $postdata['otp'];
+        }
 
         $data['select'] = ['*'];
         $data['where'] = ['order_id'=>$order_id,'user_id'=>$user_id,'otp'=>$otp];
