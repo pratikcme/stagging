@@ -377,18 +377,15 @@ class Order_model extends My_model
         }
     }
 
-    public function  verify_otp_selfPickup($postdata,$status = ''){
+    public function  verify_otp_selfPickup($postdata){
         // error_reporting(E_ALL);
         // ini_set("display_errors", "1");
         // dd($postdata);die;
         $otp = $postdata['otp'];
         $order_id = $postdata['id'];
         $isSelfPickup = $postdata['isSelfPickup'];
-        if($status != ''){
-            $status = '5';
-        }else{
-            $status = '8';
-        }
+
+        $status = '8';
 
         $data['select'] = ['*'];
         $data['where'] = ['order_id' => $order_id, 'otp' => $otp];
@@ -410,7 +407,6 @@ class Order_model extends My_model
                 $order_log_data = array('order_id' => $order_id, 'status'=> $status);
                 $this->api_v2_api_admin_model->order_logs($order_log_data);
             }
-            
             $data['update']['status'] = '1';
             $data['where'] = ['order_id' => $order_id];
             $data['table'] = 'selfPickup_otp';

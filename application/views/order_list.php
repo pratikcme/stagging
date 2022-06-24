@@ -395,6 +395,7 @@
                style ="background-color:#f92e2e !important; color: white; font-weight:bold;";  
             }
         }
+        if(status != 4){
          $.ajax({
                     url: '<?php echo base_url().'order/change_order_status'; ?>' ,
                     data: {
@@ -417,6 +418,12 @@
                         alert('Failed to change order status.');
                     }
                 });
+        } else{
+            bootbox.alert("admin can not pick up order", function() {
+                // window.location.reload(true);
+                return false;
+            });
+        }
 
     });
     /*Single Delete Script*/

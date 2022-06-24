@@ -562,7 +562,7 @@ function getAjaxPriceList($TableData){
         // print_r($otp_status);die; 
          $attr1 = '';$attr2 = '';$attr3 = '';$attr4 = '';$attr5 = '';
          $attr8 = '';$attr9 = ''; $otpAttr =""; $otpValue ="VerifyOtp";
-         if(($otp_status == '1' && $row->isSelfPickup =='1') || (($row->isSelfPickup =='0') && ($otp_status_not_selfpickup[0]->otp_verify == '1' || $otp_status == '1' )) ){
+         if(($otp_status == '1' && $otp_status_not_selfpickup[0]->otp_verify == '1') || (($row->isSelfPickup =='0') && ($otp_status_not_selfpickup[0]->otp_verify == '1' || $otp_status == '1' )) ){
             $otpAttr = 'disabled'; 
             $otpValue = 'Verified';
          }

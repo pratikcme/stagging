@@ -87,7 +87,7 @@ class Order extends Vendor_Controller
            $r =  $this->this_model->verify_otp();
             $status = $this->this_model->checkLatestOrderStaus($this->input->post());
             if($r == 0 && $status[0]->order_status >= 4){
-                $this->this_model->verify_otp_selfPickup($this->input->post(),'5');    
+                $this->this_model->verify_otp_selfPickup($this->input->post());    
             }else{
                 echo "0";
                 exit;
