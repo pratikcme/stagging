@@ -371,8 +371,6 @@ class Delivery_api_model extends My_model
     }
 
     public function order_delivered($postdata){
-        error_reporting(E_ALL);
-        ini_set('display_errors','1');
         $order_id = $postdata['order_id'];
         $user_id = $postdata['user_id'];
         $otp = $postdata['otp'];
@@ -417,7 +415,7 @@ class Delivery_api_model extends My_model
         $this->deleteRecords($data);
 
         /*order_delieverd logs*/
-        $logs = ['branch_id'=>$order_data[0]->branch_id,'order_id'=>$order_id,'order_status'=>'Order is delivered','dt_created'=>DATE_TIME];
+        $logs = ['branch_id'=>$order_data[0]->branch_id,'order_id'=>$order_id,'status'=>'Order is delivered','dt_created'=>DATE_TIME];
         $this->order_logs($logs);
         /*end order_delieverd logs*/
         return true;
