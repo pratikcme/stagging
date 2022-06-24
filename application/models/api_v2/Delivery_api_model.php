@@ -433,13 +433,13 @@ class Delivery_api_model extends My_model
             'dt_created'       => DATE_TIME,
             'dt_updated'       => DATE_TIME
         );
-        $this->load->model('api_v2/api_model','api_v2_model');
-        $this->api_v2_model->pushAdminNotification($branchNotification);
-
         /*order_delieverd logs*/
         $logs = ['branch_id'=>$order_data[0]->branch_id,'order_id'=>$order_id,'status'=>'Order is delivered','dt_created'=>DATE_TIME];
         $this->order_logs($logs);
         /*end order_delieverd logs*/
+        $this->load->model('api_v2/api_model','api_v2_model');
+        $this->api_v2_model->pushAdminNotification($branchNotification);
+
         return true;
 
     }
