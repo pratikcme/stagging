@@ -169,11 +169,8 @@ class Delivery_api extends CI_Controller
         $postdata = $this->input->post();
 
         if (isset($postdata['order_id'])) {
-
             $result = $this->this_model->order_delivered($postdata);
-
             if($result){
-
                 $response['success'] = 1;
                 $response['message'] = "Order delivered";
             }else{
