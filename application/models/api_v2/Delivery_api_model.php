@@ -413,9 +413,9 @@ class Delivery_api_model extends My_model
         $data['where'] = ['order_id' =>$order_id];
         $data['table'] = 'delivery_notification';
         $this->deleteRecords($data);
-        
+
         $iOrderNo = $order_data[0]->order_no;
-        $message = 'Order '.$iOrderNo .' is Delivered' ;
+        $message = $iOrderNo .' is Delivered' ;
         $branchNotification = array(
             'order_id'         =>  $order_id,
             'branch_id'          =>  $order_data[0]->branch_id,
