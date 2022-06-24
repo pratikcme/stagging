@@ -419,9 +419,9 @@
                     }
                 });
         } else{
-            bootbox.alert("admin can not pick up order", function() {
-                // window.location.reload(true);
-                return false;
+            bootbox.alert("Admin can not pick up order", function() {
+                window.location.reload(true);
+                // return false;
             });
         }
 
