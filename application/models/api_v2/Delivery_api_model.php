@@ -391,6 +391,8 @@ class Delivery_api_model extends My_model
         }else{
             return false;
         }
+        echo '1';
+        die;
         unset($data);
         $data['update']= ['order_status'=> '8','dt_updated'=> strtotime(date('Y-m-d h:i:s'))];
         $data['where'] = ['id'=>$order_id];
