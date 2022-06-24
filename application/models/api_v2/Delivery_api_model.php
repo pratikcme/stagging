@@ -399,7 +399,7 @@ class Delivery_api_model extends My_model
         $this->load->model('api_v2/api_model');
         $this->staff_api_model->send_notificaion($order_id);
         unset($data);
-            $data['select'] = ['branch_id'];
+            $data['select'] = ['branch_id','order_no'];
             $data['where'] = ['id'=>$postdata['order_id']];
             $data['table'] = 'order';
             $order_data = $this->selectRecords($data);
@@ -413,6 +413,20 @@ class Delivery_api_model extends My_model
         $data['where'] = ['order_id' =>$order_id];
         $data['table'] = 'delivery_notification';
         $this->deleteRecords($data);
+        
+        $iOrderNo = $order_data[0]->branch_id;
+        $message = 'Order '.$iOrderNo .' is Delivered' ;
+        $branchNotification = array(
+            'order_id'         =>  $order_id,
+            'branch_id'          =>  $order_data[0]->branch_id,
+            'notification_type'=> 'order_delivered',
+            'message'          => $message,
+            'status'           =>'0',
+            'dt_created'       => DATE_TIME,
+            'dt_updated'       => DATE_TIME
+        );
+        $this->load->model('api_v2/api_model','api_v2_model');
+        $this->api_v2_model->pushAdminNotification($branchNotification);
 
         /*order_delieverd logs*/
         $logs = ['branch_id'=>$order_data[0]->branch_id,'order_id'=>$order_id,'status'=>'Order is delivered','dt_created'=>DATE_TIME];
