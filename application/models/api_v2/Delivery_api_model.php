@@ -371,7 +371,8 @@ class Delivery_api_model extends My_model
     }
 
     public function order_delivered($postdata){
-
+        error_reporting(E_ALL);
+        ini_set('display_errors','1');
         $order_id = $postdata['order_id'];
         $user_id = $postdata['user_id'];
         $otp = $postdata['otp'];
@@ -387,12 +388,9 @@ class Delivery_api_model extends My_model
             $data['where'] = ['id'=>$id];
             $data['table'] = 'selfPickup_otp';
             $this->updateRecords($data);
-            return true;
         }else{
             return false;
         }
-        echo '1';
-        die;
         unset($data);
         $data['update']= ['order_status'=> '8','dt_updated'=> strtotime(date('Y-m-d h:i:s'))];
         $data['where'] = ['id'=>$order_id];
