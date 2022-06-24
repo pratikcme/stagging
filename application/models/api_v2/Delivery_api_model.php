@@ -378,8 +378,7 @@ class Delivery_api_model extends My_model
         }else{
              $otp = $postdata['otp'];
         }
-        dd($postdata);
-        $data['select'] = ['branch_id','order_no'];
+        $data['select'] = ['branch_id','order_no','user_id'];
         $data['where'] = ['id'=>$postdata['order_id']];
         $data['table'] = 'order';
         $orderdetails = $this->selectRecords($data);
