@@ -49,10 +49,10 @@ class Users extends User_Controller {
 			$data['order'][$key]->orderDetails = $this->view($value->id);
 			$data['order'][$key]->vendorName = $getVendorDetails[0]->name;
 			$data['order'][$key]->vendorAddress = $getVendorDetails[0]->location;
-			if($value->isSelfPickup == '1'){
+			// if($value->isSelfPickup == '1'){
 				$otp = $this->this_model->getSelfPickupOtp($value->id);
 				$value->isSelfPickup_details = $otp;
-			}
+			// }
 
 		}
 

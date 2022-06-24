@@ -272,7 +272,7 @@ Class Checkout_model extends My_model{
         $user_id = $this->session->userdata('user_id');
         $data['table'] = 'user';
         $data['select'] = ['*'];
-        $data['where'] = ['id'=>$user_id,'status'=>'1'];
+        $data['where'] = ['id'=>$user_id];
         return $this->selectRecords($data);   
 
     }

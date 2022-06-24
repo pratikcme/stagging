@@ -124,7 +124,7 @@ class Checkout extends User_Controller {
       $data['get_address'] = $this->this_model->getVendorAddress();
     }
       $userdata = $this->this_model->checkUserMobile();
-
+      
       if($userdata[0]->phone != ''){
         $data['phone'] = '1'; 
       }

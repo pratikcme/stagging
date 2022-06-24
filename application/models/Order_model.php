@@ -52,8 +52,9 @@ class Order_model extends My_model
     public function checkSelfPickUpOtpIsVerified($order_id){
         $data['table'] = 'selfPickup_otp';
         $data['where'] = ['order_id'=>$order_id];
-        $data['select'] = ['status'];
+        $data['select'] = ['*'];
         $result = $this->selectRecords($data);
+        return $result;
         if(!empty($result)){
             return $result[0]->status;   
         }
@@ -333,6 +334,15 @@ class Order_model extends My_model
         return true;
     }
 
+    public function checkLatestOrderStaus($postData){
+        $id = $postData['id'];
+        $data['table'] = TABLE_ORDER;
+        $data['where'] = ['id'=>$id];
+        $data['select'] = ['*'];
+        $result = $this->selectRecords($data);
+        return $result;
+    }
+
     public function verify_otp()
     {
 
@@ -357,22 +367,29 @@ class Order_model extends My_model
             $this->load->model('api_v2/api_admin_model');
             $order_log_data = array('order_id' => $id, 'status'=> '5');
             $this->api_admin_model->order_logs($order_log_data);
-
+            // return 1
             echo "1";
             exit;
         } else {
+            return 0;
             echo "0";
             exit;
         }
     }
 
-    public function  verify_otp_selfPickup($postdata){
+    public function  verify_otp_selfPickup($postdata,$status = ''){
         // error_reporting(E_ALL);
         // ini_set("display_errors", "1");
+        // dd($postdata);die;
         $otp = $postdata['otp'];
         $order_id = $postdata['id'];
         $isSelfPickup = $postdata['isSelfPickup'];
-        
+        if($status != ''){
+            $status = '5';
+        }else{
+            $status = '8';
+        }
+
         $data['select'] = ['*'];
         $data['where'] = ['order_id' => $order_id, 'otp' => $otp];
         $data['table'] = 'selfPickup_otp';
@@ -380,7 +397,7 @@ class Order_model extends My_model
           if($res) {
             unset($data);
             $date = strtotime(DATE_TIME);
-            $data['update']['order_status'] = '8';
+            $data['update']['order_status'] = $status;
             $data['update']['dt_updated'] = $date;
             $data['where'] = ['id' => $order_id];
             $data['table'] = 'order';
@@ -389,7 +406,7 @@ class Order_model extends My_model
             unset($data);
 
             $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
-            $order_log_data = array('order_id' => $order_id, 'status'=> '8');
+            $order_log_data = array('order_id' => $order_id, 'status'=> $status);
             $this->api_v2_api_admin_model->order_logs($order_log_data);
 
             $data['update']['status'] = '1';
