@@ -380,7 +380,6 @@ class Delivery_api_model extends My_model
         $data['where'] = ['order_id'=>$order_id,'user_id'=>$user_id,'otp'=>$otp];
         $data['table'] = 'selfPickup_otp';
         $verification = $this->selectRecords($data);
-        dd($verification);
         unset($data);
         if(!empty($verification)){
             $id = $verification[0]->id;
