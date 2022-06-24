@@ -405,10 +405,12 @@ class Order_model extends My_model
 
             unset($data);
 
-            $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
-            $order_log_data = array('order_id' => $order_id, 'status'=> $status);
-            $this->api_v2_api_admin_model->order_logs($order_log_data);
-
+            if($status == '8'){
+                $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
+                $order_log_data = array('order_id' => $order_id, 'status'=> $status);
+                $this->api_v2_api_admin_model->order_logs($order_log_data);
+            }
+            
             $data['update']['status'] = '1';
             $data['where'] = ['order_id' => $order_id];
             $data['table'] = 'selfPickup_otp';
