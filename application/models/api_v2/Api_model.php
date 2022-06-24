@@ -160,13 +160,15 @@ class Api_model extends My_model {
 
         $total_count = $this->get_total($postdata);
         $notification_status = $this->notification_status($userdata['id']);
-
+        $path = base_url().'public/images/'.$this->folder.'user_profile/';
         $data = array(
                         'id' => $userdata['id'], 
                         'fname' => $userdata['fname'], 
                         'lname' => $userdata['lname'], 
-                        'email' => $userdata['email'], 
+                        'email' => $userdata['email'],
+                        'country_code' => $userdata['country_code'],
                         'phone' => $userdata['phone'], 
+                        'profileimage' => ($userdata['profileimage']!='')?$path.$userdata['profileimage']:'',
                         'user_gst_number' => ($userdata['user_gst_number'] == null) ? "" : $userdata['user_gst_number'], 
                         'login_type' => $login_type, 
                         'cart_item' => $total_count[0]->cart_items, 
@@ -226,6 +228,7 @@ class Api_model extends My_model {
                 $res['update_date'] = date('d-M', $res['update_date']);
             }
         }
+
         if ($res) {
             $response = array('success' => '1', 'message' => 'success', 'data' => $res);
         } else {
@@ -1864,7 +1867,13 @@ class Api_model extends My_model {
 
         if($total_price < $promocode[0]->min_cart){
             $response["success"] = 0;
-            $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';   
+            $response["message"] = "Cart Minimum ".$promocode[0]->min_cart.' amount is required';   
+            return $response;
+        }
+
+        if($total_price > $promocode[0]->max_cart){
+            $response["success"] = 0;
+            $response["message"] = "Maximum ".$promocode[0]->max_cart.' Cart amount is required';   
             return $response;
         }
 
@@ -1900,6 +1909,7 @@ class Api_model extends My_model {
     }
 
     function checkout($postdata){
+        
         $user_id = $_POST['user_id'];
         $postdata['user_id'] = $user_id;
         if (isset($_POST['user_address_id'])) {
@@ -2022,10 +2032,11 @@ class Api_model extends My_model {
                     $last_insert_id = $this->insertRecord($data);
             
                     $otpForSelfPickup = '';
-                    if (isset($_POST['isSelfPickup']) && $_POST['isSelfPickup'] == '1') {
+                    
+                    // if (isset($_POST['isSelfPickup']) && $_POST['isSelfPickup'] == '1') {
                         $otpForSelfPickup = rand(1000, 9999);
                         $this->selfPickUp_otp($last_insert_id, $user_id, $otpForSelfPickup);
-                    }
+                    // }
 
                     $this->load->model('api_v2/api_admin_model');
                     $order_log_data = array('order_id' => $last_insert_id, 'status'=>'1' );
@@ -2088,9 +2099,20 @@ class Api_model extends My_model {
 
                     /*Remove From My Cart*/
                     $this->db->query('UNLOCK TABLES;');
-                    
                     $this->deleteUserCart($user_id);
-                  
+                    /*Admin Notification*/
+                    $message = 'new order '.$iOrderNo ;
+                    $branchNotification = array(
+                        'order_id'         =>  $last_insert_id,
+                        'branch_id'          =>  $branch_id,
+                        'notification_type'=> 'new_order',
+                        'message'          => $message,
+                        'status'           =>'0',
+                        'dt_created'       => DATE_TIME,
+                        'dt_updated'       => DATE_TIME
+                    );
+                    $this->pushAdminNotification($branchNotification);
+                    /* End Admin Notification*/
                     $response = array();
                     $gettotal = $this->get_total($postdata);
                     $response["cart_count"] = (int)$gettotal[0]->cart_items;
@@ -2281,7 +2303,7 @@ class Api_model extends My_model {
         
         $data = array('otp' => $otp, 'dt_updated' => strtotime(DATE_TIME));
         $res = $this->db->update("user", $data, array("id" => $postData['user_id']));;
-        $this->sendOtp($mobile_number,$otp);
+        // $this->sendOtp($mobile_number,$otp);
         
         if ($res) {
             if($_SERVER['SERVER_NAME']=='ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
@@ -2376,7 +2398,14 @@ class Api_model extends My_model {
                 $this->set_user_cart($postdata);
                 $total_count = $this->get_total($postdata);
                 $notification_status = $this->notification_status($postData['user_id']);
-                $datass = array('id' => $userDetail[0]->id, 'fname' => $userDetail[0]->fname, 'lname' => $userDetail[0]->lname, 'email' => $userDetail[0]->email, 'phone' => $userDetail[0]->phone, 'user_gst_number' => ($userDetail[0]->user_gst_number == null) ? "" : $userDetail[0]->user_gst_number, 'login_type' => $userDetail[0]->login_type, 'cart_item' => $total_count[0]->cart_items, 'notification_status' => $notification_status, 'mobile_verify' => $userDetail[0]->is_verify);
+                if($userDetail[0]->profileimage != '' ||  $userDetail[0]->profileimage != NULL){
+                    $userDetail[0]->profileimage = base_url().'public/images'.$this->folder.'user_profile/'.$userDetail[0]->profileimage; 
+                }else{
+                    $userDetail[0]->profileimage =  "";
+                }
+
+                $datass = array('id' => $userDetail[0]->id, 'fname' => $userDetail[0]->fname, 'lname' => $userDetail[0]->lname, 'email' => $userDetail[0]->email, 'phone' => $userDetail[0]->phone, 'user_gst_number' => ($userDetail[0]->user_gst_number == null) ? "" : $userDetail[0]->user_gst_number, 'login_type' => $userDetail[0]->login_type, 'cart_item' => $total_count[0]->cart_items, 'notification_status' => $notification_status, 'mobile_verify' => $userDetail[0]->is_verify,'profileimage'=>$userDetail[0]->profileimage);
+                
                 $response["success"] = 1;
                 $response["message"] = "otp is verifired";
                 $response["user_data"] = $datass;
@@ -2413,14 +2442,29 @@ class Api_model extends My_model {
         }
         function cancle_order($postdata) {
             $order_id = $postdata['order_id'];
-            $data['select'] = ['order_status'];
+            $data['select'] = ['branch_id','order_status','order_no'];
             $data['where'] = ['id' => $order_id];
             $data['table'] = 'order';
             $get = $this->selectRecords($data);
+            $branch_id = $get[0]->branch_id;
+            $order_no = $get[0]->order_no;
             if(count($get)>0){
                 if($get[0]->order_status=='8'){
                     return false;
                 }
+                $send_status = 'Cancelled';
+                $type = 'order_cancelled';
+                $message = $order_no .' is '.$send_status;
+                $branchNotification = array(
+                    'order_id'         =>  $order_id,
+                    'branch_id'          =>  $branch_id,
+                    'notification_type'=> $type,
+                    'message'          => $message,
+                    'status'           =>'0',
+                    'dt_created'       => DATE_TIME,
+                    'dt_updated'       => DATE_TIME
+                );
+                $this->pushAdminNotification($branchNotification); 
                 $this->cancle_order_quntity_reset($order_id);
                 unset($data);
                 $date = strtotime(DATE_TIME);
@@ -2701,9 +2745,14 @@ class Api_model extends My_model {
        public function userInfo($postdata){
             $user_id = $postdata['user_id'];
             $data['table'] = TABLE_USER;
-            $data['select'] = ['id','fname','lname','phone','email','country_code','login_type','is_verify','email_verify','status','user_gst_number','notification_status','dt_added','dt_updated','is_verify'];
+            $data['select'] = ['id','fname','lname','phone','email','country_code','login_type','is_verify','email_verify','status','user_gst_number','notification_status','dt_added','dt_updated','is_verify','profileimage'];
             $data['where'] = ['id'=>$user_id];
             $result = $this->selectRecords($data);
+            if($result[0]->profileimage != '' || $result[0]->profileimage != NULL){
+                $result[0]->profileimage = base_url().'public/images/'.$this->folder.'user_profile/'.$result[0]->profileimage;
+            }else{
+                $result[0]->profileimage = "";
+            }
             $result[0]->mobile_verify = $result[0]->is_verify;
 
             $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart as mc WHERE  mc.user_id= '$user_id' AND mc.status != '9' ORDER BY mc.id DESC");
@@ -3564,11 +3613,19 @@ class Api_model extends My_model {
 
                 $data['update'] = [
                             'otp' => '',
+                            'is_verify' => '1'
                             ];
                 $data['where'] = ['id'=>$re[0]['id']];
                 $data['table'] = 'user';
-                $this->updateRecords($data);
-
+                $d = $this->updateRecords($data);
+                if($d){
+                    $re[0]['is_verify'] = '1';
+                }
+                unset($data);
+                // $data['select'] = ['*'];
+                // $data['table'] = 'user';
+                // $data['where']['id'] = $re[0]['id'];
+                // $res = $this->selectRecords($data,true);
                 $postdata = array(
                                     'user_id' => $re[0]['id'], 
                                     'device_id' => $device_id, 
@@ -3588,27 +3645,42 @@ class Api_model extends My_model {
         return $response;
     }
 
-    function completeProfile($postData){  
-        $data['update'] = [
-                            'fname' => $postData['fname'],
-                            'lname' => $postData['lname'],
-                            'dt_updated'=>strtotime(DATE_TIME),
-
-                            ];
-        if(isset($postData['email'])){
-            $data['email'] = $postData['email'];
+  
+    public function completeProfile($postData){
+        $user_id = $postData['user_id'];
+        $fname = $postData['fname'];
+        $lname = $postData['lname'];
+        $email = $postData['email'];
+        $user_gst_number = $postData['user_gst_number'];
+        if (!file_exists("public/images/".$this->folder."user_profile/")) {
+            mkdir("public/images/".$this->folder."user_profile/", 0777, true);
         }
-        $data['table'] = 'user';
-        $data['where']['vendor_id'] = $postData['vendor_id'];    
-        $data['where']['id'] = $postData['user_id'];
-        $re = $this->updateRecords($data);
+        if(isset($_FILES['profileimage']) && $_FILES['profileimage']['error'] == 0){
+            $UploadPath = "public/images/".$this->folder."user_profile/";
+            $uploadImage =  upload_single_image($_FILES,'uprofile',$UploadPath);
+            $uploadImage = $uploadImage['data']['file_name'];   
+            $data['update']['profileimage'] =  $uploadImage;
+        }
+        $path = base_url().'public/images/'.$this->folder.'user_profile/';
+        $data['table'] = TABLE_USER;
+        $data['update']['fname'] = $fname;
+        $data['update']['lname'] = $lname;
+        $data['update']['email'] = $email;
+        $data['update']['user_gst_number'] = $user_gst_number;
+        $data['update']['dt_updated'] = strtotime(DATE_TIME);
+        $data['where'] = ['id'=>$user_id];
+        $result = $this->updateRecords($data);
+
         unset($data);
-        if($re){
+        if($result){
+            $data['table'] = TABLE_USER;
+            $data['select'] = ['*'];
+            $data['where'] = ['id'=>$user_id];
+            $r = $this->selectRecords($data,true);
             $response["success"] = 1;
             $response["message"] = "Profile Updated";  
-        }else{
-            $response["success"] = 0;
-            $response["message"] = "Error to update profile";                
+            // $response["user_data"] = $r[0];  
+            $response =  $this->sendLoginResponse($r[0],$postData,true);
         }
         return $response;
     }
@@ -3655,18 +3727,18 @@ class Api_model extends My_model {
         $data['where'] = ['od.offer_id'=>$postData['offer_id']];
         $return =  $this->selectFromJoin($data);
         unset($data);
-        $product_variant_id = $return[0]->product_varient_id;
         $branch_id = $return[0]->branch_id;
         foreach ($return as $k => $v) {
+            $product_variant_id = $v->product_varient_id;
             $data['select'] = ['quantity'];
             $data['where']['product_weight_id'] = $product_variant_id;
             $data['where']['status !='] = 9;
             $data['where']['branch_id'] = $branch_id;
-            if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
-                $data['where']['user_id'] = $postdata['user_id'];
+            if (isset($postData['user_id']) && $postData['user_id'] != '') {
+                $data['where']['user_id'] = $postData['user_id'];
             } else {
-                if (isset($postdata['device_id'])) {
-                    $data['where']['device_id'] = $postdata['device_id'];
+                if (isset($postData['device_id'])) {
+                    $data['where']['device_id'] = $postData['device_id'];
                     $data['where']['user_id'] = 0;
                 }
             }
@@ -3681,6 +3753,7 @@ class Api_model extends My_model {
             $v->my_cart_quantity = $my_cart_quantity;
             $image = $this->getVarient_image($v->product_varient_id);
             $v->image = base_url() . 'public/images/'.$this->folder.'product_image/'.$image[0]->image;
+            $v->image = str_replace(' ', '%20', $v->image);
         }
         $response["success"] = 1;
         $response["message"] = "offer details data";  
@@ -3704,6 +3777,7 @@ class Api_model extends My_model {
 
      }
 
+     /*Developer : Shahid abdul Rahman */
     public function pushAdminNotification($insertData){
         $data['table'] = 'admin_notification';
         $data['insert'] = $insertData;
@@ -3721,7 +3795,8 @@ class Api_model extends My_model {
             $deviceToken['message'] = $message;
             $deviceToken['type'] = $type;
             $deviceToken['device_id'] = $device_id;
-            // $this->utility_apiv2->sendNotification($deviceToken,$notification_type,$result,$for_id); i have to change tis function
+            $deviceToken['for_admin'] = true;
+            $this->utility_apiv2->sendNotification($deviceToken,$notification_type,$result);
             // if($notification_status == '1'){
             // }
             unset($data);

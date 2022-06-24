@@ -170,7 +170,6 @@ class Orders extends User_Controller {
 		$postdata['order_id'] = $this->utility->safe_b64decode($id);
         if (isset($postdata['order_id'])) {
             $cancle = $this->this_model->cancle_order($postdata);
-		// print_r($cancle);die;
             
             $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
             $order_log_data = array('order_id' =>$postdata['order_id'],'status'=>'9');

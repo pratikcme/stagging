@@ -91,6 +91,11 @@ class Api extends Apiuser_Controller {
         $response = $this->checkRequiredField($post, $req);
         if ($response['status'] == 1) {
             $result = $this->this_model->user_info($post);
+            if($result[0]->profileimage != '' || $result[0]->profileimage != NULL){
+                $result[0]->profileimage = base_url().'public/images/'.$this->folder.'user_profile/'.$result[0]->profileimage;
+            }else{
+                $result[0]->profileimage = "";
+            }
             $result[0]->mobile_verify = $result[0]->is_verify;
 
             $user_id = $post['user_id'];
@@ -152,6 +157,7 @@ class Api extends Apiuser_Controller {
     }
     public function vendor_list() {
         $return = $this->this_model->vendor_list();
+        // dd($return);
         // $this->this_model->CategoryCount();
         echo json_encode($return);
         exit;
@@ -761,6 +767,11 @@ class Api extends Apiuser_Controller {
                         }
                         $img = [];
                         foreach ($product_image_result as $pro_image) {
+                            if(!file_exists('public/images/'.$this->folder.'product_image/'.$pro_image->image) || $pro_image->image == ''){
+                                $this->load->model('common_model');
+                                $default_product_image =$this->common_model->default_product_image();
+                                $pro_image->image =  $default_product_image;
+                            }
                             $pro_image->image = str_replace(' ', '%20', $pro_image->image);
                             $img[] = array('id' => $pro_image->id, 'product_id' => $pro_image->product_id, 'weight_id' => $pro_weight->weight_id, 'image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $pro_image->image, 'thumb_image' => base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $pro_image->image,);
                         }
@@ -1433,7 +1444,7 @@ class Api extends Apiuser_Controller {
             $order_query = $this->db->query("SELECT * FROM `order` WHERE status != '9' AND user_id = '$user_id' AND id = '$order_id'");
             $order_result = $order_query->row_array();
             $check_promocode_used = $order_result['promocode_used'];
-            if($check_promocode_used[''] == 1){
+            if($check_promocode_used == 1){
                 $order_promocode_amount = $this->this_model->get_order_promocode_discount($_POST['order_id']);
                 $instance_discount = number_format((float)$order_promocode_amount[0]->amount,'2','.','');
             }else{
@@ -1444,12 +1455,12 @@ class Api extends Apiuser_Controller {
             $isSelfPickup = $order_result['isSelfPickup'];
             $total_with_charge = $order_result['payable_amount'];
             $delivery_charge = $order_result['delivery_charge'];
-            if ($isSelfPickup == 1) {
+            // if ($isSelfPickup == 1) {
                 $self_pick = $this->db->query("SELECT * FROM `selfPickup_otp` WHERE order_id = '$order_id' AND user_id = '$user_id'");
                 $self_otp = $self_pick->row_array();
                
                 $self_pick_otp = $self_otp['otp'];
-            }
+            // }
             $my_order_price_query = $this->db->query("SELECT SUM(calculation_price) as total_price from order_details WHERE status != '9' AND order_id = '$order_id' AND user_id = '$user_id'");
             $my_order_price_result = $my_order_price_query->row_array();
             $branch_id = $result[0]->branch_id;
@@ -2003,7 +2014,7 @@ class Api extends Apiuser_Controller {
         if ($response['status'] == 1) {
             $post = $this->input->post();
             $response = $this->this_model->sendOtpLogin($post);
-            $response = array('responsedata' => $response);
+            // $response = array('responsedata' => $response);
         }
        $this->response($response);
     }

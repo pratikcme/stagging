@@ -1,3 +1,4 @@
+
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -47,13 +48,12 @@ class Offer extends Admin_Controller{
 	public function edit($branch_id=''){
 
 		$data['js'] = array('offer.js');
-		$data['init'] = array('OFFER.add()','OFFER.table()','OFFER.edit()');
+		$data['init'] = array('OFFER.table()','OFFER.edit()');
 
 		$data['FormAction'] = base_url().'offer/edit';
 			if($this->input->post()){
 				$validation = $this->serRules();
 				if($validation){
-					// dd($this->input->	post());
 					$result = $this->this_model->updateRecord($this->input->post());
 					 if($result){
 					 	$this->utility->setFlashMessage($result[0],$result[1]);
@@ -65,6 +65,7 @@ class Offer extends Admin_Controller{
 		$this->load->model('banners_model');
 		$data['branchList'] = $this->banners_model->getBranch();
 		$data['editRecord'] = $this->this_model->getOffer($this->uri->segment(4)); 
+		// print_r($data['editRecord']);die;
 
 		$data['producList'] = [];
 		if($branch_id != ''){
@@ -163,8 +164,7 @@ class Offer extends Admin_Controller{
 	{
 		$re = $this->this_model->multi_delete();
 		
-	}	
-
+	}
 
 	public function getproductVarient(){
 		if($this->input->post()){
@@ -175,6 +175,57 @@ class Offer extends Admin_Controller{
 			}
 
 			echo json_encode(['varient_list'=>$varient_list]);
+		}
+	}
+	public function getselectedVarient(){
+		if($this->input->post()){
+			// dd($this->input->post('varient_ids'));
+			$branch_id = $this->input->post('branch_id');
+			$variant_ids = $this->input->post('varient_ids');
+			$productVarientList = $this->this_model->getproductVarient($branch_id);
+
+			$html = '';
+			foreach ($productVarientList as $key => $value) {
+				if(in_array($value->id,$variant_ids)){
+				$html .= ' <tr><td>'.$value->product_name.'</td><td><input type="text" name="update_discount[]" value="'.$value->discount_per.'" class="form-control discount_per">
+				<div><label class"error_sp text-danger" style="color:red;font-size: 11px;float: left;"> </label></div>
+				</td><td>'.$value->price.'</td><td>'.$value->weight_no.' '.$value->weight_name.' '.$value->package.'</td></tr>';
+				$html .= '<input type="hidden" name="exiting_discount_per[]" value="'.$value->discount_per.'"';
+				}
+			}
+
+			$html .= '<tr ><td colspan="4" class="last-td"><button type="submit" id="btnSubmit" class="btn btn-danger">Add</button></td></tr>';
+		}
+		echo json_encode(['html'=>$html]);
+	}
+
+	public function test(){
+		$this->this_model->test();lq();
+	}
+
+	public function applied_offer_bycron(){
+		$res = $this->this_model->getOfferForApplied();
+		foreach ($res as $key => $value) {
+			$product_varient_id = $value->product_varient_id;
+			$new_discount = $value->new_percentage;
+			$product_varient = $this->this_model->getProductVarientById($product_varient_id);
+			$price = $product_varient[0]->price;
+			$discount = ($price/100)*$new_discount;
+			$discount_price = $price - $discount;
+			$this->this_model->updateProductVarientById($product_varient_id,$new_discount,$discount_price);
+		}
+	}
+
+	public function rollback_offer_bycron(){
+		$rollback = $this->this_model->getOfferForApplied(true);
+		foreach ($rollback as $key => $value) {
+			$product_varient_id = $value->product_varient_id;
+			$old_discount = $value->old_percentage;
+			$product_varient = $this->this_model->getProductVarientById($product_varient_id);
+			$price = $product_varient[0]->price;
+			$discount = ($price/100)* $old_discount;
+			$discount_price = $price - $discount;
+			$this->this_model->updateProductVarientById($product_varient_id,$old_discount,$discount_price);
 		}
 	}
 	

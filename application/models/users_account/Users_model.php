@@ -5,13 +5,16 @@ class Users_model extends My_model {
 
 	public function varifiy_password($postData)
     {
-        
+        // dd($_FILES);
         if(isset($_FILES['profileimage']) && $_FILES['profileimage']['error'] == 0){
             $UploadPath = "public/images/".$this->folder."user_profile/";
             $uploadImage =  upload_single_image($_FILES,'uprofile',$UploadPath);
+            // dd($uploadImage);
             $uploadImage = $uploadImage['data']['file_name'];   
             $data['update']['profileimage'] =  $uploadImage;
+           
             $old_one = $postData['hidden_image'];
+           
             unlink($UploadPath.$old_one);
         }
 
@@ -24,7 +27,6 @@ class Users_model extends My_model {
             $data['update']['user_gst_number'] =  $postData['user_gst_number'];
             $data['where']['id'] =  $this->session->userdata('user_id');
                 /*$response =*/ $this->updateRecords($data);
-
         if(isset($postData['otp']) && $postData['otp']!=''){
             unset($data);
             $data['select'] = ['*'];

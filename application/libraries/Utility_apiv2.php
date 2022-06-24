@@ -274,20 +274,28 @@ class Utility_apiv2
         $user_bandle_id = $result[0]->user_bandle_id;
         $staff_bandle_id = $result[0]->staff_bandle_id;
         $delivery_bandle_id = $result[0]->delivery_bandle_id;
+        $admin_bandle_id = $result[0]->admin_bandle_id;
 
         $deviceId = $deviceIds['device_id'];
+        // echo $deviceId;die;
+        // $deviceId = 'E5FA6E1F6E840ABB449336B52B10C63C3A228C18D9133CDA6DE75CB4D2A3D004';
         $msg = $msg['message'];
-       
-        if(isset($deviceIds['for_staff'])){
-            $ck = $staff_bandle_id;
-        }else{
-            
-            if($key==NULL){
-                $ck = $user_bandle_id;
+
+       if(!isset($deviceIds['for_admin'])){
+
+            if(isset($deviceIds['for_staff'])){
+                $ck = $staff_bandle_id;
             }else{
-                $ck = $delivery_bandle_id;
+                
+                if($key==NULL){
+                    $ck = $user_bandle_id;
+                }else{
+                    $ck = $delivery_bandle_id;
+                }
             }
-        }
+       }else{
+            $ck = $admin_bandle_id;
+       }
 
         $payload = array(
             'iss' => $team_id,
@@ -302,14 +310,13 @@ class Utility_apiv2
           $keyid = $key_id;                            # <- Your Key ID
           $teamid = $team_id;                           # <- Your Team ID (see Developer Portal)
           $bundleid = $ck;                # <- Your Bundle ID
+         
           $url = 'https://api.development.push.apple.com';  # <- development url, or use http://api.push.apple.com for production environment
           // $token = '5412db72d82307bb3b606eeae2885bd742c2acc9806a7c0f4b76b9b723e11adf';              # <- Device Token
           $token = $deviceId;              # <- Device Token
 
           $message = '{"aps":{"alert":"'.$msg.'","sound":"default","status":"'.$status.'"}}';
-
           $key = openssl_pkey_get_private('file://'.$keyfile);
-
           $header = ['alg'=>'ES256','kid'=>$keyid];
           $claims = ['iss'=>$teamid,'iat'=>time()];
 
@@ -354,14 +361,9 @@ class Utility_apiv2
     }
     
     function notificationForAndroid($deviceId,$msg,$jsonData,$type , $unread,$key,$result) {
-        //  $CI = &get_instance();
-        // $CI->load->model('common_model');        
-        // $result = $CI->common_model->getNotificationKey();
-        // if(empty($result)){
-        //     return true;
-        // }
+        
         // print_r($result);die;
-        $firebase_key = $result[0]->user_firebase_key;
+        // $firebase_key = $result[0]->user_firebase_key;
         // print_r($firebase_key);die;
         $message = $msg;
 
@@ -376,37 +378,45 @@ class Utility_apiv2
             'to' => $deviceId['device_id'],                
             'data' => $body
         );
-        
             // echo $key;exit;
         $fields_json = json_encode($fields);
-
-        if(isset($deviceId['delivery_notification'])){
+        if(!isset($deviceId['for_admin'])){
+          
+            if(isset($deviceId['delivery_notification'])){
             // echo '1';die;
-            $headers = array(
+                $headers = array(
                     'Authorization: key= '.$result[0]->delivery_firebase_key,
                     'Content-Type: application/json'
                 );
             // print_r($headers);die;
-        }else{
-            if($key==NULL){
+            }else{
+
+                if($key==NULL){
                 // $headers = array(
                 //     'Authorization: key= AAAAN7pGzqM:APA91bGjSoksYAJHdxtvBaNqt2VCqKuNiBzJiYsMwvNVuyGAJ8Iuj1HNEClo_VkzgdGuTHWoHp7O9FYP7Et_l2eI_iNNEEePeao3Q5qlVNNMIsp93_60xvxAAPMvIspLzQ3nsFM6_9n7',
                 //     'Content-Type: application/json'
                 // );
-                 $headers = array(
+                   $headers = array(
                     'Authorization: key= '.$result[0]->user_firebase_key,
                     'Content-Type: application/json'
                 );
-                
-            }else{
+
+               }else{
                 $headers = array(
                     'Authorization: key= '.$result[0]->staff_firebase_key,
                     'Content-Type: application/json'
                 );
             }
         }
+    }else{
+        $admin_firebase_key = 'AAAAYmVu0RM:APA91bGMSKZnWRlSZrDilKghySf-ywPbiyRgT5C0Gnfa4-TQRI-Bz7-RiKL6FbL632rbX7mNIszlDnJ1dAogf4GFOBaSRAi5NcxnRlOdXbAxhDVoVOjXiqfICuHPCpnlGysK4_Ygitx9';
+        $headers = array(
+            'Authorization: key= '.$admin_firebase_key,
+            'Content-Type: application/json'
+        );
+    } 
         // print_r($headers);die;
-                // echo $key;exit;
+        //         echo $key;exit;
         
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

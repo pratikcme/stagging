@@ -167,14 +167,16 @@ class Delivery_api extends CI_Controller
     public function order_delivered()
     {
         $postdata = $this->input->post();
+
         if (isset($postdata['order_id'])) {
-
             $result = $this->this_model->order_delivered($postdata);
-
+            
             if($result){
-
                 $response['success'] = 1;
                 $response['message'] = "Order delivered";
+            }else{
+                $response['success'] = 0;
+                $response['message'] = "invalid otp";
             }
         }
         else {
@@ -274,16 +276,13 @@ class Delivery_api extends CI_Controller
 
     public function logout(){
         $postdata = $this->input->post(); 
-        if (isset($postdata['user_id']) && $postdata['user_id'] != '' ) { 
+        if (isset($postdata['user_id']) && $postdata['user_id'] != '' ) {
+
             $user_id = $postdata['user_id'];
-            $result = $this->this_model->logout($user_id);
-           
+            $result = $this->this_model->logout($user_id);   
             $response['success'] = 1;
             $response['message'] = "Logout successfully";
-           
-            
-        }
-        else {
+        }else {
             $response['success'] = 0;
             $response['message'] = "invalid input";
         }

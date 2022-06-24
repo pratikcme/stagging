@@ -113,9 +113,10 @@ class Delivery_api_model extends My_model
 
         // print_r($res);die;
 
-        if($res[0]->isSelfPickup == '1'){
+        if($res[0]['isSelfPickup'] == '1'){
             return true;
         }
+
         $res = $res[0];
 
         $b_add = explode(',',$res['b_address']);
@@ -171,11 +172,12 @@ class Delivery_api_model extends My_model
 
                
 
-                $key = "AAAAIhCnTt0:APA91bEAjiw53KeCGPM4Ns6lfvvBlihTd5FTrWo3_yW9ozu0iM8vs1MBErm1g0hOel4UXdk9zCtsX2l0YCa99XCystgrOsjyQ2lvZWcimH0FcNgNqBsKWWPEiniN9M2z5dBIhwaIizPH";
+                    $key = "AAAAIhCnTt0:APA91bEAjiw53KeCGPM4Ns6lfvvBlihTd5FTrWo3_yW9ozu0iM8vs1MBErm1g0hOel4UXdk9zCtsX2l0YCa99XCystgrOsjyQ2lvZWcimH0FcNgNqBsKWWPEiniN9M2z5dBIhwaIizPH";
                 
                 
                     $this->load->model('api_v2/api_model');
                     $result = $this->api_model->getNotificationKey($branch_id);
+                    // dd($result);
                     $this->utility_apiv2->sendNotification($dataArray, $notification_type,$result,NULL,$this->key);
                 
                     
@@ -369,10 +371,33 @@ class Delivery_api_model extends My_model
     }
 
     public function order_delivered($postdata){
-
         $order_id = $postdata['order_id'];
         $user_id = $postdata['user_id'];
-
+        if(isset($postdata['verify_otp'])){
+            $otp = $postdata['verify_otp'];    
+        }else{
+             $otp = $postdata['otp'];
+        }
+        $data['select'] = ['branch_id','order_no','user_id'];
+        $data['where'] = ['id'=>$postdata['order_id']];
+        $data['table'] = 'order';
+        $orderdetails = $this->selectRecords($data);
+        unset($data);
+        $data['select'] = ['*'];
+        $data['where'] = ['order_id'=>$order_id,'user_id'=>$orderdetails[0]->user_id,'otp'=>$otp];
+        $data['table'] = 'selfPickup_otp';
+        $verification = $this->selectRecords($data);
+        unset($data);
+        if(!empty($verification)){
+            $id = $verification[0]->id;
+            $data['update']=['status'=>'1','dt_updated'=> date('Y-m-d h:i:s')];
+            $data['where'] = ['id'=>$id];
+            $data['table'] = 'selfPickup_otp';
+            $this->updateRecords($data);
+        }else{
+            return false;
+        }
+        unset($data);
         $data['update']= ['order_status'=> '8','dt_updated'=> strtotime(date('Y-m-d h:i:s'))];
         $data['where'] = ['id'=>$order_id];
         $data['table'] = 'order';
@@ -382,7 +407,7 @@ class Delivery_api_model extends My_model
         $this->load->model('api_v2/api_model');
         $this->staff_api_model->send_notificaion($order_id);
         unset($data);
-            $data['select'] = ['branch_id'];
+            $data['select'] = ['branch_id','order_no'];
             $data['where'] = ['id'=>$postdata['order_id']];
             $data['table'] = 'order';
             $order_data = $this->selectRecords($data);
@@ -394,10 +419,47 @@ class Delivery_api_model extends My_model
         $this->updateRecords($data);
         unset($data);
         $data['where'] = ['order_id' =>$order_id];
-            $data['table'] = 'delivery_notification';
-            $this->deleteRecords($data);
+        $data['table'] = 'delivery_notification';
+        $this->deleteRecords($data);
+
+        $iOrderNo = $order_data[0]->order_no;
+        $message = $iOrderNo .' is Delivered' ;
+        $branchNotification = array(
+            'order_id'         =>  $order_id,
+            'branch_id'          =>  $order_data[0]->branch_id,
+            'notification_type'=> 'order_delivered',
+            'message'          => $message,
+            'status'           =>'0',
+            'dt_created'       => DATE_TIME,
+            'dt_updated'       => DATE_TIME
+        );
+        /*order_delieverd logs*/
+        $logs = ['branch_id'=>$order_data[0]->branch_id,'order_id'=>$order_id,'status'=>'Order is delivered','dt_created'=>DATE_TIME];
+        $this->order_logs($logs);
+        /*end order_delieverd logs*/
+        $this->load->model('api_v2/api_model','api_v2_model');
+        $this->api_v2_model->pushAdminNotification($branchNotification);
+
         return true;
 
+    }
+
+      public function order_logs($postData){
+
+            $branch_id = '';
+            if (isset($postData['branch_id'])) {
+                $branch_id = $postData['branch_id'];
+            }
+            $data['table'] = 'order_log';
+            $insertData = array(
+                'order_id' => $postData['order_id'],
+                'branch_id'=> $branch_id,
+                'order_status'=> $postData['status'],
+                'dt_created'=>DATE_TIME
+            );
+            $data['insert'] = $insertData;
+            $this->insertRecord($data);
+            return true; 
     }
 
     public function delivered_order_list($postdata){

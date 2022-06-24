@@ -8,12 +8,12 @@ class Api_admin_model extends My_model {
         $result_login = $this->db->query("SELECT * FROM branch WHERE email='$email' AND password='$password'");
         $row_login = $result_login->row_array();
         $branch_id = $row_login['vendor_id'];
-        // print_r($branch_id);die();
         $getDefault = $this->db->query("SELECT value FROM set_default WHERE request_id = '3' AND vendor_id = '$branch_id'");
         $row_default = $getDefault->row_array();
         if($row_login['status'] != '0'){
             if ($result_login->num_rows() > 0) {
                 $token = $this->update_token($row_login['id']);
+                $this->addAdminDevice($postData,$row_login['id']);
                 $status = $row_login['status'];
                 if ($status == '1') {
                     $login_data = array(
@@ -54,6 +54,46 @@ class Api_admin_model extends My_model {
         }
 
         return $res;
+    }
+
+    public function addAdminDevice($postData,$branch_id){
+        // dd($postData);
+        $data['table'] = 'branch_device';
+        $data['select'] = ['*'];
+        $data['where'] = ['branch_id' =>$branch_id];
+        $res = $this->selectRecords($data);
+        unset($data);
+        if(count($res) > 0){
+            if($res[0]->device_id != $postData['device_id']){
+                $data['table'] = 'branch_device';
+                $data['where'] = ['id' =>$res[0]->id];
+                $this->deleteRecords($data);
+                unset($data);
+                $data['table'] = 'branch_device';
+                $data['insert'] = [
+                    'branch_id'=>$branch_id,
+                    'device_id'=>$postData['device_id'],
+                    'token'=>$postData['token'],
+                    'type'=>$postData['type'],
+                    'dt_created'=>DATE_TIME,
+                    'dt_updated'=>DATE_TIME
+                ];
+                $this->insertRecord($data);
+            }
+        }else{
+            unset($data);
+            $data['table'] = 'branch_device';
+            $data['insert'] = [
+                'branch_id'=>$branch_id,
+                'device_id'=>$postData['device_id'],
+                'token'=>$postData['token'],
+                'type'=>$postData['type'],
+                'dt_created'=>DATE_TIME,
+                'dt_updated'=>DATE_TIME
+            ];
+            $this->insertRecord($data);
+        }
+        return true;
     }
 
 
@@ -1290,10 +1330,12 @@ class Api_admin_model extends My_model {
     public function change_order_status($postData) {
         $order_id = $postData['order_id'];
 
-        $data['select'] = ['order_status'];
+        $data['select'] = ['order_status','branch_id','order_no'];
         $data['where'] = ['id' => $order_id];
         $data['table'] = 'order';
         $results = $this->selectRecords($data);
+        $branch_id = $results[0]->branch_id; 
+        $order_no = $results[0]->order_no; 
 
         $this->order_logs($_POST); // insert Order logs;
 
@@ -1304,12 +1346,37 @@ class Api_admin_model extends My_model {
             }
         }
         $status = $postData['status'];
+        
+        if($status=='9' || $status=='8'){
+            if ($status == '8') {
+                $send_status = 'Delivered';
+                $type = 'order_delivered';
+            }
+            if ($status == '9') {
+                $send_status = 'Cancelled';
+                $type = 'order_cancelled';
+            }
+           $message = $order_no .' is '.$send_status;
+           $branchNotification = array(
+            'order_id'         =>  $order_id,
+            'branch_id'          =>  $branch_id,
+            'notification_type'=> $type,
+            'message'          => $message,
+            'status'           =>'0',
+            'dt_created'       => DATE_TIME,
+            'dt_updated'       => DATE_TIME
+        );
+           $this->load->model('api_v2/api_model','api_v2_model');
+           $this->api_v2_model->pushAdminNotification($branchNotification);    
+       }
+
         $date = strtotime(DATE_TIME);
 
         $this->db->query("UPDATE `order` SET order_status = '$status',dt_updated = '$date' WHERE id = '$order_id'");
         if ($status == '4') {
             $this->db->query("UPDATE `order_details` SET delevery_status = '1',dt_updated = '$date' WHERE order_id = '$order_id'");
         }
+
         $this->send_notificaion($order_id);
         $return = ['status' => 1, 'message' => 'Status Updated'];
         return $return;

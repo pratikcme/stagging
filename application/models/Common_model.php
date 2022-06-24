@@ -258,30 +258,33 @@ Class Common_model extends My_model{
     }
 
     public function getAdminNotification(){
+    	$branch_id = $this->session->userdata('id');
     	$data['table'] = 'admin_notification';
         $data['select'] = ['*'];
-        $data['where'] = ['status'=>'0'];
+        $data['where'] = ['status'=>'0','branch_id'=>$branch_id];
         $data['order'] = 'id desc';
         return $this->selectRecords($data);	
     }
 
     public function adminNotify()
     {
+    	$branch_id = $this->session->userdata('id');
         $data['table'] = 'admin_notification';
         $data['select'] = ['*'];
-        $data['where'] = ['status'=>'0'];
+        $data['where'] = ['status'=>'0','branch_id'=>$branch_id];
         $data['order'] = 'id desc';
         return $this->selectRecords($data);
     }
 
     public function read_all(){
+    	$branch_id = $this->session->userdata('id');
     	$data['table']  = 'admin_notification';
-        $data['update'] = ['status'=>'1'];
+        $data['update'] = ['status'=>'1','branch_id'=>$branch_id];
         $this->updateRecords($data);
         unset($data);
         $data['table'] = 'admin_notification';
         $data['select'] = ['*'];
-        $data['where'] = ['status'=>'0'];
+        $data['where'] = ['status'=>'0','branch_id'=>$branch_id];
         $data['order'] = 'id desc';
         return $this->selectRecords($data);
     }

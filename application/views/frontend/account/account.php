@@ -65,12 +65,12 @@
                         <h4><span><i class="fas fa-user"></i></span>Account Details </h4>
                      
                      </div>
-                     <form id='ChangePass' action="<?=base_url().'users_account/users/account'?>" method="post" class="account-form">
+                     <form id='ChangePass' action="<?=base_url().'users_account/users/account'?>" method="post" class="account-form" enctype="multipart/form-data">
                           <input type="hidden" name="hidden_image" value="<?=$userDetails[0]->profileimage?>">
                         <div class="text-center">
                         <div class="group-image">
                            <div class="circle">
-                              <img class="profile-pic" src="https://baiya.cmexpertise.com/public/images/baiya/user_profile/uprofile_1654622944.png">
+                              <img class="profile-pic" src="<?=($userDetails[0]->profileimage !='' ) ? base_url().'public/images/'.$this->folder.'user_profile/'.$userDetails[0]->profileimage : base_url().'public/images/'.$this->folder.'user_profile/dumy.jpg'?>" >
                            </div>
                            <div class="p-image">
                               <i class="fa fa-camera upload-button"></i>
@@ -274,17 +274,17 @@
                                  </div>
                               </div>
                            </li>
-                           <?php if ($value->isSelfPickup == '1' && $value->order_status != '9'){?>
+                           <!-- <?php if ($value->isSelfPickup == '1' && $value->order_status != '9'){ ?> -->
+                           <!-- <?php } ?> -->  
                               <li class="total-wrap">
                                  <div class="total-count">
-                                    <h6><span><i class="fas fa-mobile"></i></span>   SelfPickUp OTP</h6>
+                                    <h6><span><i class="fas fa-mobile"></i></span><?=($value->isSelfPickup == '1') ? "SelfPickUp OTP" : "OTP"?></h6>
                                     <div class="price-seperator">
                                        <span class="seperator">:</span>
                                        <p><?=$value->isSelfPickup_details[0]->otp?></p>
                                     </div>
                                  </div>
                               </li>
-                           <?php } ?>
                            <div class="order-cancle-btn">
                            <?php if($value->order_status != '8' && $value->order_status != '9'){ ?> 
                             <a href="javescript:;" data-href="<?=base_url().'orders/cancle_order/'.$this->utility->safe_b64encode($value->id)?>" class="cncOrder btn btn-orange">Cancel Order</a>

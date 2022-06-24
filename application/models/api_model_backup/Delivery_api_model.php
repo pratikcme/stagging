@@ -326,6 +326,7 @@ class Delivery_api_model extends My_model
 
         $order_id = $postdata['order_id'];
         $user_id = $postdata['user_id'];
+        
 
         $data['update']= ['order_status'=> '8','dt_updated'=> strtotime(date('Y-m-d h:i:s'))];
         $data['where'] = ['id'=>$order_id];

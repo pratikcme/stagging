@@ -52,9 +52,13 @@ class Order_model extends My_model
     public function checkSelfPickUpOtpIsVerified($order_id){
         $data['table'] = 'selfPickup_otp';
         $data['where'] = ['order_id'=>$order_id];
-        $data['select'] = ['status'];
+        $data['select'] = ['*'];
         $result = $this->selectRecords($data);
-        return $result[0]->status;   
+        return $result;
+        if(!empty($result)){
+            return $result[0]->status;   
+        }
+        return 0;
     }
 
     public function vendorDetail($vendor_id){
@@ -152,10 +156,12 @@ class Order_model extends My_model
     public function change_order_status()
     {
         $order_id = $_POST['order_id'];
-        $data['select'] = ['order_status','payment_type','paymentMethod'];
+        $data['select'] = ['branch_id','order_status','payment_type','paymentMethod','order_no'];
         $data['where'] = ['id' => $order_id];
         $data['table'] = 'order';
         $results = $this->selectRecords($data);
+        $branch_id = $results[0]->branch_id; 
+        $order_no = $results[0]->order_no; 
          $this->order_logs($_POST); // insert Order logs;
 
         if (count($results) > 0) {
@@ -185,16 +191,41 @@ class Order_model extends My_model
                 $respons = $this->refundPaymentStripe($order_id);   
             } 
         }
+        if($status=='9' || $status=='8'){
+            if ($status == '8') {
+                $send_status = 'Delivered';
+                $type = 'order_delivered';
+            }
+            if ($status == '9') {
+                $send_status = 'Cancelled';
+                $type = 'order_cancelled';
+            }
+           $message = $order_no .' is '.$send_status;
+           $branchNotification = array(
+            'order_id'         =>  $order_id,
+            'branch_id'          =>  $branch_id,
+            'notification_type'=> $type,
+            'message'          => $message,
+            'status'           =>'0',
+            'dt_created'       => DATE_TIME,
+            'dt_updated'       => DATE_TIME
+        );
+           $this->load->model('api_v2/api_model','api_v2_model');
+           $this->api_v2_model->pushAdminNotification($branchNotification);    
+       }
+
+
 
         $date = strtotime(DATE_TIME);
 
-        $this->db->query("UPDATE `order` SET order_status = '$status',dt_updated = '$date' WHERE id = '$order_id'");
+         $this->db->query("UPDATE `order` SET order_status = '$status',dt_updated = '$date' WHERE id = '$order_id'");
 
         // echo $this->db->last_query();die;
         if ($status == '4') {
             $this->db->query("UPDATE `order_details` SET delevery_status = '1',dt_updated = '$date' WHERE order_id = '$order_id'");
         }
 
+       
         $this->send_notificaion($order_id);
 
         ob_get_clean();
@@ -221,8 +252,7 @@ class Order_model extends My_model
 
     public function send_notificaion($order_id)
     {
-
-
+           
         $data['select'] = ['o.user_id', 'd.token', 'd.type', 'd.device_id', 'u.notification_status', 'o.order_status', 'o.order_no','o.branch_id'];
         $data['where'] = ['o.id' => $order_id];
         $data['table'] = 'order AS o';
@@ -248,10 +278,8 @@ class Order_model extends My_model
         if ($order_status == '3') {
             
             $send_status = 'Ready For Deliver';
-
             $this->load->model('api_v2/delivery_api_model','api_v2_delivery');
             $this->api_v2_delivery->send_notification($order_id);
-            die;
         }
         if ($order_status == '4') {
             $send_status = 'Pick Up';
@@ -306,6 +334,15 @@ class Order_model extends My_model
         return true;
     }
 
+    public function checkLatestOrderStaus($postData){
+        $id = $postData['id'];
+        $data['table'] = TABLE_ORDER;
+        $data['where'] = ['id'=>$id];
+        $data['select'] = ['*'];
+        $result = $this->selectRecords($data);
+        return $result;
+    }
+
     public function verify_otp()
     {
 
@@ -330,10 +367,11 @@ class Order_model extends My_model
             $this->load->model('api_v2/api_admin_model');
             $order_log_data = array('order_id' => $id, 'status'=> '5');
             $this->api_admin_model->order_logs($order_log_data);
-
+            // return 1
             echo "1";
             exit;
         } else {
+            return 0;
             echo "0";
             exit;
         }
@@ -342,10 +380,13 @@ class Order_model extends My_model
     public function  verify_otp_selfPickup($postdata){
         // error_reporting(E_ALL);
         // ini_set("display_errors", "1");
+        // dd($postdata);die;
         $otp = $postdata['otp'];
         $order_id = $postdata['id'];
         $isSelfPickup = $postdata['isSelfPickup'];
-        
+
+        $status = '8';
+
         $data['select'] = ['*'];
         $data['where'] = ['order_id' => $order_id, 'otp' => $otp];
         $data['table'] = 'selfPickup_otp';
@@ -353,7 +394,7 @@ class Order_model extends My_model
           if($res) {
             unset($data);
             $date = strtotime(DATE_TIME);
-            $data['update']['order_status'] = '8';
+            $data['update']['order_status'] = $status;
             $data['update']['dt_updated'] = $date;
             $data['where'] = ['id' => $order_id];
             $data['table'] = 'order';
@@ -361,10 +402,11 @@ class Order_model extends My_model
 
             unset($data);
 
-            $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
-            $order_log_data = array('order_id' => $order_id, 'status'=> '8');
-            $this->api_v2_api_admin_model->order_logs($order_log_data);
-
+            if($status == '8'){
+                $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
+                $order_log_data = array('order_id' => $order_id, 'status'=> $status);
+                $this->api_v2_api_admin_model->order_logs($order_log_data);
+            }
             $data['update']['status'] = '1';
             $data['where'] = ['order_id' => $order_id];
             $data['table'] = 'selfPickup_otp';

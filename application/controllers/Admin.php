@@ -14,6 +14,7 @@ class Admin extends CI_Controller
         $this->siteFevicon = $siteDetail['favicon_image'];
         $this->folder = $siteDetail['folder'];
         $this->countCategory = $this->common_model->CountCategory();
+        $this->adminNotification = $this->common_model->getAdminNotification();
 
     }
     
@@ -127,7 +128,7 @@ class Admin extends CI_Controller
 
     public function dashboard()
     { 
-        
+        // dd($_SESSION);
         $this->load->model('dashboard_model','this_model');
         $data['total_order_monthly'] = $this->this_model->total_order_month();
         $data['total_order'] = $this->this_model->total_order_today();
@@ -1105,6 +1106,36 @@ class Admin extends CI_Controller
         header('Content-Type: application/json');
         echo json_encode(['status'=>1]);
         exit;
+    }
+
+    public function admin_notification(){
+        $this->load->model('common_model');
+        $res = $this->common_model->adminNotify();
+        $html = '';
+        foreach ($res as $key => $value) {
+            $html .= '<li>'.$value->message.'</li>';
+        }
+        if(count($res) == '0'){
+            $html .= '<li>No Notification</li>';
+        }else{
+            $html .='<li id="clear_all">Clear All</li>';
+        }
+        echo json_encode(['notify'=>$html,'count'=>count($res)]);
+    }
+
+    public function read_all(){
+            $this->load->model('common_model');
+            $res = $this->common_model->read_all();
+            $html = '';
+            foreach ($res as $key => $value) {
+                $html .= '<li>'.$value->message.'</li>';
+            }
+            if(count($res) == '0'){
+                $html .= '<li>No Notification</li>';
+            }else{
+                $html .='<li id="clear_all">Clear All</li>';
+            }
+        echo json_encode(['notify'=>$html,'count'=>count($res)]);
     }  
 }
 ?>

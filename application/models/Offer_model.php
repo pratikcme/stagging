@@ -4,6 +4,11 @@ Class Offer_model extends My_model{
 
     function __construct(){
      $this->vendor_id = $this->session->userdata('vendor_admin_id');
+        $request_schema = $_SERVER['REQUEST_SCHEME'];
+        $server_name = $_SERVER['SERVER_NAME'];
+        // $this->crone_url = $request_schema.'://'.$server_name."/offer/applied_offer_bycron";
+        $this->crone_url = $request_schema.'://'.$server_name."/stagging/offer/test";
+        $this->crone_url_local = $request_schema.'://'.$server_name."/stagging/offer/test";
     }
 
 
@@ -44,6 +49,7 @@ Class Offer_model extends My_model{
 
   ## Add Update ##
     public function addRecord($postData){
+        // dd($postData);
          $varient_ids = explode(',',$postData['hidden_varient_id']);
         if($_FILES['offer_image']['error'] == 0){
             ## Image Upload ##
@@ -61,20 +67,48 @@ Class Offer_model extends My_model{
             'branch_id' => $postData['branch_id'],
             'image' => $offer_image,
             'offer_title' => $postData['offer_title'],
-            'offer_percent' => $postData['offer_percent'],
-            'offer_percent' => ($postData['offer_percent'] && $postData['offer_percent'] != '') ? : NULL,
+            'offer_percent' => ($postData['offer_percent'] && $postData['offer_percent'] != '') ? $postData['offer_percent'] : NULL,
+            'start_date' => date("Y-m-d", strtotime($postData['start_date'])),
+            'end_date' => date("Y-m-d", strtotime($postData['end_date'])),
+            'start_time' => $postData['start_time'],
+            'end_time' => $postData['end_time'],
             'dt_created' => DATE_TIME,
             'dt_updated' => DATE_TIME
         );
-        $data['table'] = TABLE_OFFER;
+        
+        $data['table'] = TABLE_OFFER;       
         $data['insert'] = $insert;
         $offer_id = $this->insertRecord($data);
+        unset($data);
+        $st_array = date('H:i',strtotime($postData['start_time']."-1 minutes"));
+        $st_array = explode(':',$st_array);
+        // dd($st_array);
+        $st_hr = $st_array[0];
+        $st_min = $st_array[1];
+        if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
+            unlink('/var/www/html/stagging/crontab_final.txt');
+            exec('sudo crontab -u php -r');
+            file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url_local.'/crone/connect >> /var/www/html/stagging/cronlog.log 2>&1'.PHP_EOL);
+
+            exec('chmod -R 777 /var/www/html/stagging/crontab_final.txt');
+            exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
+            dd($ext);
+        }else{
+            unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
+            exec('sudo crontab -u a1630btr -r');
+            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
+            exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
+            exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
+        }
+
         unset($data);
         if($offer_id){
             foreach ($varient_ids as $key => $id) {
             $offer_details = array(
                 'offer_id' => $offer_id,
                 'product_varient_id' => $id,
+                'old_percentage' => $postData['exiting_discount_per'][$key],
+                'new_percentage' => $postData['update_discount'][$key],
                 'dt_created' => DATE_TIME,
                 'dt_updated' => DATE_TIME
             );
@@ -89,6 +123,7 @@ Class Offer_model extends My_model{
 
 
     public function updateRecord($postData){
+        // dd($postData);
         $varient_ids = explode(',',$postData['hidden_varient_id']);
         if($_FILES['offer_image']['error'] == 0){
             ## Image Upload ##
@@ -109,6 +144,10 @@ Class Offer_model extends My_model{
             'image' => $offer_image,
             'offer_title' => $postData['offer_title'],
             'offer_percent' => $postData['offer_percent'],
+            'start_date' => date("Y-m-d", strtotime($postData['start_date'])),
+            'end_date' => date("Y-m-d", strtotime($postData['end_date'])),
+            'start_time' => $postData['start_time'],
+            'end_time' => $postData['end_time'],
             'dt_created' => DATE_TIME,
             'dt_updated' => DATE_TIME
         );
@@ -118,7 +157,26 @@ Class Offer_model extends My_model{
         $this->updateRecords($data);
 
         unset($data);
+        $st_array = date('H:i',strtotime($postData['start_time']."-1 minutes"));
+        $st_array = explode(':',$st_array);
+        $st_hr = $st_array[0];
+        $st_min = $st_array[1];
 
+        if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
+            unlink('/var/www/html/stagging/crontab_final.txt');
+            exec('sudo crontab -u php -r');
+            file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url_local.'/crone/connect >> /var/www/html/stagging/cronlog.log 2>&1'.PHP_EOL);
+            exec('chmod -R 777 /var/www/html/stagging/crontab_final.txt');
+            exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
+        }else{
+            unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
+            exec('sudo crontab -u a1630btr -r');
+            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
+            exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
+            exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
+        }
+
+        // dd($ext);
         $data['table'] = TABLE_OFFER_DETAIL;
         $data['where'] = ['offer_id'=>$postData['edit_id']];
         $isDelete = $this->deleteRecords($data);
@@ -128,6 +186,8 @@ Class Offer_model extends My_model{
             $offer_details = array(
                 'offer_id' => $postData['edit_id'],
                 'product_varient_id' => $id,
+                'old_percentage' => $postData['exiting_discount_per'][$key],
+                'new_percentage' => $postData['update_discount'][$key],
                 'dt_created' => DATE_TIME,
                 'dt_updated' => DATE_TIME
             );
@@ -282,7 +342,56 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
         $this->db->where($where);
         return $this->db->count_all_results(); 
            // echo $this->db->last_query();
-    }   
+    }
+
+    public function getOfferForApplied($for=''){
+
+        if($for != ''){
+            $time =  date("h:i:00",strtotime("-1 minutes"));
+            $date = date('Y-m-d');
+            $data['where'] = ['of.end_date'=>$date,'of.end_time'=>$time];
+        }else{
+            $time =  date("h:i:00",strtotime("+1 minutes"));
+            $date = date('Y-m-d');
+            $data['where'] = ['of.start_date'=>$date,'of.start_time'=>$time];
+        }
+
+        $data['table'] = TABLE_OFFER .' of';
+        $data['select'] = ['ofd.*'];
+        $data['join'] = [TABLE_OFFER_DETAIL .' ofd'=>['of.id=ofd.offer_id','LEFT']];
+
+        $return =  $this->selectFromJoin($data);
+
+        return $return;
+    } 
+
+    public function getProductVarientById($v_id){
+        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$v_id];
+        return $this->selectRecords($data);
+    }
+
+    public function updateProductVarientById($v_id,$discount,$discount_price){
+        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['update']['discount_per'] = $discount;
+        $data['update']['discount_price'] = $discount_price;
+        $data['where'] = ['id'=>$v_id];
+        return $this->updateRecords($data);
+    }
+    public function test(){
+        $data['table'] = TABLE_USER;
+        $data['update'] = ['login_type'=>'1'];
+        if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){  
+        $data['where'] = ['id'=>'9'];
+    }else{
+        $data['where'] = ['id'=>'265'];
+    }
+        return $this->updateRecords($data);
+    }
 }
+
+
+ 
 
 ?>
