@@ -387,6 +387,7 @@ class Delivery_api_model extends My_model
             $data['where'] = ['id'=>$id];
             $data['table'] = 'selfPickup_otp';
             $this->updateRecords($data);
+            return true;
         }else{
             return false;
         }
