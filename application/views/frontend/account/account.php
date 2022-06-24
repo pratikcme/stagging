@@ -278,7 +278,7 @@
                            <!-- <?php } ?> -->  
                               <li class="total-wrap">
                                  <div class="total-count">
-                                    <h6><span><i class="fas fa-mobile"></i></span>   SelfPickUp OTP</h6>
+                                    <h6><span><i class="fas fa-mobile"></i></span><?= ($value->isSelfPickup == '1') ? " SelfPickUp OTP" : "OTP" </h6>
                                     <div class="price-seperator">
                                        <span class="seperator">:</span>
                                        <p><?=$value->isSelfPickup_details[0]->otp?></p>
