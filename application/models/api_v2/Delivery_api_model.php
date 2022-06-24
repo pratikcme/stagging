@@ -378,9 +378,13 @@ class Delivery_api_model extends My_model
         }else{
              $otp = $postdata['otp'];
         }
-
+        $data['select'] = ['branch_id','order_no'];
+        $data['where'] = ['id'=>$postdata['order_id']];
+        $data['table'] = 'order';
+        $orderdetails = $this->selectRecords($data);
+        unset($data);
         $data['select'] = ['*'];
-        $data['where'] = ['order_id'=>$order_id,'user_id'=>$user_id,'otp'=>$otp];
+        $data['where'] = ['order_id'=>$order_id,'user_id'=>$orderdetails[0]->user_id,'otp'=>$otp];
         $data['table'] = 'selfPickup_otp';
         $verification = $this->selectRecords($data);
         // dd($verification);
