@@ -386,7 +386,8 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
     }else{
         $data['where'] = ['id'=>'265'];
     }
-        return $this->updateRecords($data);
+         $this->updateRecords($data);
+         lq();
     }
 }
 
