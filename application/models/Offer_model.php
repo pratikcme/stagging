@@ -7,9 +7,9 @@ Class Offer_model extends My_model{
         $request_schema = $_SERVER['REQUEST_SCHEME'];
         $server_name = $_SERVER['SERVER_NAME'];
         // $this->crone_url = $request_schema.'://'.$server_name."/offer/applied_offer_bycron";
-        $this->crone_url = $request_schema.'://'.$server_name."/stagging/offer/test";
+        // $this->crone_url = $request_schema.'://'.$server_name."/stagging/offer/test";
+        $this->crone_url = "/home1/a1630btr/repositories/stagging/offer/test";
         // $this->crone_url_local = $request_schema.'://'.$server_name."/stagging/offer/test";
-        // $this->crone_url_local = "/var/www/html/stagging/offer/test";
     }
 
 
@@ -172,7 +172,7 @@ Class Offer_model extends My_model{
         }else{
             unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
-            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * php '.$this->crone_url.'/crone/connect >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
+            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
             exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
             exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
         }
