@@ -379,7 +379,7 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
         return $this->updateRecords($data);
     }
     public function test(){
-        $data['table'] = TABLE_USER;
+        $data['table'] = 'user';
         $data['update'] = ['login_type'=>'1'];
         if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){  
         $data['where'] = ['id'=>'9'];
