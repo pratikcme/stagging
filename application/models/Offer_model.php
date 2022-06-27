@@ -383,11 +383,9 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
     public function test(){
         $data['table'] = TABLE_USER;
         $data['update'] = ['login_type'=>'1'];
-        if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){  
-        $data['where'] = ['id'=>'9'];
-    }else{
+        $data['update'] = ['country_code'=>'+965'];
         $data['where'] = ['id'=>'265'];
-    }
+        
         return $this->updateRecords($data);
     }
 }
