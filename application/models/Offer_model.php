@@ -7,7 +7,8 @@ Class Offer_model extends My_model{
         $request_schema = $_SERVER['REQUEST_SCHEME'];
         $server_name = $_SERVER['SERVER_NAME'];
         // $this->crone_url = $request_schema.'://'.$server_name."/offer/applied_offer_bycron";
-        $this->crone_url = $request_schema.'://'.$server_name."/stagging/cron/test";
+        // $this->crone_url = $request_schema.'://'.$server_name."/stagging/cron/test";
+        $this->crone_url ='/home1/a1630btr/repositories/stagging/cron/test';
         $this->crone_url_local = $request_schema.'://'.$server_name."/stagging/cron/test";
     }
 
