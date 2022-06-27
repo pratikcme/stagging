@@ -200,7 +200,8 @@ class Offer extends Admin_Controller{
 	}
 
 	public function test(){
-		$this->this_model->test();lq();
+		$this->this_model->test();
+		lq();
 	}
 
 	public function applied_offer_bycron(){
