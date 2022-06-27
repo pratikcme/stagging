@@ -22,8 +22,8 @@
              <span><i class="fas fa-search"></i></span>
             </div>
             <?php } ?>
-            <?php if($this->uri->segment(1)!='login') { ?>
-            <?php if($ApprovedBranch[0]->approved_branch > '1'){ ?>
+            <?php if($this->uri->segment(1)!='login' && $this->uri->segment(1) != '') { ?>
+            <?php if(count($ApprovedBranch) > '1'){ ?>
             <div class="location-wrap">
               <select class="form-control vendor_nav location-wrap">
                 <option value=""> All store</option>
@@ -33,6 +33,7 @@
             </select>
             </div>
             <?php } ?>
+        <?php } ?>
               <?php 
               if($this->uri->segment(1) != ''){ 
                   $placeholder = 'Search product..';
@@ -51,7 +52,6 @@
             </div> 
           <?php } ?> 
 
-        <?php } ?>
             <div class="d-flex">
             <div class="cart_outter_wrap">
             <div class="cart-wrap">

@@ -48,13 +48,20 @@ class Vendor_model extends My_model{
 	}
 
 	public function ApprovedBranch(){
-		$data['table'] = ADMIN;
+		$data['table'] = TABLE_BRANCH;
+		$data['select'] = ['*'];
+		$data['where'] = ['domain_name'=>base_url(),'status'=>'1'];
+		return $this->selectRecords($data);
+		
+	}
+
+	public function ApprovedVendor(){
+		$data['table'] = TABLE_BRANCH;
 		$data['select'] = ['*'];
 		$data['where'] = ['server_name'=>$_SERVER['SERVER_NAME']];
 		return $this->selectRecords($data);
 		
 	}
-
 
 	public function branchProductCount($branch_id){
 		$data['table'] = TABLE_PRODUCT;
