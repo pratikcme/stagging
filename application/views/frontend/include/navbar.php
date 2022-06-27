@@ -23,7 +23,7 @@
             </div>
             <?php } ?>
             <?php if($this->uri->segment(1)!='login' && $this->uri->segment(1) != '') { ?>
-            <?php if(count($ApprovedBranch) > '1'){ ?>
+            <?php if($ApprovedBranch[0]->approved_branch > '1'){ ?>
             <div class="location-wrap">
               <select class="form-control vendor_nav location-wrap">
                 <option value=""> All store</option>

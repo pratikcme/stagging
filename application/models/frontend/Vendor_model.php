@@ -56,7 +56,7 @@ class Vendor_model extends My_model{
 	}
 
 	public function ApprovedVendor(){
-		$data['table'] = TABLE_BRANCH;
+		$data['table'] = ADMIN;
 		$data['select'] = ['*'];
 		$data['where'] = ['server_name'=>$_SERVER['SERVER_NAME']];
 		return $this->selectRecords($data);

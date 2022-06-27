@@ -284,12 +284,9 @@ class Import_model extends My_model {
                             $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                             $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                             $data['table'] = 'temp_product';
-                            // dd($data);
                             $lastId = $this->insertRecord($data);
                             $lastInsertedId = $lastId;
-                           
                             unset($data);
-
                             goto a;
                         }
 
@@ -298,7 +295,7 @@ class Import_model extends My_model {
                             a:
                             $final_discount_price = '';
 
-                            if ($dicount != '0') {
+                            if ($dicount != '0' && $dicount != '') {
                                 $discount_price_cal = (($retailPrice * $dicount) / 100);
                                 $discount_price = number_format((float) $discount_price_cal, 2, '.', '');
                                 $final_discount_price = number_format((float) $retailPrice - $discount_price, 2, '.', '');
@@ -327,8 +324,8 @@ class Import_model extends My_model {
                                 $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                                 $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                                 $data['table'] = 'temp_product_weight';
-                               
                                 $result = $this->insertRecord($data);
+                               // lq();
 
                                 unset($data);
                                 foreach ($images as $key => $value) {
@@ -342,6 +339,7 @@ class Import_model extends My_model {
                                     $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                                     $data['table'] = 'temp_product_image';
                                     $res = $this->insertRecord($data);
+                                    // lq();
                                 }
                                 unset($data);
                             }
@@ -426,9 +424,9 @@ class Import_model extends My_model {
                     $discount_price = ($price * $discount)/100; 
 
                   
-
                     $Varient = $this->ProductVarient($productName);
-
+                    // dd($Varient);
+                    
                     if($type != ''){
 
                         if ($type == 'New') {
