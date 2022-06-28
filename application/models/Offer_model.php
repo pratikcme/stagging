@@ -245,7 +245,7 @@ Class Offer_model extends My_model{
             // unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
             foreach ($crontabs as $key => $value) {
-                file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $v->cron_command.PHP_EOL);
+                file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $value->cron_command.PHP_EOL);
                 exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
                 // dd($ext);
             }
