@@ -626,7 +626,6 @@ class Products extends User_Controller {
 			$userLat = $result[0]->latitude; 
 			$userLong = $result[0]->longitude; 
 			$data['calc_shiping'] = $this->this_model->getDeliveryCharge($userLat,$userLong,$_SESSION['vendor_id']);
-			lq();
 			if(!empty($data['calc_shiping']) && $data['calc_shiping']!='NotInRange' ){
 				$data['calc_shiping'] = number_format((float)$data['calc_shiping'],2,'.','');
 			}
