@@ -20,7 +20,6 @@ class Cron extends CI_Controller{
 			$product_varient_id = $value->product_varient_id;
 			$new_discount = $value->new_percentage;
 			$product_varient = $this->this_model->getProductVarientById($product_varient_id);
-			dd($product_varient);
 			$price = $product_varient[0]->price;
 			$discount = ($price/100)*$new_discount;
 			$discount_price = $price - $discount;
