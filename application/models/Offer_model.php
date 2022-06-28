@@ -432,7 +432,7 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
             $date = date('Y-m-d');
             $data['where'] = ['of.start_date'=>$date,'of.start_time'=>$time];
         }
-
+            echo $time;
         $data['table'] = 'offer' .' of';
         $data['select'] = ['ofd.*'];
         $data['join'] = ['offer_detail' .' ofd'=>['of.id=ofd.offer_id','LEFT']];
