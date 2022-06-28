@@ -110,14 +110,14 @@ input[type="text"]:focus{
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="start_date"> Start date</label>
-                                  <input type="text" id="start_date" name="start_date" class="form-control datetime" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> value="<?=$editRecord[0]->start_date?>">
+                                  <input type="text" id="start_date" name="start_date" class="form-control datetime" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> value="<?=date('d/m/Y',strtotime($editRecord[0]->start_date))?>">
                                   <label for="start_date" style="color: red" class="error"><?php echo @form_error('start_date'); ?></label>
                                </div>
                             </div>
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="end_date">End date</label>
-                                  <input type="text" id="end_date" name="end_date" class="form-control datetime_end" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> value="<?=$editRecord[0]->end_date?>">
+                                  <input type="text" id="end_date" name="end_date" class="form-control datetime_end" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> value="<?=date('d/m/Y',strtotime($editRecord[0]->end_date))?>">
                                   <label for="end_date" style="color: red" class="error"><?php echo @form_error('end_date'); ?></label>
                                </div>
                             </div>
@@ -126,14 +126,14 @@ input[type="text"]:focus{
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="start_time">Start time</label>
-                                  <input type="time" id="start_time" name="start_time" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> value="<?=date('d/m/yyyy',strtotime($editRecord[0]->start_time)?>">
+                                  <input type="time" id="start_time" name="start_time" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> value="<?=$editRecord[0]->start_time?>">
                                   <label for="start_time" style="color: red" class="error"><?php echo @form_error('start_time'); ?></label>
                                </div>
                             </div>
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="end_time">End time</label>
-                                  <input type="time" id="end_time" name="end_time" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> value="<?=date('d/m/Y',strtotime($editRecord[0]->end_time))?>">
+                                  <input type="time" id="end_time" name="end_time" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> value="<?=$editRecord[0]->end_time?>">
                                   <label for="end_time" style="color: red" class="error"><?php echo @form_error('end_time'); ?></label>
                                </div>
                             </div>
