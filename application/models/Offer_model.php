@@ -93,11 +93,17 @@ Class Offer_model extends My_model{
             exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
             dd($ext);
         }else{
+            $utc_time =  gmdate("H:i",strtotime($st_array));
+            $srvTime = date("H:i",strtotime($utc_time));
+            $sts = explode(':',$srvTime);
+            $st_hr = $sts[0];
+            $st_min = $sts[1];
+            // echo $st_hr;die;
             unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
-            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.'/crone/connect >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
-            exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
+            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.' >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
             exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
+            exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
         }
 
         unset($data);
