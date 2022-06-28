@@ -124,14 +124,14 @@ input[type="text"]:focus{
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="start_time">Start time</label>
-                                  <input type="time" id="start_time" name="start_time" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <input type="time" id="start_time" name="start_time" class="form-control datetime" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
                                   <label for="start_time" style="color: red" class="error"><?php echo @form_error('start_time'); ?></label>
                                </div>
                             </div>
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="end_time">End time</label>
-                                  <input type="time" id="end_time" name="end_time" class="form-control" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <input type="time" id="end_time" name="end_time" class="form-control datetime_end" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
                                   <label for="end_time" style="color: red" class="error"><?php echo @form_error('end_time'); ?></label>
                                </div>
                             </div>
