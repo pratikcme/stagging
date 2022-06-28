@@ -219,7 +219,7 @@ Class Offer_model extends My_model{
             // exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
 
             $date = explode('-',$postData['start_date']);
-            dd($date);
+            // dd($date);
             $start_month =  $date['0'];
             $start_day =  $date['1'];
 
