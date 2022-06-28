@@ -202,11 +202,15 @@ Class Offer_model extends My_model{
             exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
         }else{
 
-            // $utc_time =  gmdate("H:i",strtotime($st_array));
-            // $srvTime = date("H:i",strtotime($utc_time));
-            // $sts = explode(':',$srvTime);
-            // $st_hr = $sts[0];
-            // $st_min = $sts[1];
+            $utc_time =  gmdate("H:i",strtotime($st_array));
+            $srvTime = date("H:i",strtotime($utc_time));
+            $sts = explode(':',$srvTime);
+            $st_hr = $sts[0];
+            $st_min = $sts[1];
+            unset($data);
+            $data['table'] = 'offer';
+            $data['where'] = ['offer_id'=>$postData['edit_id']];
+            $this->deleteRecord($data);
             // // echo $st_hr;die;
             // unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             // exec('sudo crontab -u a1630btr -r');
