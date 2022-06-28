@@ -894,7 +894,7 @@ Class Product_model extends My_model{
 			 unset($data);
 	        $data['select'] = ['price'];
 	        $data['table'] = 'delivery_charge';
-	        $data['where'] = ['start_range <=' => $getkm, 'end_range >=' => $getkm];
+	        $data['where'] = ['start_range <=' => $getkm, 'end_range >=' => $getkm,'vendor_id'=>$this->session->userdata('vendor_id')];
 	        $get_range = $this->selectRecords($data);
 
 	        if (count($get_range)) {
