@@ -441,14 +441,14 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
     } 
 
     public function getProductVarientById($v_id){
-        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['table'] = 'product_weight';
         $data['select'] = ['*'];
         $data['where'] = ['id'=>$v_id];
         return $this->selectRecords($data);
     }
 
     public function updateProductVarientById($v_id,$discount,$discount_price){
-        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['table'] = 'product_weight';
         $data['update']['discount_per'] = $discount;
         $data['update']['discount_price'] = $discount_price;
         $data['where'] = ['id'=>$v_id];
