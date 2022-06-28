@@ -881,7 +881,6 @@ Class Product_model extends My_model{
 
     public function getDeliveryCharge($lat,$long,$vendor_id){
 	    	// echo $this->branch_id;die;
-    	dd($_SESSION);
 	    	if(isset($this->branch_id)){
 
 	    		  	$data['select'] = ['latitude', 'longitude'];
