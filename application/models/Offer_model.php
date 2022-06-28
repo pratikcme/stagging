@@ -208,7 +208,7 @@ Class Offer_model extends My_model{
             $st_hr = $sts[0];
             $st_min = $sts[1];
             unset($data);
-            $data['table'] = 'offer';
+            $data['table'] = 'crontab';
             $data['where'] = ['offer_id'=>$postData['edit_id']];
             $this->deleteRecord($data);
             // // echo $st_hr;die;
@@ -223,17 +223,17 @@ Class Offer_model extends My_model{
             $start_day =  $date['1'];
 
             unset($data);
-            // $data['table'] = 'crontab';
-            // $data['insert']['offer_id'] = $offer_id;
-            // $data['insert']['cron_command'] = "/home1/a1630btr/repositories/stagging/crontab_final.txt, ".$st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1"; 
-            // $data['insert']['cron_exec_command'] = "crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1"; 
-            // $data['insert']['hour'] = $st_hr;
-            // $data['insert']['min'] = $st_min;
-            // $data['insert']['start_date'] = date("Y-m-d", strtotime($postData['start_date']));
-            // $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
-            // $data['insert']['dt_created'] = DATE_TIME;
-            // $data['insert']['dt_updated'] = DATE_TIME;
-            // $this->insertRecord($data);
+            $data['table'] = 'crontab';
+            $data['insert']['offer_id'] = $offer_id;
+            $data['insert']['cron_command'] = "/home1/a1630btr/repositories/stagging/crontab_final.txt, ".$st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1"; 
+            $data['insert']['cron_exec_command'] = "crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1"; 
+            $data['insert']['hour'] = $st_hr;
+            $data['insert']['min'] = $st_min;
+            $data['insert']['start_date'] = date("Y-m-d", strtotime($postData['start_date']));
+            $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
+            $data['insert']['dt_created'] = DATE_TIME;
+            $data['insert']['dt_updated'] = DATE_TIME;
+            $this->insertRecord($data);
 
             unset($data);
             $data['table'] = 'crontab';
