@@ -96,10 +96,13 @@ class Login_model extends My_model{
 
                 $data['update'] = [
                             'otp' => '',
+                            'is_verify' => '1',
+                            'status'=>'1',
                             ];
                 $data['where'] = ['id'=>$re[0]['id']];
                 $data['table'] = 'user';
                 $this->updateRecords($data);
+                lq();
                 if($re[0]['fname']!=''){
 
 	            	$login_data = array(

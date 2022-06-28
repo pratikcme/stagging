@@ -3613,7 +3613,8 @@ class Api_model extends My_model {
 
                 $data['update'] = [
                             'otp' => '',
-                            'is_verify' => '1'
+                            'is_verify' => '1',
+                            'status'=>'1',
                             ];
                 $data['where'] = ['id'=>$re[0]['id']];
                 $data['table'] = 'user';
