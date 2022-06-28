@@ -218,7 +218,7 @@ Class Offer_model extends My_model{
             // exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
             // exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
 
-            $date = explode('-',$postData['start_date']);
+            $date = explode('/',$postData['start_date']);
             // dd($date);
             $start_month =  $date['0'];
             $start_day =  $date['1'];
@@ -234,6 +234,7 @@ Class Offer_model extends My_model{
             $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
             $data['insert']['dt_created'] = DATE_TIME;
             $data['insert']['dt_updated'] = DATE_TIME;
+
             $this->insertRecord($data);
 
             unset($data);
