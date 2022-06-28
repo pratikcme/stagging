@@ -156,18 +156,26 @@ Class Offer_model extends My_model{
         $this->updateRecords($data);
 
         unset($data);
+        $postData['start_time'];
         $st_array = date('H:i',strtotime($postData['start_time']."-1 minutes"));
-        $st_array = explode(':',$st_array);
-        $st_hr = $st_array[0];
-        $st_min = $st_array[1];
+        $st = explode(':',$st_array);
+        $st_hr = $st[0];
+        $st_min = $st[1];
 
-        if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
+        if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){ 
             unlink('/var/www/html/stagging/crontab_final.txt');
             exec('sudo crontab -u php -r');
             file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url_local.'/crone/connect >> /var/www/html/stagging/cronlog.log 2>&1'.PHP_EOL);
             exec('chmod -R 777 /var/www/html/stagging/crontab_final.txt');
             exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
         }else{
+
+            $utc_time =  gmdate("H:i",strtotime($st_array));
+            $srvTime = date("H:i",strtotime($utc_time));
+            $st = explode(':',$srvTime);
+            $st_hr = $st[0];
+            $st_min = $st[1];
+            
             unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
             file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.' >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
