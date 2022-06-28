@@ -242,7 +242,7 @@ Class Offer_model extends My_model{
             $data['select'] = ['*'];
             $crontabs = $this->selectRecords($data);
             // dd($crontabs);
-            unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
+            // unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
             foreach ($crontabs as $key => $value) {
                 file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $v->cron_command.PHP_EOL);
