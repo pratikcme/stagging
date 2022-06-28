@@ -102,7 +102,7 @@ class Login_model extends My_model{
                 $data['where'] = ['id'=>$re[0]['id']];
                 $data['table'] = 'user';
                 $this->updateRecords($data);
-                lq();
+                // lq();
                 if($re[0]['fname']!=''){
 
 	            	$login_data = array(
