@@ -245,8 +245,8 @@ Class Offer_model extends My_model{
             // unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
             foreach ($crontabs as $key => $value) {
-                file_put_contents($value->cron_command.PHP_EOL);
-                exec($value->cron_exec_command, $ext);
+                file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt, 29 11 28 06 * curl --silent https://bigbucket.launchestore.com/cron/test >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
+                exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
                 dd($ext);
             }
             exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
