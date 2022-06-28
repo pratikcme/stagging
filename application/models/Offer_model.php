@@ -247,9 +247,9 @@ Class Offer_model extends My_model{
             foreach ($crontabs as $key => $value) {
                 file_put_contents($value->cron_command.PHP_EOL);
                 exec($value->cron_exec_command, $ext);
-                // dd($ext);
+                dd($ext);
             }
-                exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
+            exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
         }
 
         // dd($ext);
