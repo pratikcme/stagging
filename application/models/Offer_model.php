@@ -210,7 +210,7 @@ Class Offer_model extends My_model{
             unset($data);
             $data['table'] = 'crontab';
             $data['where'] = ['offer_id'=>$postData['edit_id']];
-            $this->deleteRecord($data);
+            $this->deleteRecords($data);
             // // echo $st_hr;die;
             // unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             // exec('sudo crontab -u a1630btr -r');
