@@ -80,31 +80,57 @@ Class Offer_model extends My_model{
         $offer_id = $this->insertRecord($data);
         unset($data);
         $st_array = date('H:i',strtotime($postData['start_time']."-1 minutes"));
-        $st_array = explode(':',$st_array);
+        $st = explode(':',$st_array);
         // dd($st_array);
-        $st_hr = $st_array[0];
-        $st_min = $st_array[1];
-        if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
-            unlink('/var/www/html/stagging/crontab_final.txt');
-            exec('sudo crontab -u php -r');
-            file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url_local.'/crone/connect >> /var/www/html/stagging/cronlog.log 2>&1'.PHP_EOL);
+        $st_hr = $st[0];
+        $st_min = $st[1];
 
-            exec('chmod -R 777 /var/www/html/stagging/crontab_final.txt');
-            exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
-            dd($ext);
-        }else{
             $utc_time =  gmdate("H:i",strtotime($st_array));
             $srvTime = date("H:i",strtotime($utc_time));
             $sts = explode(':',$srvTime);
             $st_hr = $sts[0];
             $st_min = $sts[1];
-            // echo $st_hr;die;
-            unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
-            exec('sudo crontab -u a1630btr -r');
-            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.' >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
-            exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
+            
+        // if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
+        //     unlink('/var/www/html/stagging/crontab_final.txt');
+        //     exec('sudo crontab -u php -r');
+        //     file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url_local.' >> /var/www/html/stagging/cronlog.log 2>&1'.PHP_EOL);
+
+        //     exec('chmod -R 777 /var/www/html/stagging/crontab_final.txt');
+        //     exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
+        //     // dd($ext);
+        // }else{
+            $date = explode('/',$postData['start_date']);
+            $start_month =  $date['0'];
+            $start_day =  $date['1'];
+
+            unset($data);
+            $data['table'] = 'crontab';
+            $data['insert']['offer_id'] = $offer_id;
+            $data['insert']['cron_command'] = "/home1/a1630btr/repositories/stagging/crontab_final.txt, ".$st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1".PHP_EOL ; 
+            $data['insert']['cron_exec_command'] = "crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1"; 
+            $data['insert']['hour'] = $st_hr;
+            $data['insert']['min'] = $st_min;
+            $data['insert']['start_date'] = date("Y-m-d", strtotime($postData['start_date']));
+            $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
+            $data['insert']['dt_created'] = DATE_TIME;
+            $data['insert']['dt_updated'] = DATE_TIME;
+            $this->insertRecord($data);
+
+            unset($data);
+            $data['table'] = 'crontab';
+            $data['select'] = ['*'];
+            $crontabs = $this->selectRecords($data);
+            // dd($crontabs);
+            // unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
+                exec('sudo crontab -u php -r');
+                file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt, 27 09 28 06 * curl --silent http://localhost/cron/test >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
+                exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
+
+            // foreach ($crontabs as $k => $v) {
+            // }
             exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
-        }
+        // }
 
         unset($data);
         if($offer_id){
@@ -176,17 +202,46 @@ Class Offer_model extends My_model{
             exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
         }else{
 
-            $utc_time =  gmdate("H:i",strtotime($st_array));
-            $srvTime = date("H:i",strtotime($utc_time));
-            $sts = explode(':',$srvTime);
-            $st_hr = $sts[0];
-            $st_min = $sts[1];
-            // echo $st_hr;die;
+            // $utc_time =  gmdate("H:i",strtotime($st_array));
+            // $srvTime = date("H:i",strtotime($utc_time));
+            // $sts = explode(':',$srvTime);
+            // $st_hr = $sts[0];
+            // $st_min = $sts[1];
+            // // echo $st_hr;die;
+            // unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
+            // exec('sudo crontab -u a1630btr -r');
+            // file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.' >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
+            // exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
+            // exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
+
+            $date = explode('/',$postData['start_date']);
+            $start_month =  $date['0'];
+            $start_day =  $date['1'];
+
+            unset($data);
+            // $data['table'] = 'crontab';
+            // $data['insert']['offer_id'] = $offer_id;
+            // $data['insert']['cron_command'] = "/home1/a1630btr/repositories/stagging/crontab_final.txt, ".$st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1"; 
+            // $data['insert']['cron_exec_command'] = "crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1"; 
+            // $data['insert']['hour'] = $st_hr;
+            // $data['insert']['min'] = $st_min;
+            // $data['insert']['start_date'] = date("Y-m-d", strtotime($postData['start_date']));
+            // $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
+            // $data['insert']['dt_created'] = DATE_TIME;
+            // $data['insert']['dt_updated'] = DATE_TIME;
+            // $this->insertRecord($data);
+
+            unset($data);
+            $data['table'] = 'crontab';
+            $data['select'] = ['*'];
+            $crontabs = $this->selectRecords($data);
             unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
-            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.' >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
-            exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
-            exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
+            foreach ($crontabs as $key => $value) {
+                file_put_contents($value->cron_command.PHP_EOL);
+                exec($value->cron_exec_command, $ext);
+            }
+                exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
         }
 
         // dd($ext);

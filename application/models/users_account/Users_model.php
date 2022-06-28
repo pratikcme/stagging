@@ -413,7 +413,7 @@ class Users_model extends My_model {
         }
         $mobile = $postData['phone'];
         $mobile_number = $country_code.''.$mobile;
-        $this->api_model->sendOtp($mobile_number,$otp);
+        // $this->api_model->sendOtp($mobile_number,$otp);
 
         $data['update'] = ['otp'=>$otp];
         $data['where'] =['id'=>$this->session->userdata('user_id')];
