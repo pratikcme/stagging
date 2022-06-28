@@ -175,7 +175,7 @@ Class Offer_model extends My_model{
             $sts = explode(':',$srvTime);
             $st_hr = $sts[0];
             $st_min = $sts[1];
-            echo $st_hr;die;
+            // echo $st_hr;die;
             unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
             file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.' >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
