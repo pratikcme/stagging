@@ -428,7 +428,6 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
             $data['where'] = ['of.end_date'=>$date,'of.end_time'=>$time];
         }else{
             $time =  date("H:i:00",strtotime("+1 minutes"));
-            $time =  '20:30:00';
             $date = date('Y-m-d');
             $data['where'] = ['of.start_date'=>$date,'of.start_time'=>$time];
         }
