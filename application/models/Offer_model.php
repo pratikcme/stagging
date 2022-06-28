@@ -433,9 +433,9 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
             $data['where'] = ['of.start_date'=>$date,'of.start_time'=>$time];
         }
 
-        $data['table'] = TABLE_OFFER .' of';
+        $data['table'] = 'offer' .' of';
         $data['select'] = ['ofd.*'];
-        $data['join'] = [TABLE_OFFER_DETAIL .' ofd'=>['of.id=ofd.offer_id','LEFT']];
+        $data['join'] = ['offer_details' .' ofd'=>['of.id=ofd.offer_id','LEFT']];
 
         $return =  $this->selectFromJoin($data);
 
