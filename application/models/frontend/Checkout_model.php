@@ -60,7 +60,7 @@ Class Checkout_model extends My_model{
 		        $get_vandor_address = $this->selectRecords($data);
                 $getkm = $this->circle_distance($lat, $long, $get_vandor_address[0]->latitude, $get_vandor_address[0]->longitude);
 		        $getkm = round($getkm);
-                print_r($getkm);die;
+                // print_r($getkm);die;
 		 unset($data);
         $data['select'] = ['price'];
         $data['table'] = 'delivery_charge';
