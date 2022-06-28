@@ -224,7 +224,7 @@ Class Offer_model extends My_model{
 
             unset($data);
             $data['table'] = 'crontab';
-            $data['insert']['offer_id'] = $offer_id;
+            $data['insert']['offer_id'] = $postData['edit_id'];
             $data['insert']['cron_command'] = "/home1/a1630btr/repositories/stagging/crontab_final.txt, ".$st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1"; 
             $data['insert']['cron_exec_command'] = "crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1"; 
             $data['insert']['hour'] = $st_hr;
