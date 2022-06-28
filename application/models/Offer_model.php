@@ -171,11 +171,12 @@ Class Offer_model extends My_model{
         }else{
 
             $utc_time =  gmdate("H:i",strtotime($st_array));
-            $srvTime = date("H:i",strtotime($utc_time));
+            echo $srvTime = date("H:i",strtotime($utc_time));
+            die;
             $st = explode(':',$srvTime);
             $st_hr = $st[0];
             $st_min = $st[1];
-            
+
             unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
             file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url.' >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
