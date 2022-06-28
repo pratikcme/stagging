@@ -6,7 +6,7 @@ Class Offer_model extends My_model{
      $this->vendor_id = $this->session->userdata('vendor_admin_id');
         $request_schema = $_SERVER['REQUEST_SCHEME'];
         $server_name = $_SERVER['SERVER_NAME'];
-        $this->crone_url = $request_schema.'://'.$server_name."/cron/test";
+        $this->crone_url = $request_schema.'://'.$server_name."/cron/applied_offer_bycron";
         $this->crone_url_local = $request_schema.'://'.$server_name."/stagging/cron/test";
     }
 
@@ -107,7 +107,7 @@ Class Offer_model extends My_model{
             unset($data);
             $data['table'] = 'crontab';
             $data['insert']['offer_id'] = $offer_id;
-            $data['insert']['cron_command'] = "/home1/a1630btr/repositories/stagging/crontab_final.txt, ".$st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1".PHP_EOL ; 
+            $data['insert']['cron_command'] = $st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1" ; 
             $data['insert']['cron_exec_command'] = "crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1"; 
             $data['insert']['hour'] = $st_hr;
             $data['insert']['min'] = $st_min;
@@ -121,14 +121,13 @@ Class Offer_model extends My_model{
             $data['table'] = 'crontab';
             $data['select'] = ['*'];
             $crontabs = $this->selectRecords($data);
-            // dd($crontabs);
-            // unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
-                exec('sudo crontab -u php -r');
-                file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt, 27 09 28 06 * curl --silent http://localhost/cron/test >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1'.PHP_EOL);
+            
+            @unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
+            exec('sudo crontab -u php -r');
+            foreach ($crontabs as $k => $v) {
+                file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt',$v->cron_command .PHP_EOL);
                 exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
-
-            // foreach ($crontabs as $k => $v) {
-            // }
+            }
             exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
         // }
 
@@ -195,7 +194,7 @@ Class Offer_model extends My_model{
         $st_min = $st[1];
 
         if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){ 
-            unlink('/var/www/html/stagging/crontab_final.txt');
+            @unlink('/var/www/html/stagging/crontab_final.txt');
             exec('sudo crontab -u php -r');
             file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url_local.'/crone/connect >> /var/www/html/stagging/cronlog.log 2>&1'.PHP_EOL);
             exec('chmod -R 777 /var/www/html/stagging/crontab_final.txt');
@@ -242,7 +241,7 @@ Class Offer_model extends My_model{
             $data['select'] = ['*'];
             $crontabs = $this->selectRecords($data);
             // dd($crontabs);
-            // unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
+            unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
             foreach ($crontabs as $key => $value) {
                 file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $value->cron_command.PHP_EOL);
