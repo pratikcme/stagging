@@ -15,7 +15,6 @@ class Cron extends CI_Controller{
 
 	public function applied_offer_bycron(){
 		$res = $this->this_model->getOfferForApplied();
-		lq();
 		foreach ($res as $key => $value) {
 			$product_varient_id = $value->product_varient_id;
 			$new_discount = $value->new_percentage;
