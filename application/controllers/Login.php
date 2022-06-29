@@ -290,7 +290,6 @@ class Login extends User_Controller {
 	public function varifyOtpLogin(){	
      	$post = $this->input->post();
       $response = $this->this_model->varifyOtpLogin($post);   
-      lq();
       echo json_encode($response);die;       
     }
     public function completeProfile(){	
