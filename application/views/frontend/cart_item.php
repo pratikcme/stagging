@@ -96,6 +96,9 @@
               <?php } ?>
             </tbody>
           </table>
+          <div>
+            <a href="delete.php?id=22" class="btn btn-primary" onclick="return confirm('Are you sure?')">Link</a>
+          </div>
         </div>
       </div>
       <div class="col-lg-4 col-md-12">
@@ -183,7 +186,7 @@
                 </td>
                 <td class="text-center">
                   <?php if ($value->discount_per > 0): ?>
-                  <p class="discount-on"><span><?=$this->siteCurrency?></span><?=$value->product_price?></p>
+                  <p class="discount-on"><span><?=$this->siteCurrency?></span><?=$value->price?></p>
                   <?php endif ?>
                   <p><span><?=$this->siteCurrency?></span><?=$value->discount_price?></p>
                 </td>
@@ -202,6 +205,7 @@
               <?php } ?>
             </tbody>
           </table>
+          <input type="button" class="btn" id="ClearCart" value="Clear cart">
         </div>
       </div>
       <div class="col-lg-4 col-md-12">

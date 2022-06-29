@@ -1151,7 +1151,7 @@ Class Product_model extends My_model{
 
     	$data['table'] = TABLE_MY_CART .' as mc';
     	$data['join'] = [TABLE_PRODUCT_WEIGHT . ' as pw'=>['pw.id=mc.product_weight_id','LEFT']];
-    	$data['select'] = ['mc.*','pw.discount_price','pw.product_id','pw.price'];
+    	$data['select'] = ['mc.*','pw.discount_price','pw.product_id','pw.price','pw.discount_per','pw.weight_id'];
     	$data['where']['mc.user_id'] = $user_id;
     	$data['where']['mc.branch_id'] = $this->branch_id;
     	return $this->selectFromJoin($data);
@@ -1206,6 +1206,13 @@ Class Product_model extends My_model{
     	$data['select'] = ['*'];
     	$data['where']['id'] = $branch_id;
     	return $this->selectRecords($data);	
+    }
+
+    public function clear_cart(){
+    	$user_id = $this->session->userdata('user_id');
+    	$data['table'] = TABLE_MY_CART;
+    	$data['where'] = ['user_id'=>$user_id];
+    	return $this->deleteRecords($data);
     }
 
 
