@@ -96,9 +96,7 @@
               <?php } ?>
             </tbody>
           </table>
-          <div>
-            <a href="delete.php?id=22" class="btn btn-primary" onclick="return confirm('Are you sure?')">Link</a>
-          </div>
+           <input type="button" class="btn" id="ClearCart" value="Clear cart">
         </div>
       </div>
       <div class="col-lg-4 col-md-12">
