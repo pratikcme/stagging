@@ -195,6 +195,7 @@
                     <span><?=$this->siteCurrency?></span><span class="total"><?=number_format((float)$calculation_price,2,'.','')?></span>
                  </p>
                 </td>
+                
                 <td class="text-center"> 
                   <span class="delete-item removeCartItem" data-product_id="<?=$value->product_id?>"
                   data-product_weight_id="<?=$value->product_weight_id?>" data-weight_id="<?=$value->weight_id?>">
