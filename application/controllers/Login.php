@@ -124,11 +124,14 @@ class Login extends User_Controller {
 				}
 			}
 			$common = $this->common_keys;
-			$google_client_id = $common[0]->google_client_id;
-			$google_secret_id = $common[0]->google_secret_id;
+			// dd($common);
+			$google_client_id = '';
+				$google_secret_id = '';
+			if(!empty($common)){
+				$google_client_id = $common[0]->google_client_id;
+				$google_secret_id = $common[0]->google_secret_id;
+				}
 			if(!isset($_SESSION['oauth']) && $google_client_id != '' && $google_secret_id != ''){
-				
-				// print_r($common);die;
 				
 				include_once APPPATH . "libraries/vendor/autoload.php";
 					 $google_client = new Google_Client();
@@ -298,9 +301,12 @@ class Login extends User_Controller {
 	public function fb_login(){
 		// Call Facebook API
 		$common = $this->common_keys;
-		$facebook_client_id = $common[0]->facebook_client_id;
-		$facebook_secret_id = $common[0]->facebook_secret_id;
-
+		$facebook_client_id = '';
+		$facebook_secret_id = '';
+		if(!empty($common)){
+			$facebook_client_id = $common[0]->facebook_client_id;
+			$facebook_secret_id = $common[0]->facebook_secret_id;
+		}
 		if($facebook_client_id != '' && $facebook_secret_id != ''){
 			$facebook = new \Facebook\Facebook([
 				'app_id'      => $facebook_client_id,

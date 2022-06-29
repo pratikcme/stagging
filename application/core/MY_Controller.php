@@ -41,7 +41,10 @@ class MY_Controller extends CI_Controller
         
             $this->countCategory = $this->common_model->CountCategory();
             $this->CountSubcategory = $this->common_model->CountSubCategory();
-            $this->common_keys = $this->common_model->getCommonKeysAndLink();
+            $common_keys = $this->common_model->getCommonKeysAndLink();
+            if(!empty($common_keys)){
+                $this->common_keys = $common_keys;
+            }
             $this->adminNotification = $this->common_model->getAdminNotification();
             }
            

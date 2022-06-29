@@ -35,9 +35,11 @@ class Login_model extends My_model{
 	public function checkLoginType(){
 		$data['table'] = 'vendor';
         $data['select'] = ['login_type'];
-        $data['where']['id'] = $this->vendor_id;
+        $data['where']['server_name'] = $_SERVER['SERVER_NAME'];
         $r = $this->selectRecords($data);
-        return $r[0]->login_type; 
+        if(!empty($r)){
+        	return $r[0]->login_type; 
+        }
 	}
 
 	public function sendOtpLogin($postData){
