@@ -20,20 +20,20 @@
     
        <form id="form" method="post" action="<?=base_url().'contact'?>">
           <div class="row">
-            <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="input-wrapper">
                 <span><i class="fas fa-user-circle"></i></span>
                 <input type="text" name="fname" placeholder="First Name" value="<?=($this->session->userdata('user_name') != '' ) ? $this->session->userdata('user_name') : '' ?>" <?=($this->session->userdata('user_name') != '' ) ?'readonly':'';?> >
               </div>
               <label for="fname" class="error"><?=form_error('fname')?></label>
             </div>
-            <div class="col-lg-6 col-md-12 col-sm-6">
+            <!-- <div class="col-lg-6 col-md-12 col-sm-6">
               <div class="input-wrapper">
                 <span><i class="fas fa-user-circle"></i></span>
                 <input type="text" name="lname" placeholder="Last Name" value="<?=($this->session->userdata('user_lname') != '' ) ? $this->session->userdata('user_lname') : '' ?>" <?=($this->session->userdata('user_lname') != '' ) ?'readonly':'';?> >
               </div>
               <label for="lname" class="error"><?=form_error('lname')?></label>
-            </div>
+            </div> -->
             <div class="col-md-12">
               <div class="input-wrapper">
                 <span><i class="fas fa-envelope"></i></span>

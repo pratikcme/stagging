@@ -17,6 +17,7 @@ Class Contact_model extends My_model{
 			'created_at'=> DATE_TIME,
 			'updated_at'=> DATE_TIME,
 		];
+		// dd($insertContactDetail);die;
         $data['insert'] = $insertContactDetail;
         $data['table'] = TABLE_CONTACT_US;
         $contacusId = $this->insertRecord($data);
