@@ -42,14 +42,15 @@ class Users extends User_Controller {
 			}
 			$data['order'][$key]->promocode_discount = $instance_discount;
 
-			$getVendorDetails = $this->this_model->getVendorDetails($value->branch_id);
-			dd($getVendorDetails);
+			$getBranchDetails = $this->this_model->getBranchDetails($value->branch_id);
+			$data['getVedorDetails'] = $this->this_model->getVedorDetails($value->branch_id);
+
 			$gst_amount = $this->api_admin_model->getGstAmount($value->id);
 			$data['order'][$key]->TotalGstAmount = number_format((float)$gst_amount,'2','.','') ;
 			$data['order'][$key]->AmountWithoutGst =  number_format((float)($value->total - $gst_amount),'2','.','');
 			$data['order'][$key]->orderDetails = $this->view($value->id);
-			$data['order'][$key]->vendorName = $getVendorDetails[0]->name;
-			$data['order'][$key]->vendorAddress = $getVendorDetails[0]->location;
+			$data['order'][$key]->vendorName = $getBranchDetails[0]->name;
+			$data['order'][$key]->vendorAddress = $getBranchDetails[0]->location;
 			// if($value->isSelfPickup == '1'){
 				$otp = $this->this_model->getSelfPickupOtp($value->id);
 				$value->isSelfPickup_details = $otp;
