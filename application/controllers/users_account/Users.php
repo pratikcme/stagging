@@ -43,6 +43,7 @@ class Users extends User_Controller {
 			$data['order'][$key]->promocode_discount = $instance_discount;
 
 			$getVendorDetails = $this->this_model->getVendorDetails($value->branch_id);
+			dd($getVendorDetails);
 			$gst_amount = $this->api_admin_model->getGstAmount($value->id);
 			$data['order'][$key]->TotalGstAmount = number_format((float)$gst_amount,'2','.','') ;
 			$data['order'][$key]->AmountWithoutGst =  number_format((float)($value->total - $gst_amount),'2','.','');
