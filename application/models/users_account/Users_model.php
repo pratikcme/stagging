@@ -374,7 +374,7 @@ class Users_model extends My_model {
 
     public function getVendorDetails($branch_id){
         $data['table'] = TABLE_VENDOR; 
-        $data['select'] = ['name','address','location','login_type'];
+        $data['select'] = ['name','address','location'];
         $data['where'] = [
                         'id'=>$branch_id ,
                         'status' => '1',
