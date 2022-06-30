@@ -199,6 +199,7 @@ class vendor_model extends My_model{
     public function getCurrency(){
         $data['table'] = 'currency';
         $data['select'] = ['*'];
+        $data['where'] = ['vendor_id'=>$this->vendor_id];
         return $this->selectRecords($data);
     }
 
