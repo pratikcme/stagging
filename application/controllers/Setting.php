@@ -35,8 +35,6 @@ class Setting extends Admin_Controller
      public function profit_percent()
     {
         $data['result'] = $this->this_model->getDefaultPercentage();
-        lq();
-        dd($data['result']);
         // print_r( $data['result']);die;
         $this->load->view('profit_percent',$data);
     }
