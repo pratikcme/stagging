@@ -26,7 +26,7 @@ class Setting extends Admin_Controller
     public function currency()
     {
         $data['result'] = $this->this_model->getDefaultCurrency();
-        dd($data['result']);
+        // dd($data['result']);
         $this->load->view('currency',$data);
     }
     public function currency_add()
