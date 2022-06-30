@@ -113,7 +113,6 @@ class Setting_model extends My_model{
         $data['select'] = ['*'];
         $data['where'] = ['request_id'=>'2','vendor_id'=>$this->vendor_id];
         $result = $this->selectRecords($data,true);
-        lq();
         return $result[0]; 
     }
 }
