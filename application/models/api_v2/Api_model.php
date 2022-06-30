@@ -3533,6 +3533,7 @@ class Api_model extends My_model {
         unset($data);
         foreach ($result as $k => $v) {
             if($v->end_date == $today && $v->end_time >= $time){
+                echo '1';die;
                 unset($result[$key]);
                 continue;
             }
