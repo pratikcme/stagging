@@ -96,7 +96,6 @@ class Setting_model extends My_model{
         $data['select'] = ['*'];
         $data['where'] = ['request_id'=>'3','vendor_id'=>$this->vendor_id];
         $result = $this->selectRecords($data);
-        // echo $this->db->last_query();die;
         return $result[0];
     }
 
