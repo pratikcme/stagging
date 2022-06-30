@@ -140,6 +140,7 @@ class Dashboard_model extends My_model{
 			$data['where']['u.status !='] = '9';
 			$data['groupBy'] = 'v.id';
 			$total_registered_user =  $this->selectFromJoin($data,true);
+			lq();
 			return $total_registered_user[0];
         }else{
        
