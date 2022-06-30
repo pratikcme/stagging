@@ -53,7 +53,7 @@ class Setting_model extends My_model{
         $currency = $this->input->post('profit');
         $id = $this->input->post('id');
         if($id==''){
-            $insertion = array('value'=>$currency,'request_id'=>2,'branch_id'=>$this->branch_id);
+            $insertion = array('value'=>$currency,'request_id'=>2,'vendor_id'=>$this->vendor_id);
             $data['insert'] = $insertion;
             $data['table'] = 'set_default';
             $result = $this->insertRecord($data);
@@ -73,7 +73,7 @@ class Setting_model extends My_model{
         $subscription_value = $this->input->post('subscription_value');
         $id = $this->input->post('id');
         if($id==''){
-            $insertion = array('value'=>$subscription_value,'request_id'=>4,'branch_id'=>$this->branch_id);
+            $insertion = array('value'=>$subscription_value,'request_id'=>4,'vendor_id'=>$this->vendor_id);
             $data['insert'] = $insertion;
             $data['insert'] = ['branch_id'=>$this->branch_id];
             $data['table'] = 'set_default';
