@@ -3519,6 +3519,7 @@ class Api_model extends My_model {
 
     //Developer : Shahid Abdul Rahman     
     public function get_offer($branch_id){
+        $branch_id = $_POST['branch_id'];
         $data['table'] = TABLE_OFFER .' as o';
         $data['join'] = [TABLE_OFFER_DETAIL . ' as od'=>['o.id=od.offer_id','LEFT']];
         $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image'];
