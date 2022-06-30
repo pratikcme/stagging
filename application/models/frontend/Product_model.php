@@ -432,8 +432,8 @@ Class Product_model extends My_model{
 	            	$class = 'fas .fa-heart';
 	            }
             }
-            if($value->image != '' ){
-          		$image = str_replace(' ', '%20', $value->image);
+          	$image = str_replace(' ', '%20', $value->image);
+            if($image != '' ){
 	            if(!file_exists('public/images/'.$this->folder.'product_image/'.$image)){
 	            	// $image = 'defualt.png';	
 	            	$image = $this->v2_common_model->default_product_image();
