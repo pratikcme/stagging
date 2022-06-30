@@ -1,6 +1,6 @@
 <?php 
 date_default_timezone_set('Asia/Kolkata');
-
+echo 1; die;
 /**
 
  * CodeIgniter
