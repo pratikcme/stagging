@@ -12,7 +12,7 @@ class Setting_model extends My_model{
     	$cart_min_value = $this->input->post('cart_min_value');
     	$id = $this->input->post('id');
     	if($id==''){
-    		$insertion = array('value'=>$cart_min_value,'request_id'=>1);
+    		$insertion = array('vendor_id'=>$this->vendor_id,'value'=>$cart_min_value,'request_id'=>1);
     		$data['insert'] = $insertion;
     		$data['table'] = 'set_default';
     		$result = $this->insertRecord($data);
