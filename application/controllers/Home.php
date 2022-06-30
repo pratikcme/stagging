@@ -47,7 +47,7 @@ class Home extends User_Controller {
 				$this->load->model('common_model');
 				$data['new_arrival'][$key]->image = $default_product_image; 
 			}
-			$image = str_replace(' ', '%20', $value->image);
+			$value->image = str_replace(' ', '%20', $value->image);
 			$addQuantity = $this->product_model->findProductAddQuantity($value->id,$value->pw_id);
   			$value->addQuantity = $addQuantity;
 
