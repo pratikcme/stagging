@@ -3526,9 +3526,9 @@ class Api_model extends My_model {
         $data['table'] = TABLE_OFFER .' as o';
         $data['join'] = [TABLE_OFFER_DETAIL . ' as od'=>['o.id=od.offer_id','LEFT']];
         $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image','start_date','end_date','start_time','end_time'];
-        // $data['where'] = ['o.branch_id'=>$branch_id,'start_date <='=>$today,'end_date >='=>$today];
-        // $data['having'] = ['start_time >= '=>$time,];
-        // $data['groupBy'] = 'o.id';
+        $data['where'] = ['o.branch_id'=>$branch_id,'start_date <='=>$today,'end_date >='=>$today];
+        $data['having'] = ['start_time >= '=>$time];
+        $data['groupBy'] = 'o.id';
         $result = $this->selectFromJoin($data);
         print_r($result);
         lq();
