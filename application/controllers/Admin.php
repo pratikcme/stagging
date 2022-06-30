@@ -157,10 +157,10 @@ class Admin extends CI_Controller
     }
 
     public function profile(){
-        dd($_SESSION);
+        // dd($_SESSION);
         $this->load->model('vendor_model');
         $email = $this->session->userdata('email');
-        $vendor_id = $this->session->userdata['id'];
+        $vendor_id = $this->session->userdata['vendor_admin_id'];
         $data['currency'] = $this->vendor_model->getCurrency();
         $data['app_result'] = $this->vendor_model->vendorByIdEmail($email);     
         $this->load->view('profile',$data);
