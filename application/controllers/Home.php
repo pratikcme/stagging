@@ -39,14 +39,13 @@ class Home extends User_Controller {
 		
 		$product_ids = [];
 		$default_product_image = $this->common_model->default_product_image(); 
-		echo $this->folder ; 
-		dd($data['new_arrival']);
 		foreach ($data['new_arrival'] as $key => $value) {
 			$varientQuantity = $this->this_model->checkVarientQuantity($value->id);
 
 			$product_ids[] = $value->id;
 			$this->load->model('frontend/product_model');
-
+			echo $value->image ;
+			exit;
 			if($value->image == '' || !file_exists('public/images/'.$this->folder.'product_image/'.$value->image)){
 				$this->load->model('common_model');
 				// $data['new_arrival'][$key]->image = 'defualt.png';
