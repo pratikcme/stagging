@@ -117,9 +117,9 @@ class Checkout extends User_Controller {
     $data['phone'] = '0';
     $data['is_verify'] = '0';
     $vendor = $this->this_model->getVendorAddress();
-    lq();
-    dd($vendor);
     $data['isOnlinePayment'] = $vendor[0]->isOnlinePayment;
+    dd($data['isOnlinePayment']);
+
     $data['isCOD'] = $vendor[0]->isCOD;
     if(isset($_SESSION['isSelfPickup']) && $_SESSION['isSelfPickup'] == '1'){
     
