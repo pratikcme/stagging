@@ -433,8 +433,7 @@ Class Product_model extends My_model{
 	            }
             }
             if($value->image != '' ){
-            	echo $image = $value->image; die;
-
+          		$image = str_replace(' ', '%20', $image);
 	            if(!file_exists('public/images/'.$this->folder.'product_image/'.$image)){
 	            	// $image = 'defualt.png';	
 	            	$image = $this->v2_common_model->default_product_image();
@@ -443,7 +442,6 @@ Class Product_model extends My_model{
             	// $image = 'defualt.png'; 
             	$image = $this->v2_common_model->default_product_image();
             }
-          $image = str_replace(' ', '%20', $image);
          $value->name = character_limiter($value->name,30); 
   		$product_html.='<div class="col-lg-3 col-md-6 col-sm-6">
 					        <div class="product-wrapper">
