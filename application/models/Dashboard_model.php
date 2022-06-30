@@ -133,8 +133,7 @@ class Dashboard_model extends My_model{
 			$data['table'] = TABLE_USER.' as u';
 			$data['select'] = ['count(*) as total_registered_user'];
 			$data['join'] = [
-				'vendor as v'=>['v.id = u.vendor_id ','LEFT'],
-				TABLE_BRANCH .' as b'=>['b.vendor_id = u.vendor_id','LEFT']
+				'vendor as v'=>['v.id = u.vendor_id ','LEFT']
 			];
 		    $data['where']['u.vendor_id'] = $this->session->userdata('vendor_admin_id');
 			$data['where']['u.status !='] = '9';
