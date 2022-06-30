@@ -580,12 +580,12 @@ class vendor_model extends My_model{
     public function vendorByIdEmail($email){
 
         $branch_id = $this->session->userdata['id'];
-        if($vendor_id == 0 ){
+        if($branch_id == 0 ){
             $data['table'] = 'vendor';
             $data['where']['id'] = $this->vendor_id;
         }else{
             $data['table'] = 'branch';
-            $data['where']['email'] = $email;
+            // $data['where']['email'] = $email;
             $data['where']['id'] = $branch_id;
         }
         $data['select'] = ['*'];
