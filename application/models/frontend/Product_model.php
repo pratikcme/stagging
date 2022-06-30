@@ -436,8 +436,7 @@ Class Product_model extends My_model{
 
             if(!empty($value->image) || $value->image != '' ){
             	$image = $value->image;
-            	echo $image;
-	            if(!file_exists('public/images/'.$this->folder.'product_image/'.$value->image)){
+	            if(!file_exists('public/images/'.$this->folder.'product_image/'.$image)){
 	            	// $image = 'defualt.png';	
 	            	$image = $this->v2_common_model->default_product_image();
 	            }    
