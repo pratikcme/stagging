@@ -138,7 +138,7 @@ class Dashboard_model extends My_model{
 			];
 		    $data['where']['u.vendor_id'] = $this->session->userdata('vendor_admin_id');
 			$data['where']['u.status !='] = '9';
-			$data['groupBy'] = 'u.id,b.id';
+			$data['groupBy'] = 'v.id';
 			$total_registered_user =  $this->selectFromJoin($data,true);
 			return $total_registered_user[0];
         }else{
