@@ -1,8 +1,4 @@
-<?php
-include('header.php');
-    $query = $this->db->query("SELECT * FROM set_default WHERE request_id='3'");
-    $result = $query->row_array();
-?>
+<?php include('header.php'); ?>
 <style>
  .required{
          color: red;
