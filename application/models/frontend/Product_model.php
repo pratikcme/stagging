@@ -367,7 +367,6 @@ Class Product_model extends My_model{
 			}
 			$data['where']['p.branch_id'] = $this->branch_id;
 			$data['where']['pw.status !='] = '9';
-			// $data['where']['pi.status !='] = '9';
 			$data['where']['p.status'] = '1';
 			$data['table'] = TABLE_PRODUCT . " as p";
 			$data['select'] = ['p.*','p.id as prod_id','pw.price','pw.quantity','pw.discount_per','pw.id as product_weight_id','pw.discount_price','pi.image','pw.status as pw_status','pw.weight_id'];
