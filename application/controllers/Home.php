@@ -48,8 +48,8 @@ class Home extends User_Controller {
 			if($value->image == '' || !file_exists('public/images/'.$this->folder.'product_image/'.$value->image)){
 				$this->load->model('common_model');
 				// $data['new_arrival'][$key]->image = 'defualt.png';
+				dd($default_product_image);
 				$data['new_arrival'][$key]->image = $default_product_image; 
-				dd($data['new_arrival'][$key]->image);
 			}
 
 			$addQuantity = $this->product_model->findProductAddQuantity($value->id,$value->pw_id);
