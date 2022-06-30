@@ -221,23 +221,23 @@ class Import_model extends My_model {
                     $image = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
                     $gst = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
                     $max_order_qty = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-            // print_r($type);
-            // print_r($subCategory);
-            // print_r($brandName);
-            // print_r($productContent);
-            // print_r($productAbout);
-            // print_r($varient);
-            // print_r($unit);
-            // print_r($package);
-            // print_r($qty);
-            // print_r($purchasePrice);
-            // print_r($retailPrice);
+            print_r($type);
+            print_r($subCategory);
+            print_r($brandName);
+            print_r($productContent);
+            print_r($productAbout);
+            print_r($varient);
+            print_r($unit);
+            print_r($package);
+            print_r($qty);
+            print_r($purchasePrice);
+            print_r($retailPrice);
 
-            // print_r($dicount);
-            // print_r($image);
-            // print_r($gst);
-            // print_r($max_order_qty);
-            // die;
+            print_r($dicount);
+            print_r($image);
+            print_r($gst);
+            print_r($max_order_qty);
+            die;
 
                     if($subCategory != ''){
                         $getSub = $this->subcategory_list($categoryId, $subCategory);
