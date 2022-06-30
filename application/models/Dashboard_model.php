@@ -136,9 +136,9 @@ class Dashboard_model extends My_model{
 				'vendor as v'=>['v.id = u.vendor_id ','LEFT'],
 				TABLE_BRANCH .' as b'=>['b.vendor_id = u.vendor_id','LEFT']
 			];
-		   $data['where']['u.vendor_id'] = $this->session->userdata('vendor_admin_id');
+		    $data['where']['u.vendor_id'] = $this->session->userdata('vendor_admin_id');
 			$data['where']['u.status !='] = '9';
-			$data['groupBy'] = 'u.id';
+			$data['groupBy'] = 'u.id,b.id';
 			$total_registered_user =  $this->selectFromJoin($data,true);
 			return $total_registered_user[0];
         }else{
