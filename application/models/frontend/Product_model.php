@@ -434,16 +434,16 @@ Class Product_model extends My_model{
 	            }
             }
 
-            // if(!empty($value->image) || $value->image != '' ){
-            // 	$image = $value->image;
-	           //  if(!file_exists('public/images/'.$this->folder.'product_image/'.$image)){
-	           //  	// $image = 'defualt.png';	
-	           //  	$image = $this->v2_common_model->default_product_image();
-	           //  }    
-            // }else{
-            // 	// $image = 'defualt.png'; 
-            // 	$image = $this->v2_common_model->default_product_image();
-            // }
+            if(!empty($value->image) || $value->image != '' ){
+            	$image = $value->image;
+	            if(!file_exists('public/images/'.$this->folder.'product_image/'.$image)){
+	            	// $image = 'defualt.png';	
+	            	$image = $this->v2_common_model->default_product_image();
+	            }    
+            }else{
+            	// $image = 'defualt.png'; 
+            	$image = $this->v2_common_model->default_product_image();
+            }
           $image = str_replace(' ', '%20', $image);
          $value->name = character_limiter($value->name,30); 
   		$product_html.='<div class="col-lg-3 col-md-6 col-sm-6">
