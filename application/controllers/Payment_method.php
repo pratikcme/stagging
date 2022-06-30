@@ -11,8 +11,6 @@ class Payment_method extends Vendor_Controller
 	public function index(){
 
 		$data['paymentMethods'] = $this->this_model->get_payment_method();
-		// echo "<pre>";
-		// print_r($data['paymentMethods']);die;
 		$this->load->view('payment_method',$data);
 	}
 
