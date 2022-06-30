@@ -18,6 +18,7 @@ class Vendors extends User_Controller {
 		$data['page'] = 'frontend/vendor/vendor';
 		$data['js'] = array('vendor.js');
 		$data['branch'] = $this->this_model->branchList();
+		
 		$branch_id = count($data['branch']);
 		foreach ($data['branch'] as $key => $value) {
 			$data['branch'][$key]->product_count = $this->this_model->branchProductCount($value->id);
