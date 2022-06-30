@@ -39,6 +39,7 @@ class Home extends User_Controller {
 		
 		$product_ids = [];
 		$default_product_image = $this->common_model->default_product_image(); 
+		echo $this->folder ; 
 		dd($data['new_arrival']);
 		foreach ($data['new_arrival'] as $key => $value) {
 			$varientQuantity = $this->this_model->checkVarientQuantity($value->id);
