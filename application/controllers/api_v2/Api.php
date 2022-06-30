@@ -1989,6 +1989,7 @@ class Api extends Apiuser_Controller {
     /*Developer : Shahid abdul rahman*/
 
     public function get_offer(){
+
        $result = $this->this_model->get_offer();
         if ($result) {
             $response = array();
