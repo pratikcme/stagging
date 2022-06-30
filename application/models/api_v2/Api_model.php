@@ -3527,12 +3527,16 @@ class Api_model extends My_model {
         $data['join'] = [TABLE_OFFER_DETAIL . ' as od'=>['o.id=od.offer_id','LEFT']];
         $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image','start_date','end_date','start_time','end_time'];
         $data['where'] = ['o.branch_id'=>$branch_id,'start_date  <= '=>$today,'end_date >='=>$today];
-        $data['having'] = ['start_time <= '=>$time,'end_time >='=>$time];
+        $data['having'] = ['start_time >= '=>$time,];
         $data['groupBy'] = 'o.id';
         $result = $this->selectFromJoin($data);
         lq();
         unset($data);
         foreach ($result as $k => $v) {
+            if($v->end_date == $today && $v->end_time >= $time){
+                unset($result[$key]);
+                continue;
+            }
             $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
             $data['select'] = ['c.name as category_name','p.category_id','pw.product_id'];
             $data['table'] = TABLE_PRODUCT_WEIGHT . ' as pw';
