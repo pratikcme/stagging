@@ -582,7 +582,7 @@ class vendor_model extends My_model{
         $branch_id = $this->session->userdata['id'];
         if($vendor_id == 0 ){
             $data['table'] = 'vendor';
-            $data['where']['email'] = $email;
+            $data['where']['id'] = $this->vendor_id;
         }else{
             $data['table'] = 'branch';
             $data['where']['email'] = $email;
