@@ -378,6 +378,7 @@ Class Product_model extends My_model{
 			$data['limit'] = $page * $limit;
 			$product = $this->selectFromJoin($data);
 			// lq();
+			dd($product);
 			$total_result = $this->countRecords($data);
 			$pages = ceil($total_result/20);
 			if($page < $pages){
