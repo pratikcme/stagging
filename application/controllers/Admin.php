@@ -360,7 +360,6 @@ class Admin extends CI_Controller
            $server_name = $_SERVER["SERVER_NAME"];
            $result_login = $this->db->query("SELECT * FROM `vendor` WHERE email='$email' AND password='$password' AND server_name='$server_name'"); 
             $row_login = $result_login->row_array();
-            dd($row_login);
         if ($result_login->num_rows() > 0) {
            
                 $login_data = array(
