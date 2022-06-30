@@ -585,7 +585,7 @@ class vendor_model extends My_model{
             $data['where']['id'] = $this->vendor_id;
         }else{
             $data['table'] = 'branch';
-            // $data['where']['email'] = $email;
+            $data['where']['email'] = $email;
             $data['where']['id'] = $branch_id;
         }
         $data['select'] = ['*'];
