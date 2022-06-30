@@ -427,6 +427,12 @@ Class Checkout_model extends My_model{
             return $response;
         }
 
+        if($total_price > $promocode[0]->max_cart){
+            $response["success"] = 0;
+            $response["message"] = "Maximum ".$promocode[0]->max_cart.' Cart amount is required';   
+            return $response;
+        }
+
         unset($data);
         $data['select'] = ['count(*) as count'];
         $data['where'] = ['promocode_id' => $promocode[0]->id];
