@@ -52,11 +52,9 @@ class Home extends User_Controller {
             		$image = $value->image;
 	            }
             }else{
-            	// $image = 'defualt.png'; 
             	$image = $default_product_image;
             }
           	$value->image = str_replace(' ', '%20', $image);
-
 			$addQuantity = $this->product_model->findProductAddQuantity($value->id,$value->pw_id);
   			$value->addQuantity = $addQuantity;
 
