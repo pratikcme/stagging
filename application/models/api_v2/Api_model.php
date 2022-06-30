@@ -3530,7 +3530,6 @@ class Api_model extends My_model {
         $data['having'] = ['start_time >= '=>$time,];
         $data['groupBy'] = 'o.id';
         $result = $this->selectFromJoin($data);
-        lq();
         unset($data);
         foreach ($result as $k => $v) {
             if($v->end_date == $today && $v->end_time >= $time){
