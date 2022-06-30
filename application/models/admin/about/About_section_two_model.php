@@ -93,7 +93,7 @@ Class About_section_two_model extends My_model{
                     move_uploaded_file($temp_location, $uploadpath);
             }
                     $data['table'] = ABOUT_SECTION_TWO;
-                    $data['insert']['branch_id'] = $this->vendor_id;
+                    $data['insert']['vendor_id'] = $this->vendor_id;
                     $data['insert']['image'] = $image;
                     $data['insert']['name'] = $postData['name'];
                     $data['insert']['designation'] = $postData['designation'];
