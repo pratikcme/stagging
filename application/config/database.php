@@ -81,7 +81,7 @@ if($_SERVER['HTTP_HOST'] == '192.168.2.2' || $_SERVER['HTTP_HOST'] == 'localhost
 	$host = 'localhost';
 	$userName = 'a1630btr_development_user';
 	$password = 'Ra#Ch^1j.sLR';
-	$dbName = 'a1630btr_bigbucket';	
+	$dbName = 'a1630btr_bigbucket_2';	
 }
 
 // echo $dbName;die;
