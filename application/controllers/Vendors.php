@@ -15,11 +15,10 @@ class Vendors extends User_Controller {
 
 
 	public function index(){
-		echo '1';die;
 		$data['page'] = 'frontend/vendor/vendor';
 		$data['js'] = array('vendor.js');
 		$data['branch'] = $this->this_model->branchList();
-	
+		dd($data['branch']);
 		$branch_id = count($data['branch']);
 		foreach ($data['branch'] as $key => $value) {
 			$data['branch'][$key]->product_count = $this->this_model->branchProductCount($value->id);
