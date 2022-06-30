@@ -199,7 +199,6 @@ class vendor_model extends My_model{
     public function getCurrency(){
         $data['table'] = 'currency';
         $data['select'] = ['*'];
-        // $data['where'] = ['vendor_id'=>$this->vendor_id];
         return $this->selectRecords($data);
     }
 
@@ -580,13 +579,14 @@ class vendor_model extends My_model{
 
     public function vendorByIdEmail($email){
 
-        $vendor_id = $this->session->userdata['id'];
+        $branch_id = $this->session->userdata['id'];
         if($vendor_id == 0 ){
             $data['table'] = 'vendor';
             $data['where']['email'] = $email;
         }else{
             $data['table'] = 'branch';
-            $data['where'] = ['email'=>$email,'id'=>$vendor_id];
+            $data['where']['email'] = $email;
+            $data['where']['id'] = $branch_id;
         }
         $data['select'] = ['*'];
         $re = $this->selectRecords($data,true);
