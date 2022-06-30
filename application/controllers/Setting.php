@@ -41,6 +41,7 @@ class Setting extends Admin_Controller
     public function profit_add()
     {
         $this->this_model->profit_add();
+        lq();
     }
     public function subscription()
     {

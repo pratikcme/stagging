@@ -50,16 +50,16 @@ class Setting_model extends My_model{
         exit();
     }
     public function profit_add(){
-        $currency = $this->input->post('profit');
+        $profit = $this->input->post('profit');
         $id = $this->input->post('id');
         if($id==''){
-            $insertion = array('value'=>$currency,'request_id'=>2,'vendor_id'=>$this->vendor_id);
+            $insertion = array('value'=>$profit,'request_id'=>2,'vendor_id'=>$this->vendor_id);
             $data['insert'] = $insertion;
             $data['table'] = 'set_default';
             $result = $this->insertRecord($data);
             $this->session->set_flashdata('msg', 'Profit Percentage has been set successfully');
         }else{
-            $insertion = array('value'=>$currency,'request_id'=>2);
+            $insertion = array('value'=>$profit,'request_id'=>2);
             $data['update'] = $insertion;
             $data['where']['id'] = $id;
             $data['table'] = 'set_default';
