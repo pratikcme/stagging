@@ -299,7 +299,7 @@ class Import_model extends My_model {
                             $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                             $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                             $data['table'] = 'temp_product';
-                            // $lastId = $this->insertRecord($data);
+                            $lastId = $this->insertRecord($data);
                             $lastInsertedId = $lastId;
                             unset($data);
                             goto a;
@@ -318,7 +318,7 @@ class Import_model extends My_model {
                                 $dicount = 0;
                                 $final_discount_price = $retailPrice;
                             }
-                            echo $unitId .'/'.$packageId .'/'. $varient .'/'. $purchasePrice .'/'.$purchasePrice .'/'. $retailPrice .'/'. $qty ; die; 
+                            // echo $unitId .'/'.$packageId .'/'. $varient .'/'. $purchasePrice .'/'.$purchasePrice .'/'. $retailPrice .'/'. $qty ; die; 
                             if($unitId !='' && ($packageId !='') && ($varient !='') && ($purchasePrice == 0 || $purchasePrice != '') && ($retailPrice !='') && ($qty !='') ) {
                                 $data['insert']['branch_id'] = $this->branch_id;
                                 $data['insert']['product_id'] = ($lastId != '') ? $lastId : $lastInsertedId;
