@@ -1030,6 +1030,10 @@ class Api extends Apiuser_Controller {
         $post = $this->input->post();
         $req = array('vendor_id');
         $response = $this->checkRequiredField($post, $req);
+        dd($response);
+        // if($response){
+
+        // }
         echo json_encode(array('responsedata' => $response));
 die;
         if ($_POST['vendor_id'] == '0') {
