@@ -266,13 +266,13 @@ class Import_model extends My_model {
                         $brandId = $getBrand[0]['id'];
                         // $brandId = '10';
                     }
-                        echo $brandId;die;
 
                  
                     if($package != ''){
                         $getPackage = $this->package_list($package);
                         $packageId = $getPackage[0]['id'];
                     }
+                        echo $packageId;die;
 
                     if($unit != ''){
                         $getUnit = $this->unit_list($unit);
