@@ -180,7 +180,8 @@ class Import_model extends My_model {
 
 
     function importExcel(){
-            // print_r($_FILES);die;
+        // echo '1';die;
+            // print_r($_POST);die;
 
         if (isset($_FILES["file"]["name"])) {
             $path = $_FILES["file"]["tmp_name"];
@@ -188,10 +189,8 @@ class Import_model extends My_model {
             // $getCategory = $this->getCatgory($name[0]);
             // $categoryId = $getCategory[0]->id;
             $categoryId = $this->input->post('catgeory');
-            error_reporting(E_ALL);
-            ini_set('display_errors', 1);
+
             $object = PHPExcel_IOFactory::load($path);
-            print_r($object);die;
             $lastInsertedId = '';
             foreach ($object->getWorksheetIterator() as $worksheet) {
                 $highestRow = $worksheet->getHighestRow();
@@ -222,36 +221,37 @@ class Import_model extends My_model {
                     $image = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
                     $gst = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
                     $max_order_qty = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-            // print_r($type);
-            // echo "<br>";
-            // print_r($subCategory);
-            // echo "<br>";
+            print_r($type);
+            echo "<br>";
+            print_r($subCategory);
+            echo "<br>";
             print_r($brandName);
             echo "<br>";
-            // print_r($productContent);
-            // echo "<br>";
-            // print_r($productAbout);
-            // echo "<br>";
-            // print_r($varient);
-            // echo "<br>";
-            // print_r($unit);
-            // echo "<br>";
-            // print_r($package);
-            // echo "<br>";
-            // print_r($qty);
-            // echo "<br>";
-            // print_r($purchasePrice);
-            // echo "<br>";
-            // print_r($retailPrice);
-            // echo "<br>";
-            // print_r($dicount);
-            // echo "<br>";
-            // print_r($image);
-            // echo "<br>";
-            // print_r($gst);
-            // echo "<br>";
-            // print_r($max_order_qty);
-            // echo "<br>";
+            print_r($productContent);
+            echo "<br>";
+            print_r($productAbout);
+            echo "<br>";
+            print_r($varient);
+            echo "<br>";
+            print_r($unit);
+            echo "<br>";
+            print_r($package);
+            echo "<br>";
+            print_r($qty);
+            echo "<br>";
+            print_r($purchasePrice);
+            echo "<br>";
+            print_r($retailPrice);
+            echo "<br>";
+
+            print_r($dicount);
+            echo "<br>";
+            print_r($image);
+            echo "<br>";
+            print_r($gst);
+            echo "<br>";
+            print_r($max_order_qty);
+            echo "<br>";
             die;
 
                     if($subCategory != ''){
@@ -267,6 +267,7 @@ class Import_model extends My_model {
                         // $brandId = '10';
                     }
 
+                 
                     if($package != ''){
                         $getPackage = $this->package_list($package);
                         $packageId = $getPackage[0]['id'];
