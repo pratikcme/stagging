@@ -3530,6 +3530,7 @@ class Api_model extends My_model {
         $data['having'] = ['start_time <= '=>$time];
         $data['groupBy'] = 'o.id';
         $result = $this->selectFromJoin($data);
+        dd($result);
         unset($data);
         foreach ($result as $k => $v) {
             if($v->end_date == $today && $v->end_time <= $time){
@@ -3561,7 +3562,7 @@ class Api_model extends My_model {
             TABLE_OFFER_DETAIL . ' as od'=>['o.id=od.offer_id','LEFT'],
             TABLE_PRODUCT_WEIGHT . ' as pw'=>['pw.id = od.product_varient_id','LEFT'],
         ];
-        $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image','pw.product_id'];
+        $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image'];
         $data['where'] = ['o.id'=>$offer_id];
         $data['groupBy'] = 'pw.product_id';
         $result = $this->selectFromJoin($data);
