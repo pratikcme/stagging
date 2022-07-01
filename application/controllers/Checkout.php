@@ -38,7 +38,7 @@ class Checkout extends User_Controller {
       redirect($_SERVER['HTTP_REFERER']);
     }
     $defaultCartValue = $this->this_model->getCartValue();
- 
+  dd($defaultCartValue);
     $myCartValue = 0;
     $total_gst = 0;
     if($this->session->userdata('user_id') == '' ){
