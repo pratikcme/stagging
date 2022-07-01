@@ -182,8 +182,6 @@ class Import_model extends My_model {
     function importExcel(){
         // echo '1';die;
             // print_r($_POST);die;
-        error_reporting(E_ALL);
-            ini_set('display_errors', 1);
         $this->load->library('excel');
         if (isset($_FILES["file"]["name"])) {
             $path = $_FILES["file"]["tmp_name"];
