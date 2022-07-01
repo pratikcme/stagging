@@ -1051,6 +1051,7 @@ class Api extends Apiuser_Controller {
 
         if ($query->num_rows() > 0 ) {
             
+            $response = array();
             $counter = 0;
             foreach ($result as $row) {
                 $data = array();
@@ -1087,7 +1088,6 @@ class Api extends Apiuser_Controller {
             echo $output = json_encode(array('responsedata' => $response));
             die;
             }
-            $response = array();
             $response["success"] = 0;
             $response["message"] = "No record found";
             $output = json_encode(array('responsedata' => $response));
