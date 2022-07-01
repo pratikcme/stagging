@@ -182,14 +182,14 @@ class Import_model extends My_model {
     function importExcel(){
         // echo '1';die;
             // print_r($_POST);die;
-
+        $this->load->library('excel');
         if (isset($_FILES["file"]["name"])) {
             $path = $_FILES["file"]["tmp_name"];
             $name = explode('.',$_FILES["file"]["name"]);
             // $getCategory = $this->getCatgory($name[0]);
             // $categoryId = $getCategory[0]->id;
             $categoryId = $this->input->post('catgeory');
-
+            
             $object = PHPExcel_IOFactory::load($path);
             $lastInsertedId = '';
             foreach ($object->getWorksheetIterator() as $worksheet) {
