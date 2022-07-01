@@ -233,13 +233,13 @@
                             <label id="image-error" class="error" for="image" style="display: inline-block;"></label>
                             <div class="img_preview"> <img src="" id="img_preview" width="200" height="150"> </div>
                             <div class="All_images"></div>
-                          </div>
-
                           <?php $vendorimg = $app_result['image']; ?>
                             <div class="img img_show" id="image_<?=$vendor_id;?>" style="float: left; margin-right: 10px; margin-bottom: 20px;">
                               <?php if($vendorimg != '' && file_exists('public/images/'.$this->folder.'vendor_shop/'.$vendorimg)){ ?> <img src="<?php echo base_url().'public/images/'.$this->folder.'vendor_shop/'.$vendorimg; ?>" style="height: 180px; width: 200px;">
                                 <?php } ?>
                             </div>
+                          </div>
+
                           
                             <div class="form-group">
                               <label class="margin_top_label">Product defualt Image :<span class="required" aria-required="true"> * </span></label>
@@ -248,12 +248,12 @@
                               <label id="default_image_error" class="error" for="image" style="display: inline-block;"></label>
                               <div class="default_img_preview"> <img src="" id="default_img_preview" width="200" height="150"> </div>
                               <div class="All_images"></div>
+                            </div>
                             <?php $defualt_image = $app_result['product_default_image']; ?>
                             <div class="img img_showw" id="image_<?=$vendor_id;?>" style="float: left; margin-right: 10px; margin-bottom: 20px;">
                               <?php if($defualt_image != '' && file_exists('public/images/'.$this->folder.'product_image/'.$defualt_image)){ ?> <img src="<?php echo base_url().'public/images/'.$this->folder.'product_image/'.$defualt_image; ?>" style="height: 180px; width: 200px;">
                                <?php } ?>
                           </div>
-                            </div>
                         </div>
                         <?php } ?>
                 </div>
