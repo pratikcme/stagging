@@ -298,7 +298,6 @@ class Import_model extends My_model {
                             $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                             $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                             $data['table'] = 'temp_product';
-                            dd($data);
                             $lastId = $this->insertRecord($data);
                             $lastInsertedId = $lastId;
                             unset($data);
