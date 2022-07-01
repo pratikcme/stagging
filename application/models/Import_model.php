@@ -277,11 +277,12 @@ class Import_model extends My_model {
                         $getUnit = $this->unit_list($unit);
                         $unitId = $getUnit[0]['id'];
                     }
-                        echo $unitId;die;
                     if($image != ''){
                         $image = $image;
                         $images = explode(',', $image);
-                        
+                    }   
+
+                    echo $type;die;
                     if($type != ''){
                         if ($type == 'New') {
                             // echo 'new';die;
