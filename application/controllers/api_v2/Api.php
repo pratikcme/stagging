@@ -1049,42 +1049,44 @@ class Api extends Apiuser_Controller {
             $offer_list = $this->this_model->get_offer($vendor_id);
         }
 
-        if ($query->num_rows() > 0 || !empty($offer_list)) {
-            if($query->num_rows() > 0){
-                $response['success'] = "1";
-                $response['message'] = "Banner promotion list";
-                $response["data"] = array();
-                $counter = 0;
-                foreach ($result as $row) {
-                    $data = array();
-                    $data['id'] = $row->id;
-                    $data['branch_id'] = $row->branch_id;
-                    $data['type'] = $row->type;
-                    $data['category_id'] = $row->category_id;
-                    $data['category_name'] = ($row->category_name!='')?$row->category_name:'';
-                    $data['product_id'] = $row->product_id;
-                    $data['product_varient_id'] = $row->product_varient_id;
-                    $data['image'] = base_url() . 'public/images/'.$this->folder.'banner_promotion/' . $row->app_banner_image;
-                    $data['image_thumb'] = base_url() . 'public/images/'.$this->folder.'banner_promotion_thumb/' . $row->app_banner_image;
-                    $data['dt_added'] = $row->dt_created;
-                    $data['dt_updated'] = $row->dt_updated;
-                    array_push($response["data"], $data);
-                    $counter++;
-                }
+        if ($query->num_rows() > 0 ) {
+            
+            $counter = 0;
+            foreach ($result as $row) {
+                $data = array();
+                $data['id'] = $row->id;
+                $data['branch_id'] = $row->branch_id;
+                $data['type'] = $row->type;
+                $data['category_id'] = $row->category_id;
+                $data['category_name'] = ($row->category_name!='')?$row->category_name:'';
+                $data['product_id'] = $row->product_id;
+                $data['product_varient_id'] = $row->product_varient_id;
+                $data['image'] = base_url() . 'public/images/'.$this->folder.'banner_promotion/' . $row->app_banner_image;
+                $data['image_thumb'] = base_url() . 'public/images/'.$this->folder.'banner_promotion_thumb/' . $row->app_banner_image;
+                $data['dt_added'] = $row->dt_created;
+                $data['dt_updated'] = $row->dt_updated;
+                array_push($response["data"], $data);
+                $counter++;
             }
             // $branch_id = $result[0]->branch_id;
             unset($data);
-            $response['offer_list'] = $offer_list;
-            $type = '1';
-            foreach ($response['offer_list'] as $key => $value) {
-                $s = $this->this_model->check($value->id);
-                if(count($s) > 1){
-                 $type = '2';   
-                }
-               $value->type = $type;        
-            }
-            echo $output = json_encode(array('responsedata' => $response));
         } else {
+            $response['offer_list'] = $offer_list;
+            if(!empty($response['offer_list'])){
+                $type = '1';
+                foreach ($response['offer_list'] as $key => $value) {
+                    $s = $this->this_model->check($value->id);
+                    if(count($s) > 1){
+                     $type = '2';   
+                    }
+                   $value->type = $type;        
+                }
+            $response['success'] = "1";
+            $response['message'] = "Banner promotion list";
+            $response["data"] = array();
+            echo $output = json_encode(array('responsedata' => $response));
+            die;
+            }
             $response = array();
             $response["success"] = 0;
             $response["message"] = "No record found";
