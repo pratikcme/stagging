@@ -365,7 +365,7 @@ class Import_model extends My_model {
                
             }
         }
-        return true;
+        // return true;
     }
 } 
 
