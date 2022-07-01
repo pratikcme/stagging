@@ -1069,7 +1069,15 @@ class Api extends Apiuser_Controller {
                 $counter++;
             }
             // $branch_id = $result[0]->branch_id;
-            unset($data);
+            
+        } else {
+            $response = array();
+            $response["success"] = 0;
+            $response["message"] = "No record found";
+            $output = json_encode(array('responsedata' => $response));
+            echo $output;
+        }
+        unset($data);
             $response['offer_list'] = $this->this_model->get_offer($vendor_id);
             $type = '1';
             foreach ($response['offer_list'] as $key => $value) {
@@ -1080,13 +1088,6 @@ class Api extends Apiuser_Controller {
                $value->type = $type;        
             }
             echo $output = json_encode(array('responsedata' => $response));
-        } else {
-            $response = array();
-            $response["success"] = 0;
-            $response["message"] = "No record found";
-            $output = json_encode(array('responsedata' => $response));
-            echo $output;
-        }
     }
 
     ## Brand List ##
