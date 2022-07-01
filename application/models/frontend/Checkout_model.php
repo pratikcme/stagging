@@ -89,6 +89,7 @@ Class Checkout_model extends My_model{
         $data['where'] = ['request_id' => '1','vendor_id'=>$this->vendor_id];
         $data['table'] = 'set_default';
         $result = $this->selectRecords($data);
+        lq();
         return $result[0]->value;
     }
 
