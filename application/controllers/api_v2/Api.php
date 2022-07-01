@@ -1029,7 +1029,8 @@ class Api extends Apiuser_Controller {
     public function banner_promotion_list() {
         $post = $this->input->post();
         $req = array('vendor_id');
-        $this->checkRequiredField($post, $req);
+        $response = $this->checkRequiredField($post, $req);
+        echo json_encode(array('responsedata' => $response));
 
         if ($_POST['vendor_id'] == '0') {
             $response = array();
@@ -1049,7 +1050,6 @@ class Api extends Apiuser_Controller {
             $offer_list = $this->this_model->get_offer($vendor_id);
         }
 
-            echo json_encode(array('responsedata' => $response));
         if ($query->num_rows() > 0 || !empty($offer_list) ) {
             $response['success'] = "1";
             $response['message'] = "Banner promotion list";
