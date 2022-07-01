@@ -1054,6 +1054,7 @@ class Api extends Apiuser_Controller {
             $response['message'] = "Banner promotion list";
             $response["data"] = array();
             $counter = 0;
+            echo json_encode(array('responsedata' => $response));
             foreach ($result as $row) {
                 $data = array();
                 $data['id'] = $row->id;
