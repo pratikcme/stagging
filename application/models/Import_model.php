@@ -283,7 +283,6 @@ class Import_model extends My_model {
                     }   
 
                     if($type != ''){
-                    echo '1';die;
                         if ($type == 'New') {
                             // echo 'new';die;
                             $data['insert']['branch_id'] = $this->branch_id;
@@ -300,6 +299,7 @@ class Import_model extends My_model {
                             $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                             $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                             $data['table'] = 'temp_product';
+                            dd($data);
                             $lastId = $this->insertRecord($data);
                             $lastInsertedId = $lastId;
                             unset($data);
@@ -309,6 +309,7 @@ class Import_model extends My_model {
                         if ($type == 'Old') {
 
                             a:
+                    echo '1';die;
                             $final_discount_price = '';
 
                             if ($dicount != '0' && $dicount != '') {
