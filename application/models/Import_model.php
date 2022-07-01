@@ -277,12 +277,12 @@ class Import_model extends My_model {
                         $getUnit = $this->unit_list($unit);
                         $unitId = $getUnit[0]['id'];
                     }
-                    echo $unitId;die;
                     if($image != ''){
                         $image = $image;
                         $images = explode(',', $image);
                     }   
 
+                    echo $images;die;
                     if($type != ''){
                         if ($type == 'New') {
                             // echo 'new';die;
@@ -367,8 +367,7 @@ class Import_model extends My_model {
             }
         }
         return true;
-    }
-} 
+    } 
 
     public function getProductOfCategory($postData){
         $data['table'] = TABLE_CATEGORY;
