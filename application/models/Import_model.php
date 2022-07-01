@@ -282,7 +282,7 @@ class Import_model extends My_model {
                         $images = explode(',', $image);
                     }   
 
-                    echo $images;die;
+                    echo $image;die;
                     if($type != ''){
                         if ($type == 'New') {
                             // echo 'new';die;
