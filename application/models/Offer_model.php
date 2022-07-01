@@ -3,7 +3,7 @@
 Class Offer_model extends My_model{
 
     function __construct(){
-     $this->vendor_id = $this->session->userdata('vendor_admin_id');
+        $this->vendor_id = $this->session->userdata('vendor_admin_id');
         $request_schema = $_SERVER['REQUEST_SCHEME'];
         $server_name = $_SERVER['SERVER_NAME'];
         $this->crone_url = $request_schema.'://'.$server_name."/cron/applied_offer_bycron";
@@ -49,8 +49,8 @@ Class Offer_model extends My_model{
 
   ## Add Update ##
     public function addRecord($postData){
-        // dd($postData);
-         $varient_ids = explode(',',$postData['hidden_varient_id']);
+        
+        $varient_ids = explode(',',$postData['hidden_varient_id']);
         if($_FILES['offer_image']['error'] == 0){
             ## Image Upload ##
 
@@ -65,6 +65,7 @@ Class Offer_model extends My_model{
 
         $insert = array(
             'branch_id' => $postData['branch_id'],
+            'vendor_id' => $this->vendor_id,
             'image' => $offer_image,
             'offer_title' => $postData['offer_title'],
             'offer_percent' => ($postData['offer_percent'] && $postData['offer_percent'] != '') ? $postData['offer_percent'] : NULL,
@@ -75,7 +76,7 @@ Class Offer_model extends My_model{
             'dt_created' => DATE_TIME,
             'dt_updated' => DATE_TIME
         );
-        
+        dd($insert);
         $data['table'] = TABLE_OFFER;       
         $data['insert'] = $insert;
         $offer_id = $this->insertRecord($data);
