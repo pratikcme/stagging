@@ -258,7 +258,6 @@ class Import_model extends My_model {
                         $getSub = $this->subcategory_list($categoryId, $subCategory);
                         $subCategoryId = $getSub[0]['id'];
                     }
-                        echo $subCategoryId ;;die;
 
                     if($brandName != ''){
                         $getBrand = $this->brand_list($categoryId, $brandName);
@@ -267,6 +266,7 @@ class Import_model extends My_model {
                         $brandId = $getBrand[0]['id'];
                         // $brandId = '10';
                     }
+                        echo $brandId;die;
 
                  
                     if($package != ''){
