@@ -28,6 +28,7 @@ class Cron extends CI_Controller{
 
 	public function rollback_offer_bycron(){
 		$rollback = $this->this_model->getOfferForApplied(true);
+		dd($rollback);
 		foreach ($rollback as $key => $value) {
 			$product_varient_id = $value->product_varient_id;
 			$old_discount = $value->old_percentage;
