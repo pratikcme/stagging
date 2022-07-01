@@ -272,12 +272,12 @@ class Import_model extends My_model {
                         $getPackage = $this->package_list($package);
                         $packageId = $getPackage[0]['id'];
                     }
-                        echo $packageId;die;
 
                     if($unit != ''){
                         $getUnit = $this->unit_list($unit);
                         $unitId = $getUnit[0]['id'];
                     }
+                        echo $unitId;die;
                     if($image != ''){
                         $image = $image;
                         $images = explode(',', $image);
