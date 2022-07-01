@@ -259,7 +259,6 @@ class Import extends Vendor_Controller
 
     public function import_excel(){
         $productResult = $this->display_records();
-        echo $this->db->last_query();
         $data['tempRecord'] = $productResult;
         if($this->input->post()){
             $this->db->query('TRUNCATE TABLE temp_product');
