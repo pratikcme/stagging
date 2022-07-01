@@ -1049,12 +1049,12 @@ class Api extends Apiuser_Controller {
             $offer_list = $this->this_model->get_offer($vendor_id);
         }
 
+            echo json_encode(array('responsedata' => $response));
         if ($query->num_rows() > 0 || !empty($offer_list) ) {
             $response['success'] = "1";
             $response['message'] = "Banner promotion list";
             $response["data"] = array();
             $counter = 0;
-            echo json_encode(array('responsedata' => $response));
             foreach ($result as $row) {
                 $data = array();
                 $data['id'] = $row->id;
