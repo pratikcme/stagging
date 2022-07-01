@@ -3533,16 +3533,10 @@ class Api_model extends My_model {
         // dd($result);
         unset($data);
         foreach ($result as $k => $v) {
-
-
             if($v->end_date == $today && $v->end_time <= $time){
                 unset($result[$k]);
                 continue;
             }
-                echo $v->end_date; echo "<br>";
-                echo $today; echo "<br>";
-                echo $v->end_time; echo "<br>";
-                echo $time; echo "<br>"; die;
 
             $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
             $data['select'] = ['c.name as category_name','p.category_id','pw.product_id'];
