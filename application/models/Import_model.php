@@ -265,7 +265,8 @@ class Import_model extends My_model {
                         $brandId = $getBrand[0]['id'];
                         // $brandId = '10';
                     }
-
+                    dd($brandId);die;
+                    
                  
                     if($package != ''){
                         $getPackage = $this->package_list($package);
