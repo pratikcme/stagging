@@ -282,8 +282,8 @@ class Import_model extends My_model {
                         $images = explode(',', $image);
                     }   
 
-                    // dd($images);die;
                     if($type != ''){
+                    echo '1';die;
                         if ($type == 'New') {
                             // echo 'new';die;
                             $data['insert']['branch_id'] = $this->branch_id;
