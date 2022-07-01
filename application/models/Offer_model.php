@@ -283,6 +283,8 @@ Class Offer_model extends My_model{
 
             $this->insertRecord($data);
 
+            $this->setReverceCron($postData,$postData['edit_id']);
+
             unset($data);
             $data['table'] = 'crontab';
             $data['select'] = ['*'];
