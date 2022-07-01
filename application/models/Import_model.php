@@ -225,8 +225,8 @@ class Import_model extends My_model {
             // echo "<br>";
             // print_r($subCategory);
             // echo "<br>";
-            // print_r($brandName);
-            // echo "<br>";
+            print_r($brandName);
+            echo "<br>";
             // print_r($productContent);
             // echo "<br>";
             // print_r($productAbout);
@@ -251,7 +251,7 @@ class Import_model extends My_model {
             // echo "<br>";
             // print_r($max_order_qty);
             // echo "<br>";
-            // die;
+            die;
 
                     if($subCategory != ''){
                         $getSub = $this->subcategory_list($categoryId, $subCategory);
@@ -265,9 +265,7 @@ class Import_model extends My_model {
                         $brandId = $getBrand[0]['id'];
                         // $brandId = '10';
                     }
-                    dd($brandId);die;
-                    
-                 
+
                     if($package != ''){
                         $getPackage = $this->package_list($package);
                         $packageId = $getPackage[0]['id'];
