@@ -189,7 +189,7 @@ class Import_model extends My_model {
             // $getCategory = $this->getCatgory($name[0]);
             // $categoryId = $getCategory[0]->id;
             $categoryId = $this->input->post('catgeory');
-            
+
             $object = PHPExcel_IOFactory::load($path);
             $lastInsertedId = '';
             foreach ($object->getWorksheetIterator() as $worksheet) {
@@ -258,6 +258,7 @@ class Import_model extends My_model {
                         $getSub = $this->subcategory_list($categoryId, $subCategory);
                         $subCategoryId = $getSub[0]['id'];
                     }
+                        echo $subCategoryId ;;die;
 
                     if($brandName != ''){
                         $getBrand = $this->brand_list($categoryId, $brandName);
@@ -283,7 +284,6 @@ class Import_model extends My_model {
                         
                     if($type != ''){
                         if ($type == 'New') {
-                        echo '2';die;
                             // echo 'new';die;
                             $data['insert']['branch_id'] = $this->branch_id;
                             $data['insert']['category_id'] = $categoryId;
