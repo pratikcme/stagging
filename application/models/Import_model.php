@@ -180,7 +180,7 @@ class Import_model extends My_model {
 
 
     function importExcel(){
-            print_r($_FILES);die;
+            // print_r($_FILES);die;
 
         if (isset($_FILES["file"]["name"])) {
             $path = $_FILES["file"]["tmp_name"];
@@ -190,6 +190,7 @@ class Import_model extends My_model {
             $categoryId = $this->input->post('catgeory');
 
             $object = PHPExcel_IOFactory::load($path);
+            print_r($object);die;
             $lastInsertedId = '';
             foreach ($object->getWorksheetIterator() as $worksheet) {
                 $highestRow = $worksheet->getHighestRow();
