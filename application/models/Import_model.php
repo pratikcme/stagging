@@ -188,7 +188,8 @@ class Import_model extends My_model {
             // $getCategory = $this->getCatgory($name[0]);
             // $categoryId = $getCategory[0]->id;
             $categoryId = $this->input->post('catgeory');
-
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
             $object = PHPExcel_IOFactory::load($path);
             print_r($object);die;
             $lastInsertedId = '';
