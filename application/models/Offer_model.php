@@ -194,7 +194,7 @@ Class Offer_model extends My_model{
             $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
             $data['insert']['dt_created'] = DATE_TIME;
             $data['insert']['dt_updated'] = DATE_TIME;
-            $this->insertRecord($data)
+            $this->insertRecord($data);
             return true;
     }
 
