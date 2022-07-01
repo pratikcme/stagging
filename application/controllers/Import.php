@@ -261,14 +261,13 @@ class Import extends Vendor_Controller
         $productResult = $this->display_records();
         echo $this->db->last_query();
         $data['tempRecord'] = $productResult;
-        $this->load->library('excel');
         if($this->input->post()){
             $this->db->query('TRUNCATE TABLE temp_product');
             $this->db->query('TRUNCATE TABLE temp_product_weight');
             $this->db->query('TRUNCATE TABLE temp_product_image');
             $result = $this->this_model->importExcel($this->input->post());
+            lq();
             if($result){
-
                 // $this->utility->setFlashMessage('success',"Product uploaded successfully");
                 $number = rand(10,100);
                 redirect(base_url().'import/import_excel/'.$this->utility->safe_b64encode($number));
