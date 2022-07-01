@@ -244,15 +244,15 @@ class Import_model extends My_model {
             // print_r($retailPrice);
             // echo "<br>";
 
-            // print_r($dicount);
-            // echo "<br>";
-            // print_r($image);
-            // echo "<br>";
-            // print_r($gst);
-            // echo "<br>";
-            // print_r($max_order_qty);
-            // echo "<br>";
-            // die;
+            print_r($dicount);
+            echo "<br>";
+            print_r($image);
+            echo "<br>";
+            print_r($gst);
+            echo "<br>";
+            print_r($max_order_qty);
+            echo "<br>";
+            die;
 
                     if($subCategory != ''){
                         $getSub = $this->subcategory_list($categoryId, $subCategory);
