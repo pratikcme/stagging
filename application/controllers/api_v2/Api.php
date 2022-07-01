@@ -1029,7 +1029,7 @@ class Api extends Apiuser_Controller {
     public function banner_promotion_list() {
         $post = $this->input->post();
         $req = array('vendor_id');
-        $response = $this->checkRequiredField($post, $req);
+        $this->checkRequiredField($post, $req);
 
         if ($_POST['vendor_id'] == '0') {
             $response = array();
