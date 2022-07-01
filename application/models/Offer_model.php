@@ -7,6 +7,7 @@ Class Offer_model extends My_model{
         $request_schema = $_SERVER['REQUEST_SCHEME'];
         $server_name = $_SERVER['SERVER_NAME'];
         $this->crone_url = $request_schema.'://'.$server_name."/cron/applied_offer_bycron";
+        $this->crone_url_rollaback = $request_schema.'://'.$server_name."/cron/rollback_offer_bycron";
         $this->crone_url_local = $request_schema.'://'.$server_name."/stagging/cron/test";
     }
 
@@ -85,11 +86,11 @@ Class Offer_model extends My_model{
         $st_hr = $st[0];
         $st_min = $st[1];
 
-            $utc_time =  gmdate("H:i",strtotime($st_array));
-            $srvTime = date("H:i",strtotime($utc_time));
-            $sts = explode(':',$srvTime);
-            $st_hr = $sts[0];
-            $st_min = $sts[1];
+        $utc_time =  gmdate("H:i",strtotime($st_array));
+        $srvTime = date("H:i",strtotime($utc_time));
+        $sts = explode(':',$srvTime);
+        $st_hr = $sts[0];
+        $st_min = $sts[1];
             
         // if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
         //     unlink('/var/www/html/stagging/crontab_final.txt');
@@ -116,6 +117,11 @@ Class Offer_model extends My_model{
             $data['insert']['dt_created'] = DATE_TIME;
             $data['insert']['dt_updated'] = DATE_TIME;
             $this->insertRecord($data);
+
+
+
+            $this->setReverceCron($postData,$offer_id);
+
 
             unset($data);
             $data['table'] = 'crontab';
@@ -151,6 +157,46 @@ Class Offer_model extends My_model{
         redirect(base_url().'offer');
 }
 
+    public function setReverceCron($postData,$offer_id){
+        $end_array = date('H:i',strtotime($postData['end_time']."+1 minutes"));
+        $st = explode(':',$end_array);
+        // dd($st_array);
+        $end_hr = $st[0];
+        $end_min = $st[1];
+
+        $utc_time =  gmdate("H:i",strtotime($end_array));
+        $srvTime = date("H:i",strtotime($utc_time));
+        $sts = explode(':',$srvTime);
+        $st_hr = $sts[0];
+        $st_min = $sts[1];
+            
+        // if($_SERVER['REQUEST_SCHEME'] == 'http' && $_SERVER['SERVER_NAME'] =='localhost'){        
+        //     unlink('/var/www/html/stagging/crontab_final.txt');
+        //     exec('sudo crontab -u php -r');
+        //     file_put_contents('/var/www/html/stagging/crontab_final.txt', $st_min.' '. $st_hr .' * * * curl --silent '.$this->crone_url_local.' >> /var/www/html/stagging/cronlog.log 2>&1'.PHP_EOL);
+
+        //     exec('chmod -R 777 /var/www/html/stagging/crontab_final.txt');
+        //     exec('crontab /var/www/html/stagging/crontab_final.txt 2>&1', $ext);
+        //     // dd($ext);
+        // }else{
+            $date = explode('/',$postData['end_date']);
+            $end_month =  $date['0'];
+            $end_day =  $date['1'];
+
+            unset($data);
+            $data['table'] = 'crontab';
+            $data['insert']['offer_id'] = $offer_id;
+            $data['insert']['cron_command'] = $st_min." ". $st_hr ." ".$end_day." ".$end_month." * curl --silent ".$this->crone_url_rollaback." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1"; 
+            $data['insert']['cron_exec_command'] = "crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1"; 
+            $data['insert']['hour'] = $st_hr;
+            $data['insert']['min'] = $st_min;
+            $data['insert']['start_date'] = date("Y-m-d", strtotime($postData['start_date']));
+            $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
+            $data['insert']['dt_created'] = DATE_TIME;
+            $data['insert']['dt_updated'] = DATE_TIME;
+            $this->insertRecord($data)
+            return true;
+    }
 
     public function updateRecord($postData){
         // dd($postData);
