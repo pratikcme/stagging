@@ -180,8 +180,7 @@ class Import_model extends My_model {
 
 
     function importExcel(){
-        // echo '1';die;
-            // print_r($_POST);die;
+            print_r($_FILES);die;
 
         if (isset($_FILES["file"]["name"])) {
             $path = $_FILES["file"]["tmp_name"];
