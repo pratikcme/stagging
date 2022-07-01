@@ -258,6 +258,7 @@ class Import extends Vendor_Controller
     }
 
     public function import_excel(){
+        echo '1';die;
         $productResult = $this->display_records();
         $data['tempRecord'] = $productResult;
         if($this->input->post()){
