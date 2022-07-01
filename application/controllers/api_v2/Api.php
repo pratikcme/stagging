@@ -1049,7 +1049,7 @@ class Api extends Apiuser_Controller {
             $offer_list = $this->this_model->get_offer($vendor_id);
         }
 
-        if ($query->num_rows() > 0 || !empty($offer_list)) {
+        if ($query->num_rows() > 0 || !empty($offer_list) ) {
             $response['success'] = "1";
             $response['message'] = "Banner promotion list";
             $response["data"] = array();
@@ -1072,7 +1072,7 @@ class Api extends Apiuser_Controller {
             }
             // $branch_id = $result[0]->branch_id;
             unset($data);
-            $response['offer_list'] = $offer_list
+            $response['offer_list'] = $offer_list;
             $type = '1';
             foreach ($response['offer_list'] as $key => $value) {
                 $s = $this->this_model->check($value->id);
