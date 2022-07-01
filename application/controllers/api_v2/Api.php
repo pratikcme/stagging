@@ -1079,7 +1079,6 @@ class Api extends Apiuser_Controller {
             $type = '1';
             foreach ($response['offer_list'] as $key => $value) {
                 $s = $this->this_model->check($value->id);
-                lq();
                 if(count($s) > 1){
                  $type = '2';   
                 }
