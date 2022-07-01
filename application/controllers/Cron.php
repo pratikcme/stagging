@@ -23,6 +23,7 @@ class Cron extends CI_Controller{
 			$discount = ($price/100)*$new_discount;
 			$discount_price = $price - $discount;
 			$this->this_model->updateProductVarientById($product_varient_id,$new_discount,$discount_price);
+			echo 'applied';
 		}
 	}
 
@@ -36,6 +37,8 @@ class Cron extends CI_Controller{
 			$discount = ($price/100)* $old_discount;
 			$discount_price = $price - $discount;
 			$this->this_model->updateProductVarientById($product_varient_id,$old_discount,$discount_price);
+			echo 'rollback';
+
 		}
 	}
 
