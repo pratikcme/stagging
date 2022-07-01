@@ -248,12 +248,12 @@
                               <label id="default_image_error" class="error" for="image" style="display: inline-block;"></label>
                               <div class="default_img_preview"> <img src="" id="default_img_preview" width="200" height="150"> </div>
                               <div class="All_images"></div>
-                            </div>
                             <?php $defualt_image = $app_result['product_default_image']; ?>
                             <div class="img img_showw" id="image_<?=$vendor_id;?>" style="float: left; margin-right: 10px; margin-bottom: 20px;">
                               <?php if($defualt_image != '' && file_exists('public/images/'.$this->folder.'product_image/'.$defualt_image)){ ?> <img src="<?php echo base_url().'public/images/'.$this->folder.'product_image/'.$defualt_image; ?>" style="height: 180px; width: 200px;">
-                            <?php } ?>
+                               <?php } ?>
                           </div>
+                            </div>
                         </div>
                         <?php } ?>
                 </div>
