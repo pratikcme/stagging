@@ -12,7 +12,7 @@ class Setting_model extends My_model{
     	$cart_min_value = $this->input->post('cart_min_value');
     	$id = $this->input->post('id');
     	if($id==''){
-    		$insertion = array('value'=>$cart_min_value,'request_id'=>1);
+    		$insertion = array('vendor_id'=>$this->vendor_id,'value'=>$cart_min_value,'request_id'=>1);
     		$data['insert'] = $insertion;
     		$data['table'] = 'set_default';
     		$result = $this->insertRecord($data);
@@ -50,16 +50,16 @@ class Setting_model extends My_model{
         exit();
     }
     public function profit_add(){
-        $currency = $this->input->post('profit');
+        $profit = $this->input->post('profit');
         $id = $this->input->post('id');
         if($id==''){
-            $insertion = array('value'=>$currency,'request_id'=>2,'branch_id'=>$this->branch_id);
+            $insertion = array('value'=>$profit,'request_id'=>2,'vendor_id'=>$this->vendor_id);
             $data['insert'] = $insertion;
             $data['table'] = 'set_default';
             $result = $this->insertRecord($data);
             $this->session->set_flashdata('msg', 'Profit Percentage has been set successfully');
         }else{
-            $insertion = array('value'=>$currency,'request_id'=>2);
+            $insertion = array('value'=>$profit,'request_id'=>2);
             $data['update'] = $insertion;
             $data['where']['id'] = $id;
             $data['table'] = 'set_default';
@@ -73,7 +73,7 @@ class Setting_model extends My_model{
         $subscription_value = $this->input->post('subscription_value');
         $id = $this->input->post('id');
         if($id==''){
-            $insertion = array('value'=>$subscription_value,'request_id'=>4,'branch_id'=>$this->branch_id);
+            $insertion = array('value'=>$subscription_value,'request_id'=>4,'vendor_id'=>$this->vendor_id);
             $data['insert'] = $insertion;
             $data['insert'] = ['branch_id'=>$this->branch_id];
             $data['table'] = 'set_default';
@@ -95,8 +95,7 @@ class Setting_model extends My_model{
         $data['table'] = 'set_default';
         $data['select'] = ['*'];
         $data['where'] = ['request_id'=>'3','vendor_id'=>$this->vendor_id];
-        $result = $this->selectRecords($data);
-        // echo $this->db->last_query();die;
+        $result = $this->selectRecords($data,true);
         return $result[0];
     }
 

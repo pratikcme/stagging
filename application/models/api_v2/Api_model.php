@@ -69,6 +69,7 @@ class Api_model extends My_model {
             $dataIns['insert']['lname']= $postData['lname'];
             $dataIns['insert']['email']= $postData['email'];
             $dataIns['insert']['password']= (isset($postData['password']) && $postData['password']!='')?md5($postData['password']):NULL;
+            $dataIns['insert']['country_code']= $postData['country_code'];
             $dataIns['insert']['login_type']= $postData['login_type'];
             $dataIns['insert']['phone']= $postData['phone'];
             $dataIns['insert']['status']= '1';
@@ -3518,15 +3519,26 @@ class Api_model extends My_model {
         }
 
     //Developer : Shahid Abdul Rahman     
-    public function get_offer($branch_id){
+    public function get_offer($vendor_id =''){
+        $today = date('Y-m-d');
+        $time = date('H:i:00');
+
+
         $data['table'] = TABLE_OFFER .' as o';
         $data['join'] = [TABLE_OFFER_DETAIL . ' as od'=>['o.id=od.offer_id','LEFT']];
-        $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image'];
-        $data['where'] = ['o.branch_id'=>$branch_id];
+        $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image','start_date','end_date','start_time','end_time'];
+        $data['where'] = ['o.vendor_id'=>$vendor_id,'start_date <='=>$today,'end_date >='=>$today];
+        $data['having'] = ['start_time <= '=>$time];
         $data['groupBy'] = 'o.id';
         $result = $this->selectFromJoin($data);
+        // dd($result);
         unset($data);
         foreach ($result as $k => $v) {
+            if($v->end_date == $today && $v->end_time <= $time){
+                unset($result[$k]);
+                continue;
+            }
+
             $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
             $data['select'] = ['c.name as category_name','p.category_id','pw.product_id'];
             $data['table'] = TABLE_PRODUCT_WEIGHT . ' as pw';
@@ -3540,6 +3552,8 @@ class Api_model extends My_model {
             $v->category_name = $res[0]->category_name;
             $v->product_id = $res[0]->product_id;
         }
+        if($today == $value->sta && $time == $value->start_time){}
+
         return $result;
 
     }
@@ -3613,7 +3627,8 @@ class Api_model extends My_model {
 
                 $data['update'] = [
                             'otp' => '',
-                            'is_verify' => '1'
+                            'is_verify' => '1',
+                            'status'=>'1',
                             ];
                 $data['where'] = ['id'=>$re[0]['id']];
                 $data['table'] = 'user';

@@ -208,11 +208,11 @@ Class Common_model extends My_model{
 		$data['table'] = 'branch '; // vendor
 		$data['where'] = ['id'=>$branch_id,'status!='=>'9'];
 		$return =  $this->selectRecords($data);
-		if($return[0]->product_default_image != ''){
+		if(!empty($return) && $return[0]->product_default_image != ''){
 			$image =  $return[0]->product_default_image;
 		}else{
-			// $image =  'defualt.png';
-			$image =  'http://www.ddexim.org/assets/images/img-dummy-product.jpg';
+			$image =  'defualt.png';
+			// $image =  'http://www.ddexim.org/assets/images/img-dummy-product.jpg';
 		}
 		return $image; 
 	}

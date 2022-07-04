@@ -50,14 +50,6 @@ class Contact extends User_Controller {
 							]
 					),
 					array(
-						'field'=> 'lname',
-						'lable'=> 'lname',
-						'rules' => 'trim|required',
-						'errors' => [ 
-								'required' => "please enter your last name"
-							]
-					),
-					array(
 						'field'=> 'email',
 						'lable'=> 'email',
 						'rules' => 'trim|required|valid_email',

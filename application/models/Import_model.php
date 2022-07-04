@@ -182,7 +182,7 @@ class Import_model extends My_model {
     function importExcel(){
         // echo '1';die;
             // print_r($_POST);die;
-
+        $this->load->library('excel');
         if (isset($_FILES["file"]["name"])) {
             $path = $_FILES["file"]["tmp_name"];
             $name = explode('.',$_FILES["file"]["name"]);
@@ -222,21 +222,36 @@ class Import_model extends My_model {
                     $gst = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
                     $max_order_qty = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
             // print_r($type);
+            // echo "<br>";
             // print_r($subCategory);
+            // echo "<br>";
             // print_r($brandName);
+            // echo "<br>";
             // print_r($productContent);
+            // echo "<br>";
             // print_r($productAbout);
+            // echo "<br>";
             // print_r($varient);
+            // echo "<br>";
             // print_r($unit);
+            // echo "<br>";
             // print_r($package);
+            // echo "<br>";
             // print_r($qty);
+            // echo "<br>";
             // print_r($purchasePrice);
+            // echo "<br>";
             // print_r($retailPrice);
+            // echo "<br>";
 
             // print_r($dicount);
+            // echo "<br>";
             // print_r($image);
+            // echo "<br>";
             // print_r($gst);
+            // echo "<br>";
             // print_r($max_order_qty);
+            // echo "<br>";
             // die;
 
                     if($subCategory != ''){
@@ -265,10 +280,10 @@ class Import_model extends My_model {
                     if($image != ''){
                         $image = $image;
                         $images = explode(',', $image);
-                        
+                    }   
+
                     if($type != ''){
                         if ($type == 'New') {
-                        // echo '2';die;
                             // echo 'new';die;
                             $data['insert']['branch_id'] = $this->branch_id;
                             $data['insert']['category_id'] = $categoryId;
@@ -284,12 +299,9 @@ class Import_model extends My_model {
                             $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                             $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                             $data['table'] = 'temp_product';
-                            // dd($data);
                             $lastId = $this->insertRecord($data);
                             $lastInsertedId = $lastId;
-                           
                             unset($data);
-
                             goto a;
                         }
 
@@ -298,7 +310,7 @@ class Import_model extends My_model {
                             a:
                             $final_discount_price = '';
 
-                            if ($dicount != '0') {
+                            if ($dicount != '0' && $dicount != '') {
                                 $discount_price_cal = (($retailPrice * $dicount) / 100);
                                 $discount_price = number_format((float) $discount_price_cal, 2, '.', '');
                                 $final_discount_price = number_format((float) $retailPrice - $discount_price, 2, '.', '');
@@ -327,8 +339,8 @@ class Import_model extends My_model {
                                 $data['insert']['dt_added'] = strtotime(date('Y-m-d H:i:s'));
                                 $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                                 $data['table'] = 'temp_product_weight';
-                               
                                 $result = $this->insertRecord($data);
+                               // lq();
 
                                 unset($data);
                                 foreach ($images as $key => $value) {
@@ -342,6 +354,7 @@ class Import_model extends My_model {
                                     $data['insert']['dt_updated'] = strtotime(date('Y-m-d H:i:s'));
                                     $data['table'] = 'temp_product_image';
                                     $res = $this->insertRecord($data);
+                                    // lq();
                                 }
                                 unset($data);
                             }
@@ -353,8 +366,7 @@ class Import_model extends My_model {
             }
         }
         return true;
-    }
-} 
+    } 
 
     public function getProductOfCategory($postData){
         $data['table'] = TABLE_CATEGORY;
@@ -426,9 +438,9 @@ class Import_model extends My_model {
                     $discount_price = ($price * $discount)/100; 
 
                   
-
                     $Varient = $this->ProductVarient($productName);
-
+                    // dd($Varient);
+                    
                     if($type != ''){
 
                         if ($type == 'New') {

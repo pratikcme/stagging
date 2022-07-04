@@ -159,9 +159,9 @@ class Admin extends CI_Controller
     public function profile(){
         $this->load->model('vendor_model');
         $email = $this->session->userdata('email');
-        $vendor_id = $this->session->userdata['id'];
+        $vendor_id = $this->session->userdata['vendor_admin_id'];
         $data['currency'] = $this->vendor_model->getCurrency();
-        $data['app_result'] = $this->vendor_model->vendorByIdEmail($email);     
+        $data['app_result'] = $this->vendor_model->vendorByIdEmail($email); 
         $this->load->view('profile',$data);
     }
 
@@ -359,7 +359,6 @@ class Admin extends CI_Controller
            $server_name = $_SERVER["SERVER_NAME"];
            $result_login = $this->db->query("SELECT * FROM `vendor` WHERE email='$email' AND password='$password' AND server_name='$server_name'"); 
             $row_login = $result_login->row_array();
-
         if ($result_login->num_rows() > 0) {
            
                 $login_data = array(

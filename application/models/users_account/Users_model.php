@@ -372,8 +372,8 @@ class Users_model extends My_model {
         return $this->selectRecords($data);
     }
 
-    public function getVendorDetails($branch_id){
-        $data['table'] = TABLE_VENDOR; 
+    public function getBranchDetails($branch_id){
+        $data['table'] = TABLE_BRANCH; 
         $data['select'] = ['name','address','location'];
         $data['where'] = [
                         'id'=>$branch_id ,
@@ -413,7 +413,7 @@ class Users_model extends My_model {
         }
         $mobile = $postData['phone'];
         $mobile_number = $country_code.''.$mobile;
-        $this->api_model->sendOtp($mobile_number,$otp);
+        // $this->api_model->sendOtp($mobile_number,$otp);
 
         $data['update'] = ['otp'=>$otp];
         $data['where'] =['id'=>$this->session->userdata('user_id')];
@@ -425,6 +425,16 @@ class Users_model extends My_model {
         $response['data'] = $otp;
         return $response;
 
+    }
+
+    public function getVedorDetails(){
+        $vendor_id = $this->session->userdata('vendor_id');
+        $data['table'] = 'vendor'; 
+        $data['select'] = ['login_type'];
+        $data['where'] = [
+                        'id'=> $vendor_id,
+                     ];
+        return $this->selectRecords($data); 
     }
 }
 ?>

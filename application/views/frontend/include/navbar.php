@@ -22,7 +22,7 @@
              <span><i class="fas fa-search"></i></span>
             </div>
             <?php } ?>
-            <?php if($this->uri->segment(1)!='login') { ?>
+            <?php if($this->uri->segment(1)!='login' && $this->uri->segment(1) != '') { ?>
             <?php if($ApprovedBranch[0]->approved_branch > '1'){ ?>
             <div class="location-wrap">
               <select class="form-control vendor_nav location-wrap">
@@ -33,6 +33,7 @@
             </select>
             </div>
             <?php } ?>
+        <?php } ?>
               <?php 
               if($this->uri->segment(1) != ''){ 
                   $placeholder = 'Search product..';
@@ -51,7 +52,6 @@
             </div> 
           <?php } ?> 
 
-        <?php } ?>
             <div class="d-flex">
             <div class="cart_outter_wrap">
             <div class="cart-wrap">
@@ -324,7 +324,7 @@
          
          <div class="col-md-12">
           <div class="mobile-location">
-             <?php if($this->uri->segment(1)!='login') { ?>
+             <?php if($this->uri->segment(1)!='login' && $ApprovedBranch[0]->approved_branch > '1') { ?>
             <?php if($ApprovedBranch[0]->approved_branch > '1'){ ?>
               <div class="location-wrap-2">
                 <select class="form-control vendor_nav">

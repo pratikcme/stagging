@@ -1030,7 +1030,10 @@ class Api extends Apiuser_Controller {
         $post = $this->input->post();
         $req = array('vendor_id');
         $response = $this->checkRequiredField($post, $req);
-
+        if($response['status'] = '1'){
+            unset($response);
+        }
+        
         if ($_POST['vendor_id'] == '0') {
             $response = array();
             $response["success"] = 0;
@@ -1045,9 +1048,11 @@ class Api extends Apiuser_Controller {
             $branch_id = (!empty($branch)) ? $branch[0]->id : 0;
             $query = $this->db->query("SELECT b.* ,c.name as category_name FROM banners as b LEFT JOIN category as c ON c.id = b.category_id WHERE b.vendor_id = '$vendor_id'");  
             $result = $query->result();
+            
+            $offer_list = $this->this_model->get_offer($vendor_id);
         }
 
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() > 0 || !empty($offer_list) ) {
             $response['success'] = "1";
             $response['message'] = "Banner promotion list";
             $response["data"] = array();
@@ -1068,9 +1073,9 @@ class Api extends Apiuser_Controller {
                 array_push($response["data"], $data);
                 $counter++;
             }
-            $branch_id = $result[0]->branch_id;
+            // $branch_id = $result[0]->branch_id;
             unset($data);
-            $response['offer_list'] = $this->this_model->get_offer($branch_id);
+            $response['offer_list'] = $offer_list;
             $type = '1';
             foreach ($response['offer_list'] as $key => $value) {
                 $s = $this->this_model->check($value->id);
@@ -1989,6 +1994,7 @@ class Api extends Apiuser_Controller {
     /*Developer : Shahid abdul rahman*/
 
     public function get_offer(){
+
        $result = $this->this_model->get_offer();
         if ($result) {
             $response = array();

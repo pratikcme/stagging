@@ -41,7 +41,10 @@ class MY_Controller extends CI_Controller
         
             $this->countCategory = $this->common_model->CountCategory();
             $this->CountSubcategory = $this->common_model->CountSubCategory();
-            $this->common_keys = $this->common_model->getCommonKeysAndLink();
+            $common_keys = $this->common_model->getCommonKeysAndLink();
+            if(!empty($common_keys)){
+                $this->common_keys = $common_keys;
+            }
             $this->adminNotification = $this->common_model->getAdminNotification();
             }
            
@@ -52,7 +55,8 @@ class MY_Controller extends CI_Controller
 
     function loadView($layout,$data){
        $this->load->model('frontend/vendor_model','vendor_model');
-       $data['ApprovedBranch'] = $this->vendor_model->ApprovedBranch();
+       $data['ApprovedBranch'] = $this->vendor_model->ApprovedVendor();
+       // lq();
        $this->load->model($this->myvalues->contactFrontEnd['model'],'contact');
        $data['getContact'] = $this->contact->getContact();
        $data['home_url'] = base_url().'home';
@@ -128,9 +132,9 @@ class Vendor_Controller extends MY_Controller
                 foreach ($data['branch'] as $key => $value) {
                     $data['branch'][$key]->product_count = $this->vendor_model->branchProductCount($value->id);
                 };
-                $Approved = $this->vendor_model->ApprovedBranch();
-
-                if($Approved[0]->approved_branch == '1' || $branch_id == '1'){
+                $Approved = $this->vendor_model->ApprovedVendor();
+                // dd($Approved);
+                if($Approved[0]->approved_branch == '1'){
                     $branch_id = $data['branch'][0]->id;
                     $branch_name = $data['branch'][0]->name;
                     $this->load->model('vendor_model','vendor');
@@ -171,14 +175,17 @@ class Vendor_Controller extends MY_Controller
                 
                 $this->load->model('frontend/vendor_model','vendor_model');
                 $data['branch_nav'] = $this->vendor_model->branchList();
-                $data['ApprovedBranch'] = $this->vendor_model->ApprovedBranch();
+                $data['ApprovedBranch'] = $this->vendor_model->ApprovedVendor();
+                // dd( $data['ApprovedBranch']);
                 $this->load->model('frontend/product_model','product_model');
                 $data['wish_pid'] = $this->product_model->getUsersWishlist();
                 $data['getContact'] = $this->contact->getContact();
                 $data['home_url'] = base_url().'home';
                 $data['de_currency'] = $this->home->defualtCurrency();
-                $this->de_currency = $data['de_currency'][0]->value;
-                $this->session->set_userdata('de_currency',$this->de_currency);
+                if(!empty($data['de_currency'])){
+                    $this->de_currency = $data['de_currency'][0]->value; 
+                    $this->session->set_userdata('de_currency',$this->de_currency);
+                }
                 $this->load->model('frontend/product_model','product_model');
                 $data['CategoryHighrstProduct'] = $this->product_model->getCategoryHighrstProduct();
                 $data['appLinks'] = $this->common_model->getCommonKeysAndLink();

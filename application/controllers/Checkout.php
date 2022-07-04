@@ -38,7 +38,7 @@ class Checkout extends User_Controller {
       redirect($_SERVER['HTTP_REFERER']);
     }
     $defaultCartValue = $this->this_model->getCartValue();
- 
+    
     $myCartValue = 0;
     $total_gst = 0;
     if($this->session->userdata('user_id') == '' ){
@@ -118,6 +118,7 @@ class Checkout extends User_Controller {
     $data['is_verify'] = '0';
     $vendor = $this->this_model->getVendorAddress();
     $data['isOnlinePayment'] = $vendor[0]->isOnlinePayment;
+
     $data['isCOD'] = $vendor[0]->isCOD;
     if(isset($_SESSION['isSelfPickup']) && $_SESSION['isSelfPickup'] == '1'){
     

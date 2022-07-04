@@ -35,9 +35,11 @@ class Login_model extends My_model{
 	public function checkLoginType(){
 		$data['table'] = 'vendor';
         $data['select'] = ['login_type'];
-        $data['where']['id'] = $this->vendor_id;
+        $data['where']['server_name'] = $_SERVER['SERVER_NAME'];
         $r = $this->selectRecords($data);
-        return $r[0]->login_type; 
+        if(!empty($r)){
+        	return $r[0]->login_type; 
+        }
 	}
 
 	public function sendOtpLogin($postData){
@@ -96,10 +98,13 @@ class Login_model extends My_model{
 
                 $data['update'] = [
                             'otp' => '',
+                            'is_verify' => '1',
+                            'status'=>'1',
                             ];
                 $data['where'] = ['id'=>$re[0]['id']];
                 $data['table'] = 'user';
                 $this->updateRecords($data);
+                // lq();
                 if($re[0]['fname']!=''){
 
 	            	$login_data = array(

@@ -358,170 +358,6 @@ class Products extends User_Controller {
 
 	}
 
-	// public function addtocart(){
-	// 	// print_r($_SESSION);die;
-	// 	// print_r($this->input->post());die;
-	// 	$this->load->model('common_model');
-	// 	$default_product_image =$this->common_model->default_product_image();
-
-	// 	if($this->input->post()){	
-	// 		$result = $this->this_model->DefaultProductAddInCart_add_to_cart($this->input->post());
-	//  	}
-	//  	$quantity = $this->input->post('quantity');
-
-	//  	if(!file_exists('public/images/'.$this->folder.'product_image/'.$result[0]->image) || $result[0]->image == '' ){
- //          // $product_image[0]->image = 'defualt.png';
- //          $result[0]->image = $default_product_image;
- //        }
-        
-	//  	if(!empty($result)){
-	//  		if($result[0]->max_order_qty!='' && $result[0]->max_order_qty!='0' && $quantity > $result[0]->max_order_qty){
-
-	// 			$errormsg = 'Maximum order quantity reached';
-	// 		}
-	// 		elseif($quantity > $result[0]->quantity){
-	// 			 // $errormsg = $quantity .' Quantity not available';
-	// 			if($result[0]->quantity == 0){
-	// 			 	$errormsg = 'Product is out of stock';
-	// 			}else{
-	// 				// $errormsg = $quantity .' These number of quantity not available';
-	// 				$errormsg = 'These quantity not available';
-	// 			}
-	// 		}else{
-
-	// 			if($this->session->userdata('user_id') != ''){
-
-	// 			$cartTable = $this->this_model->getToCheckMycard($this->input->post());
-				
-	// 			if($cartTable){
-	// 				$update_id = $cartTable[0]->id;
-	// 				// $update_quantity = $cartTable[0]->quantity + $quantity ;
-	// 				$price = 	$cartTable[0]->discount_price * $quantity;
-	// 			$this->this_model->update_my_card($update_id,$quantity,$price);
-	// 				$itemExist = 'Product quantity updated successfully';
-	// 			}else{
-	// 			$my_cart_table_data = array(
-	// 					'branch_id'=>$this->session->userdata('branch_id'),	
-	// 					'vendor_id'=>$this->session->userdata('vendor_id'),	
-	// 					'user_id'=> $this->session->userdata('user_id'),	
-	// 					'product_id'=> $result[0]->id,	
-	// 					'product_weight_id'=> $result[0]->pw_id,
-	// 					'weight_id'=> $result[0]->weight_id,
-	// 					'quantity'=> $quantity,
-	// 					'actual_price'=>$result[0]->price,
-	// 					'actual_quantity'=>$result[0]->quantity,
-	// 					'discount_per'=>$result[0]->discount_per,
-	// 					'discount_price'=>$result[0]->discount_price,
-	// 					'calculation_price'=>$quantity * $result[0]->discount_price,
-	// 					'status'=>'1',
-	// 					'dt_added' => strtotime(DATE_TIME),
-	// 					'dt_updated' => strtotime(DATE_TIME)
-	// 				);
-	// 				$this->this_model->insertToMyCart($my_cart_table_data);
-	// 			}
-	// 		}
-				
-	// 				$cart_item = array(
-	// 					'product_id' => $result[0]->id,
-	// 					'branch_id' => $result[0]->branch_id,
-	// 					'vender_id' => $result[0]->vendor_id,
-	// 					'weight_id' => $result[0]->weight_id,
-	// 					'product_name'=>$result[0]->name,
-	// 					'product_price' =>	$result[0]->price,
-	// 					'discount_per' =>$result[0]->discount_per,
-	// 					'discount_price' => $result[0]->discount_price,
-	// 					'quantity'=> $quantity,
-	// 					'image'=> $result[0]->image,
-	// 					'total'=> $result[0]->discount_price * $quantity,
-	// 					'product_weight_id'=> $result[0]->pw_id
-	// 				);
-
-	// 				// print_r($cart_item);
-	// 				// print_r($_SESSION['My_cart']);
-	// 				// exit;
-	// 				if(isset($_SESSION['My_cart']) && !isset($_SESSION['user_id'])){
-	// 					// echo '1';die;
-	// 				$item_array_id = array_column($_SESSION["My_cart"], "product_id");
-	// 				$item_weight_id = array_column($_SESSION["My_cart"], "product_weight_id");
-
-	// 						if(in_array($result[0]->id, $item_array_id)){
-
-	// 							if(!in_array($result[0]->pw_id, $item_weight_id)){
-									
-	// 								$temp = max(array_keys($_SESSION["My_cart"]));
-	// 								$_SESSION["My_cart"][$temp+1] = $cart_item;
-	// 							}else{
-
-	// 							foreach($_SESSION["My_cart"] as $key => $value){
-	// 									$p_id = $_SESSION['My_cart'][$key]['product_id'];
-	// 									$w_id = $_SESSION['My_cart'][$key]['weight_id'];
-	// 									$p_qunt = $_SESSION['My_cart'][$key]['quantity'];
-
-	// 									if($p_id == $result[0]->id && $w_id == $result[0]->weight_id ){
-	// 										if($p_qunt > $result[0]->quantity){
-	// 											$errormsg ='stock not available';
-	// 										}else{
-	// 											$qun = /*$value['quantity'] +*/ $quantity;
-	// 											$price = $value['product_price'] * $qun;
-	// 				 							$_SESSION["My_cart"][$key]['quantity'] = $qun;
-	// 				 							$_SESSION["My_cart"][$key]['total'] = $price;			 
-	// 										}
-	// 								}
-	// 							}
-
-	// 						// $errormsg = "Item Already Added";
-	// 							$itemExist = 'Product quantity updated successfully';
-	// 						}
-	// 				}else{
-	// 					$temp = max(array_keys($_SESSION["My_cart"]));
-	// 					$_SESSION["My_cart"][$temp+1] = $cart_item;
-	// 				}
-	// 			}
-	// 			else
-	// 			{
-	// 				$_SESSION["My_cart"][0] = $cart_item;	
-	// 		}
-	// 	}
-
-	// }else{
-	// 		$errormsg ='product not found';	
-	// 	}
-
-	// 	  if(!isset($errormsg)){
-	// 	  		$errormsg = '';
-	// 	  }
-	// 	  if(!isset($itemExist)){
-	// 	  		$itemExist = '';
-	// 	  }if(!isset($result[0]->image) ){
-	// 	  		$image = '';
-	// 	  }else{
-	// 	  		$image = $result[0]->image;
-	// 	  }
-	// 	  // $final_total = 0;
-	// 	  // if(isset($_SESSION['My_cart'])){
-	// 	  // 	foreach ($_SESSION['My_cart'] as $key => $value) {
-	// 	  // 		$final_total +=  $value['discount_price'];
-	// 	  // 	}
-	// 	  // }
-	// 	$response = [
-	// 				'prod_id' => $result[0]->id,
-	// 				'product_name'=>$result[0]->name,
-	// 				'total'=> $result[0]->discount_price * $quantity,
-	// 				'weight_id'=> $result[0]->weight_id,
-	// 				'image'=>$image,
-	// 				 'count'=>cartItemCount(),
-	// 				 'errormsg'=>$errormsg,
-	// 				 'itemExist' =>$itemExist,
-	// 				 'final_total'=>getMycartSubtotal(),
-	// 				 'pro_weight_id'=> $result[0]->pw_id,
-	// 				 'enc_prod_id' => $this->utility->safe_b64encode($result[0]->id),
-	// 				 'updated_list'=>NavbarDropdown(),
-	// 				 'cartTotal'=>getMycartSubtotal(),
-	// 				 'product_variant_id'=>$this->utility->safe_b64encode($result[0]->pw_id),
-	// 				];
-	// 	echo json_encode($response);
-
-	// }
 
 	public function getDataProductWeight(){
 		// print_r($_SESSION);die;
@@ -597,6 +433,7 @@ class Products extends User_Controller {
 	public function cart_item(){
 
 		$my_cart = $this->this_model->getMyCart();
+		// dd($my_cart);
 		if(empty($_SESSION['My_cart']) && empty($my_cart) ){
 				redirect(base_url().'home');
 		}
@@ -746,6 +583,21 @@ class Products extends User_Controller {
 		}
 		// print_r($res);
 		echo json_encode($tutorialData);
+	}
+
+	public function clear_cart(){
+		$status = '0';
+		if($this->session->userdata('user_id') == ''){
+			$this->session->unset_userdata('My_cart');
+				$status = '1';
+		}else{
+			$res = $this->this_model->clear_cart();
+			if($res){
+				$status = '1';
+			}
+		}
+		$this->utility->setFlashMessage($success,$message);
+		echo json_encode(['status'=>$status]);
 	}
 }
   

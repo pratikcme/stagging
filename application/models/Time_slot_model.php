@@ -26,7 +26,7 @@ class time_slot_model extends My_model{
 
                 );
                 $data['table'] = 'time_slot';   
-                $data['where'] = ['id'=>$id,'branch_id'=>$vendor_id];
+                $data['where'] = ['id'=>$id];
                 $data['update'] = $up;
                 $this->updateRecords($data);
                 $this->session->set_flashdata('msg', 'Time slot has been updated successfully');

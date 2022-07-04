@@ -15,18 +15,19 @@ class Vendors extends User_Controller {
 
 
 	public function index(){
-	
 		$data['page'] = 'frontend/vendor/vendor';
 		$data['js'] = array('vendor.js');
 		$data['branch'] = $this->this_model->branchList();
-	
+		
 		$branch_id = count($data['branch']);
 		foreach ($data['branch'] as $key => $value) {
 			$data['branch'][$key]->product_count = $this->this_model->branchProductCount($value->id);
 		};
-		$Approved = $this->this_model->ApprovedBranch();
 
-		if($Approved[0]->approved_branch == '1' || $branch_id == '1'){
+		
+		$Approved = $this->this_model->ApprovedVendor();
+		// lq();
+		if(!empty($Approved)  && ($Approved[0]->approved_branch == '1' || $branch_id == '1')){
 			$branch_id = $data['branch'][0]->id;
 	 		$branch_name = $data['branch'][0]->name;
 			$this->load->model('vendor_model','vendor');

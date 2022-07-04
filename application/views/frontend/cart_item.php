@@ -96,6 +96,7 @@
               <?php } ?>
             </tbody>
           </table>
+           <input type="button" class="btn" id="ClearCart" value="Clear cart">
         </div>
       </div>
       <div class="col-lg-4 col-md-12">
@@ -183,7 +184,7 @@
                 </td>
                 <td class="text-center">
                   <?php if ($value->discount_per > 0): ?>
-                  <p class="discount-on"><span><?=$this->siteCurrency?></span><?=$value->product_price?></p>
+                  <p class="discount-on"><span><?=$this->siteCurrency?></span><?=$value->price?></p>
                   <?php endif ?>
                   <p><span><?=$this->siteCurrency?></span><?=$value->discount_price?></p>
                 </td>
@@ -192,6 +193,7 @@
                     <span><?=$this->siteCurrency?></span><span class="total"><?=number_format((float)$calculation_price,2,'.','')?></span>
                  </p>
                 </td>
+                
                 <td class="text-center"> 
                   <span class="delete-item removeCartItem" data-product_id="<?=$value->product_id?>"
                   data-product_weight_id="<?=$value->product_weight_id?>" data-weight_id="<?=$value->weight_id?>">
@@ -202,6 +204,7 @@
               <?php } ?>
             </tbody>
           </table>
+          <input type="button" class="btn" id="ClearCart" value="Clear cart">
         </div>
       </div>
       <div class="col-lg-4 col-md-12">

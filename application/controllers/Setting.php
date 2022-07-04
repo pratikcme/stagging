@@ -26,6 +26,7 @@ class Setting extends Admin_Controller
     public function currency()
     {
         $data['result'] = $this->this_model->getDefaultCurrency();
+        // dd($data['result']);
         $this->load->view('currency',$data);
     }
     public function currency_add()
@@ -35,12 +36,14 @@ class Setting extends Admin_Controller
      public function profit_percent()
     {
         $data['result'] = $this->this_model->getDefaultPercentage();
+        // dd($data['result']);
         // print_r( $data['result']);die;
         $this->load->view('profit_percent',$data);
     }
     public function profit_add()
     {
         $this->this_model->profit_add();
+        lq();
     }
     public function subscription()
     {

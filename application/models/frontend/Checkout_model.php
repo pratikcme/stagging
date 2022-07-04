@@ -89,7 +89,15 @@ Class Checkout_model extends My_model{
         $data['where'] = ['request_id' => '1','vendor_id'=>$this->vendor_id];
         $data['table'] = 'set_default';
         $result = $this->selectRecords($data);
-        return $result[0]->value;
+        if(!empty($result)){
+            return $result[0]->value;
+        }else{
+            unset($data);
+            $data['table'] = 'set_default';
+            $data['insert'] = ['vendor_id'=>$this->vendor_id,'request_id' => '1','value'=>'200'];
+            $this->insertRecord($data);
+        }
+        return '200';
     }
 
     public function ActivePaymentMethod(){
@@ -424,6 +432,13 @@ Class Checkout_model extends My_model{
             $response["success"] = 0;
             $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';
             $response["orderAmount"] = $total_price;      
+            return $response;
+        }
+
+        if($total_price > $promocode[0]->max_cart){
+            $response["success"] = 0;
+            $response["message"] = "Maximum ".$promocode[0]->max_cart.' Cart amount is required'; 
+            $response["orderAmount"] = $total_price;   
             return $response;
         }
 

@@ -1,14 +1,4 @@
-<?php
-include('header.php');
-error_reporting(0);
-$id = $this->utility->decode($_GET['id']);
-
-$vendor_id = $this->session->userdata['id'];
-
-    $query = $this->db->query("SELECT * FROM set_default WHERE request_id='2'");
-    $result = $query->row_array();
-
-?>
+<?php include('header.php') ;?>
 <style>
  .required{
          color: red;
