@@ -82,29 +82,29 @@ $(document).on('click','#logout',function() {
 
 })
 
-$(document).on('click','#delete_account',function() {
-	var url = $('#url').val();
-	swal({
-		title: "Are you sure?",
-		text: "All the data associated with it (including your profile, photos, orders) will be permanently deleted now. This information can't be recovered once the account is deleted.",
-		icon: "warning",
-		buttons: true,
-		dangerMode: true,
-	})
-	.then((willDelete) => {
-		if (willDelete) {
-			$.ajax({
-				url : url +'users_account/data_deletion',
-				method: 'post',
-				success:function(output){
-					window.location.href = url+'home';
-				}
-			})			
-		}
-	});
+// $(document).on('click','#delete_account',function() {
+// 	var url = $('#url').val();
+// 	swal({
+// 		title: "Are you sure?",
+// 		text: "All the data associated with it (including your profile, photos, orders) will be permanently deleted now. This information can't be recovered once the account is deleted.",
+// 		icon: "warning",
+// 		buttons: true,
+// 		dangerMode: true,
+// 	})
+// 	.then((willDelete) => {
+// 		if (willDelete) {
+// 			$.ajax({
+// 				url : url +'users_account/data_deletion',
+// 				method: 'post',
+// 				success:function(output){
+// 					window.location.href = url+'home';
+// 				}
+// 			})			
+// 		}
+// 	});
 
 
-})
+// })
 
 
 
