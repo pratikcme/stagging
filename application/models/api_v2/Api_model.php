@@ -3536,7 +3536,7 @@ class Api_model extends My_model {
                 continue;
             }
             $c = $this->check_branch_is_active($v->branch_id);
-            if(!$c){
+            if($c[0]->status == '0'){
                 unset($result[$k]);
                 continue;   
             }
@@ -3564,11 +3564,7 @@ class Api_model extends My_model {
         $data['select'] = ['*'];
         $data['where'] = ['id'=>$branch_id,'status'=>'0'];
         $res = $this->selectRecords($data);
-        if(!empty($res)){
-            return true;
-        }else{
-            return false;
-        }
+        return $res;
     }
     public function check($offer_id){
         $data['table'] = TABLE_OFFER .' as o';
