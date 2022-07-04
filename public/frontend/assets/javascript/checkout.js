@@ -486,6 +486,8 @@ var CHECKOUT = function(){
                             $('#mobileModal').modal('hide');
                             $('#Otp').modal('show');
                             $('#Otp').modal({ backdrop: 'static', keyboard: false });
+                        }else{
+                            $('.mobile_verfication').html('This mobile number is linked with another account');
                         }
                     }            
                 });
