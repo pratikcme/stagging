@@ -132,7 +132,7 @@ class Api_model extends My_model {
         $data['limit'] = 1;
         $data['table'] = 'user';        
         $getUser =  $this->selectRecords($data,true);
-        lq();
+       
         print_r($getUser);
         return $this->sendLoginResponse($getUser[0],$postData);
 
