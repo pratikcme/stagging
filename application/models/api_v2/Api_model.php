@@ -60,7 +60,7 @@ class Api_model extends My_model {
 
         if(empty($getUser)){
             $checkAlreadyRegisterWithEmail = $this->check_register($postData['email'],$postData['vendor_id']);
-            dd($checkAlreadyRegisterWithEmail);  
+            // dd($checkAlreadyRegisterWithEmail);  
 
             $token = md5($this->utility->encode($postData['email']));
            
@@ -78,7 +78,7 @@ class Api_model extends My_model {
             $dataIns['insert']['dt_added']= strtotime(DATE_TIME);
             $dataIns['insert']['dt_updated']= strtotime(DATE_TIME);                 
             $dataIns['table'] = 'user';
-
+            dd($dataIns);
             if($checkAlreadyRegisterWithEmail){
                 unset($data['where']);
                 $data['update']['fname']= $postData['fname'];
