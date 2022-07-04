@@ -27,6 +27,7 @@ class About extends User_Controller {
 	{
 		$data['page'] = 'frontend/about.php';
 		$data['about_banner'] = $this->this_model->getAboutBanner();
+		lq();
 		$data['about_section_one'] = $this->this_model->getAboutSectionOne();
 		// echo $this->db->last_query();
 		$data['about_section_two'] = $this->this_model->getAboutSectionTwo();
