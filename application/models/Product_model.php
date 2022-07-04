@@ -494,6 +494,11 @@ public function Product_add_update(){
         $id = $_POST['id'];
 
         $product_id = $_POST['product_id'];
+
+        $this->load->model('api_v2/api_model');
+        $gst_percent = $this->api_model->getProductGst($product_id);
+
+
         $weight_id = $_POST['weight_id'];
         // $unit = number_format((float)$_POST['unit'], 2, '.', '');
         $unit = $_POST['unit'];
@@ -511,7 +516,9 @@ public function Product_add_update(){
             if($fraction == 0){
                 $unit = (int)$unit;   
             }
-
+           $gst_amount = ($final_discount_price * $gst_percent) / 100;
+           $product_price_without_gst = $final_discount_price - $gst_amount;
+           // dd($product_price_without_gst);
         
             /* Product Weight Update */
             if ($id != '') {
@@ -526,6 +533,7 @@ public function Product_add_update(){
                     'price' => $price,
                     'quantity' => $quantity,
                     'discount_per' => $discount_per,
+                    'without_gst_price'=>$product_price_without_gst,
                     'discount_price' => $final_discount_price,
                     'dt_updated' => strtotime(date('Y-m-d H:i:s')),
                 );
@@ -591,6 +599,7 @@ public function Product_add_update(){
                     'quantity' => $quantity,
                     'discount_per' => $discount_per,
                     'discount_price' => $final_discount_price,
+                    'without_gst_price'=>$product_price_without_gst,
                     'status' => '1',
                     'dt_added' => strtotime(date('Y-m-d H:i:s')),
                     'dt_updated' => strtotime(date('Y-m-d H:i:s')),

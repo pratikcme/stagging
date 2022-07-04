@@ -3704,15 +3704,7 @@ class Api_model extends My_model {
 
     public function delete_user($postData)
     {
-        // $data['select'] = ['*'];
-        // $data['where'] = ['group_createdby_id'=>$postData['user_id']];
-        // $data['table'] = TABLE_GROUP;
-        // $checkGroupAdmin = $this->selectRecords($data);
-        // if(!empty($checkGroupAdmin)){
-        //     $response["success"] = 0;
-        //     $response["message"] = "Please change group admin or delete group";
-        //     return $response;
-        // }
+       
         $data['select'] = ['*'];
         $data['where'] = ['order_status <'=>'8','user_id'=>$postData['user_id']];
         $data['table'] = TABLE_ORDER;
