@@ -52,7 +52,7 @@
                <a style="display: none;" class="nav-link <?=($action_name == 'faq') ? 'active' : ''?> " id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="<?=($action_name == 'faq') ? 'true' : 'false'?>"><span><i class="fas fa-info-circle"></i></span>FAQ</a>
                <a class="nav-link"  role="tab" id="logout" ><span><i class="fas fa-power-off"></i></span>logout</a>
 
-               <a class="nav-link"  href="javescript:" role="tab" id="delete_account" ><span><i class="fas fa-power-off"></i></span>Delete Account</a>
+               <a class="nav-link"  role="tab" id="delete_account" ><span><i class="fas fa-power-off"></i></span>Delete Account</a>
             </div>
          </div>
          <div class="col-lg-9 col-md-8">
