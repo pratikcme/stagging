@@ -132,9 +132,10 @@ Class Offer_model extends My_model{
             @unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('sudo crontab -u a1630btr -r');
             foreach ($crontabs as $k => $v) {
-                file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt',$v->cron_command .PHP_EOL);
-                exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
+                file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt',$v->cron_command .PHP_EOL,FILE_APPEND);
+                $this->deleteAfterSetCron($v->id);
             }
+            exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
             exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
         // }
 
@@ -157,6 +158,11 @@ Class Offer_model extends My_model{
         $this->session->set_flashdata('msg', 'Offer have been added successfully.');
         redirect(base_url().'offer');
 }
+    public function deleteAfterSetCron($cron_id){
+        $data['table'] = 'crontab';
+        $data['where'] = ['id'=>$cron_id];
+        $this->deleteRecords($data);
+    }
 
     public function setReverceCron($postData,$offer_id){
         $end_array = date('H:i',strtotime($postData['end_time']."+1 minutes"));
@@ -295,7 +301,7 @@ Class Offer_model extends My_model{
             exec('sudo crontab -u a1630btr -r');
             foreach ($crontabs as $key => $value) {
                 file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $value->cron_command.PHP_EOL,FILE_APPEND);
-            
+                $this->deleteAfterSetCron($value->id);
             }
             exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
