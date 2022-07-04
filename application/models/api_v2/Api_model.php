@@ -69,6 +69,7 @@ class Api_model extends My_model {
             $dataIns['insert']['lname']= $postData['lname'];
             $dataIns['insert']['email']= $postData['email'];
             $dataIns['insert']['password']= (isset($postData['password']) && $postData['password']!='')?md5($postData['password']):NULL;
+            $dataIns['insert']['country_code']= $postData['country_code'];
             $dataIns['insert']['login_type']= $postData['login_type'];
             $dataIns['insert']['phone']= $postData['phone'];
             $dataIns['insert']['status']= '1';
