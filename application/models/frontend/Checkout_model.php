@@ -299,8 +299,8 @@ Class Checkout_model extends My_model{
         $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id' => $user_id,'status !=' =>'9','vendor_id'=>$this->vendor_id];
         $userDetail = $this->selectRecords($userData);
         // lq();
-        dd($userDetail); 
-        if(!empty($userDetail) ){
+        // dd($userDetail); 
+        if(empty($userDetail) ){
             $response["success"] = 0;
             $response["message"] = "This mobile number is linked with another account";
             return false;
