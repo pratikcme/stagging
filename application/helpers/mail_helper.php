@@ -15,10 +15,7 @@ function sendMail($data) {
    'priority' => 1,
    'charset' => 'utf-8',
    'mailtype' => 'html',
-   'wordwrap' => TRUE,
-   'crlf'] => "\r\n",
-   'newline' => "\r\n",
-   'mailtype' => "html",
+   'wordwrap' => TRUE
  );
 
   $CI = &get_instance();
