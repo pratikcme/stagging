@@ -298,7 +298,7 @@ Class Checkout_model extends My_model{
         $userData['table'] = 'user';
         $userDetail = $this->selectRecords($userData);
         $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id' => $user_id,'status !=' =>'9','vendor_id'=>$this->vendor_id];
-        // dd($userDetail);
+        dd($userDetail);
         if(!empty($userDetail) ){
 
             if($_SERVER['SERVER_NAME']=='ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
