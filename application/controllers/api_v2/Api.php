@@ -1084,7 +1084,6 @@ class Api extends Apiuser_Controller {
                     unset($response['offer_list'][$key]);
                     continue;
                 }
-                array_values($response['offer_list']);
 
                 $s = $this->this_model->check($value->id);
                 if(count($s) > 1){
@@ -1092,6 +1091,7 @@ class Api extends Apiuser_Controller {
                 }
                $value->type = $type;        
             }
+            array_values($response['offer_list']);
             echo $output = json_encode(array('responsedata' => $response));
         } else {
             $response = array();
