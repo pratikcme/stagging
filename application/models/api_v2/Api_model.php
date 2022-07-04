@@ -134,7 +134,7 @@ class Api_model extends My_model {
         $data['limit'] = 1;
         $data['table'] = 'user';        
         $getUser =  $this->selectRecords($data,true);
-
+        dd($getUser);
         return $this->sendLoginResponse($getUser[0],$postData);
 
     }
@@ -178,7 +178,6 @@ class Api_model extends My_model {
                     );
 
         $this->update_device($userdata, $postData);
-        dd($data);
         $login_logs = [
             'user_id' => $user_id,
             'vendor_id' => $vendor_id,
