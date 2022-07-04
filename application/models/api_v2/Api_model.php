@@ -90,7 +90,6 @@ class Api_model extends My_model {
             }else{
                 $in = $this->insertRecord($dataIns);
             }
-            echo $in;die;
             if($postData['login_type']=='0'){
                 $response["success"] = 1;
                 $response["message"] = "Account created successfully";
@@ -134,7 +133,6 @@ class Api_model extends My_model {
         $data['table'] = 'user';        
         $getUser =  $this->selectRecords($data,true);
 
-        print_r($getUser);
         return $this->sendLoginResponse($getUser[0],$postData);
 
     }
