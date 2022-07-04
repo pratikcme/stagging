@@ -132,11 +132,14 @@ class Api_model extends My_model {
         $data['limit'] = 1;
         $data['table'] = 'user';        
         $getUser =  $this->selectRecords($data,true);
+        print_r($getUser);
         return $this->sendLoginResponse($getUser[0],$postData);
 
     }
 
     function sendLoginResponse($userdata,$postData){
+
+        dd($userdata);
         $device_id = $postData['device_id'];
         $login_type = $postData['login_type'];
         $vendor_id = $postData['vendor_id'];
@@ -173,7 +176,6 @@ class Api_model extends My_model {
                         'notification_status' => $notification_status, 
                         'mobile_verify' => $userdata['is_verify']
                     );
-        dd($data);
         $this->update_device($userdata, $postData);
         $login_logs = [
             'user_id' => $user_id,
