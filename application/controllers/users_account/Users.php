@@ -246,4 +246,11 @@ public function sendOtpAccount(){
       echo json_encode($response);die;       
  	}
 
+ 	public function data_deletion(){
+ 		ecit();
+ 		// $post = $this->input->post();
+   //  $response = $this->this_model->delete_user($post);
+   //  $response = array('responsedata' => $response);
+ 	}
+
 }
