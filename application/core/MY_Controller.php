@@ -165,18 +165,19 @@ class Vendor_Controller extends MY_Controller
                 $this->load->model($this->myvalues->homeFrontEnd['model'],'home');
                 $this->load->model($this->myvalues->usersAccount['model'],'users');
                
-                    if($this->session->userdata('user_id') != ''){
+                if($this->session->userdata('user_id') != ''){
                      
                         $userInfo = $this->users->getUserDetails();
                             $_SESSION['user_name'] = $userInfo[0]->fname;
                             $_SESSION['user_lname'] = $userInfo[0]->lname;
                             $_SESSION['user_phone'] = $userInfo[0]->phone; 
-                        }
+                $data['userInformation'] = $userInfo;
+                }
                 
                 $this->load->model('frontend/vendor_model','vendor_model');
                 $data['branch_nav'] = $this->vendor_model->branchList();
                 $data['ApprovedBranch'] = $this->vendor_model->ApprovedVendor();
-                
+
                 $this->load->model('frontend/product_model','product_model');
                 $data['wish_pid'] = $this->product_model->getUsersWishlist();
                 $data['getContact'] = $this->contact->getContact();
