@@ -171,9 +171,8 @@ class Vendor_Controller extends MY_Controller
                             $_SESSION['user_name'] = $userInfo[0]->fname;
                             $_SESSION['user_lname'] = $userInfo[0]->lname;
                             $_SESSION['user_phone'] = $userInfo[0]->phone; 
-                $data['userInformation'] = $userInfo;
+                
                 }
-                // dd($data['userInformation']);die;
                 $this->load->model('frontend/vendor_model','vendor_model');
                 $data['branch_nav'] = $this->vendor_model->branchList();
                 $data['ApprovedBranch'] = $this->vendor_model->ApprovedVendor();
@@ -208,6 +207,7 @@ class Vendor_Controller extends MY_Controller
                 }
                 $data['mycart'] = $my_cart;
                 $data['notification'] = $this->common_model->userNotify();
+                $data['userInformation'] = $this->users->getUserDetails();
                 return $this->load->view($layout,$data);
         }
 
