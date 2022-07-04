@@ -101,6 +101,7 @@ var LOGIN = function(){
                         number: "Please enter valid mobile number",
                         minlength: 'Please enter minimum 6 digits',
                         maxlength: "Please enter maximum 15 digits",
+                        remote: "This mobile number is already exist"
                     },
                     country_code : { required : 'Please select country code'},
                     password:{  required: "Please enter password",
