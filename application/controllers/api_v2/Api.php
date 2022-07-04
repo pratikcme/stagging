@@ -347,12 +347,12 @@ class Api extends Apiuser_Controller {
                 $message = "Congrats!!! Your new login credentials :<br/>
                 Your New password is : ".$ran_digit."<br/>
                 To change your password : You can change your password once you login.";
+                // dd($asd);
 
                 $dataa['to'] = $email;           
                 $dataa['subject'] = 'Forgot Password';
                 $dataa['message'] = $message;
                 $asd = sendMail($dataa);
-                dd($asd);
                 $response = array();
                 $response["success"] = 1;
                 $response["message"] = "New password has been sent on your email id";
