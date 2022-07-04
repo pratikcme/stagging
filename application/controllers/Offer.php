@@ -11,7 +11,7 @@ class Offer extends Admin_Controller{
 
 	public function index()
 	{
-		dd(ip_info('182.77.123.239'));
+		// dd(ip_info('182.77.123.239'));
 		// dd($_SESSION);
 		$data['page'] = 'offer/list';
 		$data['js'] = array('offer.js');
