@@ -78,7 +78,7 @@ class Api_model extends My_model {
             $dataIns['insert']['dt_added']= strtotime(DATE_TIME);
             $dataIns['insert']['dt_updated']= strtotime(DATE_TIME);                 
             $dataIns['table'] = 'user';
-            dd($dataIns);
+            // dd($dataIns);
             if($checkAlreadyRegisterWithEmail){
                 unset($data['where']);
                 $data['update']['fname']= $postData['fname'];
@@ -178,6 +178,7 @@ class Api_model extends My_model {
                     );
 
         $this->update_device($userdata, $postData);
+        dd($data);
         $login_logs = [
             'user_id' => $user_id,
             'vendor_id' => $vendor_id,
