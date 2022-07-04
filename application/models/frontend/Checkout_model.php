@@ -296,10 +296,10 @@ Class Checkout_model extends My_model{
 
         $userData['select'] = ['*'];
         $userData['table'] = 'user';
-        $userDetail = $this->selectRecords($userData);
         $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id' => $user_id,'status !=' =>'9','vendor_id'=>$this->vendor_id];
+        $userDetail = $this->selectRecords($userData);
         // dd($userDetail);
-        if(!empty($userDetail) ){
+        if($userDetail[0]->is_verify != '1'){
 
             if($_SERVER['SERVER_NAME']=='ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
                 $this->load->model('api_model');
@@ -315,11 +315,12 @@ Class Checkout_model extends My_model{
             $data['where'] = ['id'=>$user_id,'status'=>'1'];
             $this->updateRecords($data);   
             return true; 
-        }else{
-            $response["success"] = 0;
-            $response["message"] = "This mobile number is linked with another account";
-            return false;
         }
+        // else{
+        //     $response["success"] = 0;
+        //     $response["message"] = "This mobile number is linked with another account";
+        //     return false;
+        // }
     }
 
      public function OtpVerification($postdata){
