@@ -570,6 +570,20 @@ class Login_model extends My_model{
           	}
           }
 
+      public function mobileVerification($postData){
+      		$mobile = $postData['phone'];
+      		$country_code = $postData['country_code'];
+          	$data['table'] = TABLE_USER;
+          	$data['select'] = ['*'];
+          	$data['where'] = ['country_code'=>$country_code 'phone'=>$phone,'vendor_id'=>$this->vendor_id];  	
+          	$count = $this->countRecords($data);
+          	if($count > 0){
+          		return "false";
+          	}else{
+          		return "true";
+          	}
+          }
+
 
 	}
 ?>

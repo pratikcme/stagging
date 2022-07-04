@@ -527,6 +527,13 @@ class Login extends User_Controller {
 		die;
 	}
 
+	public function verify_mobile(){
+		// print_r($_SESSION);die;
+		$email = $this->input->post('email');
+		echo $result = $this->this_model->mobileVerification($email);
+		die;
+	}
+
 
 }
   

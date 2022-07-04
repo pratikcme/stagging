@@ -58,6 +58,11 @@ var LOGIN = function(){
                              number: true,
                              minlength: 6,
                              maxlength: 15,
+                             remote:{ 
+                              url: url+"login/verify_mobile",
+                              type: "POST",
+                              country_code : $('#country_code').val()
+                            }
                             //  remote:{ 
                             //   url: url+"login/verify_email",
                             //   type: "POST",
