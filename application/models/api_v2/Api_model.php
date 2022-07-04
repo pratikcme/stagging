@@ -3530,15 +3530,14 @@ class Api_model extends My_model {
         $result = $this->selectFromJoin($data);
         unset($data);
         foreach ($result as $k => $v) {
+            $c = $this->check_branch_is_active($v->branch_id);
+            if($c[0]->status == 0){
+                unset($result[$k]);
+                continue;   
+            }
             if($v->end_date == $today && $v->end_time <= $time){
                 unset($result[$k]);
                 continue;
-            }
-            $c = $this->check_branch_is_active($v->branch_id);
-            if($c[0]->status == '0'){
-                // dd($c);
-                // unset($result[$k]);
-                continue;   
             }
             $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
             $data['select'] = ['c.name as category_name','p.category_id','pw.product_id'];
