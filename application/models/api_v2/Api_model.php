@@ -3534,7 +3534,8 @@ class Api_model extends My_model {
                 unset($result[$k]);
                 continue;
             }
-            // $c = $this->check_branch_is_active($v->branch_id);
+            $c = $this->check_branch_is_active($v->branch_id);
+            dd($c);
             // if($c[0]->status == '0'){
             //     unset($result[$k]);
             //     continue;   
