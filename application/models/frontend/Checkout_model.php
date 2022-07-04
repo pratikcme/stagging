@@ -298,7 +298,7 @@ Class Checkout_model extends My_model{
         $userData['table'] = 'user';
         $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id !=' => $user_id,'status !=' =>'9'];
         $userDetail = $this->selectRecords($userData);
-        dd($userDetail);
+        // dd($userDetail);
         if(!empty($userDetail) ){
             $response["success"] = 0;
             $response["message"] = "This mobile number is linked with another account";
@@ -311,7 +311,7 @@ Class Checkout_model extends My_model{
             $this->load->model('api_model');
             $this->api_model->send_otp_int($mobile_number,$otp);
         }else{
-            echo '1';die;
+            // echo '1';die;
             $this->sendOtp($mobile_number,$otp);
         }
 
