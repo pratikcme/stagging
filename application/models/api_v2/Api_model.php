@@ -3531,7 +3531,7 @@ class Api_model extends My_model {
         unset($data);
         foreach ($result as $k => $v) {
             $c = $this->check_branch_is_active($v->branch_id);
-            if($c[0]->status == 0){
+            if($c->status == '0'){
                 unset($result[$k]);
                 continue;   
             }
@@ -3562,7 +3562,7 @@ class Api_model extends My_model {
         $data['select'] = ['*'];
         $data['where'] = ['id'=>$branch_id];
         $res = $this->selectRecords($data);
-        return $res;
+        return $res[0];
     }
     public function check($offer_id){
         $data['table'] = TABLE_OFFER .' as o';
