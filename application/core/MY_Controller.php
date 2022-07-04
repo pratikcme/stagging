@@ -56,7 +56,6 @@ class MY_Controller extends CI_Controller
     function loadView($layout,$data){
        $this->load->model('frontend/vendor_model','vendor_model');
        $data['ApprovedBranch'] = $this->vendor_model->ApprovedVendor();
-       // lq();
        $this->load->model($this->myvalues->contactFrontEnd['model'],'contact');
        $data['getContact'] = $this->contact->getContact();
        $data['home_url'] = base_url().'home';
@@ -176,7 +175,7 @@ class Vendor_Controller extends MY_Controller
                 $this->load->model('frontend/vendor_model','vendor_model');
                 $data['branch_nav'] = $this->vendor_model->branchList();
                 $data['ApprovedBranch'] = $this->vendor_model->ApprovedVendor();
-
+                dd($data['ApprovedBranch']);die;
                 $this->load->model('frontend/product_model','product_model');
                 $data['wish_pid'] = $this->product_model->getUsersWishlist();
                 $data['getContact'] = $this->contact->getContact();
