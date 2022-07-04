@@ -1091,7 +1091,7 @@ class Api extends Apiuser_Controller {
                 }
                $value->type = $type;        
             }
-            array_values($response['offer_list']);
+           $response['offer_list'] = array_values($response['offer_list']);
             echo $output = json_encode(array('responsedata' => $response));
         } else {
             $response = array();
