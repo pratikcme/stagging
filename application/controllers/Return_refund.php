@@ -25,9 +25,9 @@ class Return_refund extends User_Controller {
 
 	public function index()
 	{
-		
 		$data['page'] = 'frontend/account/return_refund';
 		$data['return_refund'] = $this->this_model->getAllData();
+		lq();
 		// print_r($data['return_refund']);die;
 		$this->loadView(USER_LAYOUT,$data);
 	}
