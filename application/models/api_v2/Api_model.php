@@ -3562,7 +3562,7 @@ class Api_model extends My_model {
     public function check_branch_is_active($branch_id){
         $data['table'] = 'branch';
         $data['select'] = ['*'];
-        $data['where'] = ['id'=>$branch_id,'status !='=>'9'];
+        $data['where'] = ['id'=>$branch_id,'status'=>'0'];
         $res = $this->selectRecords($data);
         if(!empty($res)){
             return true;
