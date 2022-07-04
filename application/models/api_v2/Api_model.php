@@ -53,6 +53,7 @@ class Api_model extends My_model {
         }
 
         $data['where']['vendor_id'] = $postData['vendor_id'];
+        $data['where']['status !='] '9';
         $data['table'] = 'user';
         $getUser = $this->selectRecords($data);
     
