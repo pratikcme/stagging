@@ -78,7 +78,6 @@ class Api_model extends My_model {
             $dataIns['insert']['dt_added']= strtotime(DATE_TIME);
             $dataIns['insert']['dt_updated']= strtotime(DATE_TIME);                 
             $dataIns['table'] = 'user';
-            // dd($dataIns);
             if($checkAlreadyRegisterWithEmail){
                 unset($data['where']);
                 $data['update']['fname']= $postData['fname'];
@@ -91,7 +90,7 @@ class Api_model extends My_model {
             }else{
                 $this->insertRecord($dataIns);
             }
-
+            lq();
             if($postData['login_type']=='0'){
                 $response["success"] = 1;
                 $response["message"] = "Account created successfully";
@@ -134,7 +133,6 @@ class Api_model extends My_model {
         $data['limit'] = 1;
         $data['table'] = 'user';        
         $getUser =  $this->selectRecords($data,true);
-        dd($getUser);
         return $this->sendLoginResponse($getUser[0],$postData);
 
     }
