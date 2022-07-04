@@ -3692,10 +3692,10 @@ class Api_model extends My_model {
             $data['select'] = ['*'];
             $data['where'] = ['id'=>$user_id];
             $r = $this->selectRecords($data,true);
-            $response["success"] = 1;
-            $response["message"] = "Profile Updated";  
             // $response["user_data"] = $r[0];  
             $response =  $this->sendLoginResponse($r[0],$postData,true);
+            $response["success"] = 1;
+            $response["message"] = "Profile Updated";  
         }
         return $response;
     }
