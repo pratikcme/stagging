@@ -18,7 +18,7 @@ function sendMail($data) {
    'wordwrap' => TRUE,
    'crlf'] => "\r\n",
    'newline' => "\r\n",
-   'mailtype' = "html",
+   'mailtype' => "html",
  );
 
   $CI = &get_instance();
