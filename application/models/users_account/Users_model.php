@@ -384,7 +384,7 @@ class Users_model extends My_model {
 
     public function getUserDetails(){
         $data['table'] = TABLE_USER; 
-        $data['select'] = ['fname','lname','phone'];
+        $data['select'] = ['fname','lname','phone','login_type'];
         $data['where'] = [
                         'id'=> $this->session->userdata('user_id'),
                         'status !=' => '9',
