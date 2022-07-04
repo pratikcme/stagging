@@ -3536,9 +3536,9 @@ class Api_model extends My_model {
             }
             $c = $this->check_branch_is_active($v->branch_id);
             if($c[0]->status == '0'){
-                dd($c);
+                // dd($c);
                 // unset($result[$k]);
-                // continue;   
+                continue;   
             }
             $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
             $data['select'] = ['c.name as category_name','p.category_id','pw.product_id'];
