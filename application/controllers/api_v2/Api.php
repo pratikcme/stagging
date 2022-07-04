@@ -1084,7 +1084,7 @@ class Api extends Apiuser_Controller {
                 }
                $value->type = $type;        
             }
-            echo $output = json_encode(array('responsedata' => $response));
+            echo $output = json_encode(array('responsedata' => json_encode($response)));
         } else {
             $response = array();
             $response["success"] = 0;
