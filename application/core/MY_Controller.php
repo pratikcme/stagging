@@ -208,7 +208,7 @@ class Vendor_Controller extends MY_Controller
                 $data['mycart'] = $my_cart;
                 $data['notification'] = $this->common_model->userNotify();
                 $data['userInformation'] = $this->users->getUserDetails();
-                dd($data['userInformation']);die;
+                // dd($data['userInformation']);die;
                 return $this->load->view($layout,$data);
         }
 
