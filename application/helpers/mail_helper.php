@@ -31,7 +31,7 @@ function sendMail($data) {
   if($CI->email->send()){
     return true;
   } else {
-    echo $CI->email->print_debugger(); die;
+    print_r($CI->email->print_debugger()); die;
     return FALSE;
   }
 
