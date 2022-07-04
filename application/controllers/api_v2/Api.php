@@ -352,7 +352,7 @@ class Api extends Apiuser_Controller {
                 $dataa['subject'] = 'Forgot Password';
                 $dataa['message'] = $message;
                 $asd = sendMail($dataa);
-
+                dd($asd);
                 $response = array();
                 $response["success"] = 1;
                 $response["message"] = "New password has been sent on your email id";
