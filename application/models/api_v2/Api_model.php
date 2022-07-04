@@ -3552,7 +3552,7 @@ class Api_model extends My_model {
             $v->category_name = $res[0]->category_name;
             $v->product_id = $res[0]->product_id;
         }
-        dd($result);
+        // dd($result);
         return $result;
 
     }
