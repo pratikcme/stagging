@@ -439,7 +439,7 @@ class Login extends User_Controller {
                     	    'required' => "please enter your password"
                     ]
                 ),
-                array(
+           	array(
 					'field' => 'confirm_password', 
                   	'label' => 'confirm_password', 
                   	'rules' => 'trim|required|matches[password]',
