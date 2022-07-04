@@ -61,13 +61,13 @@ var LOGIN = function(){
                              remote:{ 
                               url: url+"login/verify_mobile",
                               type: "POST",
-                              country_code : $('#country_code').val()
-                            }
-                            //  remote:{ 
-                            //   url: url+"login/verify_email",
-                            //   type: "POST",
-                            // }
+                              data: {
+                                  country_code : function() {
+                                    return $( "#country_code" ).val();
+                                },
+                            },
                           },
+                      },
                     email: { required: true,
                              email: true,
                              remote:{ 
