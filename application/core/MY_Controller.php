@@ -176,7 +176,7 @@ class Vendor_Controller extends MY_Controller
                 $this->load->model('frontend/vendor_model','vendor_model');
                 $data['branch_nav'] = $this->vendor_model->branchList();
                 $data['ApprovedBranch'] = $this->vendor_model->ApprovedVendor();
-                dd( $data['ApprovedBranch']);
+                // dd( $data['ApprovedBranch']);
                 $this->load->model('frontend/product_model','product_model');
                 $data['wish_pid'] = $this->product_model->getUsersWishlist();
                 $data['getContact'] = $this->contact->getContact();
