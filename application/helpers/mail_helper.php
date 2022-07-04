@@ -11,9 +11,14 @@ function sendMail($data) {
    'smtp_user' => 'test@launchestore.com', 
    'smtp_pass' => 'HhZ~sU(@drk_',
          // 'smtp_secure' => 'ssl',
-   'mailtype' => 'html',
+   'smtp_timeout'=> 20,
+   'priority' => 1,
    'charset' => 'utf-8',
-   'wordwrap' => TRUE
+   'mailtype' => 'html',
+   'wordwrap' => TRUE,
+   'crlf'] => "\r\n",
+   'newline' => "\r\n",
+   'mailtype' = "html",
  );
 
   $CI = &get_instance();
