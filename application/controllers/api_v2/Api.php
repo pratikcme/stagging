@@ -1080,7 +1080,7 @@ class Api extends Apiuser_Controller {
             foreach ($response['offer_list'] as $key => $value) {
                 $c = $this->this_model->check_branch_is_active($value->branch_id);
                 if($c->status == 0){
-                    unset($response['offer_list'][$key]);
+                    dd($response['offer_list']);
                     continue;   
                 }
                 $s = $this->this_model->check($value->id);
