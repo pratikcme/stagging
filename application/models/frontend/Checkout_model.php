@@ -310,6 +310,7 @@ Class Checkout_model extends My_model{
             $this->load->model('api_model');
             $this->api_model->send_otp_int($mobile_number,$otp);
         }else{
+            echo '1';die;
             $this->sendOtp($mobile_number,$otp);
         }
 
