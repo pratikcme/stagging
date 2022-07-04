@@ -1078,6 +1078,11 @@ class Api extends Apiuser_Controller {
             $response['offer_list'] = $offer_list;
             $type = '1';
             foreach ($response['offer_list'] as $key => $value) {
+                $c = $this->this_model->check_branch_is_active($value->branch_id);
+                if($c->status == '0'){
+                    unset($result[$key]);
+                    continue;   
+                }
                 $s = $this->this_model->check($value->id);
                 if(count($s) > 1){
                  $type = '2';   
