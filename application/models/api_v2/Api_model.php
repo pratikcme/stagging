@@ -173,7 +173,7 @@ class Api_model extends My_model {
                         'notification_status' => $notification_status, 
                         'mobile_verify' => $userdata['is_verify']
                     );
-
+        dd($data);
         $this->update_device($userdata, $postData);
         $login_logs = [
             'user_id' => $user_id,
