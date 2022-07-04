@@ -206,14 +206,14 @@
                         My Address
                       </a>   
                      </li>
-
+                      <?php if($ApprovedBranch[0]->login_type == '0'){ ?>
                       <li>
                       <a href="<?=base_url().'users_account/users/account?name=change'?>">
                         <span><i class="fas fa-lock"></i></span>
                         Change Password
                       </a>   
                      </li>
-
+                    <?php } ?>
                       <li style="display: none">
                       <a href="<?=base_url().'users_account/users/account?name=faq'?>">
                         <span><i class="fas fa-info-circle"></i></span>
