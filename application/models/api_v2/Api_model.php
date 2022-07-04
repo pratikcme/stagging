@@ -86,11 +86,11 @@ class Api_model extends My_model {
                 $data['where']['email'] = $postData['email'];
                 $data['where']['vendor_id'] = $postData['vendor_id'];
                 $data['table'] = 'user';
-                $this->updateRecords($data);
+                $in = $this->updateRecords($data);
             }else{
-                $this->insertRecord($dataIns);
+                $in = $this->insertRecord($dataIns);
             }
-            lq();
+            echo $in;die;
             if($postData['login_type']=='0'){
                 $response["success"] = 1;
                 $response["message"] = "Account created successfully";
