@@ -70,7 +70,7 @@
                         <div class="text-center">
                         <div class="group-image">
                            <div class="circle">
-                              <img class="profile-pic" src="<?=($userDetails[0]->profileimage !='' ) ? base_url().'public/images/'.$this->folder.'user_profile/'.$userDetails[0]->profileimage : 'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg'" >
+                              <img class="profile-pic" src="<?=($userDetails[0]->profileimage !='' ) ? base_url().'public/images/'.$this->folder.'user_profile/'.$userDetails[0]->profileimage : "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" >
                            </div>
                            <div class="p-image">
                               <i class="fa fa-camera upload-button"></i>
