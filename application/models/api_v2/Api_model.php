@@ -3535,7 +3535,11 @@ class Api_model extends My_model {
                 unset($result[$k]);
                 continue;
             }
-
+            $c = $this->check_branch_is_active($v->branch_id);
+            if(!$c){
+                unset($result[$k]);
+                continue;   
+            }
             $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
             $data['select'] = ['c.name as category_name','p.category_id','pw.product_id'];
             $data['table'] = TABLE_PRODUCT_WEIGHT . ' as pw';
@@ -3555,6 +3559,17 @@ class Api_model extends My_model {
 
     }
 
+    public fucntion check_branch_is_active($branch_id){
+        $data['table'] = 'branch';
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$branch_id,'status !='=>'9'];
+        $res = $this->selectRecords($data);
+        if(!empty($res)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public function check($offer_id){
         $data['table'] = TABLE_OFFER .' as o';
         $data['join'] = [
