@@ -3531,10 +3531,10 @@ class Api_model extends My_model {
         unset($data);
         foreach ($result as $k => $v) {
             $c = $this->check_branch_is_active($v->branch_id);
-            if($c->status == '0'){
-                unset($result[$k]);
-                continue;   
-            }
+            // if($c->status == '0'){
+            //     unset($result[$k]);
+            //     continue;   
+            // }
             if($v->end_date == $today && $v->end_time <= $time){
                 unset($result[$k]);
                 continue;
