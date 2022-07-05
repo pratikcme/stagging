@@ -486,34 +486,33 @@ public function Product_add_update(){
     }
 
 
-    public function update_without_gst(){
-        $this->load->model('api_v2/api_model','s');
-        $data['table'] = TABLE_PRODUCT_WEIGHT;
-        $data['select'] = ['*'];
-        $re = $this->selectRecords($data);
-        foreach ($re as $key => $value) {
-            $gst_percent = $this->s->getProductGst($value->product_id);
-            $price = number_format((float)$value->price, 2, '.', '');
+    // public function update_without_gst(){
+    //     $this->load->model('api_v2/api_model','s');
+    //     $data['table'] = TABLE_PRODUCT_WEIGHT;
+    //     $data['select'] = ['*'];
+    //     $re = $this->selectRecords($data);
+    //     foreach ($re as $key => $value) {
+    //         $gst_percent = $this->s->getProductGst($value->product_id);
+    //         $price = number_format((float)$value->price, 2, '.', '');
 
-            $discount_per = $value->discount_per;
-            $purchase_price = $value->purchase_price;
+    //         $discount_per = $value->discount_per;
+    //         $purchase_price = $value->purchase_price;
             
 
-            $discount_price_cal = (($price * $discount_per) / 100);
-            $discount_price = number_format((float)$discount_price_cal, 2, '.', '');
-            $final_discount_price = number_format((float)$price - $discount_price, 2, '.', '');
+    //         $discount_price_cal = (($price * $discount_per) / 100);
+    //         $discount_price = number_format((float)$discount_price_cal, 2, '.', '');
+    //         $final_discount_price = number_format((float)$price - $discount_price, 2, '.', '');
 
-           $gst_amount = ($final_discount_price * $gst_percent) / 100;
-           $product_price_without_gst = $final_discount_price - $gst_amount;
-           unset($data);
+    //        $gst_amount = ($final_discount_price * $gst_percent) / 100;
+    //        $product_price_without_gst = $final_discount_price - $gst_amount;
+    //        unset($data);
 
-           $data['table'] =  TABLE_PRODUCT_WEIGHT;
-           $data['update'] = ['without_gst_price'=>number_format((float)$product_price_without_gst, 2, '.', '') ];
-           $data['where'] = ['id'=>$value->id];
-           $this->updateRecords($data);
-           lq();
-        }
-    }   
+    //        $data['table'] =  TABLE_PRODUCT_WEIGHT;
+    //        $data['update'] = ['without_gst_price'=>number_format((float)$product_price_without_gst, 2, '.', '') ];
+    //        $data['where'] = ['id'=>$value->id];
+    //        $this->updateRecords($data);
+    //     }
+    // }   
     
     /*This code is used update database without_gst_price*/ 
     /*End this code is used update database without_gst_price*/
