@@ -519,6 +519,7 @@ public function Product_add_update(){
 
     public function product_weight_add_update(){
         $this->update_without_gst();
+        
         $vendor_id = $this->session->userdata['id'];
         $ven_id = $this->session->userdata['vendor_id'];
         $id = $_POST['id'];
