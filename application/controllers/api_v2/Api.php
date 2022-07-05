@@ -12,7 +12,7 @@ class Api extends Apiuser_Controller {
             $getVendor =  $this->common_model->getVendorIdFromBranch();
             $_POST['vendor_id'] = $getVendor[0]->vendor_id;
         }
-       
+    /*ALTER TABLE `vendor` ADD `display_price_with_gst` ENUM('0','1') NOT NULL COMMENT '0=?>with_gst; \'1\'=>without_gst' AFTER `type`;*/
     }
     public function appDetails(){   
         $post = $this->input->post();
@@ -475,11 +475,11 @@ class Api extends Apiuser_Controller {
             $cart_response["data"] = array();
             if(!empty($my_cart_result)){
 
-                $vendorId = $my_cart_result[0]->branch_id;
-                $vendor_query = $this->db->query("SELECT * FROM branch WHERE id ='$vendorId'");
+                $BranchId = $my_cart_result[0]->branch_id;
+                $vendor_query = $this->db->query("SELECT * FROM branch WHERE id ='$BranchId'");
                 $vendor_result = $vendor_query->result();
 
-                $payment_method = $this->db->query("SELECT * FROM payment_method WHERE branch_id ='$vendorId' AND status='1'");
+                $payment_method = $this->db->query("SELECT * FROM payment_method WHERE branch_id ='$BranchId' AND status='1'");
 
                 $p_method = $payment_method->result();
                 
@@ -689,7 +689,9 @@ class Api extends Apiuser_Controller {
     }
 
     public function product_detail() {
-
+        $this->load->model('api_v2/common_model','co_model');
+            $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
+     
         if (isset($_POST['product_id']) && isset($_POST['branch_id'])) {
             $product_id = $_POST['product_id'];
             $category_id = $_POST['category_id'];
@@ -735,7 +737,9 @@ class Api extends Apiuser_Controller {
                     $new_array_product_weight = array();
 
                     foreach ($product_weight_result as $pro_weight) {
-                        
+                        if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                                $pro_weight->discount_price = $pro_weight->without_gst_price;
+                        }  
                         $whatsappShareUrl = base_url().'products/productDetails/'.$this->utility->safe_b64encode($pro_weight->product_id).'/'.$this->utility->safe_b64encode($pro_weight->id);
 
                         $package_id = $pro_weight->package;
@@ -1443,9 +1447,11 @@ class Api extends Apiuser_Controller {
 
     ## My Orders Details ##
     public function my_order_details() {
+
         if (isset($_POST['user_id']) && isset($_POST['order_id'])) {
+            $this->load->model('api_v2/common_model','co_model');
+            $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
             $limit = '10';
-           
             $user_id = $_POST['user_id'];
             $order_id = $_POST['order_id'];
             $actual_price_total = 0;
@@ -1484,6 +1490,7 @@ class Api extends Apiuser_Controller {
                 $total_gst = 0;
                 foreach ($result as $row) {
                     $gst_percent = $this->this_model->getProductGst($row->product_id);
+                    
                     $product_weight_id = $row->product_weight_id;
                     $product_weight_query = $this->db->query("SELECT pw.*, p.name as product_name, p.image as product_image, w.name as product_weight_name,p.gst FROM product_weight as pw 
                     LEFT JOIN product as p ON p.id = pw.product_id
@@ -1511,8 +1518,11 @@ class Api extends Apiuser_Controller {
                     $response["TotalGstAmount"] = number_format((float)$total_gst, '2', '.', '');
                     $response["amountWithoutGst"] = number_format((float)$total_price - $total_gst, '2', '.', '');
                     $product_id = $row->product_id;
+
                     $product_query = $this->db->query("SELECT name, image FROM product WHERE  id = '$product_id'");
+
                     $product_image_query = $this->db->query("SELECT * FROM product_image WHERE status != '9' AND product_id = '$product_id' AND product_variant_id = '$product_weight_id'");
+
                     $product_image_result = $product_image_query->result();
                     
                     $proimg = str_replace(' ', '%20',$product_image_result[0]->image);
@@ -1693,7 +1703,9 @@ class Api extends Apiuser_Controller {
 
     ## Product Search ##
     public function product_search() {
-        
+        $this->load->model('api_v2/common_model','co_model');
+        $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($_POST['vendor_id']);
+
         $product_name = $_POST['product_name'];
         if (isset($_POST['user_id']) && $_POST['user_id'] != '') {
             $user_id = $_POST['user_id'];
@@ -1704,45 +1716,41 @@ class Api extends Apiuser_Controller {
 
             if(isset($branch_id) && $branch_id != ''){
                 $result_count = $this->db->query("SELECT p.* FROM `product` as p 
-                    LEFT JOIN product_search as ps ON ps.product_id = p.id
                     LEFT JOIN product_weight as w ON w.product_id = p.id
                     LEFT JOIN branch as br ON br.id = p.branch_id
-                    WHERE p.status != '9'  AND p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND (p.name LIKE '%$product_name%' OR ps.name LIKE '%$product_name%') GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
+                    WHERE p.status != '9'  AND p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND (p.name LIKE '%$product_name%' OR p.name LIKE '%$product_name%') GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
                 $row_count_ = $result_count->result();
                 $total_count = count(array_keys($row_count_));
 
                 $query = $this->db->query("SELECT p.*,c.name as category_name,sb.name as subcat_name,b.name as brand_name FROM `product` as p 
-                    LEFT JOIN product_search as ps ON ps.product_id = p.id
                     LEFT JOIN product_weight as w ON w.product_id = p.id
                     LEFT JOIN category as c ON c.id = p.category_id
                     LEFT JOIN subcategory as sb ON sb.id = p.subcategory_id
                     LEFT JOIN brand as b ON b.id = p.brand_id
                     LEFT JOIN branch as br ON br.id = p.branch_id
 
-                    WHERE p.status != '9' AND p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND ( p.name LIKE '%$product_name%' OR c.name LIKE '%$product_name%' OR sb.name LIKE '%$product_name%' OR b.name LIKE '%$product_name%' OR ps.name LIKE '%$product_name%')
+                    WHERE p.status != '9' AND p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND ( p.name LIKE '%$product_name%' OR c.name LIKE '%$product_name%' OR sb.name LIKE '%$product_name%' OR b.name LIKE '%$product_name%' OR p.name LIKE '%$product_name%')
                     GROUP BY p.id,c.id,sb.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2)) ASC ");
                 $result = $query->result();
             }else            
             if (isset($_POST['vendor_id']) && $_POST['vendor_id'] != '') {
                 $vendor_id = $_POST['vendor_id'];
                 $result_count = $this->db->query("SELECT p.* FROM `product` as p 
-                    LEFT JOIN product_search as ps ON ps.product_id = p.id
                     LEFT JOIN product_weight as w ON w.product_id = p.id
                     LEFT JOIN branch as br ON br.id = p.branch_id
-                    WHERE p.status != '9'  AND br.vendor_id = '$vendor_id' AND w.discount_price != '' AND w.status != '9' AND (p.name LIKE '%$product_name%' OR ps.name LIKE '%$product_name%') GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
+                    WHERE p.status != '9'  AND br.vendor_id = '$vendor_id' AND w.discount_price != '' AND w.status != '9' AND (p.name LIKE '%$product_name%' OR p.name LIKE '%$product_name%') GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
                 $row_count_ = $result_count->result();
                 $total_count = count(array_keys($row_count_));
                 
 
                 $query = $this->db->query("SELECT p.*,c.name as category_name,sb.name as subcat_name,b.name as brand_name FROM `product` as p 
-                    LEFT JOIN product_search as ps ON ps.product_id = p.id
                     LEFT JOIN product_weight as w ON w.product_id = p.id
                     LEFT JOIN category as c ON c.id = p.category_id
                     LEFT JOIN subcategory as sb ON sb.id = p.subcategory_id
                     LEFT JOIN brand as b ON b.id = p.brand_id
                     LEFT JOIN branch as br ON br.id = p.branch_id
 
-                    WHERE p.status != '9' AND br.vendor_id = '$vendor_id' AND w.discount_price != '' AND w.status != '9' AND ( p.name LIKE '%$product_name%' OR c.name LIKE '%$product_name%' OR sb.name LIKE '%$product_name%' OR b.name LIKE '%$product_name%' OR ps.name LIKE '%$product_name%')
+                    WHERE p.status != '9' AND br.vendor_id = '$vendor_id' AND w.discount_price != '' AND w.status != '9' AND ( p.name LIKE '%$product_name%' OR c.name LIKE '%$product_name%' OR sb.name LIKE '%$product_name%' OR b.name LIKE '%$product_name%' OR p.name LIKE '%$product_name%')
                     GROUP BY p.id,c.id,sb.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2)) ASC ");
                 $result = $query->result();
                 
@@ -1764,6 +1772,10 @@ class Api extends Apiuser_Controller {
                     $product_image_result = $product_image_query->result();
                     $new_array_product_weight = array();
                     foreach ($product_weight_result as $pro_weight) {
+                        if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                                $pro_weight->discount_price = $pro_weight->without_gst_price;
+                        }
+
                         $package_id = $pro_weight->package;
                         $variant_id = $pro_weight->id;
                         $package_name = $this->this_model->get_package($package_id);

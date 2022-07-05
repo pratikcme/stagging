@@ -81,6 +81,7 @@ if (@$myhidejs != 1) { ?>
         type:'post',
         data : {vendor_id : vendor_id},
         success:function(output){
+          // window.location.reload(); 
           window.location.href = url+"admin/dashboard";
         }
       })

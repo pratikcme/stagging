@@ -859,6 +859,10 @@ class Api_model extends My_model {
         return $total_gst;
     }
     function filter($postdata) {
+
+        $this->load->model('api_v2/common_model','co_model');
+        $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
+
         $branch_id = $postdata['branch_id'];
         $sort = $postdata['filter_search'];
         if (isset($postdata['offset'])) {
@@ -960,7 +964,13 @@ class Api_model extends My_model {
             
         }
         unset($data);
-        $data['select'] = ['p.*', 'max(w.discount_price) AS maxdis', 'min(w.discount_price) AS mindis'];
+         if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+            $pro_weight->discount_price = $pro_weight->without_gst_price;
+            $data['select'] = ['p.*', 'max(w.without_gst_price) AS maxdis', 'min(w.without_gst_price) AS mindis']; 
+        }else{
+        $data['select'] = ['p.*', 'max(w.discount_price) AS maxdis', 'min(w.discount_price) AS mindis'];    
+        } 
+
         $data['table'] = 'product AS p';
         $data['join'] = ['product_weight  AS w' => ['w.product_id = p.id', 'LEFT']];
         $data_where['p.status !='] = '9';
@@ -2553,13 +2563,14 @@ class Api_model extends My_model {
             }
         }
         function get_product_list($postdata) {
-            
+            $this->load->model('api_v2/common_model','co_model');
+            $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
+
             if(isset($postdata['defualt_product'])){
                 $defualt_product = $postdata['defualt_product'];
             }else{
                 $defualt_product = '';
             }
-            
             
             $branch_id = $postdata['branch_id'];
             $category_id = $postdata['category_id'];
@@ -2620,7 +2631,11 @@ class Api_model extends My_model {
                         unset($data);
                         unset($getdata);
                         foreach ($product_query as $r => $product_variant) {
-                            //                        print_r($product_query);exit;
+                            // print_r($product_query);exit;
+                            if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                                $product_variant->discount_price = $product_variant->without_gst_price;
+                            }
+
                             $product_variant_id = $product_variant->id;
                           
                             $package_id = $product_variant->package;
@@ -2668,7 +2683,7 @@ class Api_model extends My_model {
                                         'discount_per' => $product_variant->discount_per, 
                                         'discount_price' => $product_variant->discount_price, 
                                         'package_name' => $package_name, 
-                                        'my_cart_quantity' => $my_cart_quantity, 
+                                        'my_cart_quantity' => $my_cart_quantity,
                                         'variant_image' => $image
                                     );
                             $getdata[] = $data;
@@ -3715,7 +3730,11 @@ class Api_model extends My_model {
             $response["message"] = "Please wait for deliver current order or cancle ongoing order";
             return $response;
         }
-
+        unset($data);
+        $data['where'] = ['user_id'=>$postData['user_id']];
+        $data['table'] = TABLE_MY_CART;
+        $this->deleteRecords($data);
+        unset($data);
         $data['update'] = ['status'=>'9'];
         $data['where'] = ['id'=>$postData['user_id'] ];
         $data['table'] = TABLE_USER;

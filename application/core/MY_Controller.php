@@ -1,9 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-// error_reporting(E_ALL);
-// ini_set("display_errors", '1');
+
 class MY_Controller extends CI_Controller
 {
-
     public $json_response = null;
     public $user_id = null;
     
@@ -12,7 +10,7 @@ class MY_Controller extends CI_Controller
         parent::__construct();
        
         $this->json_response = array('status' => 'error', 'message' => 'something went wrong!');
-
+        // print_r($_SESSION);
          if(isset($_SESSION['My_cart']) && count($_SESSION['My_cart']) == 0 ){
                 $this->session->unset_userdata('My_cart');
             }
@@ -100,7 +98,8 @@ class Vendor_Controller extends MY_Controller
         if($this->session->userdata('branch_admin') != '1' ){
                 redirect(base_url().'admin/dashboard');
         
- }   }
+        }   
+    }
 
 }
     class User_Controller extends MY_Controller

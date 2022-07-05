@@ -48,7 +48,7 @@ class Admin extends CI_Controller
             $vendor = $this->input->post('vendor_id');
             if($vendor != 'vendor_admin'){
                 $res = $this->vendor_model->getAllVendor($this->input->post());
-
+            
                 $this->session->unset_userdata('vendor_admin');
                 $this->session->unset_userdata('super_id');
                 $this->session->unset_userdata('branch_admin');
@@ -60,7 +60,6 @@ class Admin extends CI_Controller
                 $this->session->unset_userdata('phone');
                 $this->session->unset_userdata('logged_in');
 
-
                 $login_data = array(
                     'branch_admin'=>TRUE,
                     'id' => $res[0]->id,
@@ -71,7 +70,9 @@ class Admin extends CI_Controller
                     'logged_in' => TRUE
                 );
                 $this->session->set_userdata($login_data);
+                
             }else{
+
             $flag = $this->session->userdata('flag');
             $result_login = $this->db->query("SELECT * FROM `vendor` WHERE id='$flag'");
             $row_login = $result_login->row_array();

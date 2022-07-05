@@ -14,6 +14,7 @@ class Home extends User_Controller {
 	}
 
 	public function index(){
+		// dd($_SESSION);
 		$data['page'] = 'frontend/home/home';
 		$subcategory = $this->this_model->countSubcategory();
 		$data['subcategory'] = count($subcategory);
