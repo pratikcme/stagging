@@ -247,10 +247,12 @@ public function sendOtpAccount(){
  	}
 
  	public function data_deletion(){
- 		ecit();
- 		// $post = $this->input->post();
-   //  $response = $this->this_model->delete_user($post);
-   //  $response = array('responsedata' => $response);
+ 		$post = $this->input->post();
+ 		if($this->input->post()){
+    	$response = $this->this_model->delete_user($post);
+    	$response = array($response);
+ 			echo json_encode($response);
+ 		}
  	}
 
 }

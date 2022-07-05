@@ -355,6 +355,7 @@ class Login_model extends My_model{
 							'email'=>$postData['email'],
 							'password'=>null,
 							'login_type !='=>'0',
+							'status !=' => '9',
 							'vendor_id' =>$this->vendor_id
 						];
 		$re = $this->selectRecords($data);
@@ -397,7 +398,8 @@ class Login_model extends My_model{
 		$data['where'] = [
 							'vendor_id' =>$this->vendor_id,
 							'email'=>$postData['email'],
-							'password'=>md5($postData['password'])
+							'password'=>md5($postData['password']),
+							'status !=' => '9',
 						];
 		$return = $this->selectRecords($data);
 		// echo $this->db->last_query();
@@ -505,8 +507,11 @@ class Login_model extends My_model{
 		$data['select'] = ['*'];
 		$data['where'] = [
 							'email'=>$postdata['email'],
+							'status!=' =>'9',
+							'vendor_id'=>$this->session->userdata('vendor_id') 
 						];
-		$chk_num = $this->countRecords($data);		
+		$chk_num = $this->countRecords($data);
+		// dd($chk_num);
         if($chk_num > 0)
         {
            $user_details =  $this->selectRecords($data);

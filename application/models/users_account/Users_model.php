@@ -436,5 +436,44 @@ class Users_model extends My_model {
                      ];
         return $this->selectRecords($data); 
     }
+
+    public function delete_user()
+    {
+        $user_id = $this->session->userdata('user_id');
+        $data['select'] = ['*'];
+        $data['where'] = ['order_status <'=>'8','user_id'=>$user_id];
+        $data['table'] = TABLE_ORDER;
+        $checkOrder = $this->selectRecords($data);
+        if(!empty($checkOrder)){
+            $this->utility->setFlashMessage('danger',"Please wait for deliver current order or cancle ongoing order");
+            $response["success"] = 0;
+            $response["message"] = "Please wait for deliver current order or cancle ongoing order";
+            // return true;
+            // redirect(base_url().'home');
+            return $response;
+        }
+        unset($data);
+        $data['where'] = ['user_id'=>$user_id];
+        $data['table'] = TABLE_MY_CART;
+        $this->deleteRecords($data);
+        unset($data);
+        $data['update'] = ['status'=>'9'];
+        $data['where'] = ['id'=>$user_id];
+        $data['table'] = TABLE_USER;
+        
+        $this->updateRecords($data);
+        $this->session->unset_userdata('My_cart');
+        $this->session->unset_userdata('user_id');
+        $this->session->unset_userdata('user_name');
+        $this->session->unset_userdata('user_lname');
+        $this->session->unset_userdata('user_email');
+        $this->session->unset_userdata('user_phone');
+        $this->utility->setFlashMessage('danger',"User Account is permanant deleted");
+        $response["success"] = 1;
+        $response["message"] = "User Account is permanant deleted";  
+        return $response;
+        return true;
+        // redirect(base_url().'home');
+    }
 }
 ?>
