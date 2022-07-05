@@ -490,9 +490,9 @@ public function Product_add_update(){
         $data['table'] = TABLE_PRODUCT_WEIGHT;
         $data['select'] = ['*'];
         $re = $this->selectRecords($data);
-        $this->load->model('api_v2/api_model');
+        $this->load->model('api_v2/api_model','s');
         foreach ($re as $key => $value) {
-            $gst_percent = $this->api_model->getProductGst($value->product_id);
+            $gst_percent = $this->s->getProductGst($value->product_id);
             $price = number_format((float)$value->price, 2, '.', '');
 
             $discount_per = $value->discount_per;
