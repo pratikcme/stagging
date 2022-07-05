@@ -525,8 +525,8 @@ public function Product_add_update(){
         $product_id = $_POST['product_id'];
 
         $this->load->model('api_v2/api_model');
-        $gst_percent = $this->api_model->getProductGst($product_id);
-
+        echo $gst_percent = $this->api_model->getProductGst($product_id);
+        die;
 
         $weight_id = $_POST['weight_id'];
         // $unit = number_format((float)$_POST['unit'], 2, '.', '');
