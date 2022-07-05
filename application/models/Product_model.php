@@ -494,15 +494,8 @@ public function Product_add_update(){
         foreach ($re as $key => $value) {
             $gst_percent = $this->s->getProductGst($value->product_id);
             $price = number_format((float)$value->price, 2, '.', '');
-            $discount_per = $value->discount_per;            
-
-            $discount_price_cal = (($price * $discount_per) / 100);
-
-            $discount_price = number_format((float)$discount_price_cal, 2, '.', '');
-
-            $final_discount_price = number_format((float)$price - $discount_price, 2, '.', '');
-
-           $gst_amount = ($final_discount_price * $gst_percent) / 100;
+            
+           $gst_amount = ($value->discount_price * $gst_percent) / 100;
            $product_price_without_gst = $final_discount_price - $gst_amount;
            unset($data);
 
