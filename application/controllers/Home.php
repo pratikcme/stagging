@@ -14,7 +14,11 @@ class Home extends User_Controller {
 	}
 
 	public function index(){
-		// dd($_SESSION);
+		$this->load->model('api_v2/common_model','co_model');
+        $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
+        // dd($isShow);
+
+
 		$data['page'] = 'frontend/home/home';
 		$subcategory = $this->this_model->countSubcategory();
 		$data['subcategory'] = count($subcategory);
@@ -41,6 +45,10 @@ class Home extends User_Controller {
 		$product_ids = [];
 		$default_product_image = $this->common_model->default_product_image(); 
 		foreach ($data['new_arrival'] as $key => $value) {
+			 if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+        		$value->discount_price = $value->without_gst_price;
+        	}
+
 			$varientQuantity = $this->this_model->checkVarientQuantity($value->id);
 			$product_ids[] = $value->id;
 			$this->load->model('frontend/product_model');
@@ -64,7 +72,6 @@ class Home extends User_Controller {
 		
 
 		$data['top_sell_core'] = $this->this_model->selectTopSelling($product_ids);
-		
 		$top_selling_core = array();
 		foreach ($data['top_sell_core'] as $key => $value) {  
 			$selling_core = $this->this_model->top_selling_product($value->product_id);
@@ -77,7 +84,9 @@ class Home extends User_Controller {
 			array_multisort($quantity, SORT_DESC, $top_selling_core);
 			
 		foreach ($top_selling_core as $key => $value) {
-
+			if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+        		$value->discount_price = $value->without_gst_price;
+        	}
 			$addQuantity = $this->product_model->findProductAddQuantity($value->id,$value->pw_id);
   			$value->addQuantity = $addQuantity;
 			

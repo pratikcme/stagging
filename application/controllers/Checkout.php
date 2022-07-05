@@ -66,7 +66,7 @@ class Checkout extends User_Controller {
 
     if($myCartValue < $defaultCartValue ){
       $this->utility->setFlashMessage_cartValue('danger','Minimum cart value should be greater than '.$this->session->userdata('de_currency').' '.$defaultCartValue );
-      redirect($_SERVER['HTTP_REFERER']);
+      redirect(base_url().'home');
       exit(); 
     } 
 

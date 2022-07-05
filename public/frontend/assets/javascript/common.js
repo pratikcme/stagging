@@ -191,13 +191,13 @@ $(document).on('click','.remove_item',function(){
 					data : {product_id:product_id,weight_id:weight_id,product_weight_id:product_weight_id},
 					success:function(output){
 						window.location.reload();
+
 						var currnt  = window.location.href;
 						var segments = currnt.split( '/' );
-						if(segments[4] == 'productDetails'){
-							window.location.reload();
-							return false;
-						}
-						
+						// if(segments[4] == 'checkout'){
+						// 	window.location.href = url+'home';
+						// 	return false;
+						// }
 						var currntPath = window.location.pathname;
 						if(currntPath == '/checkout'){
 							if(output.count == 0){

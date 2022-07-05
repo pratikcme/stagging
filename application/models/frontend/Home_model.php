@@ -35,7 +35,7 @@ class Home_model extends My_model{
 	public function selectNewArrivel(){
 		$branch_id = $this->session->userdata('branch_id');
 			$data['table'] = TABLE_PRODUCT . " as p";
-			$data['select'] = ['p.*','pw.price','pw.id as pw_id' ,'pw.quantity','pw.discount_per','pw.discount_price','pi.image','pw.weight_id'];
+			$data['select'] = ['p.*','pw.price','pw.id as pw_id' ,'pw.quantity','pw.discount_per','pw.discount_price','pi.image','pw.weight_id','pw.without_gst_price'];
 			$data['join'] = [
 				TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
 				TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']
@@ -94,7 +94,7 @@ class Home_model extends My_model{
 	 public function top_selling_product($id){
 			$branch_id = $this->session->userdata('branch_id');
 			$data['table'] = TABLE_PRODUCT . " as p";
-			$data['select'] = ['p.*','pw.price','pw.id as pw_id' ,'pw.quantity','pw.discount_per','pw.discount_price','pi.image','pw.weight_id'];
+			$data['select'] = ['p.*','pw.price','pw.id as pw_id' ,'pw.quantity','pw.discount_per','pw.discount_price','pi.image','pw.weight_id','without_gst_price'];
 			$data['join'] = [
 					TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
 					TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']

@@ -40,6 +40,10 @@ function sendMail($data) {
 
 function getMycartSubtotal(){
   $CI = &get_instance();
+  $CI->load->model('api_v2/common_model','co_model');
+  $isShow = $CI->co_model->checkpPriceShowWithGstOrwithoutGst($CI->session->userdata('vendor_id'));
+
+
   $total = number_format((float)0,2,'.','');
   $CI->load->model('frontend/product_model');
   if($CI->session->userdata('user_id') == '' ){
@@ -56,6 +60,11 @@ function getMycartSubtotal(){
     $CI->load->model('frontend/product_model','product_model');
     $my_cart = $CI->product_model->getMyCart();
     foreach ($my_cart as $key => $value) {
+      if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+        $value->discount_price = $value->without_gst_price; 
+      }
+
+
      $total += $value->discount_price * $value->quantity; 
     }
 
@@ -106,9 +115,11 @@ function cartItemCount(){
 }
 
 function NavbarDropdown(){
-
   $html = '';
   $CI = &get_instance();
+  $CI->load->model('api_v2/common_model','co_model');
+  $isShow = $CI->co_model->checkpPriceShowWithGstOrwithoutGst($CI->session->userdata('vendor_id'));
+  
   $CI->load->model('common_model');
   $default_product_image =$CI->common_model->default_product_image();
   if($CI->session->userdata('user_id') == ''){
@@ -151,7 +162,11 @@ function NavbarDropdown(){
       
      foreach ($my_cart as $key => $value) {
         $product_image = $CI->product_model->GetUsersProductInCart($value->product_weight_id);
-        
+
+        if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+            $product_image[0]->discount_price = $product_image[0]->without_gst_price;
+        }  
+
         $product_image[0]->image = preg_replace('/\s+/', '%20', $product_image[0]->image);
         if(!file_exists('public/images/'.$CI->folder.'product_image/'.$product_image[0]->image) || $product_image[0]->image == '' ){
           if(strpos($product_image[0]->image, '%20') === true || $product_image[0]->image == ''){

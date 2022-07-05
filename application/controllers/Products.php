@@ -124,6 +124,8 @@ class Products extends User_Controller {
 	}
 
 	public function productDetails($id=''){
+		$this->load->model('api_v2/common_model','co_model');
+        $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
 
 		if(!isset($_SESSION['branch_id'])){
 			$productID = $this->uri->segment(3);
@@ -214,6 +216,10 @@ class Products extends User_Controller {
 		$related_product = $this->this_model->getRelatedProduct($data['productDetail'][0]->category_id,$data['varient']);
 		
 		foreach ($related_product as $key => $value) {
+			if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+        		$value->discount_price = $value->without_gst_price; 
+	        }    
+        
 			// $v_image = $this->this_model->getVarientImage($value->pw_id);
 			// $related_product[$key]->product_image = $v_image[0]->image;
 			$this->load->model('frontend/home_model');
@@ -227,6 +233,11 @@ class Products extends User_Controller {
 
 		$var_id = $this->utility->safe_b64decode($var_id);
 		$data['varientDetails'] = $this->this_model->getVarientDetails($var_id);
+		foreach ($data['varientDetails'] as $key => $value) {
+			if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+        		$value->discount_price = $value->without_gst_price;
+        	}
+		}
 		
 		$data['product_image'] = $this->this_model->getProductImage($var_id);
 		
@@ -360,7 +371,10 @@ class Products extends User_Controller {
 
 
 	public function getDataProductWeight(){
-		// print_r($_SESSION);die;
+		
+		$this->load->model('api_v2/common_model','co_model');
+        $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
+
 		if($this->input->post()){
 			$result = $this->this_model->getDataProductWeight($this->input->post());
 			$image = $this->this_model->getVarientImage($result[0]->id);
@@ -413,6 +427,9 @@ class Products extends User_Controller {
 	 	// $data['image'] = $image;
 	 	// print_r($data['image']);die;
 	 	// $image_div = $this->load->view('frontend/zoom_image',$data,true);
+	 	if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+        	$result[0]->discount_price =  $result[0]->without_gst_price;
+        }
 	 	$response = [
 	 				'product_weight_id'=>$result[0]->id,
 	 				'product_price'=>number_format((float)$result[0]->price, 2, '.', ''),
@@ -431,7 +448,8 @@ class Products extends User_Controller {
 	}
 
 	public function cart_item(){
-
+		$this->load->model('api_v2/common_model','co_model');
+        $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
 		$my_cart = $this->this_model->getMyCart();
 		// dd($my_cart);
 		if(empty($_SESSION['My_cart']) && empty($my_cart) ){
@@ -447,7 +465,12 @@ class Products extends User_Controller {
 			$default_product_image = $this->common_model->default_product_image();
 			
 			$data['my_cart'] = $this->this_model->getMyCart($this->session->userdata('user_id'));
+
 			foreach ($data['my_cart'] as $key => $value) {
+				 if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+        			$value->discount_price = $value->without_gst_price;
+        		 }
+				
 				$product_image = $this->this_model->GetUsersProductInCart($value->product_weight_id);
 				$data['my_cart'][$key]->product_name = $product_image[0]->name;
 				$data['my_cart'][$key]->image = $product_image[0]->image;

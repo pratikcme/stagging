@@ -17,7 +17,9 @@ class Add_to_card extends User_Controller {
 
 	public function addProducToCart(){
 		
-		// dd($this->input->post());die;
+		$this->load->model('api_v2/common_model','co_model');
+    $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
+
 		if($this->input->post()){	
 			$product_id = $this->input->post('product_id');
 			$varient_id = $this->input->post('varient_id');
@@ -36,6 +38,11 @@ class Add_to_card extends User_Controller {
         }
 
 	 	if(!empty($result)){
+	 		
+	 		if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+         $value->discount_price = $value->without_gst_price;
+      }
+
 
 	 		if($result[0]->max_order_qty!='' && $result[0]->max_order_qty!='0' && $quantity > $result[0]->max_order_qty){
 				$errormsg = 'Maximum order quantity reached';
