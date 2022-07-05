@@ -1587,7 +1587,8 @@ class Api_model extends My_model {
                     $avail_quantity = (int)$product_weight_result[0]['quantity'];
 
                     $gst_amount = ($product_discount_price * $gst) / 100;
-                    $total_gst+= $gst_amount * $row['quantity'];
+                    $total_gst += $gst_amount * $row['quantity'];
+                    echo $total_gst; die;
                     $discount_price_total = ($product_actual_price * $row['quantity']) - $row['calculation_price'] + $discount_price_total;
 
                     unset($data);
