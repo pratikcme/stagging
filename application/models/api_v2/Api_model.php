@@ -1526,9 +1526,9 @@ class Api_model extends My_model {
             if (count($my_cart_result) > 0) {
                 foreach ($my_cart_result as $row) {
 
-                    // if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
-                    //     $row['discount_price'] = $row['without_gst_price'];
-                    // }
+                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                        $row['discount_price'] = $row['without_gst_price'];
+                    }
 
                     $row['calculation_price'] = $row['discount_price'] * $row['quantity'];
                     $product_weight_id = $row['product_weight_id'];
@@ -1558,9 +1558,9 @@ class Api_model extends My_model {
                     $data['join'] = ['product  AS p' => ['p.id = pw.product_id', 'LEFT'], 'weight  AS w' => ['w.id = pw.weight_id', 'LEFT'], ];
                     $product_weight_result = $this->selectFromJoin($data, true);
 
-                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
-                        $product_weight_result[0]['discount_price'] = $product_weight_result[0]['without_gst_price'];
-                    }
+                    // if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                    //     $product_weight_result[0]['discount_price'] = $product_weight_result[0]['without_gst_price'];
+                    // }
                     $package_id = $product_weight_result[0]['package'];
                     $package_name = $this->get_package($package_id);
 
