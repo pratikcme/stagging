@@ -510,7 +510,8 @@ public function Product_add_update(){
            $data['table'] =  TABLE_PRODUCT_WEIGHT;
            $data['update'] = ['without_gst_price'=>number_format((float)$product_price_without_gst, 2, '.', '') ];
            $data['where'] = ['id'=>$value->id];
-           $this->updateRecords($data);
+           // $this->updateRecords($data);
+           lq();
            // dd($data);
         }
     }   
