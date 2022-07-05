@@ -94,10 +94,27 @@ $(document).on('click','#delete_account',function() {
 	.then((willDelete) => {
 		if (willDelete) {
 			$.ajax({
-				url : url +'users_account/data_deletion',
+				url : url +'users_account/users/data_deletion',
 				method: 'post',
+				dataType : "json",
+				data : {hello : '1' },
 				success:function(output){
-					window.location.href = url+'home';
+					if(output.status == 1){
+						var title = 'Not Removed'; 
+					}else{
+						var title = 'Not Removed';
+
+					}
+					var message = output[0].message;
+					swal({
+						title: title,
+						text: message,
+						type: "success",
+						timer: 5000
+					}).then(function() {
+							window.location.href = url+'home';
+					});
+
 				}
 			})			
 		}
