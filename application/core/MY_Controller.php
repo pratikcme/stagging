@@ -34,7 +34,7 @@ class MY_Controller extends CI_Controller
 
             $siteDetail = $this->common_model->getLogo();
             if(isset($siteDetail['id'])){
-                $this->session->userdata('vendor_id',$siteDetail['id']);        
+                $this->session->set_userdata('vendor_id',$siteDetail['id']);
             }
             $this->siteLogo = $siteDetail['logo']; 
             $this->siteTitle = $siteDetail['webTitle'];
