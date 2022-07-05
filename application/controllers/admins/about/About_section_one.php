@@ -11,7 +11,6 @@ class About_section_one extends Admin_Controller{
 
 	public function index()
 	{
-		dd($_SESSION);
 		// $data['page'] = 'admin/about/section_one';
 		$data['js'] = array('about.js');
 		$data['init'] = array('ABOUT.section_one()');
