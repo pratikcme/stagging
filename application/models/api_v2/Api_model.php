@@ -1627,9 +1627,9 @@ class Api_model extends My_model {
 
             $response["TotalGstAmount"] = number_format((float)$total_gst, '2', '.', '');
             $response["amountWithoutGst"] = number_format((float)$my_cal - $total_gst, '2', '.', '');
-            if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
-                $response["amountWithoutGst"] = number_format((float)$my_cal, '2', '.', '');
-            }  
+            // if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+            //     $response["amountWithoutGst"] = number_format((float)$my_cal, '2', '.', '');
+            // }  
             
             $response["data"] = $getdata;
             echo $output = json_encode(array('responsedata' => $response));
