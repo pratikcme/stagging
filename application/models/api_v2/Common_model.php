@@ -54,7 +54,7 @@ Class Common_model extends My_model{
 			$data['where_or'] = ['server_name'=>$_SERVER['SERVER_NAME']];
 		}
 
-		$data['select'] = ['webLogo','webTitle','img_folder','favicon_image'];
+		$data['select'] = ['webLogo','webTitle','img_folder','favicon_image','id'];
 		$data['table'] = 'vendor';
 		$data['select'] = ['*'];
 		$data['where'] = ['id'=>$vendor_id];
@@ -281,6 +281,13 @@ Class Common_model extends My_model{
         return $this->selectRecords($data);
     }
 
+    public function checkpPriceShowWithGstOrwithoutGst($vendor_id){
+    	$data['table'] = 'vendor';
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$vendor_id];
+        return $this->selectRecords($data);
+
+    }
 
 	
 
