@@ -783,7 +783,7 @@ class Api extends Apiuser_Controller {
                         }
 
                         if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
-                                $pro_weight->discount_price = $pro_weight->without_gst_price;
+                               echo $pro_weight->discount_price = $pro_weight->without_gst_price; die;
                         }  
                         $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => ($pro_weight->weight_no) . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'avail_quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_images' => $img,'whatsappShareUrl'=>$whatsappShareUrl);
                         array_push($new_array_product_weight, $data);
