@@ -1491,7 +1491,7 @@ class Api_model extends My_model {
     function my_cart($postdata) {
          $this->load->model('api_v2/common_model','co_model');
             $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
-     	    dd($isShow);
+
             $response['show_qty_alert'] = false;
        
             $actual_price_total = 0;
@@ -1527,9 +1527,9 @@ class Api_model extends My_model {
                 foreach ($my_cart_result as $row) {
 
                     if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
-                        echo '1';
-                        $row->discount_price = $row->without_gst_price;
+                        $row['discount_price'] = $row['without_gst_price'];
                     }
+
                     $row['calculation_price'] = $row['discount_price'] * $row['quantity'];
                     $product_weight_id = $row['product_weight_id'];
                     $product_id = $row['product_id'];
