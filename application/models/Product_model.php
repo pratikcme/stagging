@@ -488,8 +488,6 @@ public function Product_add_update(){
     /*This code is used update database without_gst_price*/ 
 
     public function update_without_gst(){
-        error_reporting(E_ALL);
-            ini_set('display_errors', 1);
         $data['table'] = TABLE_PRODUCT_WEIGHT;
         $data['select'] = ['*'];
         $re = $this->selectRecords($data);
