@@ -495,7 +495,7 @@ public function Product_add_update(){
             $gst_percent = $this->s->getProductGst($value->product_id);
 
            $gst_amount = ($value->discount_price * $gst_percent) / 100;
-           echo 
+           // echo $gst_amount;die;
            $product_price_without_gst = $value->discount_price - $gst_amount;
            unset($data);
 
