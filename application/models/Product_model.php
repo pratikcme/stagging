@@ -495,6 +495,7 @@ public function Product_add_update(){
             $gst_percent = $this->s->getProductGst($value->product_id);
 
            $gst_amount = ($value->discount_price * $gst_percent) / 100;
+           echo 
            $product_price_without_gst = $value->discount_price - $gst_amount;
            unset($data);
 
@@ -502,7 +503,7 @@ public function Product_add_update(){
            $data['update'] = ['without_gst_price'=>number_format((float)$product_price_without_gst, 2, '.', '') ];
            $data['where'] = ['id'=>$value->id];
            $this->updateRecords($data);
-           if($key == '3000'){
+           if($value->id == '3948'){
              lq();
            }
         }
