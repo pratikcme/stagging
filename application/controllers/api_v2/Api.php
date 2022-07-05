@@ -740,9 +740,7 @@ class Api extends Apiuser_Controller {
                     $new_array_product_weight = array();
 
                     foreach ($product_weight_result as $pro_weight) {
-                        if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
-                                $pro_weight->discount_price = $pro_weight->without_gst_price;
-                        }  
+                        
                         $whatsappShareUrl = base_url().'products/productDetails/'.$this->utility->safe_b64encode($pro_weight->product_id).'/'.$this->utility->safe_b64encode($pro_weight->id);
 
                         $package_id = $pro_weight->package;
@@ -783,6 +781,10 @@ class Api extends Apiuser_Controller {
                             $pro_image->image = str_replace(' ', '%20', $pro_image->image);
                             $img[] = array('id' => $pro_image->id, 'product_id' => $pro_image->product_id, 'weight_id' => $pro_weight->weight_id, 'image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $pro_image->image, 'thumb_image' => base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $pro_image->image,);
                         }
+
+                        if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                                $pro_weight->discount_price = $pro_weight->without_gst_price;
+                        }  
                         $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => ($pro_weight->weight_no) . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'avail_quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_images' => $img,'whatsappShareUrl'=>$whatsappShareUrl);
                         array_push($new_array_product_weight, $data);
                     }
@@ -1518,6 +1520,7 @@ class Api extends Apiuser_Controller {
                     $gst_total_product = $gst_amount * $row->quantity;
                     $total_gst+= $gst_total_product;
                     $total_price = $actual_price_total - $discount_price_total;
+
                     $response["TotalGstAmount"] = number_format((float)$total_gst, '2', '.', '');
                     $response["amountWithoutGst"] = number_format((float)$total_price - $total_gst, '2', '.', '');
                     $product_id = $row->product_id;
