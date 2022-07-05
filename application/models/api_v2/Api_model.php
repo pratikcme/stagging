@@ -1566,10 +1566,12 @@ class Api_model extends My_model {
                     $data['table'] = 'product_weight as pw';
                     $data['join'] = ['product  AS p' => ['p.id = pw.product_id', 'LEFT'], 'weight  AS w' => ['w.id = pw.weight_id', 'LEFT'], ];
                     $product_weight_result = $this->selectFromJoin($data, true);
-
                     if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                        $product_weight_result_discount_price = $product_weight_result[0]['discount_price'];
+                        
                         $product_weight_result[0]['discount_price'] = $product_weight_result[0]['without_gst_price'];
                     }    
+
                     $package_id = $product_weight_result[0]['package'];
                     $package_name = $this->get_package($package_id);
 
@@ -1581,9 +1583,11 @@ class Api_model extends My_model {
                     $product_weight_name = $product_weight_result[0]['product_weight_name'];
                     $product_actual_price = $product_weight_result[0]['price'];
                     $product_discount_price = $product_weight_result[0]['discount_price'];
+                    
                     $gst = $product_weight_result[0]['gst'];
                     $avail_quantity = (int)$product_weight_result[0]['quantity'];
-                    $gst_amount = ($product_discount_price * $gst) / 100;
+
+                    $gst_amount = ($product_weight_result_discount_price * $gst) / 100;
                     $total_gst+= $gst_amount * $row['quantity'];
                     $discount_price_total = ($product_actual_price * $row['quantity']) - $row['calculation_price'] + $discount_price_total;
 
@@ -1593,7 +1597,7 @@ class Api_model extends My_model {
                     $data['product_unit'] = $product_unit . ' ' . $product_weight_name;
                     $data['product_name'] = $product_name;
                     $data['product_actual_price'] = $product_actual_price;
-                    $data['product_discount_price'] = $product_discount_price;
+                    $data['product_discount_price'] = $product_weight_result_discount_price;
                     $data['avail_quantity'] = $avail_quantity;
                     $data['discount_per'] = $product_weight_result[0]['discount_per'];
                    
