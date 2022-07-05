@@ -493,10 +493,9 @@ public function Product_add_update(){
         $re = $this->selectRecords($data);
         foreach ($re as $key => $value) {
             $gst_percent = $this->s->getProductGst($value->product_id);
-            $price = number_format((float)$value->price, 2, '.', '');
             
            $gst_amount = ($value->discount_price * $gst_percent) / 100;
-           $product_price_without_gst = $final_discount_price - $gst_amount;
+           $product_price_without_gst = $value->discount_price - $gst_amount;
            unset($data);
 
            $data['table'] =  TABLE_PRODUCT_WEIGHT;
