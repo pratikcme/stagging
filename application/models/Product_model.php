@@ -494,18 +494,18 @@ public function Product_add_update(){
         $this->load->model('api_v2/api_model');
         foreach ($re as $key => $value) {
             $gst_percent = $this->api_model->getProductGst($value->product_id);
-            echo  $price = number_format((float)$value->price, 2, '.', '');
+            $price = number_format((float)$value->price, 2, '.', '');
 
-            echo  $discount_per = $value->discount_per;
-            echo  $purchase_price = $value->purchase_price;
+            $discount_per = $value->discount_per;
+            $purchase_price = $value->purchase_price;
             
 
-            echo  $discount_price_cal = (($price * $discount_per) / 100);
-           echo   $discount_price = number_format((float)$discount_price_cal, 2, '.', '');
-            echo  $final_discount_price = number_format((float)$price - $discount_price, 2, '.', '');
+            $discount_price_cal = (($price * $discount_per) / 100);
+            $discount_price = number_format((float)$discount_price_cal, 2, '.', '');
+            echo $final_discount_price = number_format((float)$price - $discount_price, 2, '.', '');
 
-          echo   $gst_amount = ($final_discount_price * $gst_percent) / 100;
-          echo   $product_price_without_gst = $final_discount_price - $gst_amount;
+           $gst_amount = ($final_discount_price * $gst_percent) / 100;
+           $product_price_without_gst = $final_discount_price - $gst_amount;
 
            unset($data);
            $data['table'] =  TABLE_PRODUCT_WEIGHT;
