@@ -66,6 +66,7 @@ Class Common_model extends My_model{
 				'webTitle'=>$get[0]->webTitle,
 				'folder'=>($get[0]->img_folder != '') ? $get[0]->img_folder.'/'  : "",
 				'favicon_image'=>base_url().'public/client_logo/'.$get[0]->favicon_image,
+				'id'=> $get[0]->id
 			];
 			$this->session->set_userdata($return);
 			return $return;
