@@ -1611,7 +1611,6 @@ class Api_model extends My_model {
                 }
             $gettotal = $this->get_total($postdata);
             $getactual = $this->get_actual_total($postdata);
-            dd($getactual);
             $my_cal = $gettotal[0]->total;
             if ($my_cal === null || $my_cal == "<null>") {
                 $my_cal = 0.0;
