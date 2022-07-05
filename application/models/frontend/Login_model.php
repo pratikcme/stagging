@@ -352,11 +352,11 @@ class Login_model extends My_model{
 		$data['table'] = TABLE_USER;
 		$data['select'] = ['*'];
 		$data['where'] = [
+							'vendor_id' =>$this->vendor_id,
 							'email'=>$postData['email'],
 							'password'=>null,
 							'login_type !='=>'0',
-							'status !=' => '9',
-							'vendor_id' =>$this->vendor_id
+							'status !=' => '9'
 						];
 		$re = $this->selectRecords($data);
 		// print_r($re);die;
@@ -436,9 +436,9 @@ class Login_model extends My_model{
 				$login_logs = [
 					'user_id' => $return[0]->id,
 					'vendor_id' => $return[0]->vendor_id,
-			'status' => 'login',
-			'type' => 'user',
-			'dt_created' => DATE_TIME
+					'status' => 'login',
+					'type' => 'user',
+					'dt_created' => DATE_TIME
 		];
 		$this->load->model('api_v2/common_model','v2_common_model');
 		$this->v2_common_model->user_login_logout_logs($login_logs);
