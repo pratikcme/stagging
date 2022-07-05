@@ -504,6 +504,8 @@ public function Product_add_update(){
            $data['where'] = ['id'=>$value->id];
            $this->updateRecords($data);
            if($value->id == '3948'){
+            echo $gst_amount;
+            echo $product_price_without_gst;
              lq();
            }
         }
