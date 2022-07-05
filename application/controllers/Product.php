@@ -4,7 +4,7 @@
 class Product extends Vendor_Controller
 {
      function __construct(){
-        
+
         parent::__construct();
         // $vendor_id = $this->session->userdata['id'];
         $this->load->model('product_model','this_model');
@@ -70,7 +70,9 @@ class Product extends Vendor_Controller
         $this->this_model->multi_delete_product_weight();
     }
 
-
+    public updateProduct(){
+        $this->update_without_gst();
+    }
     
     public function product_image_list()
     {
