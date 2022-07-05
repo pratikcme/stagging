@@ -525,8 +525,7 @@ public function Product_add_update(){
         $product_id = $_POST['product_id'];
 
         $this->load->model('api_v2/api_model');
-        echo $gst_percent = $this->api_model->getProductGst($product_id);
-        die;
+        $gst_percent = $this->api_model->getProductGst($product_id);
 
         $weight_id = $_POST['weight_id'];
         // $unit = number_format((float)$_POST['unit'], 2, '.', '');
@@ -547,7 +546,7 @@ public function Product_add_update(){
             }
            $gst_amount = ($final_discount_price * $gst_percent) / 100;
            $product_price_without_gst = $final_discount_price - $gst_amount;
-           // dd($product_price_without_gst);
+           dd($product_price_without_gst);
         
             /* Product Weight Update */
             if ($id != '') {
