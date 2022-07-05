@@ -693,7 +693,7 @@ class Api extends Apiuser_Controller {
 
     public function product_detail() {
         $this->load->model('api_v2/common_model','co_model');
-            $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
+            $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($_POST['vendor_id']);
      
         if (isset($_POST['product_id']) && isset($_POST['branch_id'])) {
             $product_id = $_POST['product_id'];
