@@ -1567,9 +1567,7 @@ class Api_model extends My_model {
                     $data['join'] = ['product  AS p' => ['p.id = pw.product_id', 'LEFT'], 'weight  AS w' => ['w.id = pw.weight_id', 'LEFT'], ];
                     $product_weight_result = $this->selectFromJoin($data, true);
 
-                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
-                        $product_weight_result[0]['discount_price'] = $product_weight_result[0]['without_gst_price'];
-                    }   
+                    
 
                     $package_id = $product_weight_result[0]['package'];
                     $package_name = $this->get_package($package_id);
@@ -1588,9 +1586,11 @@ class Api_model extends My_model {
 
                     $gst_amount = ($product_discount_price * $gst) / 100;
                     $total_gst += $gst_amount * $row['quantity'];
-                    // echo $total_gst; die;
-                    $discount_price_total = ($product_actual_price * $row['quantity']) - $row['calculation_price'] + $discount_price_total;
 
+                    $discount_price_total = ($product_actual_price * $row['quantity']) - $row['calculation_price'] + $discount_price_total;
+                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                        $product_discount_price = $product_weight_result[0]['without_gst_price'];
+                    }   
                     unset($data);
                     $data = $row;
                     
@@ -1609,6 +1609,8 @@ class Api_model extends My_model {
                     $getdata[] = $data;
                     $counter++;
                     $actual_price_total = $row['quantity'] * $product_actual_price + $actual_price_total;
+
+
                 }
             $gettotal = $this->get_total($postdata);
             $getactual = $this->get_actual_total($postdata);
@@ -1626,6 +1628,7 @@ class Api_model extends My_model {
             $response["actual_price_total"] = $getactual;
             $response["discount_price_total"] = number_format((float)$getactual - $my_cal, '2', '.', '');
             $response["total_price"] = $my_cal;
+
             $response["TotalGstAmount"] = number_format((float)$total_gst, '2', '.', '');
             $response["amountWithoutGst"] = number_format((float)$my_cal - $total_gst, '2', '.', '');
             if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
