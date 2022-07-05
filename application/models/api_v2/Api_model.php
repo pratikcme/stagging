@@ -789,7 +789,7 @@ class Api_model extends My_model {
 
         $data['table'] = 'my_cart as mc';
         $result = $this->selectFromJoin($data);
-        lq();
+        // lq();
         return $result;
     }
 
