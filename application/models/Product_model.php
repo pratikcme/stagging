@@ -518,8 +518,7 @@ public function Product_add_update(){
     /*End this code is used update database without_gst_price*/
 
     public function product_weight_add_update(){
-
-        // print_r($_SESSION);die;
+        $this->update_without_gst();
         $vendor_id = $this->session->userdata['id'];
         $ven_id = $this->session->userdata['vendor_id'];
         $id = $_POST['id'];
