@@ -1535,9 +1535,9 @@ class Api_model extends My_model {
             if (count($my_cart_result) > 0) {
                 foreach ($my_cart_result as $row) {
 
-                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
-                        $row['discount_price'] = $row['without_gst_price'];
-                    }
+                    // if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                    //     $row['discount_price'] = $row['without_gst_price'];
+                    // }
 
                     $row['calculation_price'] = $row['discount_price'] * $row['quantity'];
                     $product_weight_id = $row['product_weight_id'];
