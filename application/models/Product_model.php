@@ -507,12 +507,11 @@ public function Product_add_update(){
            $gst_amount = ($final_discount_price * $gst_percent) / 100;
            $product_price_without_gst = $final_discount_price - $gst_amount;
            unset($data);
-           echo '1';
+           
            $data['table'] =  TABLE_PRODUCT_WEIGHT;
            $data['update'] = ['without_gst_price'=>number_format((float)$product_price_without_gst, 2, '.', '') ];
            $data['where'] = ['id'=>$value->id];
            $this->updateRecords($data);
-           lq();
            // dd($data);
         }
     }   
