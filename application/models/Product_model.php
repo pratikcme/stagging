@@ -485,7 +485,6 @@ public function Product_add_update(){
         return $image;
     }
 
-    /*This code is used update database without_gst_price*/ 
 
     public function update_without_gst(){
         $data['table'] = TABLE_PRODUCT_WEIGHT;
@@ -516,6 +515,7 @@ public function Product_add_update(){
         }
     }   
     
+    /*This code is used update database without_gst_price*/ 
     /*End this code is used update database without_gst_price*/
 
     public function product_weight_add_update(){

@@ -71,7 +71,7 @@ class Product extends Vendor_Controller
     }
 
     public function updateProduct(){
-        $this->update_without_gst();
+        $this->this->model->update_without_gst();
     }
     
     public function product_image_list()
