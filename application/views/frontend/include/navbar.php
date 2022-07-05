@@ -79,6 +79,8 @@
                         if(!file_exists('public/images/'.$CI->folder.'product_image/'.$product[0]->image) || $product[0]->image == '' ){
                           if(strpos($product[0]->image, '%20') === true || $product[0]->image == ''){
                             $product[0]->image = $default_product_image;
+                          }else{
+                            $product[0]->image = $default_product_image;
                           }
                         }
                     ?>

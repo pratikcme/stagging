@@ -196,12 +196,24 @@ class Vendor_Controller extends MY_Controller
                 $my_cart = $this->product_model->getMyCart();
                 $default_product_image = $this->common_model->default_product_image();
 
+                $this->load->model('api_v2/common_model','co_model');
+                $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
+
                 foreach ($my_cart as $key => $value) {
-                     $product_image = $this->product_model->GetUsersProductInCart($value->product_weight_id);
+
+                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                        $value->discount_price = $value->without_gst_price;
+                    }
+
+                    $product_image = $this->product_model->GetUsersProductInCart($value->product_weight_id);
                     
                      if(!file_exists('public/images/'.$this->folder.'product_image/'.$product_image[0]->image) || $product_image[0]->image == '' ){
-                        $product_image[0]->image = $default_product_image;
-                  }
+                        if(strpos($product_image[0]->image, '%20') === true || $product_image[0]->image == ''){
+                            $product_image[0]->image = $default_product_image;
+                        }else{
+                            $product_image[0]->image = $default_product_image;
+                        }
+                     }
 
                   $my_cart[$key]->product_name = $product_image[0]->name;
                   $my_cart[$key]->image = $product_image[0]->image;

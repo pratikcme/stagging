@@ -30,17 +30,20 @@ class Add_to_card extends User_Controller {
 	 	
 	 	$this->load->model('common_model');
 	 	$default_product_image =$this->common_model->default_product_image();
+	 	// dd($default_product_image);
 	 	$result[0]->image = preg_replace('/\s+/', '%20', $result[0]->image);
 	 	if(!file_exists('public/images/'.$this->folder.'product_image/'.$result[0]->image) || $result[0]->image == '' ){
           if(strpos($result[0]->image, '%20') === true || $result[0]->image == ''){
             $result[0]->image = $default_product_image;
+          }else{
+          	$result[0]->image = $default_product_image;
           }
         }
 
 	 	if(!empty($result)){
-	 		
+	 			// dd($result);
 	 		if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
-         $value->discount_price = $value->without_gst_price;
+         $result[0]->discount_price = $result[0]->without_gst_price;
       }
 
 
