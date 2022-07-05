@@ -70,9 +70,9 @@ class Product extends Vendor_Controller
         $this->this_model->multi_delete_product_weight();
     }
 
-   /* public function updateProduct(){
+    public function updateProduct(){
         $this->this_model->update_without_gst();
-    }*/
+    }
     
     public function product_image_list()
     {
