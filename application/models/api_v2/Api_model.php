@@ -794,6 +794,9 @@ class Api_model extends My_model {
     }
 
     function get_actual_total($postdata) {
+        // $this->load->model('api_v2/common_model','co_model');
+        // $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
+
         if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
             $user_id = $postdata['user_id'];
         } else {
@@ -821,6 +824,9 @@ class Api_model extends My_model {
         $result = $this->selectFromJoin($data);
         $gettotal = 0;
         foreach ($result as $key => $value) {
+            // if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+            //     $value->discount_price = $value->without_gst_price;
+            // }
             $quantity = $value->quantity;
             $actual_price = $value->price;
             $total = $quantity * $actual_price;
