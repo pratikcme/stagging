@@ -4,7 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Users extends User_Controller {
 
 	function __construct(){
-		dd($_SESSION);
 		parent::__construct();
 		$this->controller = $this->myvalues->usersAccount['controller'];
 		$this->load->model($this->myvalues->usersAccount['model'],'this_model');
