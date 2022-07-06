@@ -51,6 +51,10 @@ Class Common_model extends My_model{
 		}elseif(isset($_SESSION['vendor_admin_id'])){
 			$vendor_id = $this->session->userdata('vendor_admin_id');
 		}else{
+			if (strpos($_SERVER['SERVER_NAME'], 'www') !== false){ 
+	   				 $str = explode('.', $_SERVER['SERVER_NAME']); 
+	   				 $_SERVER['SERVER_NAME'] =  $str[1].'.'.$str[2];
+				}
 			$data['where_or'] = ['server_name'=>$_SERVER['SERVER_NAME']];
 		}
 
