@@ -27,6 +27,7 @@ class Users extends User_Controller {
 		$data['faq'] = $this->this_model->getFaq();
 		$this->load->model($this->myvalues->orderFrontEnd['model'],'order_model');
 		$data['order'] = $this->this_model->selectOrders();
+		dd($data['order']);
 		$orderDetais = [];
 		$this->load->model('api_admin_model');
 		$this->load->model('api_v2/api_model','api_v2_model');
