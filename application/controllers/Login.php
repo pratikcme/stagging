@@ -64,6 +64,7 @@ class Login extends User_Controller {
 			$validation = $this->setRulesLogin();	
 				if($validation){
 					$result = $this->this_model->login_chek($this->input->post());
+					lq();
 					 if(!empty($result)){
 					 	if($result[0]->email_verify == '1'){
 					 		$login_data = array(
