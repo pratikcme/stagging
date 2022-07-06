@@ -100,7 +100,7 @@ $(document).on('click','#delete_account',function() {
 				data : {hello : '1' },
 				success:function(output){
 					if(output.status == 1){
-						var title = 'Not Removed'; 
+						var title = 'Removed'; 
 					}else{
 						var title = 'Not Removed';
 
