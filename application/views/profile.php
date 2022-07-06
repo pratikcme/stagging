@@ -202,6 +202,14 @@
                       <div class="form-group">
                         <label for=""> Ios isforce :<span class="required" aria-required="true"> * </span></label>
                         <input type="text" name="ios_isforce" class="form-control" id="ios_isforce" placeholder="Ios isforce" value="<?php echo $app_result['ios_isforce']; ?>"> </div>
+                        <div class="form-group">
+                          <label for="">Display price without gst<span class="required" aria-required="true"> * </span></label>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <input type="radio" name="display_price_with_gst" class="display_price_with_gst" value="0" <?=($app_result[ 'display_price_with_gst']=='0' ) ? 'checked' : '' ?> > Disabled
+                              <input type="radio" name="display_price_with_gst" class="display_price_with_gst" value="1" <?=($app_result[ 'display_price_with_gst']=='1' ) ? 'checked' : '' ?> >Enabled </div>
+                            </div>
+                          </div>
                       <div class="form-group">
                         <label class="margin_top_label">Web Logo :<span class="required" aria-required="true"> * </span></label>
                         <input type="hidden" id="old_webLogo" name="old_webLogo" value="<?php echo $app_result['webLogo']; ?>">
