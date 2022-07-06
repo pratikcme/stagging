@@ -35,8 +35,7 @@ class Login extends User_Controller {
 			$my_cart[$key]->product_name = $product_image[0]->name;
 			$my_cart[$key]->image = $product_image[0]->image;
 		}
-		$data['mycart'] = $my_cart;
-		
+		$data['mycart'] = $my_cart;		
 	}
 
 
