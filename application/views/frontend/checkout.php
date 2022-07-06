@@ -122,6 +122,7 @@ label.error.mobile_verfication{
       </nav>
    </div>
 </section>
+
 <!-- =================CART SECTION================= -->
 <section class="p-100 bg-cream">
    <div class="container">
