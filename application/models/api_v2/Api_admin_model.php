@@ -1078,10 +1078,22 @@ class Api_admin_model extends My_model {
         $discount_price_cal = (($price * $discount_per) / 100);
         $discount_price = number_format((float)$discount_price_cal, 2, '.', '');
         $final_discount_price = number_format((float)$price - $discount_price, 2, '.', '');
+
+        unset($data);
+        $data['table'] = 'product';
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$product_id];
+        $re = $this->selectRecords($data);
+        $product_gst = $re[0]->gst;
+        unset($data);
+         $gst_amount = ($final_discount_price * $product_gst) /100;
+         $without_gst_price = $final_discount_price - $gst_amount;
+         $without_gst_price = number_format((float)$without_gst_price, 2, '.', '');
+
         /* Product Weight Update */
         if (isset($postData['variant_id']) && $postData['variant_id'] != '') {
             $id = $postData['variant_id'];
-            $data = array('product_id' => $product_id, 'weight_id' => $weight_id, 'weight_no' => $unit, 'package' => $package, 'purchase_price' => $purchase_price, 'price' => $price, 'quantity' => $quantity, 'discount_per' => $discount_per, 'discount_price' => $final_discount_price, 'dt_updated' => strtotime(DATE_TIME),);
+            $data = array('product_id' => $product_id, 'weight_id' => $weight_id, 'weight_no' => $unit, 'package' => $package, 'purchase_price' => $purchase_price, 'price' => $price, 'quantity' => $quantity, 'discount_per' => $discount_per, 'discount_price' => $final_discount_price,'without_gst_price'=>$without_gst_price, 'dt_updated' => strtotime(DATE_TIME),);
             $this->db->where('branch_id', $branch_id);
             $this->db->where('id', $id);
             $this->db->update('product_weight', $data);
@@ -1092,7 +1104,7 @@ class Api_admin_model extends My_model {
         }
         /* Product Weight Add */
         else {
-            $data = array('branch_id' => $branch_id, 'product_id' => $product_id, 'weight_id' => $weight_id, 'weight_no' => $unit, 'package' => $package, 'purchase_price' => $purchase_price, 'price' => $price, 'quantity' => $quantity, 'discount_per' => $discount_per, 'discount_price' => $final_discount_price, 'status' => '1', 'dt_added' => strtotime(DATE_TIME), 'dt_updated' => strtotime(DATE_TIME),);
+            $data = array('branch_id' => $branch_id, 'product_id' => $product_id, 'weight_id' => $weight_id, 'weight_no' => $unit, 'package' => $package, 'purchase_price' => $purchase_price, 'price' => $price, 'quantity' => $quantity, 'discount_per' => $discount_per, 'discount_price' => $final_discount_price, 'without_gst_price'=>$without_gst_price, 'status' => '1', 'dt_added' => strtotime(DATE_TIME), 'dt_updated' => strtotime(DATE_TIME),);
             $this->db->insert('product_weight', $data);
             $variant_id = $this->db->insert_id();
             $this->product_image_add_update($_FILES, $postData, $variant_id);
@@ -1223,6 +1235,7 @@ class Api_admin_model extends My_model {
         }
         return $return;
     }
+
     public function getOrders($postData) {
         $limit = '10';
         $offset = $postData['offset'];
