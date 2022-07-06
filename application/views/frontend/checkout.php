@@ -511,7 +511,7 @@ label.error.mobile_verfication{
                      <?php } ?>
                      <li class="total-wrap">
                         <div class="total-count">
-                           <h6>Sub total<br>(Inc. Tax)</h6>
+                           <h6>Sub total<br>(<?=($isShow[0]->display_price_with_gst == '1') ? "Exclude" : "Inc." ?> Tax)</h6>
                            <div class="price-seperator">
                               <span class="seperator">:</span>
                               <p><span><?=$this->siteCurrency?></span> <span id="checkout_subtotal"><?=$getMycartSubtotal?></span></p>
