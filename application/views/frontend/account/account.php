@@ -203,7 +203,7 @@
                                  <h6>Total Amount</h6>
                                  <div class="price-seperator">
                                     <span class="seperator">:</span>
-                                    <p><span><!-- <i class="fas fa-rupee-sign"> --> <?=$this->siteCurrency?></i></span>  <?=number_format((float)$order[$key]->sub_total,2,'.','')?></p>
+                                    <p><span><!-- <i class="fas fa-rupee-sign"> --> <?=$this->siteCurrency?></i></span>  <?=number_format((float)$order[$key]->sub_total + $order[$key]->total_saving,2,'.','')?></p>
                                  </div>
                               </div>
                            </li>

@@ -221,7 +221,7 @@ Class Order_model extends My_model{
                     'user_address_id' => $user_address_id,
                     'time_slot_id' => $time_slot_id,
                     'payment_type' => $payment_type,
-                    'total_saving' => $total_savings+ $promocode_amount,
+                    'total_saving' => $total_savings,
                     'total_item' => $total_item,
                     'sub_total' => $sub_total,
                     'user_gst_number'=>$user_gst_number,
