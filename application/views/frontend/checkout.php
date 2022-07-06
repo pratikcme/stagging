@@ -554,9 +554,19 @@ label.error.mobile_verfication{
                               <p><span><?=$this->siteCurrency?></span> 
                                <span id="checkout_final">
                                  <?php if(isset($calc_shiping) && is_numeric($calc_shiping)) {
-                                 echo  number_format((float)$getMycartSubtotal+$calc_shiping,2,'.','');
+                                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                                       $to = $getMycartSubtotal+$calc_shiping + $TotalGstAmount; 
+                                    }else{
+                                       $to = $getMycartSubtotal+$calc_shiping;
+                                    }
+                                    echo number_format((float)$to,2,'.',''); 
                                  }else{ 
-                                     echo number_format($getMycartSubtotal,2);
+                                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                                       $tot = $getMycartSubtotal + $TotalGstAmount; 
+                                    }else{
+                                       $tot = $getMycartSubtotal;
+                                    }
+                                     echo number_format($tot,2);
                                  } ?> 
                                </span>
                            </p>
