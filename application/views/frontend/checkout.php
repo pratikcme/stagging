@@ -766,7 +766,7 @@ label.error.mobile_verfication{
         <form id="OtpVerification" class="mobileNum-form" method="post" action="<?=base_url().'checkout/OtpVerification'?>">
           <div class="input-wrapper m-0">
             <span><i class="fas fa-mobile"></i></span>
-            <input type="text" name="otp" id="otp" placeholder="Please ente 4 digit otp*" maxlength="4" required="">
+            <input type="text" name="otp" id="otp" placeholder="Please enter 4 digit otp*" maxlength="4" required="">
           </div>
           <label for="otp" class="error mobile_verfication"></label>
           <label id="invalid" style="display: none; color: red">Invalid Otp</label>
