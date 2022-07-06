@@ -31,6 +31,7 @@ class MY_Controller extends CI_Controller
                 $this->load->model('api_v2/common_model');
 
             $siteDetail = $this->common_model->getLogo();
+            lq();
             if(isset($siteDetail['id'])){
                 $this->session->set_userdata('vendor_id',$siteDetail['id']);
             }
