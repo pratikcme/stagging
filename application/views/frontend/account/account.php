@@ -212,7 +212,7 @@
                                  <h6>Product Discount</h6>
                                  <div class="price-seperator">
                                     <span class="seperator">:</span>
-                                    <p> - <span><!-- <i class="fas fa-rupee-sign"></i> --><?=$this->siteCurrency?></span>  <?=$value->total_saving?></p>
+                                    <p> - <span><!-- <i class="fas fa-rupee-sign"></i> --><?=$this->siteCurrency?></span>  <?=$value->total_savin?></p>
                                  </div>
                               </div>
                            </li>
