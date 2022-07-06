@@ -47,6 +47,7 @@ class Login_model extends My_model{
        $data['select'] = ['*'];
        $data['where']['phone'] = $postData['phone'];
 	   $data['where']['country_code'] = $postData['country_code'];
+	   $data['where']['status!='] = '9';
        $data['where']['vendor_id'] = $this->vendor_id;
        $re = $this->selectRecords($data,true);
       
@@ -91,6 +92,7 @@ class Login_model extends My_model{
         $data['where']['vendor_id'] = $this->vendor_id;
         $data['where']['country_code'] = $postData['country_code'];
         $data['where']['phone'] = $postData['phone'];
+        $data['where']['status !='] = '9';
         $re = $this->selectRecords($data,true);
         unset($data);
         if(!empty($re)){

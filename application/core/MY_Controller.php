@@ -165,8 +165,9 @@ class Vendor_Controller extends MY_Controller
        function loadView($layout,$data){
                 $this->load->model($this->myvalues->contactFrontEnd['model'],'contact');
                 $this->load->model($this->myvalues->homeFrontEnd['model'],'home');
-                $this->load->model($this->myvalues->usersAccount['model'],'users');
-               
+                // $this->load->model($this->myvalues->usersAccount['model'],'users');
+                $this->load->model('users_account/users_model','users');
+                
                 if($this->session->userdata('user_id') != ''){
                      
                         $userInfo = $this->users->getUserDetails();
