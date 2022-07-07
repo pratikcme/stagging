@@ -223,7 +223,7 @@ error_reporting(0);
                      <div class="col-md-12 col-sm-12 col-xs-12">
                         <!-- <span class="panel-body padding-zero" > -->
                         <a href="<?php echo base_url().'vendor/vendor_list/'; ?>" style="float: right; margin-right: 10px;" id="delete_user" class="btn btn-danger">Cancel</a> 
-                        <input type="submit" class="btn btn-info pull-right margin_top_label" value="<?php echo $reqName.' Vendor'; ?>" name="submit1">
+                        <input type="submit" class="btn btn-info pull-right margin_top_label" value="<?php echo $reqName.' Branch'; ?>" name="submit1">
                         <!-- </span> -->
                      </div>
                   </div>

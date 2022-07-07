@@ -186,6 +186,12 @@
         <span>Order Report</span>
     </a>
 </li>
+<li>
+    <a class="<?php if ($this->uri->segment(2) == 'order_summary' ) { ?> active <?php } ?>" href="<?php echo base_url() . 'order/order_summary'; ?>">
+        <i class="fa fa-file"></i>
+        <span>Order summary</span>
+    </a>
+</li>
 <li style="display: none;">
     <a class="<?php if ($this->uri->segment(1) == 'subscription' ) { ?> active <?php } ?>" href="<?php echo base_url() . 'subscription/vendor_detail'; ?>">
         <i class="fa fa-envelope"></i>

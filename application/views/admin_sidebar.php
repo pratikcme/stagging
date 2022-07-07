@@ -237,7 +237,6 @@
         </li>
     </ul>
 </li>
-
 <li>
     <a class="<?php if ($this->uri->segment(1) == 'offer') { ?> active <?php } ?>" href="#">
         <i class="fa fa-picture-o"></i>
@@ -252,4 +251,10 @@
             </a>
         </li>
     </ul>
+</li>
+<li>
+    <a class="<?php if ($this->uri->segment(1) == 'feedback' ) { ?> active <?php } ?>" href="<?php echo base_url() . 'feedback'; ?>">
+        <i class="fa fa-file" aria-hidden="true"></i>
+        <span>Feedback</span>
+    </a>
 </li>
