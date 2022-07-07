@@ -271,7 +271,7 @@ $vendor_id = $this->session->userdata('id');
         <div class="top-nav ">
             <?php if(isset($_SESSION['id']) && $_SESSION['id'] > '0' ){ ?> 
             <div class="notif">
-               <div class="<?=(count($this->adminNotification) > 0) ? "btn__badge" : ""?> pulse-button"  id="notify-dot"></div>
+               <div class="<?=(5 > 0) ? "btn__badge" : ""?> pulse-button"  id="notify-dot"></div>
                <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
                <ul class="dropdown notify-drop <?=(count($this->adminNotification) == "0") ? 'ishave' : ''   ?>"  id="admin_notification">
                     <?php foreach ($this->adminNotification as $key => $value): ?>
