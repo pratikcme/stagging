@@ -627,7 +627,7 @@ Class Product_model extends My_model{
 				// TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT'],
 				TABLE_WEIGHT .' as w'=>['w.id = pw.weight_id','LEFT'],
 			];
-			$data['where'] = ['p.status'=>'1','pw.status!='=>'9','p.id'=>$id,'p.branch_id'=>$this->branch_id];		
+			$data['where'] = ['p.status!='=>'9','pw.status!='=>'9','p.id'=>$id,'p.branch_id'=>$this->branch_id];		
 			$data['groupBy'] =['p.id'];
 			return  $this->selectFromJoin($data);
 	}	
