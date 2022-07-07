@@ -1056,7 +1056,7 @@ class Api extends Apiuser_Controller {
             $query1 = $this->db->query("SELECT * FROM branch WHERE vendor_id = '$vendor_id' AND status != '9' ");
             $branch = $query1->result();
             $branch_id = (!empty($branch)) ? $branch[0]->id : 0;
-            $query = $this->db->query("SELECT b.* ,c.name as category_name FROM banners as b LEFT JOIN category as c ON c.id = b.category_id WHERE b.vendor_id = '$vendor_id'");  
+            $query = $this->db->query("SELECT b.* ,c.name as category_name FROM banners as b LEFT JOIN category as c ON c.id = b.category_id WHERE b.vendor_id = '$vendor_id' AND b.status != '9'");  
             $result = $query->result();
             
             $offer_list = $this->this_model->get_offer($vendor_id);
