@@ -1053,7 +1053,7 @@ class Api extends Apiuser_Controller {
         }
         $vendor_id = $_POST['vendor_id'];
         if (!empty($this->input->post('vendor_id')) && $_POST['vendor_id'] != '0') {
-            $query1 = $this->db->query("SELECT * FROM branch WHERE vendor_id = '$vendor_id' AND status != '9' AND status != '0' ");
+            $query1 = $this->db->query("SELECT * FROM branch WHERE vendor_id = '$vendor_id' AND status != '1'");
             $branch = $query1->result();
             $branch_id = (!empty($branch)) ? $branch[0]->id : 0;
             $query = $this->db->query(
