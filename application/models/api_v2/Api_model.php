@@ -3427,7 +3427,7 @@ class Api_model extends My_model {
             $data['table'] = 'vendor as a'; // vendor
             $data['select'] = ['b.id'];
             $data['join'] = ['branch as b'=>['a.id=b.vendor_id','LEFT']];
-            $data['where'] = ['a.id'=>$branch_id,'b.status!='=>'9'];
+            $data['where'] = ['a.id'=>$branch_id,'b.status'=>'1'];
             $return =  $this->selectFromJoin($data);
             // echo $this->db->last_query();die;
             return $return[0]->id;
