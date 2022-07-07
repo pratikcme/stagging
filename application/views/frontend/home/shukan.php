@@ -25,9 +25,11 @@
 <!-- =================BANNER SLIDER================= -->
 <div id="carousel" class="carousel slide hero-slides" data-ride="carousel">
   <ol class="carousel-indicators">
-    <li class="active" data-target="#carousel" data-slide-to="0"></li>
-    <li data-target="#carousel" data-slide-to="1"></li>
-    <li data-target="#carousel" data-slide-to="2"></li>
+   <?php for($b=0;$b< count($banner);$b++){ ?>
+      <li class="active" data-target="#carousel" data-slide-to="<?= $b;?>"></li>
+    <!-- <li data-target="#carousel" data-slide-to="1"></li>
+    <li data-target="#carousel" data-slide-to="2"></li> -->
+    <?php } ?>
   </ol>
   <div class="carousel-inner" role="listbox">
     <?php $calss = array('boat','sea','river','boat','sea','river','boat','sea','river'); ?>
