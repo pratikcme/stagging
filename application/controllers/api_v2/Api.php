@@ -54,7 +54,6 @@ class Api extends Apiuser_Controller {
 
         $categoryCount = $this->this_model->categoryCount();
         $subcategoryCount = $this->this_model->subcategoryCount();
-        dd($subcategoryCount);
         $vendorCount = $this->this_model->vendorCount($vendor_id);
     
         $branch_id = 0;
