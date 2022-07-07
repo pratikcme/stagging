@@ -101,6 +101,7 @@ function get_note(){
         $('#admin_notification').addClass('ishave');
       }else{
         $('#admin_notification').removeClass('ishave')
+        $('#notify-dot').addClass('btn__badge');
       }
       $('#admin_notification').html(output.notify);
     }
