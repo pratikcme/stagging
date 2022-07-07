@@ -269,20 +269,22 @@ $vendor_id = $this->session->userdata('id');
     	</div>
        
         <div class="top-nav ">
+            <?php if(isset($_SESSION['id']) && $_SESSION['id'] > '0' ){ ?> 
             <div class="notif">
-                             <div class="<?=(count($this->adminNotification) > 0) ? "btn__badge" : ""?> pulse-button"  id="notify-dot"></div>
-                            <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
-                            <ul class="dropdown notify-drop <?=(count($this->adminNotification) == "0") ? 'ishave' : ''   ?>"  id="admin_notification">
-                                <?php foreach ($this->adminNotification as $key => $value): ?>
-                                 <li><?=$value->message?></li>
-                             <?php endforeach ?>
-                             <?php if(count($this->adminNotification) == "0"){ ?> 
-                              <li>No Notification</li>
-                          <?php }else{ ?> 
-                           <li id="clear_all">Clear All</li>
-                       <?php } ?>
-                   </ul>
-               </div> 
+               <div class="<?=(count($this->adminNotification) > 0) ? "btn__badge" : ""?> pulse-button"  id="notify-dot"></div>
+               <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
+               <ul class="dropdown notify-drop <?=(count($this->adminNotification) == "0") ? 'ishave' : ''   ?>"  id="admin_notification">
+                    <?php foreach ($this->adminNotification as $key => $value): ?>
+                       <li><?=$value->message?></li>
+                   <?php endforeach ?>
+                   <?php if(count($this->adminNotification) == "0"){ ?> 
+                      <li>No Notification</li>
+                  <?php }else{ ?> 
+                     <li id="clear_all">Clear All</li>
+                 <?php } ?>
+                </ul>
+            </div> 
+            <?php } ?>
             <!--search & user info start-->
             <ul class="nav pull-right top-menu">
                 <!-- user login dropdown start-->
@@ -322,25 +324,6 @@ $vendor_id = $this->session->userdata('id');
                                 <i class="fa fa-key"></i> LogOut</a></li>
                     </ul>
                 </li>
-                <?php if(isset($_SESSION['id']) && $_SESSION['id'] > '0' ){ ?> 
-                    <li>
-                        <div class="notif">
-                             <div class="<?=(count($this->adminNotification) > 0) ? "btn__badge" : ""?> pulse-button"  id="notify-dot"></div>
-                            <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
-                            <ul class="dropdown notify-drop <?=(count($this->adminNotification) == "0") ? 'ishave' : ''   ?>"  id="admin_notification">
-                                <?php foreach ($this->adminNotification as $key => $value): ?>
-                                 <li><?=$value->message?></li>
-                             <?php endforeach ?>
-                             <?php if(count($this->adminNotification) == "0"){ ?> 
-                              <li>No Notification</li>
-                          <?php }else{ ?> 
-                           <li id="clear_all">Clear All</li>
-                       <?php } ?>
-                   </ul>
-               </div>      
-           </li>
-                <?php } ?>
-
                 <!-- user login dropdown end -->
             </ul>
             
