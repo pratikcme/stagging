@@ -33,8 +33,10 @@
   </ol>
   <div class="carousel-inner" role="listbox">
     <?php $calss = array('boat','sea','river','boat','sea','river','boat','sea','river'); ?>
-    <?php foreach ($banner as $key => $value){ ?>
+    <?php foreach ($banner as $key => $value){ 
+      echo  $value->web_banner_image; die;
 
+      ?>
     <div class="carousel-item <?=($key == 0) ? "active" : ""?> <?=$calss[$key]?>">
     <img data-src="<?php echo base_url().'public/images/'.$this->folder.'web_banners/'.$value->web_banner_image?>" class="banner-image lazy" alt="">
       <div class="container h-100 ">
