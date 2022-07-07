@@ -54,6 +54,7 @@ class Api extends Apiuser_Controller {
         $_POST['vendor_id'] = $vendor_id ;
 
         $categoryCount = $this->this_model->categoryCount();
+        lq();
         $subcategoryCount = $this->this_model->subcategoryCount();
         $vendorCount = $this->this_model->vendorCount($vendor_id);
     
@@ -796,7 +797,7 @@ class Api extends Apiuser_Controller {
                     $product_image_array = $img;
                     $data = array();
                     if($checkBranchIsActive == 0){
-                        $row->status = '9';
+                        $row->status = '9'; // branch is disable
                     }
                     $data['id'] = $row->id;
                     $data['category_id'] = $row->category_id;
