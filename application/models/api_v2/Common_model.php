@@ -276,7 +276,8 @@ Class Common_model extends My_model{
     public function read_all(){
     	$branch_id = $this->session->userdata('id');
     	$data['table']  = 'admin_notification';
-        $data['update'] = ['status'=>'1','branch_id'=>$branch_id];
+        $data['update'] = ['status'=>'1'];
+        $data['where'] = ['branch_id'=>$branch_id];
         $this->updateRecords($data);
         unset($data);
         $data['table'] = 'admin_notification';
