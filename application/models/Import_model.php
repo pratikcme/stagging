@@ -280,7 +280,10 @@ class Import_model extends My_model {
                     if($image != ''){
                         $image = $image;
                         $images = explode(',', $image);
-                    }   
+                    }
+                    if($gst == ''){
+                        $gst = 0 ;
+                    }
 
                     if($type != ''){
                         if ($type == 'New') {
@@ -318,7 +321,7 @@ class Import_model extends My_model {
                                 $dicount = 0;
                                 $final_discount_price = $retailPrice;
                             }
-
+                            
                             $gst = ($final_discount_price * $gst) /100;
                             $without_gst_price = $final_discount_price - $gst;
 
