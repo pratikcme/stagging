@@ -502,9 +502,9 @@ class Api_model extends My_model {
         if($branch_id != ''){
             $branch_id = $_POST['branch_id'];
         }
-        // if(isset($_POST['vendor_id'])){
-        //     $branch_id = $this->getExistingBranchId($_POST['vendor_id']);
-        // }  
+        if(isset($_POST['vendor_id'])){
+            $branch_id = $this->getExistingBranchId($_POST['vendor_id']);
+        }  
 
       $data['select'] = ['count(*) as categoryCount'];
       $data['where'] = ['status!=' => '9','branch_id' => $branch_id];
