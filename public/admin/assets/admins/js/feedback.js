@@ -1,0 +1,1 @@
+var dataTable = $('#feedback_table').DataTable({})
