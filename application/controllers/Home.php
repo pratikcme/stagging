@@ -30,7 +30,7 @@ class Home extends User_Controller {
 			$data['home_section_one'] = $this->home_content_model->getHomeSection_one();
 			$data['background_image'] = $this->home_content_model->getSectionOneBackground();
 		}
-		
+		dd($data['page']);
 		$data['js'] = array('add_to_cart.js');
 		
 		$data['category'] = $this->this_model->selectCategory();
