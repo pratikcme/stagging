@@ -3867,6 +3867,16 @@ class Api_model extends My_model {
         $data['select'] = ['*'];
         return $this->selectRecords($data);
     }
+
+    public function isBranchActive($branch_id){
+        $data['table'] = 'branch';
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$branch_id];
+        $res = $this->selectRecords($data);
+        if(!empty($res)){
+            return $res[0]->status; 
+        }
+    }
     
 
 }

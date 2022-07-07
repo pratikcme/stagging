@@ -701,7 +701,8 @@ class Api extends Apiuser_Controller {
             $user_id = $_POST['user_id'];
             $device_id = $_POST['device_id'];
             $branch_id = $_POST['branch_id'];
-            
+            $checkBranchIsActive = $this->this_model->isBranchActive($branch_id);
+
             // get branch details
             $branchRecord = $this->db->query("SELECT phone_no,whatsappFlag FROM branch where id = '$branch_id'");
             $branchDetails = $branchRecord->result();
@@ -723,8 +724,8 @@ class Api extends Apiuser_Controller {
             $total_count = count(array_keys($row_count_));
           
             $query = $this->db->query("SELECT p.* FROM `product` as p 
-        LEFT JOIN product_weight as w ON w.product_id = p.id
-        WHERE  p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND p.id = '$product_id' GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
+                                        LEFT JOIN product_weight as w ON w.product_id = p.id
+                                        WHERE  p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND p.id = '$product_id' GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
             $result = $query->result();
             // echo $this->db->last_query();die;
             if ($query->num_rows() > 0) {
@@ -794,6 +795,9 @@ class Api extends Apiuser_Controller {
                     $prothimg = $product_image_result[0]->image;
                     $product_image_array = $img;
                     $data = array();
+                    if($checkBranchIsActive == 0){
+                        $row->status = '9';
+                    }
                     $data['id'] = $row->id;
                     $data['category_id'] = $row->category_id;
                     $data['brand_id'] = $row->brand_id;
