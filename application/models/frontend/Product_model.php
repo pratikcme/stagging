@@ -925,6 +925,7 @@ Class Product_model extends My_model{
 				TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
 				TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']
 			];
+			$data['where']['p.status'] = '1';
 			$data['where']['pw.status!='] = '9';
   			$data['where']['pw.id'] = $varient_id;
 			// $data['groupBy'] = 'p.id';	
