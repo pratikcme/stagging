@@ -116,6 +116,7 @@ function get_note(){
         dataType : "json",
         success:function(output){
           $('#admin_notification').html(output.notify);
+          $('#notify-dot').removeClass('btn__badge');
         }
       });
   })
