@@ -206,7 +206,7 @@ Class Offer_model extends My_model{
             $last_id = $this->insertRecord($data);
             // lq();
             unset($data);
-            $data['update']['cron_command'] = $st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url_rollaback.$last_id." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1" ;
+            $data['update']['cron_command'] = $st_min." ". $st_hr ." ".$end_day." ".$end_month." * curl --silent ".$this->crone_url_rollaback.$last_id." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1" ;
             $data['where'] = ['id'=>$last_id];
             $data['table'] = 'crontab';
             $this->updateRecords($data);
