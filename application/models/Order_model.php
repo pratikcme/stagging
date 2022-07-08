@@ -501,7 +501,7 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
             if($original_date == ''){
                 $original_date = date('m-d-Y');
             }
-            echo $original_date ;die;
+            // echo $original_date ;die;
             $parts_from = explode('-', $original_date);
             $date_ = $parts_from[1] . '-' . $parts_from[0] . '-' . $parts_from[2];
             $date = strtotime(date("Y-m-d 00:00:00",strtotime($date_)));
