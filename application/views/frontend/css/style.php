@@ -6570,7 +6570,7 @@ width: 374px;
 }
 */
 .btn__badge {
-    background: var(--primary-color);
+    background: var(--secondary-color);
     color: white;
     font-size: 12px;
     position: absolute;
