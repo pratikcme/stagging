@@ -27,8 +27,8 @@ function get_note(){
 		method: 'post',
 		dataType: 'json',
 		success:function(output){
-			if(output.status > 0){
-				$('#notify_status').addClass('btn__badge');
+			if(output.count > 0){
+				$('#notify_status').addClass('btn__badge');	
 			}
 			if(output.count == 0){
 				$('#notification').addClass('ishave');
@@ -45,15 +45,11 @@ $(document).on('click','#clear_all',function(){
 		method: 'post',
 		dataType: 'JSON',
 		success:function(output){
-			$('#notify_status').removeClass('btn__badge');
-			if(output.status > '0'){
-				$('#notify-dot').addClass('btn__badge');
-			}
 			if(output.count == '0'){
-				$('#notify-dot').removeClass('btn__badge');
 				$('#notification').addClass('ishave');
 			}
 			$('#notification').html(output.notify);
+			$('#notify_status').removeClass('btn__badge');
 		}
 	});
 })
