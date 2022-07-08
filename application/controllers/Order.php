@@ -141,8 +141,8 @@ class Order extends Vendor_Controller
             // echo $date;die;
         }
         $data['report'] = $this->this_model->getOrderReportForDate($date);
-        lq();
-        print_r($data['report']);die;
+        // lq();
+        // print_r($data['report']);die;
         $data['date'] = $date;
         $this->load->view('order_report',$data);
     }
