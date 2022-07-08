@@ -125,7 +125,7 @@ Class Offer_model extends My_model{
             $this->updateRecords($data);
 
             $this->setReverceCron($postData,$offer_id);
-            
+
             unset($data);
             $data['table'] = 'crontab';
             $data['select'] = ['*'];
@@ -529,7 +529,7 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
          lq();
     }
 
-    public function deleteCronById($crone_id);{
+    public function deleteCronById($crone_id){
         $data['where']['id'] = $crone_id;
         $data['table'] = 'crontab';
         $this->deleteRecords($data);
