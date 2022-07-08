@@ -221,7 +221,7 @@ Class Order_model extends My_model{
                     'user_address_id' => $user_address_id,
                     'time_slot_id' => $time_slot_id,
                     'payment_type' => $payment_type,
-                    'total_saving' => $total_savings+ $promocode_amount,
+                    'total_saving' => $total_savings,
                     'total_item' => $total_item,
                     'sub_total' => $sub_total,
                     'user_gst_number'=>$user_gst_number,
@@ -428,7 +428,7 @@ Class Order_model extends My_model{
          unset($data);
         $data['select'] = ['price'];
         $data['table'] = 'delivery_charge';
-        $data['where'] = ['start_range <=' => $getkm, 'end_range >=' => $getkm];
+        $data['where'] = ['start_range <=' => $getkm, 'end_range >=' => $getkm,'vendor_id'=>$this->session->userdata('vendor_id')];
         $get_range = $this->selectRecords($data);
         // print_r($get_range);die;
         // echo $this->db->last_query();die;

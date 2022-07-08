@@ -53,10 +53,10 @@ class Api_model extends My_model {
         }
 
         $data['where']['vendor_id'] = $postData['vendor_id'];
+        $data['where']['status !='] = '9';
         $data['table'] = 'user';
         $getUser = $this->selectRecords($data);
-        // lq();
-        // dd($getUser);
+    
 
         if(empty($getUser)){
             $checkAlreadyRegisterWithEmail = $this->check_register($postData['email'],$postData['vendor_id']);
@@ -69,7 +69,7 @@ class Api_model extends My_model {
             $dataIns['insert']['lname']= $postData['lname'];
             $dataIns['insert']['email']= $postData['email'];
             $dataIns['insert']['password']= (isset($postData['password']) && $postData['password']!='')?md5($postData['password']):NULL;
-            $dataIns['insert']['country_code']= $postData['country_code'];
+            $dataIns['insert']['country_code']= (isset($postData['country_code']) && $postData['country_code'] !='')? $postData['country_code']:NULL;
             $dataIns['insert']['login_type']= $postData['login_type'];
             $dataIns['insert']['phone']= $postData['phone'];
             $dataIns['insert']['status']= '1';
@@ -78,7 +78,6 @@ class Api_model extends My_model {
             $dataIns['insert']['dt_added']= strtotime(DATE_TIME);
             $dataIns['insert']['dt_updated']= strtotime(DATE_TIME);                 
             $dataIns['table'] = 'user';
-
             if($checkAlreadyRegisterWithEmail){
                 unset($data['where']);
                 $data['update']['fname']= $postData['fname'];
@@ -87,11 +86,10 @@ class Api_model extends My_model {
                 $data['where']['email'] = $postData['email'];
                 $data['where']['vendor_id'] = $postData['vendor_id'];
                 $data['table'] = 'user';
-                $this->updateRecords($data);
+                $in = $this->updateRecords($data);
             }else{
-                $this->insertRecord($dataIns);
+                $in = $this->insertRecord($dataIns);
             }
-
             if($postData['login_type']=='0'){
                 $response["success"] = 1;
                 $response["message"] = "Account created successfully";
@@ -140,6 +138,7 @@ class Api_model extends My_model {
     }
 
     function sendLoginResponse($userdata,$postData){
+
         $device_id = $postData['device_id'];
         $login_type = $postData['login_type'];
         $vendor_id = $postData['vendor_id'];
@@ -176,7 +175,6 @@ class Api_model extends My_model {
                         'notification_status' => $notification_status, 
                         'mobile_verify' => $userdata['is_verify']
                     );
-
         $this->update_device($userdata, $postData);
         $login_logs = [
             'user_id' => $user_id,
@@ -758,6 +756,7 @@ class Api_model extends My_model {
         return true;
     }
     function get_total($postdata) {
+        
         if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
             $user_id = $postdata['user_id'];
         } else {
@@ -767,7 +766,10 @@ class Api_model extends My_model {
         }
         $data['join'] = ['product_weight as pw' =>['pw.id = mc.product_weight_id','INNER']];
        
-        $data['select'] = ['sum(pw.price * mc.quantity) as total_price','sum(pw.discount_price * mc.quantity ) AS total', 'count(mc.id) AS cart_items'];
+        
+            $data['select'] = ['sum(pw.price * mc.quantity) as total_price','sum(pw.discount_price * mc.quantity ) AS total', 'count(mc.id) AS cart_items'];
+        
+
         if (isset($user_id) && $user_id != 0 && $user_id != '') {
             $data['where'] = ['mc.user_id' => $user_id];
         } else {
@@ -783,11 +785,12 @@ class Api_model extends My_model {
 
         $data['table'] = 'my_cart as mc';
         $result = $this->selectFromJoin($data);
-
+        // lq();
         return $result;
     }
 
     function get_actual_total($postdata) {
+
         if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
             $user_id = $postdata['user_id'];
         } else {
@@ -861,6 +864,10 @@ class Api_model extends My_model {
         return $total_gst;
     }
     function filter($postdata) {
+
+        $this->load->model('api_v2/common_model','co_model');
+        $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
+
         $branch_id = $postdata['branch_id'];
         $sort = $postdata['filter_search'];
         if (isset($postdata['offset'])) {
@@ -962,7 +969,13 @@ class Api_model extends My_model {
             
         }
         unset($data);
-        $data['select'] = ['p.*', 'max(w.discount_price) AS maxdis', 'min(w.discount_price) AS mindis'];
+         if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+            $pro_weight->discount_price = $pro_weight->without_gst_price;
+            $data['select'] = ['p.*', 'max(w.without_gst_price) AS maxdis', 'min(w.without_gst_price) AS mindis']; 
+        }else{
+            $data['select'] = ['p.*', 'max(w.discount_price) AS maxdis', 'min(w.discount_price) AS mindis'];    
+        } 
+
         $data['table'] = 'product AS p';
         $data['join'] = ['product_weight  AS w' => ['w.product_id = p.id', 'LEFT']];
         $data_where['p.status !='] = '9';
@@ -1481,8 +1494,10 @@ class Api_model extends My_model {
 
     //user cart
     function my_cart($postdata) {
-        
-     	$response['show_qty_alert'] = false;
+         $this->load->model('api_v2/common_model','co_model');
+            $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
+
+            $response['show_qty_alert'] = false;
        
             $actual_price_total = 0;
             $discount_price_total = 0;
@@ -1515,6 +1530,11 @@ class Api_model extends My_model {
             $total_gst = 0;
             if (count($my_cart_result) > 0) {
                 foreach ($my_cart_result as $row) {
+
+                    // if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                    //     $row['discount_price'] = $row['without_gst_price'];
+                    // }
+
                     $row['calculation_price'] = $row['discount_price'] * $row['quantity'];
                     $product_weight_id = $row['product_weight_id'];
                     $product_id = $row['product_id'];
@@ -1543,6 +1563,8 @@ class Api_model extends My_model {
                     $data['join'] = ['product  AS p' => ['p.id = pw.product_id', 'LEFT'], 'weight  AS w' => ['w.id = pw.weight_id', 'LEFT'], ];
                     $product_weight_result = $this->selectFromJoin($data, true);
 
+                    
+
                     $package_id = $product_weight_result[0]['package'];
                     $package_name = $this->get_package($package_id);
 
@@ -1554,12 +1576,17 @@ class Api_model extends My_model {
                     $product_weight_name = $product_weight_result[0]['product_weight_name'];
                     $product_actual_price = $product_weight_result[0]['price'];
                     $product_discount_price = $product_weight_result[0]['discount_price'];
+                    
                     $gst = $product_weight_result[0]['gst'];
                     $avail_quantity = (int)$product_weight_result[0]['quantity'];
-                    $gst_amount = ($product_discount_price * $gst) / 100;
-                    $total_gst+= $gst_amount * $row['quantity'];
-                    $discount_price_total = ($product_actual_price * $row['quantity']) - $row['calculation_price'] + $discount_price_total;
 
+                    $gst_amount = ($product_discount_price * $gst) / 100;
+                    $total_gst += $gst_amount * $row['quantity'];
+
+                    $discount_price_total = ($product_actual_price * $row['quantity']) - $row['calculation_price'] + $discount_price_total;
+                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                        $product_discount_price = $product_weight_result[0]['without_gst_price'];
+                    }   
                     unset($data);
                     $data = $row;
                     
@@ -1578,6 +1605,8 @@ class Api_model extends My_model {
                     $getdata[] = $data;
                     $counter++;
                     $actual_price_total = $row['quantity'] * $product_actual_price + $actual_price_total;
+
+
                 }
             $gettotal = $this->get_total($postdata);
             $getactual = $this->get_actual_total($postdata);
@@ -1595,8 +1624,11 @@ class Api_model extends My_model {
             $response["actual_price_total"] = $getactual;
             $response["discount_price_total"] = number_format((float)$getactual - $my_cal, '2', '.', '');
             $response["total_price"] = $my_cal;
+
             $response["TotalGstAmount"] = number_format((float)$total_gst, '2', '.', '');
             $response["amountWithoutGst"] = number_format((float)$my_cal - $total_gst, '2', '.', '');
+           
+            
             $response["data"] = $getdata;
             echo $output = json_encode(array('responsedata' => $response));
             exit;
@@ -2555,13 +2587,14 @@ class Api_model extends My_model {
             }
         }
         function get_product_list($postdata) {
-            
+            $this->load->model('api_v2/common_model','co_model');
+            $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
+
             if(isset($postdata['defualt_product'])){
                 $defualt_product = $postdata['defualt_product'];
             }else{
                 $defualt_product = '';
             }
-            
             
             $branch_id = $postdata['branch_id'];
             $category_id = $postdata['category_id'];
@@ -2622,7 +2655,11 @@ class Api_model extends My_model {
                         unset($data);
                         unset($getdata);
                         foreach ($product_query as $r => $product_variant) {
-                            //                        print_r($product_query);exit;
+                            // print_r($product_query);exit;
+                            if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                                $product_variant->discount_price = $product_variant->without_gst_price;
+                            }
+
                             $product_variant_id = $product_variant->id;
                           
                             $package_id = $product_variant->package;
@@ -2670,7 +2707,7 @@ class Api_model extends My_model {
                                         'discount_per' => $product_variant->discount_per, 
                                         'discount_price' => $product_variant->discount_price, 
                                         'package_name' => $package_name, 
-                                        'my_cart_quantity' => $my_cart_quantity, 
+                                        'my_cart_quantity' => $my_cart_quantity,
                                         'variant_image' => $image
                                     );
                             $getdata[] = $data;
@@ -3390,7 +3427,7 @@ class Api_model extends My_model {
             $data['table'] = 'vendor as a'; // vendor
             $data['select'] = ['b.id'];
             $data['join'] = ['branch as b'=>['a.id=b.vendor_id','LEFT']];
-            $data['where'] = ['a.id'=>$branch_id,'b.status!='=>'9'];
+            $data['where'] = ['a.id'=>$branch_id,'b.status'=>'1'];
             $return =  $this->selectFromJoin($data);
             // echo $this->db->last_query();die;
             return $return[0]->id;
@@ -3531,14 +3568,13 @@ class Api_model extends My_model {
         $data['having'] = ['start_time <= '=>$time];
         $data['groupBy'] = 'o.id';
         $result = $this->selectFromJoin($data);
-        // dd($result);
         unset($data);
         foreach ($result as $k => $v) {
             if($v->end_date == $today && $v->end_time <= $time){
                 unset($result[$k]);
                 continue;
             }
-
+            
             $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
             $data['select'] = ['c.name as category_name','p.category_id','pw.product_id'];
             $data['table'] = TABLE_PRODUCT_WEIGHT . ' as pw';
@@ -3552,12 +3588,18 @@ class Api_model extends My_model {
             $v->category_name = $res[0]->category_name;
             $v->product_id = $res[0]->product_id;
         }
-        if($today == $value->sta && $time == $value->start_time){}
-
+        // dd($result);
         return $result;
 
     }
 
+    public function check_branch_is_active($branch_id){
+        $data['table'] = 'branch';
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$branch_id];
+        $res = $this->selectRecords($data);
+        return $res[0];
+    }
     public function check($offer_id){
         $data['table'] = TABLE_OFFER .' as o';
         $data['join'] = [
@@ -3692,25 +3734,17 @@ class Api_model extends My_model {
             $data['select'] = ['*'];
             $data['where'] = ['id'=>$user_id];
             $r = $this->selectRecords($data,true);
-            $response["success"] = 1;
-            $response["message"] = "Profile Updated";  
             // $response["user_data"] = $r[0];  
             $response =  $this->sendLoginResponse($r[0],$postData,true);
+            $response["success"] = 1;
+            $response["message"] = "Profile Updated";  
         }
         return $response;
     }
 
     public function delete_user($postData)
     {
-        $data['select'] = ['*'];
-        $data['where'] = ['group_createdby_id'=>$postData['user_id']];
-        $data['table'] = TABLE_GROUP;
-        $checkGroupAdmin = $this->selectRecords($data);
-        if(!empty($checkGroupAdmin)){
-            $response["success"] = 0;
-            $response["message"] = "Please change group admin or delete group";
-            return $response;
-        }
+       
         $data['select'] = ['*'];
         $data['where'] = ['order_status <'=>'8','user_id'=>$postData['user_id']];
         $data['table'] = TABLE_ORDER;
@@ -3720,7 +3754,15 @@ class Api_model extends My_model {
             $response["message"] = "Please wait for deliver current order or cancle ongoing order";
             return $response;
         }
-
+        unset($data);
+        $data['where'] = ['user_id'=>$postData['user_id']];
+        $data['table'] = TABLE_MY_CART;
+        $this->deleteRecords($data);
+        unset($data);
+        $data['where'] = ['user_id'=>$user_id];
+        $data['table'] = 'device';
+        $this->deleteRecords($data);
+        unset($data);
         $data['update'] = ['status'=>'9'];
         $data['where'] = ['id'=>$postData['user_id'] ];
         $data['table'] = TABLE_USER;
@@ -3824,6 +3866,16 @@ class Api_model extends My_model {
         $data['branch_id'] = $branch_id;
         $data['select'] = ['*'];
         return $this->selectRecords($data);
+    }
+
+    public function isBranchActive($branch_id){
+        $data['table'] = 'branch';
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$branch_id];
+        $res = $this->selectRecords($data);
+        if(!empty($res)){
+            return $res[0]->status; 
+        }
     }
     
 

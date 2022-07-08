@@ -7,7 +7,7 @@ class Google_login_model extends My_model
   // $branch_id = $this->session->userdata('branch_id');
   $vendor_id = $this->session->userdata('vendor_id');
 
-  $where = ['email'=>$email,'vendor_id'=>$vendor_id];
+  $where = ['email'=>$email,'vendor_id'=>$vendor_id,'status!='=>'9'];
 
   $this->db->where($where);
   $query = $this->db->get(TABLE_USER);

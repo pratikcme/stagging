@@ -81,6 +81,7 @@ if (@$myhidejs != 1) { ?>
         type:'post',
         data : {vendor_id : vendor_id},
         success:function(output){
+          // window.location.reload(); 
           window.location.href = url+"admin/dashboard";
         }
       })
@@ -100,6 +101,7 @@ function get_note(){
         $('#admin_notification').addClass('ishave');
       }else{
         $('#admin_notification').removeClass('ishave')
+        $('#notify-dot').addClass('btn__badge');
       }
       $('#admin_notification').html(output.notify);
     }
@@ -114,6 +116,7 @@ function get_note(){
         dataType : "json",
         success:function(output){
           $('#admin_notification').html(output.notify);
+          $('#notify-dot').removeClass('btn__badge');
         }
       });
   })

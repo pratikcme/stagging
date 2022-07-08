@@ -289,6 +289,14 @@ Class Common_model extends My_model{
         $data['order'] = 'id desc';
         return $this->selectRecords($data);
     }
+
+    public function checkpPriceShowWithGstOrwithoutGst($vendor_id){
+    	$data['table'] = 'vendor';
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$vendor_id];
+        return $this->selectRecords($data);
+
+    }
 	
 
 

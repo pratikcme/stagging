@@ -4,7 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Users extends User_Controller {
 
 	function __construct(){
-
 		parent::__construct();
 		$this->controller = $this->myvalues->usersAccount['controller'];
 		$this->load->model($this->myvalues->usersAccount['model'],'this_model');
@@ -28,6 +27,7 @@ class Users extends User_Controller {
 		$data['faq'] = $this->this_model->getFaq();
 		$this->load->model($this->myvalues->orderFrontEnd['model'],'order_model');
 		$data['order'] = $this->this_model->selectOrders();
+		// dd($data['order']);
 		$orderDetais = [];
 		$this->load->model('api_admin_model');
 		$this->load->model('api_v2/api_model','api_v2_model');
@@ -244,6 +244,15 @@ public function sendOtpAccount(){
      	$post = $this->input->post();
       $response = $this->this_model->sendOtpAccount($post);   
       echo json_encode($response);die;       
+ 	}
+
+ 	public function data_deletion(){
+ 		$post = $this->input->post();
+ 		if($this->input->post()){
+    	$response = $this->this_model->delete_user($post);
+    	$response = array($response);
+ 			echo json_encode($response);
+ 		}
  	}
 
 }

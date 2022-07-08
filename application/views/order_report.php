@@ -24,7 +24,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label for="name" class="margin_top_label">Select Date :<span class="required" aria-required="true"> * </span></label>
-                                        <input name="orderReportDate" class="form-control form-control-inline input-medium default-date-picker valid" size="16" type="text" value="<?=($date != '') ? $date : date('m-d-Y')?>" required="" placeholder="Order Report Date">
+                                        <input name="orderReportDate" class="form-control form-control-inline input-medium default-date-picker valid" size="16" type="text" value="<?=($date != '') ? $date : date('m/d/Y')?>" required="" placeholder="Order Report Date">
                                     </div>
                                 </div>
                             </div>

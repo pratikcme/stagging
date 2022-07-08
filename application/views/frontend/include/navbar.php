@@ -79,6 +79,8 @@
                         if(!file_exists('public/images/'.$CI->folder.'product_image/'.$product[0]->image) || $product[0]->image == '' ){
                           if(strpos($product[0]->image, '%20') === true || $product[0]->image == ''){
                             $product[0]->image = $default_product_image;
+                          }else{
+                            $product[0]->image = $default_product_image;
                           }
                         }
                     ?>
@@ -206,14 +208,14 @@
                         My Address
                       </a>   
                      </li>
-
+                      <?php if($userInformation[0]->login_type == '0'){ ?>
                       <li>
                       <a href="<?=base_url().'users_account/users/account?name=change'?>">
                         <span><i class="fas fa-lock"></i></span>
                         Change Password
                       </a>   
                      </li>
-
+                    <?php } ?>
                       <li style="display: none">
                       <a href="<?=base_url().'users_account/users/account?name=faq'?>">
                         <span><i class="fas fa-info-circle"></i></span>
@@ -282,14 +284,14 @@
                         My Address
                       </a>   
                      </li>
-
+                     <?php if($userInformation[0]->login_type == '0'){ ?>
                      <li>
                       <a href="<?=base_url().'users_account/users/account?name=change'?>">
                         <span><i class="fas fa-lock"></i></span>
                         Change Password
                       </a>   
                      </li>
-
+                   <?php } ?>
                       <li style="display: none">
                       <a href="<?=base_url().'users_account/users/account?name=faq'?>">
                         <span><i class="fas fa-info-circle"></i></span>

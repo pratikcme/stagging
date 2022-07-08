@@ -39,7 +39,6 @@
                 foreach ($_SESSION['My_cart'] as $key => $value) { 
                     $CI->load->model('frontend/product_model');
                     $product = $CI->product_model->GetUsersProductInCart($value['product_weight_id']);
-                    // dd($product);
                     $product[0]->image = preg_replace('/\s+/', '%20', $product[0]->image);
                     if(!file_exists('public/images/'.$CI->folder.'product_image/'.$product[0]->image) || $product[0]->image == '' ){
                       if(strpos($product[0]->image, '%20') === true || $product[0]->image == ''){

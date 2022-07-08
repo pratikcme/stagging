@@ -1,9 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-// error_reporting(E_ALL);
-// ini_set("display_errors", '1');
+
 class MY_Controller extends CI_Controller
 {
-
     public $json_response = null;
     public $user_id = null;
     
@@ -12,7 +10,7 @@ class MY_Controller extends CI_Controller
         parent::__construct();
        
         $this->json_response = array('status' => 'error', 'message' => 'something went wrong!');
-
+        // print_r($_SESSION);
          if(isset($_SESSION['My_cart']) && count($_SESSION['My_cart']) == 0 ){
                 $this->session->unset_userdata('My_cart');
             }
@@ -33,6 +31,10 @@ class MY_Controller extends CI_Controller
                 $this->load->model('api_v2/common_model');
 
             $siteDetail = $this->common_model->getLogo();
+            // lq();
+            if(isset($siteDetail['id'])){
+                $this->session->set_userdata('vendor_id',$siteDetail['id']);
+            }
             $this->siteLogo = $siteDetail['logo']; 
             $this->siteTitle = $siteDetail['webTitle'];
             $this->siteFevicon = $siteDetail['favicon_image']; 
@@ -56,7 +58,6 @@ class MY_Controller extends CI_Controller
     function loadView($layout,$data){
        $this->load->model('frontend/vendor_model','vendor_model');
        $data['ApprovedBranch'] = $this->vendor_model->ApprovedVendor();
-       // lq();
        $this->load->model($this->myvalues->contactFrontEnd['model'],'contact');
        $data['getContact'] = $this->contact->getContact();
        $data['home_url'] = base_url().'home';
@@ -98,7 +99,8 @@ class Vendor_Controller extends MY_Controller
         if($this->session->userdata('branch_admin') != '1' ){
                 redirect(base_url().'admin/dashboard');
         
- }   }
+        }   
+    }
 
 }
     class User_Controller extends MY_Controller
@@ -163,20 +165,21 @@ class Vendor_Controller extends MY_Controller
        function loadView($layout,$data){
                 $this->load->model($this->myvalues->contactFrontEnd['model'],'contact');
                 $this->load->model($this->myvalues->homeFrontEnd['model'],'home');
-                $this->load->model($this->myvalues->usersAccount['model'],'users');
-               
-                    if($this->session->userdata('user_id') != ''){
+                // $this->load->model($this->myvalues->usersAccount['model'],'users');
+                $this->load->model('users_account/users_model','users');
+                
+                if($this->session->userdata('user_id') != ''){
                      
                         $userInfo = $this->users->getUserDetails();
                             $_SESSION['user_name'] = $userInfo[0]->fname;
                             $_SESSION['user_lname'] = $userInfo[0]->lname;
                             $_SESSION['user_phone'] = $userInfo[0]->phone; 
-                        }
                 
+                }
                 $this->load->model('frontend/vendor_model','vendor_model');
                 $data['branch_nav'] = $this->vendor_model->branchList();
                 $data['ApprovedBranch'] = $this->vendor_model->ApprovedVendor();
-                // dd( $data['ApprovedBranch']);
+                // dd($data['ApprovedBranch']);die;
                 $this->load->model('frontend/product_model','product_model');
                 $data['wish_pid'] = $this->product_model->getUsersWishlist();
                 $data['getContact'] = $this->contact->getContact();
@@ -195,18 +198,32 @@ class Vendor_Controller extends MY_Controller
                 $my_cart = $this->product_model->getMyCart();
                 $default_product_image = $this->common_model->default_product_image();
 
+                $this->load->model('api_v2/common_model','co_model');
+                $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
+
                 foreach ($my_cart as $key => $value) {
-                     $product_image = $this->product_model->GetUsersProductInCart($value->product_weight_id);
+
+                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                        $value->discount_price = $value->without_gst_price;
+                    }
+
+                    $product_image = $this->product_model->GetUsersProductInCart($value->product_weight_id);
                     
                      if(!file_exists('public/images/'.$this->folder.'product_image/'.$product_image[0]->image) || $product_image[0]->image == '' ){
-                        $product_image[0]->image = $default_product_image;
-                  }
+                        if(strpos($product_image[0]->image, '%20') === true || $product_image[0]->image == ''){
+                            $product_image[0]->image = $default_product_image;
+                        }else{
+                            $product_image[0]->image = $default_product_image;
+                        }
+                     }
 
                   $my_cart[$key]->product_name = $product_image[0]->name;
                   $my_cart[$key]->image = $product_image[0]->image;
                 }
                 $data['mycart'] = $my_cart;
                 $data['notification'] = $this->common_model->userNotify();
+                $data['userInformation'] = $this->users->getUserDetails();
+                // dd($data['userInformation']);die;
                 return $this->load->view($layout,$data);
         }
 

@@ -19,7 +19,7 @@ class Checkout extends User_Controller {
   }
 
   public function check(){
-    // echo '1';die;
+    echo '1';die;
      $this->load->model('api_model');
      $this->api_model->emailTemplate_testing(5,1,11);
   }
@@ -31,7 +31,11 @@ class Checkout extends User_Controller {
 
 
   public function index(){
-   
+    $this->load->model('api_v2/common_model','co_model');
+    $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
+    $data['isShow'] = $isShow;
+
+
     $this->load->model('api_model');
     if(empty($_SESSION['My_cart']) && $this->cartCount == 0){
       $this->utility->setFlashMessage('danger','Your cart is empty');
@@ -66,7 +70,7 @@ class Checkout extends User_Controller {
 
     if($myCartValue < $defaultCartValue ){
       $this->utility->setFlashMessage_cartValue('danger','Minimum cart value should be greater than '.$this->session->userdata('de_currency').' '.$defaultCartValue );
-      redirect($_SERVER['HTTP_REFERER']);
+      redirect(base_url().'home');
       exit(); 
     } 
 

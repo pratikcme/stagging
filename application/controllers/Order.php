@@ -140,8 +140,8 @@ class Order extends Vendor_Controller
             $date =  $this->input->post('orderReportDate');  
         }
         $data['report'] = $this->this_model->getOrderReportForDate($date);
-        // print_r($data['report']);die;
-        $data['date'] = $date;
+        // $data['date'] = $date;
+        // echo $data['date'] ;die;
         $this->load->view('order_report',$data);
     }
 
@@ -168,6 +168,90 @@ class Order extends Vendor_Controller
         }
 
    } 
+
+      public function order_summary(){
+        $data['table_js'] = array('order_summary.js');
+        $data['start'] = array('ORDER_SUMMARY.table()');
+        $this->load->view('order_summary',$data);
+   }
+
+   public function getOrderSummaryListAjax(){
+        if($this->input->post()){
+            echo getOrderSummaryListAjax($this->input->post());
+        }
+   }
+
+   public function generate_order_summary_report(){
+        if($this->input->post()){
+            $re = $this->this_model->make_datatables_order_summary($this->input->post());
+            $this->load->library('excel');
+            $objPHPExcel = new PHPExcel();
+            $objPHPExcel->setActiveSheetIndex(0);
+            // set Header
+            $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'User Address');
+            $objPHPExcel->getActiveSheet()->SetCellValue('B1', 'Order By');
+            $objPHPExcel->getActiveSheet()->SetCellValue('C1', 'Order No');
+            $objPHPExcel->getActiveSheet()->SetCellValue('D1', 'Order Date');
+            $objPHPExcel->getActiveSheet()->SetCellValue('E1', 'Username');       
+            $objPHPExcel->getActiveSheet()->SetCellValue('F1', 'Total Amount');       
+            $objPHPExcel->getActiveSheet()->SetCellValue('G1', 'Payment Type');       
+            $objPHPExcel->getActiveSheet()->SetCellValue('H1', 'Order Status');       
+            // set Row
+            $objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFont()->setBold(true);
+            $objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFont()->setSize(12);
+            $objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFill()->getStartColor()->setARGB('#333');
+
+            $rowCount = 2;
+            foreach ($re as $list) {
+                if($list->order_status=='1'){
+                  $order_status = "New order";
+                }elseif($list->order_status=='2'){
+                  $order_status = "Pending";
+                }elseif($list->order_status=='3'){
+                  $order_status = "Ready";
+                }elseif($list->order_status=='4'){
+                  $order_status = "Pickup";
+                }elseif($list->order_status=='5'){
+                  $order_status = "On the way";
+                }elseif($list->order_status=='8'){
+                  $order_status = "Delivered";
+                }else{
+                  $order_status = "Cancelled";
+                } 
+            if($list->payment_type == '0'){$payment_type = 'COD';}elseif($list->payment_type == '1'){$payment_type = 'Credit-card';}else{$payment_type = 'Wallet Balance';};
+                $orderBY = ($list->group_id != '' || $list->group_id == '0' ) ? "Group" : "Self";
+                $orderDate = date('Y m d H:i A',$list->dt_added);
+                $currency = ($list->currency_type == 1) ? "$":"RTGS";
+                $username = $list->fname.' '.$list->lname;
+                $objPHPExcel->getActiveSheet()->SetCellValue('A' . $rowCount, $list->address);
+                $objPHPExcel->getActiveSheet()->SetCellValue('B' . $rowCount, $orderBY);
+                $objPHPExcel->getActiveSheet()->SetCellValue('C' . $rowCount, $list->order_no);
+                $objPHPExcel->getActiveSheet()->SetCellValue('D' . $rowCount, $orderDate);
+                $objPHPExcel->getActiveSheet()->SetCellValue('E' . $rowCount, $username);
+                $objPHPExcel->getActiveSheet()->SetCellValue('F' . $rowCount, $currency.' '.$list->payable_amount);
+                $objPHPExcel->getActiveSheet()->SetCellValue('G' . $rowCount, $payment_type);
+                $objPHPExcel->getActiveSheet()->SetCellValue('H' . $rowCount, $order_status);
+                $rowCount++;
+            }
+
+            $filename = "order_summary". date("Y-m-d-H-i-s").".xls";
+            header('Content-Type: application/vnd.ms-excel'); 
+            header('Content-Disposition: attachment;filename="'.$filename.'"');
+            header('Cache-Control: max-age=0'); 
+            ob_start();
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');  
+            $objWriter->save('php://output'); 
+            $xlsData = ob_get_contents();
+            ob_end_clean();
+            $response =  array(
+            'status' => TRUE,
+            'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData),
+            // 'filename'=>$filename
+            );
+            die(json_encode($response));
+        }
+   }
 
 
 }

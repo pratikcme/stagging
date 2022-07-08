@@ -35,8 +35,7 @@ class Login extends User_Controller {
 			$my_cart[$key]->product_name = $product_image[0]->name;
 			$my_cart[$key]->image = $product_image[0]->image;
 		}
-		$data['mycart'] = $my_cart;
-		
+		$data['mycart'] = $my_cart;		
 	}
 
 
@@ -64,7 +63,7 @@ class Login extends User_Controller {
 			$validation = $this->setRulesLogin();	
 				if($validation){
 					$result = $this->this_model->login_chek($this->input->post());
-
+					// lq();
 					 if(!empty($result)){
 					 	if($result[0]->email_verify == '1'){
 					 		$login_data = array(
@@ -439,7 +438,7 @@ class Login extends User_Controller {
                     	    'required' => "please enter your password"
                     ]
                 ),
-                array(
+           	array(
 					'field' => 'confirm_password', 
                   	'label' => 'confirm_password', 
                   	'rules' => 'trim|required|matches[password]',
@@ -524,6 +523,13 @@ class Login extends User_Controller {
 		// print_r($_SESSION);die;
 		$email = $this->input->post('email');
 		echo $result = $this->this_model->emailVerification($email);
+		die;
+	}
+
+	public function verify_mobile(){
+		// print_r($_POST);die;
+		// $email = $this->input->post('email');
+		echo $result = $this->this_model->mobileVerification_register($this->input->post());
 		die;
 	}
 

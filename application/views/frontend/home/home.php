@@ -34,8 +34,7 @@
   <div class="carousel-inner" role="listbox">
     <?php $calss = array('boat','sea','river','boat','sea','river','boat','sea','river'); ?>
     <?php foreach ($banner as $key => $value){ ?>
-
-    <div class="carousel-item <?=($key == 0) ? "active" : ""?> <?=$calss[$key]?>">
+    <div class="carousel-item <?=($key == 0) ? "active" : ""?> <?=$calss[$key]?>" data-id="<?=$value->web_banner_image?>">
     <img data-src="<?php echo base_url().'public/images/'.$this->folder.'web_banners/'.$value->web_banner_image?>" class="banner-image lazy" alt="">
       <div class="container h-100 ">
         <div class="row align-items-center h-100">

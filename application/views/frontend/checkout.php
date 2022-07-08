@@ -122,6 +122,7 @@ label.error.mobile_verfication{
       </nav>
    </div>
 </section>
+
 <!-- =================CART SECTION================= -->
 <section class="p-100 bg-cream">
    <div class="container">
@@ -512,7 +513,7 @@ label.error.mobile_verfication{
                      <ul>
                      <li class="total-wrap">
                         <div class="total-count">
-                           <h6>Sub total<br>(Inc. Tax)</h6>
+                           <h6>Sub total<br>(<?=($isShow[0]->display_price_with_gst == '1') ? "Exclude" : "Inc." ?> Tax)</h6>
                            <div class="price-seperator">
                               <span class="seperator">:</span>
                               <p><span><?=$this->siteCurrency?></span> <span id="checkout_subtotal"><?=$getMycartSubtotal?></span></p>
@@ -556,9 +557,19 @@ label.error.mobile_verfication{
                               <p><span><?=$this->siteCurrency?></span> 
                                <span id="checkout_final">
                                  <?php if(isset($calc_shiping) && is_numeric($calc_shiping)) {
-                                 echo  number_format((float)$getMycartSubtotal+$calc_shiping,2,'.','');
+                                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                                       $to = $getMycartSubtotal+$calc_shiping + $TotalGstAmount; 
+                                    }else{
+                                       $to = $getMycartSubtotal+$calc_shiping;
+                                    }
+                                    echo number_format((float)$to,2,'.',''); 
                                  }else{ 
-                                     echo number_format($getMycartSubtotal,2);
+                                    if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+                                       $tot = $getMycartSubtotal + $TotalGstAmount; 
+                                    }else{
+                                       $tot = $getMycartSubtotal;
+                                    }
+                                     echo number_format($tot,2);
                                  } ?> 
                                </span>
                            </p>
@@ -757,7 +768,7 @@ label.error.mobile_verfication{
         <form id="OtpVerification" class="mobileNum-form" method="post" action="<?=base_url().'checkout/OtpVerification'?>">
           <div class="input-wrapper m-0">
             <span><i class="fas fa-mobile"></i></span>
-            <input type="text" name="otp" id="otp" placeholder="Please ente 4 digit otp*" maxlength="4" required="">
+            <input type="text" name="otp" id="otp" placeholder="Please enter 4 digit otp*" maxlength="4" required="">
           </div>
           <label for="otp" class="error mobile_verfication"></label>
           <label id="invalid" style="display: none; color: red">Invalid Otp</label>

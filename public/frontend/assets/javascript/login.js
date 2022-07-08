@@ -58,11 +58,16 @@ var LOGIN = function(){
                              number: true,
                              minlength: 6,
                              maxlength: 15,
-                            //  remote:{ 
-                            //   url: url+"login/verify_email",
-                            //   type: "POST",
-                            // }
+                             remote:{ 
+                              url: url+"login/verify_mobile",
+                              type: "POST",
+                              data: {
+                                  country_code : function() {
+                                    return $( "#country_code" ).val();
+                                },
+                            },
                           },
+                      },
                     email: { required: true,
                              email: true,
                              remote:{ 
@@ -96,6 +101,7 @@ var LOGIN = function(){
                         number: "Please enter valid mobile number",
                         minlength: 'Please enter minimum 6 digits',
                         maxlength: "Please enter maximum 15 digits",
+                        remote: "This mobile number is already exist"
                     },
                     country_code : { required : 'Please select country code'},
                     password:{  required: "Please enter password",

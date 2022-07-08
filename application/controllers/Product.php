@@ -6,10 +6,7 @@ class Product extends Vendor_Controller
      function __construct(){
 
         parent::__construct();
-            // ini_set('display_errors', 1);
-            // error_reporting(E_ALL);
-            // error_reporting(1);
-        $vendor_id = $this->session->userdata['id'];
+        // $vendor_id = $this->session->userdata['id'];
         $this->load->model('product_model','this_model');
         // echo 1;exit;
 
@@ -73,7 +70,9 @@ class Product extends Vendor_Controller
         $this->this_model->multi_delete_product_weight();
     }
 
-
+    public function updateProduct(){
+        $this->this_model->update_without_gst();
+    }
     
     public function product_image_list()
     {

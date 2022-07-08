@@ -280,7 +280,10 @@ class Import_model extends My_model {
                     if($image != ''){
                         $image = $image;
                         $images = explode(',', $image);
-                    }   
+                    }
+                    if($gst == ''){
+                        $gst = 0 ;
+                    }
 
                     if($type != ''){
                         if ($type == 'New') {
@@ -318,6 +321,11 @@ class Import_model extends My_model {
                                 $dicount = 0;
                                 $final_discount_price = $retailPrice;
                             }
+                            
+                            $gst = ($final_discount_price * $gst) /100;
+                            $without_gst_price = $final_discount_price - $gst;
+
+
                             // echo $unitId .'/'.$packageId .'/'. $varient .'/'. $purchasePrice .'/'.$purchasePrice .'/'. $retailPrice .'/'. $qty ; die; 
                             if($unitId !='' && ($packageId !='') && ($varient !='') && ($purchasePrice == 0 || $purchasePrice != '') && ($retailPrice !='') && ($qty !='') ) {
                                 $data['insert']['branch_id'] = $this->branch_id;
@@ -330,6 +338,7 @@ class Import_model extends My_model {
                                 $data['insert']['quantity'] = $qty;
                                 $data['insert']['temp_quantity'] = $qty;
                                 $data['insert']['discount_per'] = $dicount;
+                                $data['insert']['without_gst_price'] = $without_gst_price;
                                 $data['insert']['discount_price'] = $final_discount_price;
                                 $data['insert']['discount_allow'] = '1';
                                 if(isset($max_order_qty) && $max_order_qty!='' && $max_order_qty!=0){

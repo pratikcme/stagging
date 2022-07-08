@@ -51,10 +51,14 @@ Class Common_model extends My_model{
 		}elseif(isset($_SESSION['vendor_admin_id'])){
 			$vendor_id = $this->session->userdata('vendor_admin_id');
 		}else{
+			if (strpos($_SERVER['SERVER_NAME'], 'www') !== false){ 
+	   				 $str = explode('.', $_SERVER['SERVER_NAME']); 
+	   				 $_SERVER['SERVER_NAME'] =  $str[1].'.'.$str[2];
+				}
 			$data['where_or'] = ['server_name'=>$_SERVER['SERVER_NAME']];
 		}
 
-		$data['select'] = ['webLogo','webTitle','img_folder','favicon_image'];
+		$data['select'] = ['webLogo','webTitle','img_folder','favicon_image','id'];
 		$data['table'] = 'vendor';
 		$data['select'] = ['*'];
 		$data['where'] = ['id'=>$vendor_id];
@@ -66,6 +70,7 @@ Class Common_model extends My_model{
 				'webTitle'=>$get[0]->webTitle,
 				'folder'=>($get[0]->img_folder != '') ? $get[0]->img_folder.'/'  : "",
 				'favicon_image'=>base_url().'public/client_logo/'.$get[0]->favicon_image,
+				// 'id'=> $get[0]->id
 			];
 			$this->session->set_userdata($return);
 			return $return;
@@ -271,7 +276,8 @@ Class Common_model extends My_model{
     public function read_all(){
     	$branch_id = $this->session->userdata('id');
     	$data['table']  = 'admin_notification';
-        $data['update'] = ['status'=>'1','branch_id'=>$branch_id];
+        $data['update'] = ['status'=>'1'];
+        $data['where'] = ['branch_id'=>$branch_id];
         $this->updateRecords($data);
         unset($data);
         $data['table'] = 'admin_notification';
@@ -281,6 +287,13 @@ Class Common_model extends My_model{
         return $this->selectRecords($data);
     }
 
+    public function checkpPriceShowWithGstOrwithoutGst($vendor_id){
+    	$data['table'] = 'vendor';
+        $data['select'] = ['*'];
+        $data['where'] = ['id'=>$vendor_id];
+        return $this->selectRecords($data);
+
+    }
 
 	
 

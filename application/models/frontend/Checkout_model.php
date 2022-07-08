@@ -296,29 +296,31 @@ Class Checkout_model extends My_model{
 
         $userData['select'] = ['*'];
         $userData['table'] = 'user';
-        $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id !=' => $user_id,'status !=' =>'9'];
+        $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id' => $user_id,'status !=' =>'9','vendor_id'=>$this->vendor_id];
         $userDetail = $this->selectRecords($userData);
-        if(!empty($userDetail) ){
-            $response["success"] = 0;
-            $response["message"] = "This mobile number is linked with another account";
-            return false;
+        // dd($userDetail);
+        if($userDetail[0]->is_verify != '1'){
+
+            if($_SERVER['SERVER_NAME']=='ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
+                $this->load->model('api_model');
+                $this->api_model->send_otp_int($mobile_number,$otp);
+            }else{
+                // echo '1';die;
+                $this->sendOtp($mobile_number,$otp);
+            }
+
+            $data['table'] = 'user';
+            $data['update'] = ['phone'=>$mobile,'otp'=>$otp,'country_code'=>$country_code];
+           // print_r($data['update']);die;
+            $data['where'] = ['id'=>$user_id,'status'=>'1'];
+            $this->updateRecords($data);   
+            return true; 
         }
-
-
-
-        if($_SERVER['SERVER_NAME']=='ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
-            $this->load->model('api_model');
-            $this->api_model->send_otp_int($mobile_number,$otp);
-        }else{
-            $this->sendOtp($mobile_number,$otp);
-        }
-
-        $data['table'] = 'user';
-        $data['update'] = ['phone'=>$mobile,'otp'=>$otp,'country_code'=>$country_code];
-       // print_r($data['update']);die;
-        $data['where'] = ['id'=>$user_id,'status'=>'1'];
-        $this->updateRecords($data);   
-        return true; 
+        // else{
+        //     $response["success"] = 0;
+        //     $response["message"] = "This mobile number is linked with another account";
+        //     return false;
+        // }
     }
 
      public function OtpVerification($postdata){

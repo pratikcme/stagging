@@ -485,15 +485,48 @@ public function Product_add_update(){
         return $image;
     }
 
+
+    public function update_without_gst(){
+        $this->load->model('api_v2/api_model','s');
+        $data['table'] = TABLE_PRODUCT_WEIGHT;
+        $data['select'] = ['*'];
+        $re = $this->selectRecords($data);
+        foreach ($re as $key => $value) {
+            $gst_percent = $this->s->getProductGst($value->product_id);
+
+           $gst_amount = ($value->discount_price * $gst_percent) / 100;
+           // echo $gst_amount;die;
+           $product_price_without_gst = $value->discount_price - $gst_amount;
+           unset($data);
+
+           $data['table'] =  TABLE_PRODUCT_WEIGHT;
+           $data['update'] = ['without_gst_price'=>number_format((float)$product_price_without_gst, 2, '.', '') ];
+           $data['where'] = ['id'=>$value->id];
+           $this->updateRecords($data);
+           if($value->id == '3948'){
+            echo $gst_amount;
+            echo $product_price_without_gst;
+             lq();
+           }
+        }
+    }   
     
+    /*This code is used update database without_gst_price*/ 
+    /*End this code is used update database without_gst_price*/
 
     public function product_weight_add_update(){
-        // print_r($_SESSION);die;
+
+        // $this->update_without_gst();
+
         $vendor_id = $this->session->userdata['id'];
         $ven_id = $this->session->userdata['vendor_id'];
         $id = $_POST['id'];
 
         $product_id = $_POST['product_id'];
+
+        $this->load->model('api_v2/api_model');
+        $gst_percent = $this->api_model->getProductGst($product_id);
+
         $weight_id = $_POST['weight_id'];
         // $unit = number_format((float)$_POST['unit'], 2, '.', '');
         $unit = $_POST['unit'];
@@ -511,7 +544,8 @@ public function Product_add_update(){
             if($fraction == 0){
                 $unit = (int)$unit;   
             }
-
+           $gst_amount = ($final_discount_price * $gst_percent) / 100;
+           $product_price_without_gst = $final_discount_price - $gst_amount;
         
             /* Product Weight Update */
             if ($id != '') {
@@ -526,6 +560,7 @@ public function Product_add_update(){
                     'price' => $price,
                     'quantity' => $quantity,
                     'discount_per' => $discount_per,
+                    'without_gst_price'=>number_format((float)$product_price_without_gst, 2, '.', ''),
                     'discount_price' => $final_discount_price,
                     'dt_updated' => strtotime(date('Y-m-d H:i:s')),
                 );
@@ -591,6 +626,7 @@ public function Product_add_update(){
                     'quantity' => $quantity,
                     'discount_per' => $discount_per,
                     'discount_price' => $final_discount_price,
+                    'without_gst_price'=>number_format((float)$product_price_without_gst, 2, '.', ''),
                     'status' => '1',
                     'dt_added' => strtotime(date('Y-m-d H:i:s')),
                     'dt_updated' => strtotime(date('Y-m-d H:i:s')),

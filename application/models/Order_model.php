@@ -496,30 +496,25 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
     }
 
      public function getOrderReportForDate($original_date = ''){
-            // error_reporting(E_ALL);
-            // ini_set("display_errors",'1');
+            
+
             if($original_date == ''){
                 $original_date = date('m-d-Y');
             }
-            $parts_from = explode('-', $original_date);
+
+            $parts_from = explode('/', $original_date);
             $date_ = $parts_from[1] . '-' . $parts_from[0] . '-' . $parts_from[2];
             $date = strtotime(date("Y-m-d 00:00:00",strtotime($date_)));
-
             $data['select'] = ['id','name'];
             $data['where']['branch_id'] = $this->session->userdata('id');
             $data['table'] = 'product';
             $res = $this->selectRecords($data);
-
             unset($data);
             if($date != strtotime(date("Y-m-d 00:00:00"))){
                 $endDate = strtotime(date('Y-m-d', strtotime($date_ .' +1 day')));
                 $data['where']['o.dt_added <='] = $endDate;
             }
-            
-            // if($date != strtotime(date("Y-m-d 00:00:00"))){
-            //     $endDate = strtotime(date('Y-m-d', strtotime($date_ .' +1 day')));
-            //     $data['where']['o.dt_added <='] = $endDate;
-            // }
+
 
             foreach ($res as $key => $value) {
                 $data['table'] = 'order as o';
@@ -533,7 +528,7 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
                 $data['where']['o.branch_id'] = $this->session->userdata('id');
                 $data['where']['o.dt_added >='] = $date;
                 $data['where']['od.product_id'] = $value->id;
-                $data['where']['o.order_status !='] = '9';
+                // $data['where']['o.order_status !='] = '9';
                 $return =  $this->selectFromJoin($data);
                 if(!empty($return)){
                     foreach ($return as $k => $value) {
@@ -734,6 +729,94 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
         return $this->selectRecords($data);
 
         
+    }
+
+        public  $order_column_order_summary = array("o.order_no","o.dt_added","u.fname","u.lname","o.payable_amount",'o.dt_added','ua.address');  
+    function make_query_order_summary($postData){
+        $branch_id = $this->session->userdata('id');
+        if(isset($postData['from_date']) && $postData['from_date'] != ''){
+            $fr_date = $postData['from_date'];
+            $parts_from = explode('-', $fr_date);
+            $fr_date_ = $parts_from[1] . '-' . $parts_from[0] . '-' . $parts_from[2];
+            $fr_date = strtotime(date("Y-m-d 00:00:00",strtotime($fr_date_)));
+
+            $this->db->where('o.dt_added >=',$fr_date);
+        }
+        if(isset($postData['to_date']) && $postData['to_date'] != ''){
+            $to_date = $postData['to_date'];
+            $parts_from = explode('-', $to_date);
+            $to_date_ = $parts_from[1] . '-' . $parts_from[0] . '-' . $parts_from[2];
+            $to_date = strtotime(date("Y-m-d 00:00:00",strtotime($to_date_."+1 day")));
+
+            $this->db->where('o.dt_added <=',$to_date);
+        }
+        if(isset($postData['order_status']) && $postData['order_status'] != ''){
+            $this->db->where('o.order_status',$postData['order_status']);
+        }
+            // $where = [
+            //     'o.branch_id'=>$branch_id,
+            //     'o.status !='=>'9',
+
+            // ];
+         $this->db->select('o.*,u.fname,u.lname,ua.address');  
+         $this->db->from('order as o');
+         $this->db->join('order_details as od','o.id = od.order_id','LEFT');
+         $this->db->join('user as u','u.id = o.user_id','LEFT');
+
+         $this->db->join('user_address as ua','ua.id = o.user_address_id','LEFT');
+         
+         $this->db->where('o.branch_id',$branch_id);
+         $this->db->order_by('o.dt_updated DESC');
+         $this->db->group_by('o.id');
+
+         if(isset($postData["search"]["value"]) && $postData["search"]["value"] != ''){ 
+        $this->db->group_start();
+            $this->db->like("u.fname", $postData["search"]["value"]);
+            $this->db->or_like("u.lname", $postData["search"]["value"]);
+            $this->db->or_like("o.order_no", $postData["search"]["value"]);
+            $this->db->or_like("o.dt_added", $postData["search"]["value"]);
+            $this->db->or_like("ua.user_address", $postData["search"]["value"]);
+            $this->db->or_like("o.payable_amount", $postData["search"]["value"]);
+        $this->db->group_end(); 
+        }  
+        
+        if(isset($postData["order"]) && $postData["order"] != '' ){  
+            $this->db->order_by($this->order_column_order_summary[$postData['order']['0']['column']], $postData['order']['0']['dir']);  
+           }else{  
+                $this->db->order_by('o.id', 'DESC');  
+           } 
+    }
+
+
+    function make_datatables_order_summary($postData){ 
+        $this->make_query_order_summary($postData);
+       if($postData["length"] != -1){  
+            $this->db->limit($postData['length'], $postData['start']);  
+        }  
+            $query = $this->db->get();  
+            return $query->result();
+            echo $this->db->last_query();
+        }
+
+    function get_filtered_data_order_summary($postData = false){  
+        $this->make_query_order_summary($postData);  
+        $query = $this->db->get();  
+        return $query->num_rows();
+    }    
+
+    function get_all_data_order_summary($postData = array()){
+        $branch_id = $this->session->userdata('id');
+         $this->db->select('o.*,u.fname,u.lname','ua.address');  
+         $this->db->from('order as o');
+         $this->db->join('order_details as od','o.id = od.order_id','LEFT');
+         $this->db->join('user as u','u.id = o.user_id','LEFT');
+         $this->db->join('user_address as ua','ua.id = o.user_address_id','LEFT');
+         $this->db->where('o.branch_id',$branch_id);
+         $this->db->order_by('o.dt_updated DESC');
+         $this->db->group_by('o.id');
+         // $this->db->group_by('o.id');
+         return $this->db->count_all_results(); 
+         echo $this->db->last_query();
     }
 }
 

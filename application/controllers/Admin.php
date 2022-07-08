@@ -48,7 +48,7 @@ class Admin extends CI_Controller
             $vendor = $this->input->post('vendor_id');
             if($vendor != 'vendor_admin'){
                 $res = $this->vendor_model->getAllVendor($this->input->post());
-
+            
                 $this->session->unset_userdata('vendor_admin');
                 $this->session->unset_userdata('super_id');
                 $this->session->unset_userdata('branch_admin');
@@ -60,7 +60,6 @@ class Admin extends CI_Controller
                 $this->session->unset_userdata('phone');
                 $this->session->unset_userdata('logged_in');
 
-
                 $login_data = array(
                     'branch_admin'=>TRUE,
                     'id' => $res[0]->id,
@@ -71,7 +70,9 @@ class Admin extends CI_Controller
                     'logged_in' => TRUE
                 );
                 $this->session->set_userdata($login_data);
+                
             }else{
+
             $flag = $this->session->userdata('flag');
             $result_login = $this->db->query("SELECT * FROM `vendor` WHERE id='$flag'");
             $row_login = $result_login->row_array();
@@ -533,8 +534,8 @@ class Admin extends CI_Controller
     ## Profile Update  ##
     public function update_profile()
     {   
-        error_reporting(E_ALL);
-       
+        // error_reporting(E_ALL);
+       // dd($_POST);
         if(isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Update'){
 
             $branch_id = $this->session->userdata['id'];
@@ -544,8 +545,8 @@ class Admin extends CI_Controller
             $selfPickUp = $this->input->post('selfPickUp');
             $selfPickupOpenClosingTiming = $this->input->post('selfPickupOpenClosingTiming');
             $currency_code = trim($this->input->post('currency_code'));
-
             $branch_id = $this->session->userdata['id']; 
+
             if($branch_id != 0){ 
                 $ownername = $this->input->post('ownername');
                 if(isset($_FILES) && ($_FILES['vendorimage']['name'] != '')){
@@ -635,7 +636,7 @@ class Admin extends CI_Controller
                 }else{
                     $favicon_image =  $this->input->post('old_favicon');
                 }
-
+    
                 $data = array(
                     'name' => $name,
                     'phone_no' => $phone,
@@ -646,6 +647,7 @@ class Admin extends CI_Controller
                     'android_isforce'=>$this->input->post('android_isforce'),
                     'ios_version'=>$this->input->post('ios_version'),
                     'ios_isforce'=>$this->input->post('ios_isforce'),
+                    'display_price_with_gst' =>$this->input->post('display_price_with_gst'),
                     'dt_updated' => date('Y-m-d H:i:s')
                 );
             }

@@ -47,6 +47,7 @@ class Login_model extends My_model{
        $data['select'] = ['*'];
        $data['where']['phone'] = $postData['phone'];
 	   $data['where']['country_code'] = $postData['country_code'];
+	   $data['where']['status!='] = '9';
        $data['where']['vendor_id'] = $this->vendor_id;
        $re = $this->selectRecords($data,true);
       
@@ -91,6 +92,7 @@ class Login_model extends My_model{
         $data['where']['vendor_id'] = $this->vendor_id;
         $data['where']['country_code'] = $postData['country_code'];
         $data['where']['phone'] = $postData['phone'];
+        $data['where']['status !='] = '9';
         $re = $this->selectRecords($data,true);
         unset($data);
         if(!empty($re)){
@@ -352,10 +354,11 @@ class Login_model extends My_model{
 		$data['table'] = TABLE_USER;
 		$data['select'] = ['*'];
 		$data['where'] = [
+							'vendor_id' =>$this->vendor_id,
 							'email'=>$postData['email'],
 							'password'=>null,
 							'login_type !='=>'0',
-							'vendor_id' =>$this->vendor_id
+							'status !=' => '9'
 						];
 		$re = $this->selectRecords($data);
 		// print_r($re);die;
@@ -397,7 +400,8 @@ class Login_model extends My_model{
 		$data['where'] = [
 							'vendor_id' =>$this->vendor_id,
 							'email'=>$postData['email'],
-							'password'=>md5($postData['password'])
+							'password'=>md5($postData['password']),
+							'status !=' => '9',
 						];
 		$return = $this->selectRecords($data);
 		// echo $this->db->last_query();
@@ -434,9 +438,9 @@ class Login_model extends My_model{
 				$login_logs = [
 					'user_id' => $return[0]->id,
 					'vendor_id' => $return[0]->vendor_id,
-			'status' => 'login',
-			'type' => 'user',
-			'dt_created' => DATE_TIME
+					'status' => 'login',
+					'type' => 'user',
+					'dt_created' => DATE_TIME
 		];
 		$this->load->model('api_v2/common_model','v2_common_model');
 		$this->v2_common_model->user_login_logout_logs($login_logs);
@@ -505,8 +509,11 @@ class Login_model extends My_model{
 		$data['select'] = ['*'];
 		$data['where'] = [
 							'email'=>$postdata['email'],
+							'status!=' =>'9',
+							'vendor_id'=>$this->session->userdata('vendor_id') 
 						];
-		$chk_num = $this->countRecords($data);		
+		$chk_num = $this->countRecords($data);
+		// dd($chk_num);
         if($chk_num > 0)
         {
            $user_details =  $this->selectRecords($data);
@@ -562,6 +569,23 @@ class Login_model extends My_model{
           	$data['table'] = TABLE_USER;
           	$data['select'] = ['*'];
           	$data['where'] = ['email'=>$email,'vendor_id'=>$this->vendor_id];  	
+          	$count = $this->countRecords($data);
+          	if($count > 0){
+          		return "false";
+          	}else{
+          		return "true";
+          	}
+          }
+
+      public function mobileVerification_register($postData){
+      		$mobile = $postData['phone'];
+      		if(isset($postData['country_code'])){
+      			$country_code = $postData['country_code'];
+      		}
+          	$data['table'] = TABLE_USER;
+          	$data['select'] = ['*'];
+          	$data['where']['phone'] = $mobile;
+          	$data['vendor_id'] = $this->vendor_id;  	
           	$count = $this->countRecords($data);
           	if($count > 0){
           		return "false";

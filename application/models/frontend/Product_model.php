@@ -245,6 +245,10 @@ Class Product_model extends My_model{
     }
 	// public function productOfSubcategory($limit,$start,$postdata){
 	public function productOfSubcategory($postdata){
+
+		$this->load->model('api_v2/common_model','co_model');
+        $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
+
 		// print_r($postdata);die;
 			if(isset($postdata['slider'])){
 				$postdata['getCatByURL'] = $this->utility->safe_b64encode($postdata['getCatByURL']);
@@ -369,7 +373,7 @@ Class Product_model extends My_model{
 			$data['where']['pw.status !='] = '9';
 			$data['where']['p.status'] = '1';
 			$data['table'] = TABLE_PRODUCT . " as p";
-			$data['select'] = ['p.*','p.id as prod_id','pw.price','pw.quantity','pw.discount_per','pw.id as product_weight_id','pw.discount_price','pi.image','pw.status as pw_status','pw.weight_id'];
+			$data['select'] = ['p.*','p.id as prod_id','pw.price','pw.quantity','pw.discount_per','pw.id as product_weight_id','pw.discount_price','pi.image','pw.status as pw_status','pw.weight_id','pw.without_gst_price'];
 			$data['join'] = [
 				TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
 				TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']
@@ -409,6 +413,10 @@ Class Product_model extends My_model{
 			}
 		 $product_html = ''; 
 		 foreach ($product as $key => $value) {
+		 	if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
+        		$value->discount_price =  $value->without_gst_price;
+        	}
+
             $d_none = '';
             $d_show = 'd-none';
 	        if(!empty($item_weight_id)){
@@ -619,7 +627,7 @@ Class Product_model extends My_model{
 				// TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT'],
 				TABLE_WEIGHT .' as w'=>['w.id = pw.weight_id','LEFT'],
 			];
-			$data['where'] = ['p.status!='=>'9','pw.status!='=>'9','p.id'=>$id,'p.branch_id'=>$this->branch_id];		
+			$data['where'] = ['p.status'=>'1','pw.status!='=>'9','p.id'=>$id,'p.branch_id'=>$this->branch_id];		
 			$data['groupBy'] =['p.id'];
 			return  $this->selectFromJoin($data);
 	}	
@@ -912,11 +920,12 @@ Class Product_model extends My_model{
 
 			$data['table'] = TABLE_PRODUCT . " as p";
 			$data['select'] = [
-				'p.*','pw.price','pw.id as pw_id', 'pw.quantity','pw.weight_id','pw.discount_per','pw.discount_price','pi.image','pw.weight_no','pw.max_order_qty' ];
+				'p.*','pw.price','pw.id as pw_id', 'pw.quantity','pw.weight_id','pw.discount_per','pw.discount_price','pi.image','pw.weight_no','pw.max_order_qty','pw.without_gst_price'];
 			$data['join'] = [
 				TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
 				TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']
 			];
+			$data['where']['p.status'] = '1';
 			$data['where']['pw.status!='] = '9';
   			$data['where']['pw.id'] = $varient_id;
 			// $data['groupBy'] = 'p.id';	
@@ -1082,7 +1091,7 @@ Class Product_model extends My_model{
 
 			
 			$data['table'] = TABLE_PRODUCT . " as p";
-			$data['select'] = ['p.*','pi.image as product_image','pw.id as pw_id','pw.price','pw.discount_price','pw.id as pw_id','pw.quantity','pw.discount_per','pw.weight_id'];
+			$data['select'] = ['p.*','pi.image as product_image','pw.id as pw_id','pw.price','pw.discount_price','pw.id as pw_id','pw.quantity','pw.discount_per','pw.weight_id','pw.without_gst_price'];
 			$data['join'] = [
 				TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
 				TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT'],
@@ -1152,7 +1161,7 @@ Class Product_model extends My_model{
 
     	$data['table'] = TABLE_MY_CART .' as mc';
     	$data['join'] = [TABLE_PRODUCT_WEIGHT . ' as pw'=>['pw.id=mc.product_weight_id','LEFT']];
-    	$data['select'] = ['mc.*','pw.discount_price','pw.product_id','pw.price','pw.discount_per','pw.weight_id'];
+    	$data['select'] = ['mc.*','pw.discount_price','pw.product_id','pw.price','pw.discount_per','pw.weight_id','pw.without_gst_price'];
     	$data['where']['mc.user_id'] = $user_id;
     	$data['where']['mc.branch_id'] = $this->branch_id;
     	return $this->selectFromJoin($data);
@@ -1178,7 +1187,7 @@ Class Product_model extends My_model{
     	// $productId = $this->utility->safe_b64decode($product_id);
 
     	$data['table'] = TABLE_PRODUCT . " as p";
-    	$data['select'] = ['p.name','pw.id as pw_id','pw.discount_per','pw.discount_price','pw.product_id as product_id','pi.image','pw.price','p.gst'];
+    	$data['select'] = ['p.name','pw.id as pw_id','pw.discount_per','pw.discount_price','pw.product_id as product_id','pi.image','pw.price','p.gst','pw.without_gst_price'];
     	$data['join'] = [
     		TABLE_PRODUCT_WEIGHT .' as pw'=>['p.id = pw.product_id','LEFT'],
     		TABLE_PRODUCT_IMAGE .' as pi'=>['pw.id = pi.product_variant_id','LEFT']

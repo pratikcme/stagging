@@ -25,16 +25,18 @@
 <!-- =================BANNER SLIDER================= -->
 <div id="carousel" class="carousel slide hero-slides" data-ride="carousel">
   <ol class="carousel-indicators">
-    <li class="active" data-target="#carousel" data-slide-to="0"></li>
-    <li data-target="#carousel" data-slide-to="1"></li>
-    <li data-target="#carousel" data-slide-to="2"></li>
+   <?php for($b=0;$b< count($banner);$b++){ ?>
+      <li class="active" data-target="#carousel" data-slide-to="<?= $b;?>"></li>
+    <!-- <li data-target="#carousel" data-slide-to="1"></li>
+    <li data-target="#carousel" data-slide-to="2"></li> -->
+    <?php } ?>
   </ol>
   <div class="carousel-inner" role="listbox">
     <?php $calss = array('boat','sea','river','boat','sea','river','boat','sea','river'); ?>
     <?php foreach ($banner as $key => $value){ ?>
 
     <div class="carousel-item <?=($key == 0) ? "active" : ""?> <?=$calss[$key]?>">
-    <img src="<?php echo base_url().'public/images/'.$this->folder.'web_banners/'.$value->image?>" class="banner-image" alt="">
+    <img src="<?php echo base_url().'public/images/'.$this->folder.'web_banners/'.$value->web_banner_image?>" class="banner-image" alt="">
       <div class="container h-100 ">
         <div class="row align-items-center h-100">
           <div class="col-12 col-md-12 col-lg-12 col-xl-12">

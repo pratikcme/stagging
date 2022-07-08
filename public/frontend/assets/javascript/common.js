@@ -82,6 +82,49 @@ $(document).on('click','#logout',function() {
 
 })
 
+$(document).on('click','#delete_account',function() {
+	var url = $('#url').val();
+	swal({
+		title: "Are you sure?",
+		text: "All the data associated with it (including your profile, photos, orders) will be permanently deleted now. This information can't be recovered once the account is deleted.",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+	.then((willDelete) => {
+		if (willDelete) {
+			$.ajax({
+				url : url +'users_account/users/data_deletion',
+				method: 'post',
+				dataType : "json",
+				data : {hello : '1' },
+				success:function(output){
+					if(output.status == 1){
+						var title = 'Removed'; 
+					}else{
+						var title = 'Not Removed';
+
+					}
+					var message = output[0].message;
+					swal({
+						title: title,
+						text: message,
+						type: "success",
+						timer: 5000
+					}).then(function() {
+							window.location.href = url+'home';
+					});
+
+				}
+			})			
+		}
+	});
+
+
+})
+
+
+
 $(document).on('click',".cart-qty-plus",function() {
   quantityField = $(this).prev().val();
   quantity = $(this).prev();
@@ -148,13 +191,13 @@ $(document).on('click','.remove_item',function(){
 					data : {product_id:product_id,weight_id:weight_id,product_weight_id:product_weight_id},
 					success:function(output){
 						window.location.reload();
+
 						var currnt  = window.location.href;
 						var segments = currnt.split( '/' );
-						if(segments[4] == 'productDetails'){
-							window.location.reload();
-							return false;
-						}
-						
+						// if(segments[4] == 'checkout'){
+						// 	window.location.href = url+'home';
+						// 	return false;
+						// }
 						var currntPath = window.location.pathname;
 						if(currntPath == '/checkout'){
 							if(output.count == 0){
