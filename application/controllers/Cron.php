@@ -13,7 +13,7 @@ class Cron extends CI_Controller{
 		
 	}
 
-	public function applied_offer_bycron(){
+	public function applied_offer_bycron($crone_id){
 		$res = $this->this_model->getOfferForApplied();
 		foreach ($res as $key => $value) {
 			$product_varient_id = $value->product_varient_id;
@@ -25,9 +25,11 @@ class Cron extends CI_Controller{
 			$this->this_model->updateProductVarientById($product_varient_id,$new_discount,$discount_price);
 			echo 'applied';
 		}
+		$this->this_model->deleteCronById($crone_id);
+		$this->this_model->setCron();
 	}
 
-	public function rollback_offer_bycron(){
+	public function rollback_offer_bycron($crone_id){
 		$rollback = $this->this_model->getOfferForApplied(true);
 		foreach ($rollback as $key => $value) {
 			$product_varient_id = $value->product_varient_id;
@@ -38,8 +40,9 @@ class Cron extends CI_Controller{
 			$discount_price = $price - $discount;
 			$this->this_model->updateProductVarientById($product_varient_id,$old_discount,$discount_price);
 			echo 'rollback';
-
 		}
+		$this->this_model->deleteCronById($crone_id);
+		$this->this_model->setCron();
 	}
 
 }

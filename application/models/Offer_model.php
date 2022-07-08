@@ -6,8 +6,8 @@ Class Offer_model extends My_model{
         $this->vendor_id = $this->session->userdata('vendor_admin_id');
         $request_schema = $_SERVER['REQUEST_SCHEME'];
         $server_name = $_SERVER['SERVER_NAME'];
-        $this->crone_url = $request_schema.'://'.$server_name."/cron/applied_offer_bycron";
-        $this->crone_url_rollaback = $request_schema.'://'.$server_name."/cron/rollback_offer_bycron";
+        $this->crone_url = $request_schema.'://'.$server_name."/cron/applied_offer_bycron/";
+        $this->crone_url_rollaback = $request_schema.'://'.$server_name."/cron/rollback_offer_bycron/";
         $this->crone_url_local = $request_schema.'://'.$server_name."/stagging/cron/test";
     }
 
@@ -117,13 +117,15 @@ Class Offer_model extends My_model{
             $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
             $data['insert']['dt_created'] = DATE_TIME;
             $data['insert']['dt_updated'] = DATE_TIME;
-            $this->insertRecord($data);
-
-
+            $last_id = $this->insertRecord($data);
+            unset($data);
+            $data['update']['cron_command'] = $st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url.$last_id." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1" ;
+            $data['where'] = ['id'=>$last_id];
+            $data['table'] = 'crontab';
+            $this->updateRecords($data);
 
             $this->setReverceCron($postData,$offer_id);
-
-
+            
             unset($data);
             $data['table'] = 'crontab';
             $data['select'] = ['*'];
@@ -133,7 +135,7 @@ Class Offer_model extends My_model{
             exec('sudo crontab -u a1630btr -r');
             foreach ($crontabs as $k => $v) {
                 file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt',$v->cron_command .PHP_EOL,FILE_APPEND);
-                $this->deleteAfterSetCron($v->id);
+
             }
             exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
             exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
@@ -201,7 +203,12 @@ Class Offer_model extends My_model{
             $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
             $data['insert']['dt_created'] = DATE_TIME;
             $data['insert']['dt_updated'] = DATE_TIME;
-            $this->insertRecord($data);
+            $last_id = $this->insertRecord($data);
+            unset($data);
+            $data['update']['cron_command'] = $st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url_rollaback.$last_id." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1" ;
+            $data['where'] = ['id'=>$last_id];
+            $data['table'] = 'crontab';
+            $this->updateRecords($data);
             return true;
     }
 
@@ -287,8 +294,12 @@ Class Offer_model extends My_model{
             $data['insert']['end_date'] = date("Y-m-d", strtotime($postData['end_date']));
             $data['insert']['dt_created'] = DATE_TIME;
             $data['insert']['dt_updated'] = DATE_TIME;
-
-            $this->insertRecord($data);
+            $last_id = $this->insertRecord($data);
+            unset($data);
+            $data['update']['cron_command'] = $st_min." ". $st_hr ." ".$start_day." ".$start_month." * curl --silent ".$this->crone_url.$last_id." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1" ;
+            $data['where'] = ['id'=>$last_id];
+            $data['table'] = 'crontab';
+            $this->updateRecords($data);
 
             $this->setReverceCron($postData,$postData['edit_id']);
 
@@ -301,7 +312,6 @@ Class Offer_model extends My_model{
             exec('sudo crontab -u a1630btr -r');
             foreach ($crontabs as $key => $value) {
                 file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt', $value->cron_command.PHP_EOL,FILE_APPEND);
-                $this->deleteAfterSetCron($value->id);
             }
             exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
             exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
@@ -487,7 +497,7 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
             $data['where'] = ['of.start_date'=>$date,'of.start_time'=>$time];
         }
         $data['table'] = 'offer' .' of';
-        $data['select'] = ['ofd.*'];
+        $data['select'] = ['of.id as offer_id','ofd.*'];
         $data['join'] = ['offer_detail' .' ofd'=>['of.id=ofd.offer_id','LEFT']];
         $return =  $this->selectFromJoin($data);
         return $return;
@@ -517,6 +527,27 @@ public  $order_column_offer_product = array("p.product_name","pw.quantity","pw.d
     }
          $this->updateRecords($data);
          lq();
+    }
+
+    public function deleteCronById($crone_id);{
+        $data['where']['id'] = $crone_id;
+        $data['table'] = 'crontab';
+        $this->deleteRecords($data);
+    }
+    public function setCron(){
+        unset($data);
+        $data['table'] = 'crontab';
+        $data['select'] = ['*'];
+        $crontabs = $this->selectRecords($data);
+        
+        @unlink('/home1/a1630btr/repositories/stagging/crontab_final.txt');
+        exec('sudo crontab -u a1630btr -r');
+        foreach ($crontabs as $k => $v) {
+            file_put_contents('/home1/a1630btr/repositories/stagging/crontab_final.txt',$v->cron_command .PHP_EOL,FILE_APPEND);
+
+        }
+        exec('crontab /home1/a1630btr/repositories/stagging/crontab_final.txt 2>&1', $ext);
+        exec('chmod -R 777 /home1/a1630btr/repositories/stagging/crontab_final.txt');
     }
 }
 
