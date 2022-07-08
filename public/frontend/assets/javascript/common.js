@@ -29,7 +29,7 @@ function get_note(){
 		success:function(output){
 			if(output.count > 0){
 				$('#notify-dot').addClass('btn__badge');
-			
+				$('#notification').removeClass('ishave');
 			}
 			if(output.count == 0){
 				$('#notification').addClass('ishave');
