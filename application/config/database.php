@@ -75,7 +75,7 @@ $query_builder = TRUE;
 if($_SERVER['HTTP_HOST'] == '192.168.2.2' || $_SERVER['HTTP_HOST'] == 'localhost'){	
 	$dbName = 'launchestore_dev';
 	$userName = 'root';
-	$password = '';
+	$password = 'root';
 	$host = 'localhost';	
 }else{
 	$host = 'localhost';
