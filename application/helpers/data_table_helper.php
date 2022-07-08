@@ -924,15 +924,14 @@ function getAjaxPriceList($TableData){
           }else{
               $order_status = "Cancelled";
           } 
-        if($row->payment_type == '0'){$payment_type = 'COD';}elseif($row->payment_type == '1'){$payment_type = 'Credit-card';}else{$payment_type = 'Wallet Balance';};
-        $currency = ($row->currency_type == 1) ? "$":"RTGS";
+        ($row->payment_type == '0') ? $payment_type = 'COD' : $payment_type = 'Credit-card';
         $sub_array = array();  
         $sub_array[] =  $row->address; 
         $sub_array[] = ($row->group_id != '' || $row->group_id == '0' ) ? "Group" : "Self" ; 
         $sub_array[] = '<a target="_blank" href='.base_url().'order/order_detail?id='.$CI->utility->encode($row->id).'>'.$row->order_no.'</a>'; 
         $sub_array[] = date('Y m d H:i A',$row->dt_added); 
         $sub_array[] = $row->fname.' '.$row->lname; 
-        $sub_array[] =  $currency.' '.$row->payable_amount; 
+        $sub_array[] = $row->payable_amount; 
         $sub_array[] = $payment_type;  
         $sub_array[] = '<span class="badge badge-warning">'.$order_status.'</span>';    
         $data[] = $sub_array;  
