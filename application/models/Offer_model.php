@@ -189,9 +189,10 @@ Class Offer_model extends My_model{
         //     // dd($ext);
         // }else{
             $date = explode('/',$postData['end_date']);
-            $end_month =  $date['0'];
-            $end_day =  $date['1'];
-
+            echo $end_month =  $date['0'];
+            echo "<br>";
+            echo $end_day =  $date['1'];
+            die;
             unset($data);
             $data['table'] = 'crontab';
             $data['insert']['offer_id'] = $offer_id;
