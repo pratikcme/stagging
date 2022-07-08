@@ -13,7 +13,7 @@
 <?php if($this->session->userdata('user_id') == ''){ 
   ?> 
 <section class="p-100 bg-cream">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-lg-8 col-md-12">
         <div class="cart-table-wrapper cart-item-table-wrapper">
@@ -136,7 +136,7 @@
 </section>
 <?php }else{ ?> 
   <section class="p-100 bg-cream">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-lg-8 col-md-12">
         <div class="cart-table-wrapper cart-item-table-wrapper">

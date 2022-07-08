@@ -18,9 +18,23 @@ RESPONSIVE CSS FOR 375 PX
 */
 
 
+@media(	max-width:1500px){
+	.category-wrapper{
+		margin:0 auto;
+	}
+}
+
+
+
 @media(max-width: 1400px){
 	.search-wrap{
 		max-width:500px;
+	}
+	.category-wrapper {
+    	margin: 0 auto;
+	}
+	#category_slider .owl-next {
+    	right: -10px;
 	}
 }
 
@@ -76,6 +90,11 @@ RESPONSIVE CSS FOR 375 PX
 	.category-wrapper{
 		margin-bottom: 10px;
 	}
+	.cart-table tbody tr td .cart-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding-left: 10px !important;
+}
 }
 
 @media (max-width: 1140px){
@@ -87,6 +106,15 @@ RESPONSIVE CSS FOR 375 PX
 
 /*-----RESPONSIVE CSS FOR 992 PX-----*/
 @media (max-width: 992px){
+
+
+.category-menu-wrapper{
+	flex-direction: column;
+}
+.category-menu-wrapper ul{
+	text-align: center;
+	margin-top: 5px;
+}
 
 .user-profile{
 	right: 20px;
@@ -144,6 +172,7 @@ footer ul{
 }
 .your-order-header h4{
 	font-size: 16px;
+	display: flex;
 }
 .cart-total-wrap{
 	margin-top: 50px;
@@ -211,10 +240,14 @@ footer ul{
     top: 5px;
     left: 0px;
 	}
-.category-menu-wrapper ul{
-	display: none;
-}
 
+/*.category-menu-wrapper ul{
+	display: none;
+}*/
+
+/*.category-menu-wrapper.sub-cat-menu{
+	display: block !important;
+}*/
 .product-detail-wrapper {
     margin-top: 40px;
 }
@@ -237,6 +270,10 @@ footer ul{
 	header .header-top-nav ul{
 		text-align: center;
 	}
+	#category_slider .owl-next {
+    	right: -3px;
+	}
+
 	.menu-bar div {
     margin: 0px 3px;
 	}
@@ -373,6 +410,9 @@ footer ul{
 	.abt_icon {
 		height: 59px;
 	}
+	.your-order-wrapper{
+		height: 100px;
+	}
 }
 
 
@@ -501,6 +541,9 @@ footer ul{
 	#RegisterForm #addAddress{
 		margin-bottom: 15px;
 	}
+	.your-order-wrapper{
+		height: 110px;
+	}
 }
 
 
@@ -546,6 +589,9 @@ footer ul{
 	.notif ul.dropdown{
 		width: 330px !important;
 	
+	}
+	.cart-view-wrap{
+		max-width: 300px;
 	}
 	/*.wihslist-wrapper ul li{
 		flex-direction: column;
@@ -608,7 +654,7 @@ footer ul{
 	}
 	.cart-view-wrap{
 		width: 300px;
-		right: -10px;
+		right: -35px;
 	}
 	.cart-view-wrap .view-cart-btn-wrapper{
 		justify-content: space-around;
@@ -634,6 +680,14 @@ footer ul{
 	}
 	.total-count .price-seperator p{
 		width: 100%;
+	}
+	.cart-table tbody tr td .cart-item {
+    	flex-direction: column !important;
+    	align-items: center !important;
+    	padding-left: 10px !important;
+	}
+	.cart-table tbody tr td .cart-item .cart-img-wrap{
+		margin-right: 0px;
 	}
 }
 
@@ -727,7 +781,7 @@ footer ul{
 	}
 	.your-order-wrapper {
     	padding: 15px 25px;
-   	 height: 160px;
+   	 height: 140px;
 	}
 	.notif ul.dropdown{
 		width: 300px !important;
@@ -735,7 +789,12 @@ footer ul{
 	
 	}
 }
-
+@media (max-width: 415px){
+	.your-order-wrapper {
+    	padding: 15px 25px;
+   	 	height: 160px;
+	}
+}
 
 
 /*-----RESPONSIVE CSS FOR 375 PX-----*/
@@ -816,7 +875,15 @@ footer ul{
 	}
 	.your-order-wrapper {
     	padding: 15px 25px;
-    	height: 180px;
+    	height: 160px;
 	}
+}
+
+
+@media (max-width: 350px){
+.your-order-wrapper {
+    	padding: 15px 25px;
+    	height: 170px;
+	}	
 }
 </style>

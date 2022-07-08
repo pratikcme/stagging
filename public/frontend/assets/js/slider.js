@@ -11,7 +11,7 @@ $('.slider-nav').slick({
   slidesToScroll: 1,
   asNavFor: '.slider-for',
   dots: true,
-  infinite:true,
+  // infinite:true,
   centerMode: false,
   // margin:25,
   focusOnSelect: true,
@@ -42,7 +42,7 @@ $('.slider-nav').slick({
 var owl = $('.client-owl-slider');
 owl.owlCarousel({
     items:3,
-    loop:true,
+    // loop:true,
     margin:30,
     autoplay:true,
     autoplayTimeout:2000,
@@ -79,7 +79,7 @@ owl.owlCarousel({
  jQuery(document).ready(function($) {
                 "use strict";
                 $('#category_slider').owlCarousel({
-                    loop: true,
+                    // loop: true,
                     center: false,
                     items: 5,
                     margin: 0,
@@ -127,7 +127,7 @@ owl.owlCarousel({
   jQuery(document).ready(function($) {
                 "use strict";
                 $('#top_feat_slider').owlCarousel({
-                    loop: true,
+                    // loop: true,
                     center: false,
                     items: 4,
                     margin: 0,
@@ -176,7 +176,7 @@ owl.owlCarousel({
   jQuery(document).ready(function($) {
                 "use strict";
                 $('#new_product_1').owlCarousel({
-                    loop: true,
+                    // loop: true,
                     center: false,
                     items: 4,
                     margin: 0,
@@ -226,7 +226,7 @@ owl.owlCarousel({
   jQuery(document).ready(function($) {
                 "use strict";
                 $('#new_product_2').owlCarousel({
-                    loop: true,
+                    // loop: true,
                     center: false,
                     items: 4,
                     margin: 0,

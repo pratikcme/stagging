@@ -133,7 +133,7 @@ textarea:focus{
     transition: 0.5s;
      box-shadow: 0px 0px 14px 2px rgb(11 51 67 / 15%);
 }
-.btn-orange{
+/*.btn-orange{
     background-color: #f55d2c;
     border: 1px solid #f55d2c;
 }
@@ -141,7 +141,7 @@ textarea:focus{
     background-color: #fff;
     color: #f55d2c !important;
 }
-
+*/
 .btn:hover{
     background-color: #fff;
     color: var(--primary-color);
@@ -307,8 +307,8 @@ margin-bottom: 0px;
 .quantity-wrap{
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    height: 20px;
+    justify-content: center;
+    height: auto;
 }
 .quantity-wrap button{
     background-color: var(--secondary-color);
@@ -845,8 +845,11 @@ display: none;
          transition:0.5s linear;
 }
 .mobile-login-user:hover{
-color: var(--primary-color);
+    color: #fff;
+    background-color: transparent;
+    border-color: 1px solid var(--primary-color);
 }
+
 /*
 .mobile-login-user:hover span.qnty-num{
 color: #fff;
@@ -1143,7 +1146,7 @@ cursor: pointer;
 
 .category-wrapper{
     width: 210px;
-    height: 200px;
+    height: 100%;
     background-color: #fff;
     text-align: center;
     display: flex;
@@ -1192,7 +1195,7 @@ cursor: pointer;
     cursor: pointer;
     font-family: 'OpenSans-SemiBold';
     color: #fff;
-    background-color: #0a3140;
+    background-color: var(--primary-color);
 }
 /*   
 .dropdown-subcategories .dropbtn:hover, .dropbtn:focus {
@@ -1258,7 +1261,7 @@ cursor: pointer;
     justify-content: space-between;
 }
 .product-wrapper .wishlist-wrapper .offer-wrap{
-    background-color: #f55d2c;
+    background-color: var(--primary-color);
     border-radius:3px;
     height: 22px;
     width: 60px;
@@ -1344,6 +1347,7 @@ cursor: pointer;
     margin-bottom: 0px;
     min-height: 50px;
     white-space: normal !important;
+    overflow: hidden;
 }
 
 .product-wrapper .feature-detail h6{
@@ -1391,7 +1395,7 @@ cursor: pointer;
 .feature-bottom-wrap .quantity-wrap{
     display: flex;
     align-items: center;
-    height: 20px;
+    height: auto;
 }
 .feature-bottom-wrap .quantity-wrap button{
     background-color: var(--secondary-color);
@@ -1794,7 +1798,7 @@ margin: 0px 5px;
 }
 
 .login-form a {
-    color: #fb3e0d;
+    color: var(--primary-color);
     text-transform: capitalize;
      font-family: 'OpenSans-SemiBold';
      display: inline-block;
@@ -1972,7 +1976,8 @@ height: 60px;
 
 .category-menu{
     background-color: var(--secondary-color);
-    height: 80px;
+    height: auto;
+    padding: 20px 0px;
     display: flex;
     align-items: center;
     position: relative;
@@ -2961,7 +2966,7 @@ background-color: var(--secondary-color)
 
 .your-order-wrapper{
     padding: 15px 25px;
-    height: 110px;
+    height: 105px;
     margin-bottom: 10px;
     overflow: hidden;
 }
@@ -3639,7 +3644,7 @@ margin-top: 30px;
 
 .product-detail-wrapper .in-stock{
     display: inline-block;
-    background-color:#f55d2c;
+    background-color:var(--primary-color);
     padding: 6px 13px;
     border-radius: 3px;
 }
@@ -4271,12 +4276,12 @@ margin-top: 30px;
 
 .add-new-address-wrapper .address-form .cancel-btn{
     width: 100%;
-    background-color: #f55d2c;
-    border-color: #c63b0e;
+    background-color: var(--primary-color);
+    border-color: var(--border-color);
 }
 .add-new-address-wrapper .address-form .cancel-btn:hover{
     background-color: transparent;
-    color: #f55d2c;
+    color:  var(--primary-color);
 }
 
 /*=========== date picker ===========*/
@@ -4693,6 +4698,7 @@ to{
     padding:15px;
     margin: 20px 0px; 
     border-bottom: 1px solid #ccc;
+    height: 90%;
 }
 .vendor-loc .vendor-header{
     display: flex;
@@ -4713,7 +4719,7 @@ to{
 .vendor-1 .vendor-img img {
     width: 125px;
     height: 125px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .vendor-1 .vendor-detail h5{
@@ -4886,7 +4892,7 @@ right: 15px;
 }
 
 .client-name h5{
-    color: #f55d2c;
+    color: var(--primary-color);
     font-size: 15px;
     margin-bottom: 0px;
      font-family: "OpenSans-SemiBold";

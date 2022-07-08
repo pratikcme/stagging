@@ -458,7 +458,7 @@ label.error.mobile_verfication{
                   <h6> <span><i class="fas fa-shopping-basket"></i> </span> Order Summary</h6>
                </div>
                <div class="cart-total-innerbox your-order-wrapper order-summary-box ">
-                  <ul>
+                  <ul class="checkout-scroll">
               <?php 
               $CI = &get_instance();
               $CI->load->model('common_model');
@@ -509,6 +509,8 @@ label.error.mobile_verfication{
 
                         <?php } ?>
                      <?php } ?>
+                     </ul>
+                     <ul>
                      <li class="total-wrap">
                         <div class="total-count">
                            <h6>Sub total<br>(<?=($isShow[0]->display_price_with_gst == '1') ? "Exclude" : "Inc." ?> Tax)</h6>
