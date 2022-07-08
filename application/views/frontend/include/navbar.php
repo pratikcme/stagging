@@ -146,7 +146,7 @@
              </div>
              <?php if($this->session->userdata('user_id') != ''){ ?> 
              <div class="notif">
-              <div class="btn__badge pulse-button"  id="notify-dot"></div>
+              <div class="<?=(cart($notification) > 0) ? "btn__badge" : "" ?> pulse-button"  id="notify-dot"></div>
               <i class="fas fa-bell dropdown-toggle notify-dropdown"></i>   
               <ul class="dropdown notify-drop <?=(count($notification) == '0' ) ? "ishave" : "" ?>"  id="notification">
                 <?php foreach ($notification as $key => $value): ?>
