@@ -28,7 +28,8 @@ function get_note(){
 		dataType: 'json',
 		success:function(output){
 			if(output.count > 0){
-				$('#notify_status').addClass('btn__badge');	
+				$('#notify-dot').addClass('btn__badge');
+			
 			}
 			if(output.count == 0){
 				$('#notification').addClass('ishave');
@@ -49,7 +50,7 @@ $(document).on('click','#clear_all',function(){
 				$('#notification').addClass('ishave');
 			}
 			$('#notification').html(output.notify);
-			$('#notify_status').removeClass('btn__badge');
+			$('#notify-dot').removeClass('btn__badge');
 		}
 	});
 })
