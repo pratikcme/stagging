@@ -275,7 +275,7 @@ $(document).on('click','.remove_item',function(){
 	var sess_my_count = $('#itemCount').text();
 	if(session_vendor_id != ''){
 	if(vendor_id != session_vendor_id){
-			if(sess_my_count == 1 ){
+			if(sess_my_count > 0 ){
 					 // var X = confirm('You can only order from one shop.. Are you sure you want to clear cart');
 
 			 swal({
