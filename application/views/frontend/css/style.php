@@ -6557,7 +6557,7 @@ width: 374px;
         right: -100px;
     }
 }
-.btn__badge {
+/*.btn__badge {
     background: #FF5D5D;
     color: white;
     font-size: 12px;
@@ -6568,9 +6568,9 @@ width: 374px;
     height: 8px;
     border-radius: 50%;
 }
-
+*/
 .btn__badge {
-    background: #FF5D5D;
+    background: var(--primary-color);
     color: white;
     font-size: 12px;
     position: absolute;
