@@ -125,7 +125,6 @@ class Home extends User_Controller {
 	public function get_notification(){
 		$this->load->model('common_model');
 		$res = $this->common_model->userNotify();
-		lq();
 		$html = '';
 		foreach ($res as $key => $value) {
 			$html .= '<li>'.$value->notification.'</li>';
