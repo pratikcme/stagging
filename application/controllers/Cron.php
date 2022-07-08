@@ -23,13 +23,13 @@ class Cron extends CI_Controller{
 			$discount = ($price/100)*$new_discount;
 			$discount_price = $price - $discount;
 			$this->this_model->updateProductVarientById($product_varient_id,$new_discount,$discount_price);
-			$this->db->last_query();
+			
 			echo 'applied';
 		}
 		if(!empty($res)){
 			$this->this_model->deleteCronById($crone_id);
 			$this->this_model->setCron();
-			$this->db->last_query();
+			
 		}
 	}
 
