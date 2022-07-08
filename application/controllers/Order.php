@@ -138,10 +138,10 @@ class Order extends Vendor_Controller
         $date = '';
         if($this->input->post()){
             $date =  $this->input->post('orderReportDate');  
-            // echo $date;die;
         }
         $data['report'] = $this->this_model->getOrderReportForDate($date);
-        $data['date'] = $date;
+        // $data['date'] = $date;
+        // echo $data['date'] ;die;
         $this->load->view('order_report',$data);
     }
 

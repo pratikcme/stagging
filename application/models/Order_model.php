@@ -496,31 +496,25 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
     }
 
      public function getOrderReportForDate($original_date = ''){
-            // error_reporting(E_ALL);
-            // ini_set("display_errors",'1');
+            
+
             if($original_date == ''){
                 $original_date = date('m-d-Y');
             }
-            // echo $original_date ;die;
-            $parts_from = explode('-', $original_date);
+
+            $parts_from = explode('/', $original_date);
             $date_ = $parts_from[1] . '-' . $parts_from[0] . '-' . $parts_from[2];
             $date = strtotime(date("Y-m-d 00:00:00",strtotime($date_)));
-
             $data['select'] = ['id','name'];
             $data['where']['branch_id'] = $this->session->userdata('id');
             $data['table'] = 'product';
             $res = $this->selectRecords($data);
-
             unset($data);
             if($date != strtotime(date("Y-m-d 00:00:00"))){
                 $endDate = strtotime(date('Y-m-d', strtotime($date_ .' +1 day')));
                 $data['where']['o.dt_added <='] = $endDate;
             }
-            
-            // if($date != strtotime(date("Y-m-d 00:00:00"))){
-            //     $endDate = strtotime(date('Y-m-d', strtotime($date_ .' +1 day')));
-            //     $data['where']['o.dt_added <='] = $endDate;
-            // }
+
 
             foreach ($res as $key => $value) {
                 $data['table'] = 'order as o';
@@ -534,7 +528,7 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
                 $data['where']['o.branch_id'] = $this->session->userdata('id');
                 $data['where']['o.dt_added >='] = $date;
                 $data['where']['od.product_id'] = $value->id;
-                $data['where']['o.order_status !='] = '9';
+                // $data['where']['o.order_status !='] = '9';
                 $return =  $this->selectFromJoin($data);
                 if(!empty($return)){
                     foreach ($return as $k => $value) {
