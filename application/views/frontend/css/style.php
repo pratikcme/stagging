@@ -6452,4 +6452,134 @@ width: 374px;
 
 /**/
 
+
+        /* ======= NOTIFICATION ======== */
+
+        .top-nav{
+            display:flex;
+        }
+.notif{
+     padding:10px;
+     position: relative;
+     cursor: pointer;
+   }
+   .notif ul.dropdown {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right:0px;
+  min-width: 374px;
+  padding: 0;
+  border-radius: 5px;
+  box-shadow: 0px 14px 16px -11px rgba(0,0,0,0.75);
+  background:#fff;
+  z-index: 22;
+  height: 300px;
+  overflow:auto !important;
+   
+}
+.notif .fa-bell {
+  color:#63CDF5;
+  font-size:18px;
+}
+.notif .dropdown-toggle::after {
+  display:none;
+}
+
+.notif ul.dropdown::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #fff;
+}
+
+.notif ul.dropdown::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: #fff !important;
+}
+
+.notif ul.dropdown::-webkit-scrollbar-thumb
+{
+    background-color: #63CDF5;
+    border-radius: 10px;
+}
+
+.notif .dropdown.notify-drop.ishave{
+    height:45px !important;
+}
+ 
+.notif ul.dropdown li {
+  padding: 10px;
+  list-style-type: none;
+  border-top: 1px solid lightgrey;
+  cursor: pointer;
+}   
+ 
+.notif ul.dropdown li:hover{
+  background-color: #eee;
+}
+    
+.notif ul.dropdown li:first-child {
+  list-style-type: none;
+  border-top: none;    
+  
+}
+    
+.notif ul.dropdown .fa-circle{
+    font-size: 15px;
+    color: rgba(115, 187, 22, 1);
+} 
+    
+
+/*View All Notification*/
+.notif ul.dropdown .fa-list{
+    font-size: 15px;
+    padding:5px;
+    color: rgba(115, 187, 22, 1); 
+    border: 2px solid rgba(115, 187, 22, 1);
+    border-radius: 100%;
+}
+    
+.notif ul.dropdown li:last-child{
+    text-align: center;
+    padding: 10px;
+    background:#fff;
+    position: sticky;
+    bottom:0;
+    color:#63CDF5;
+    font-weight:bold;
+}   
+
+
+@media only screen and (max-width:768px)  {
+    .notif ul.dropdown{
+        min-width: 320px;
+        right: -100px;
+    }
+}
+.btn__badge {
+    background: #FF5D5D;
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 8px;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.btn__badge {
+    background: #FF5D5D;
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 8px;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+
 </style>
