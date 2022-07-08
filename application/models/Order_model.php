@@ -512,7 +512,7 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
 
             unset($data);
             if($date != strtotime(date("Y-m-d 00:00:00"))){
-                $endDate = strtotime(date('Y-m-d', strtotime($date_ .' +1 day')));
+                $endDate = strtotime(date('Y-m-d', strtotime($date_)));
                 $data['where']['o.dt_added <='] = $endDate;
             }
             
