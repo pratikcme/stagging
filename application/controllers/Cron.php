@@ -26,7 +26,9 @@ class Cron extends CI_Controller{
 			echo 'applied';
 		}
 		$this->this_model->deleteCronById($crone_id);
+		$this->db->last_query();
 		$this->this_model->setCron();
+		$this->db->last_query();
 	}
 
 	public function rollback_offer_bycron($crone_id){
