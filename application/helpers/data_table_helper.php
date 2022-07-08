@@ -927,7 +927,6 @@ function getAjaxPriceList($TableData){
         ($row->payment_type == '0') ? $payment_type = 'COD' : $payment_type = 'Credit-card';
         $sub_array = array();  
         $sub_array[] =  $row->address; 
-        $sub_array[] = ($row->group_id != '' || $row->group_id == '0' ) ? "Group" : "Self" ; 
         $sub_array[] = '<a target="_blank" href='.base_url().'order/order_detail?id='.$CI->utility->encode($row->id).'>'.$row->order_no.'</a>'; 
         $sub_array[] = date('Y m d H:i A',$row->dt_added); 
         $sub_array[] = $row->fname.' '.$row->lname; 

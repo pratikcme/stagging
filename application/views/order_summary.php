@@ -117,11 +117,6 @@
                                             style="width: 100px;">User Address
                                         </th>
                                         <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
-                                            rowspan="1" colspan="1"
-                                            aria-label="Rendering engine: activate to sort column ascending"
-                                            style="width: 100px;">OrderBy
-                                        </th>
-                                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
                                                    rowspan="1" colspan="1"
                                                    aria-label="Rendering engine: activate to sort column ascending"
                                                    style="width: 100px;">Order No
