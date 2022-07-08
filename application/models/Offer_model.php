@@ -189,9 +189,10 @@ Class Offer_model extends My_model{
         //     // dd($ext);
         // }else{
             $date = explode('/',$postData['end_date']);
-            echo $end_month =  $date['0'];
-            echo "<br>";
-            echo $end_day =  $date['1'];
+            // echo $end_month =  $date['0'];
+            // echo "<br>";
+            // echo $end_day =  $date['1'];
+            echo $st_min." ". $st_hr ." ".$end_day." ".$end_month." * curl --silent ".$this->crone_url_rollaback." >> /home1/a1630btr/repositories/stagging/cronlog.log 2>&1";
             die;
             unset($data);
             $data['table'] = 'crontab';
