@@ -1706,7 +1706,7 @@ header .navbrand a img {
 
 .category-wrapper{
     width: 210px;
-    height: 200px;
+    height: 100%;
     background-color: #fff;
     text-align: center;
     display: flex;
@@ -5285,6 +5285,7 @@ to{
     padding:15px;
     margin: 20px 0px; 
     border-bottom: 1px solid #ccc;
+    height: 90%;
 }
 .vendor-loc .vendor-header{
     display: flex;
@@ -5305,7 +5306,7 @@ to{
 .vendor-1 .vendor-img img {
     width: 125px;
     height: 125px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .vendor-1 .vendor-detail h5{
