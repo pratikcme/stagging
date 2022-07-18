@@ -139,10 +139,7 @@ var ADDPRODUCT = function(){
         }
         var varient_id =  checkNotNull('product_varient_id');
         var product_id =  checkNotNull('product_id');
-        alert(varient_id);
-        alert(product_id);
-        alert(qnt);
-        
+
       $.ajax({
           url: url+'add_to_card/addProducToCart',
           method:'post',
