@@ -298,6 +298,7 @@ Class Checkout_model extends My_model{
         $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'status !=' =>'9','vendor_id'=>$this->vendor_id];
         $checkUniq = $this->selectRecords($userData);
         if(!empty($checkUniq)){
+            echo '4';
             $response["success"] = 0;
             $response["message"] = "This mobile number is linked with another account";
             return $response;   
