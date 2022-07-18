@@ -1460,7 +1460,7 @@ class Api_model extends My_model {
             unset($data);
 
             $data['select'] = ['*'];
-            $data['where'] = ['id'=>$value->product_variant_id];
+            //$data['where'] = ['id'=>$value->product_variant_id];
             $data['table'] = 'product_weight';
 
             $get_variant = $this->selectRecord($data);
