@@ -7,10 +7,10 @@ Class Feedback_model extends My_model{
 
 	public function get_feedback(){
 		$data['table'] = 'feedback as f';
-		$data['select'] = ['f.*','u.fname','u.lname','u.country_code','u.phone','f.dt_created','dt_updated'];
+		$data['select'] = ['f.*','u.fname','u.lname','u.country_code','u.phone','f.dt_created','dt_updated']  ;
         $data['join'] = ['user as u '=>['u.id=f.user_id','LEFT']];
         $data['where'] = ['f.vendor_id'=> $this->vendor_admin_id ]; 
-        $data['orderBy'] = 'dt_updated DESC';
+        $data['orderBy'] = 'f.dt_updated DESC';
         return $this->selectFromJoin($data);
 	}
 
