@@ -1463,7 +1463,7 @@ class Api_model extends My_model {
             $data['where'] = ['id'=>$value->product_variant_id];
             $data['table'] = "product_weight as pw";
 
-            $get_variant = $this->selectRecord($data);
+            $get_variant = $this->selectRecords($data);
      
             $quantity = (int) $get_variant[0]->quantity;
             $updatedQTY = $quantity + $value->quantity;
