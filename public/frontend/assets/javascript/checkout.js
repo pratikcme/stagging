@@ -444,8 +444,8 @@ var CHECKOUT = function(){
                     // console.log("orderAmount ====" ,orderAmount ,  parseFloat(shipping_charge) ,  parseFloat(response.data))
                     if( $('#totalSaving').length ){
                         var amount = (response.data);
-                        var promocodeDiscount = parseInt(totalSaving) + parseInt(amount);   
-                        $('#totalSaving').html(siteCurrency +' '+ promocodeDiscount.toFixed(2));
+                        var promocodeDiscount = parseFloat(totalSaving) + parseFloat(amount);   
+                        $('#totalSaving').html(siteCurrency +' '+ promocodeDiscount);
                     }
                     $('#promoAmount').html((response.data).toFixed(2));
 
