@@ -310,6 +310,12 @@
                        logout
                       </a>   
                      </li>
+                      <li>
+                      <a  id="delete_account">
+                        <span><i class="fas fa-minus"></i></span>
+                       Delete Account
+                      </a>   
+                     </li>
                      
                    </ul>
                  </div>
