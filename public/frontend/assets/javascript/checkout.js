@@ -441,11 +441,12 @@ var CHECKOUT = function(){
                     // finalAmount = (orderAmount + parseFloat(shipping_charge) - parseFloat(response.data)).toFixed(2)
                     finalAmount = (orderAmount + ( shipping_charge === "" ?  0  : parseFloat(shipping_charge) )- parseFloat(response.data)).toFixed(2)
                     // console.log("orderAmount ====" ,orderAmount ,  parseFloat(shipping_charge) ,  parseFloat(response.data))
-                    var amount = (response.data).toFixed(2);
                     if( $('#totalSaving').length ){
-                       var promocodeDiscount = parseFloat(totalSaving) + parseFloat(amount);   
+                        var amount = (response.data);
+                        var promocodeDiscount = parseInt(totalSaving) + parseInt(amount);   
+                        $('#promoAmount').html(promocodeDiscount.toFixed(2));
                     }
-                    $('#promoAmount').html(promocodeDiscount);
+                    $('#promoAmount').html((response.data).toFixed(2));
 
                     $('#checkout_final').html(finalAmount)                        
                     
