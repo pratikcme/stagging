@@ -2895,7 +2895,6 @@ class Api_model extends My_model {
             $data['where']['vendor_id'] = $vendor_id;
             $data['where']['user_id'] = $user_id;
             $res = $this->selectRecords($data);
-            dd($res);
             if (!empty($res)) {
                 unset($data);
                 $date = DATE_TIME;
