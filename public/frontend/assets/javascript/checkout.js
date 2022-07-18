@@ -444,12 +444,7 @@ var CHECKOUT = function(){
                     // console.log("orderAmount ====" ,orderAmount ,  parseFloat(shipping_charge) ,  parseFloat(response.data))
                     if( $('#totalSaving').length ){
                         var amount = response.data;
-                        if(response.success == 1){
-                            var promocodeDiscount = parseFloat(response.withoutPromo) + parseFloat(amount);   
-                        }else{
-                            alert(response.withoutPromo);
-                            var promocodeDiscount = parseFloat(response.withoutPromo);   
-                        }
+                        var promocodeDiscount = parseFloat(response.withoutPromo) + parseFloat(amount);   
                         $('#totalSaving').html(siteCurrency +' '+ promocodeDiscount.toFixed(2));
                     }
                     $('#promoAmount').html((response.data).toFixed(2));
@@ -463,6 +458,9 @@ var CHECKOUT = function(){
                 }else{
                     $("#applied_promo").val('');
                     $('#checkout_final').html((parseFloat(response.orderAmount)+parseFloat(shipping_charge)).toFixed(2))
+                     alert(response.withoutPromo);
+                     var promocodeDiscount = parseFloat(response.withoutPromo);
+                     $('#totalSaving').html(siteCurrency +' '+ promocodeDiscount.toFixed(2));
                 }
             }            
         });
