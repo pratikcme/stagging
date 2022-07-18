@@ -15,6 +15,7 @@ class Api_model extends My_model {
         $data['where']['email'] = $postData['email'];  
         $data['where']['vendor_id'] = $postData['vendor_id'];
         $data['where']['password']= md5($postData['password']);
+        $data['where']['status !='] = '9';
         $data['table'] = 'user';
         $getUser = $this->selectRecords($data,true);
         if(empty($getUser)){
@@ -127,6 +128,7 @@ class Api_model extends My_model {
             $data['where']['email'] = $postData['email'];  
         }
         $data['where']['vendor_id'] = $postData['vendor_id'];
+        $data['where']['status !='] = '9';
 
         $data['order'] = 'id desc';
         $data['limit'] = 1;
