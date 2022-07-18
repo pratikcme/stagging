@@ -130,24 +130,24 @@ var ADDPRODUCT = function(){
       })
 
      $(document).on('click','#order_now',function(){
-        var quantity = checkNotNull('qnt');
+        var qnt = checkNotNull('qnt');
         var url = $('#url').val();
-        if(quantity <= 0 || quantity == '' || quantity == '-0' || quantity == '+0' || quantity == 'NaN'){
+        if(qnt <= 0 || qnt == '' || qnt == '-0' || qnt == '+0' || qnt == 'NaN'){
           $('#qnt').val('1');
-          swal('please select valid quantity');
+          swal('please select valid qnt');
           return false;
         }
         var varient_id =  checkNotNull('product_varient_id');
         var product_id =  checkNotNull('product_id');
         alert(varient_id);
         alert(product_id);
-        alert(quantity);
+        alert(qnt);
         
       $.ajax({
           url: url+'add_to_card/addProducToCart',
           method:'post',
           dataType:'json',
-          data: {quantity:quantity,varient_id:varient_id,product_id:product_id},
+          data: {qnt:qnt,varient_id:varient_id,product_id:product_id},
           success:function(output){
             if(output.errormsg != ''){
               swal(output.errormsg);
