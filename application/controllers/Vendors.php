@@ -97,10 +97,10 @@ class Vendors extends User_Controller {
 		$ven_id = $this->session->userdata('branch_id');
 		if(isset($ven_id) && $ven_id != ''){
 			// echo $d = base_url().'frontend/home';
-			echo $d = base_url().'home';
+			// echo $d = base_url().'home';
 			 // redirect(base_url().'frontend/home');
 		}else{
-			echo $d = base_url();
+			// echo $d = base_url();
 			// redirect(base_url());
 		}
 	}
