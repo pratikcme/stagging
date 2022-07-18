@@ -444,10 +444,11 @@ var CHECKOUT = function(){
                     // console.log("orderAmount ====" ,orderAmount ,  parseFloat(shipping_charge) ,  parseFloat(response.data))
                     if( $('#totalSaving').length ){
                         var amount = response.data;
-                        if(response.status == '0'){
-                            var amount = '0.00';
+                        if(response.status == 1){
+                            var promocodeDiscount = parseFloat(response.withoutPromo) + parseFloat(amount);   
+                        }else{
+                            var promocodeDiscount = parseFloat(response.withoutPromo);   
                         }
-                        var promocodeDiscount = parseFloat(response.withoutPromo) + parseFloat(amount);   
                         $('#totalSaving').html(siteCurrency +' '+ promocodeDiscount.toFixed(2));
                     }
                     $('#promoAmount').html((response.data).toFixed(2));
