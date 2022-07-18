@@ -196,7 +196,7 @@ class My_model extends CI_Model
             $result = $this->db->get()->result_array();
         }
         else {
-            $result = $this->db->get();
+            $result = $this->db->get()->result();
             echo $this->db->last_query();
             dd($result);
         }
