@@ -445,7 +445,8 @@ Class Checkout_model extends My_model{
         if($total_price < $promocode[0]->min_cart){
             $response["success"] = 0;
             $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';
-            $response["orderAmount"] = $total_price;      
+            $response["orderAmount"] = $total_price; 
+            $response["withoutPromo"] = totalSaving();     
             return $response;
         }
 
@@ -453,6 +454,7 @@ Class Checkout_model extends My_model{
             $response["success"] = 0;
             $response["message"] = "Maximum ".$promocode[0]->max_cart.' Cart amount is required'; 
             $response["orderAmount"] = $total_price;   
+            $response["withoutPromo"] = totalSaving();
             return $response;
         }
 
@@ -465,7 +467,8 @@ Class Checkout_model extends My_model{
         if($order_promocode[0]->count >= $promocode[0]->max_use){
             $response["success"] = 0;
             $response["message"] = "Promocode is reached limit";   
-            $response["orderAmount"] = $total_price;   
+            $response["orderAmount"] = $total_price;  
+            $response["withoutPromo"] = totalSaving(); 
             return $response;
         }
 
@@ -475,6 +478,7 @@ Class Checkout_model extends My_model{
         $response["message"] = "Promocode applied";   
         $response["data"] = $calculate;   
         $response["orderAmount"] = floatval($total_price);   
+        $response["withoutPromo"] = totalSaving();
         return $response;
 
     }
