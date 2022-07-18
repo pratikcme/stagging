@@ -1942,8 +1942,7 @@ class Api_model extends My_model {
     }
 
     function checkout($postdata){
-        error_reporting(E_ALL);
-            ini_set('display_errors', 1);
+     
         $user_id = $_POST['user_id'];
         $postdata['user_id'] = $user_id;
         if (isset($_POST['user_address_id'])) {
@@ -2021,12 +2020,12 @@ class Api_model extends My_model {
 
                 unset($data);
                $my_order_result = $this->getCart($user_id);
-
                 if (!empty($my_order_result)) {
                     foreach ($my_order_result as $my_order) {
                         $var_id = $my_order->product_weight_id;
                         $qnt = $my_order->quantity;
                         $updatedQTY = $this->check_udpate_quantity($var_id,$qnt,$user_id);
+                        dd($updatedQTY);
                         if(!$updatedQTY){
                             continue;
                         }
