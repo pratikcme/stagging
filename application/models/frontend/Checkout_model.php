@@ -295,16 +295,17 @@ Class Checkout_model extends My_model{
 
         $userData['select'] = ['*'];
         $userData['table'] = 'user';
-        $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'status !=' =>'9','vendor_id'=>$this->vendor_id];
+        $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id !=' => $user_id,'status !=' =>'9','vendor_id'=>$this->vendor_id];
         $checkUniq = $this->selectRecords($userData);
-        
+        dd($checkUniq);
         if(!empty($checkUniq)){
-            return false; 
+            return false;
+         
         }
         unset($userData);
         $userData['select'] = ['*'];
         $userData['table'] = 'user';
-        $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id !=' => $user_id,'status !=' =>'9','vendor_id'=>$this->vendor_id];
+        $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id' => $user_id,'status !=' =>'9','vendor_id'=>$this->vendor_id];
         $userDetail = $this->selectRecords($userData);
 
         // dd($userDetail);
