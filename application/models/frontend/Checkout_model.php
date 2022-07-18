@@ -416,7 +416,8 @@ Class Checkout_model extends My_model{
         if(empty($promocode)){
             $response["success"] = 0;
             $response["message"] = "No Promocode Found"; 
-            $response["orderAmount"] = $total_price;   
+            $response["orderAmount"] = $total_price;
+            $response["withoutPromo"] = totalSaving();
             return $response;
         }
 
@@ -424,13 +425,15 @@ Class Checkout_model extends My_model{
             $response["success"] = 0;
             $response["message"] = "Promocode is not started yet";  
             $response["orderAmount"] = $total_price;  
+            $response["withoutPromo"] = totalSaving();
             return $response;
         }
 
         if($date > $promocode[0]->end_date){
             $response["success"] = 0;
             $response["message"] = "Promocode is expiered"; 
-            $response["orderAmount"] = $total_price;   
+            $response["orderAmount"] = $total_price;  
+            $response["withoutPromo"] = totalSaving(); 
             return $response;
         }
 
