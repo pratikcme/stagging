@@ -439,7 +439,7 @@ class Users_model extends My_model {
 
     public function delete_user()
     {
-        dd($_SESSION);die;
+        
         $user_id = $this->session->userdata('user_id');
         $data['select'] = ['*'];
         $data['where'] = ['order_status <'=>'8','user_id'=>$user_id,'branch_id' =>$this->session->userdata('branch_id')];
