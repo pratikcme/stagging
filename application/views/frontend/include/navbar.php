@@ -223,15 +223,15 @@
                       </a>   
                      </li>
                     <li>
-                      <a  id="delete_account">
+                      <a  id="logout">
                         <span><i class="fas fa-power-off"></i></span>
-                       Delete Account
+                       logout
                       </a>   
                      </li>
                       <li>
-                      <a  id="logout">
+                      <a  id="delete_account">
                         <span><i class="fas fa-minus"></i></span>
-                       logout
+                       Delete Account
                       </a>   
                      </li>
                      
