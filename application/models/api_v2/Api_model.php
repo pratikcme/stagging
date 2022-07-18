@@ -1456,6 +1456,7 @@ class Api_model extends My_model {
         $data['table'] = 'order_reservation';
         $select = $this->selectRecords($data);
         foreach ($select as $key => $value) {
+            dd($value);
             unset($data);
 
             $data['select'] = ['*'];
