@@ -413,6 +413,7 @@ var CHECKOUT = function(){
 
 
     $("#checkPromocode").click(function(){
+        var totalSaving = $('#totalSaving').data('saving');
         var promocode = $("#promocode").val();
         $("#applied_promo").val('');
         $('#promoAmount').html('0');                        
