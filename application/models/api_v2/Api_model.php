@@ -55,13 +55,11 @@ class Api_model extends My_model {
         $data['where']['vendor_id'] = $postData['vendor_id'];
         $data['where']['status !='] = '9';   
         $data['table'] = 'user';
-        $getUser = $this->selectRecords($data);
-        dd($getUser);   
+        $getUser = $this->selectRecords($data);  
     
 
         if(empty($getUser)){
             $checkAlreadyRegisterWithEmail = $this->check_register($postData['email'],$postData['vendor_id']);
-            dd($checkAlreadyRegisterWithEmail);  
 
             $token = md5($this->utility->encode($postData['email']));
            
@@ -128,6 +126,7 @@ class Api_model extends My_model {
             $data['where']['email'] = $postData['email'];  
         }
         $data['where']['vendor_id'] = $postData['vendor_id'];
+        $data['where']['status'] = '1';
 
         $data['order'] = 'id desc';
         $data['limit'] = 1;
