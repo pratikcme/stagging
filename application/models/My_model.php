@@ -107,6 +107,102 @@ class My_model extends CI_Model
         return $result;
     }
 
+
+    public function selectRecord($data, $array = false)
+    {
+        if(!isset($data["select"])){
+            $this->db->select('*');
+
+        }else{
+
+            $this->db->select($data ["select"]);
+        }
+        $this->db->from($data ["table"]);
+        
+        if (isset($data ["where"])) {
+            $this->db->where($data ["where"]);
+        }
+        
+        if (isset($data ["where_or"])) {
+            //die("Please Use GROUP query for OR WHERE");
+            $this->db->or_where($data ["where_or"]);
+        }
+
+        if (isset($data ["where_in"])) {
+            foreach ($data ["where_in"] as $k => $v) {
+                $this->db->where_in($k, $v);
+            }
+        }
+        
+        if (isset($data ["or_where_in"])) {
+            //die("Please Use GROUP query for OR WHERE IN");
+             foreach ($data ["or_where_in"] as $k => $v) {
+                $this->db->or_where_in($k, $v);
+            } 
+        }
+        
+        if (isset($data ["where_not_in"])) {
+            //die("Please Use GROUP query for OR WHERE IN");
+            foreach ($data ["where_not_in"] as $k => $v) {
+                $this->db->where_not_in($k, $v);
+                
+            }
+        }
+
+       
+        if (isset($data ["like"])) {
+            $this->db->like($data ["like"] [0], $data ["like"] [1], $data ["like"] [2]);
+        }
+        if (isset($data ["or_like"])) {
+            die("Please Use GROUP query for OR LIKE");
+            /* foreach ($data ["or_like"] as $k => $v) {
+                $this->db->or_like($v [0], $v [1], $v [2]);
+            } */
+        }
+        
+        /* Handling GROUPING for Query */
+        if (isset($data ["group"])) {
+            $this->db->group_start();
+            if (isset($data ["group"] ["like"])) {
+                $this->db->like($data ["group"] ["like"] [0], $data ["group"] ["like"] [1], $data ["group"] ["like"] [2]);
+            }
+            if (isset($data ["group"] ["or_like"])) {
+                foreach ($data ["group"] ["or_like"] as $k => $v) {
+                    $this->db->or_like($v [0], $v [1], $v [2]);
+                }
+            }
+            $this->db->group_end();
+        }
+        
+        if (isset($data ["order"])) {
+            $this->db->order_by($data ["order"]);
+        }
+        if (isset($data ["skip"])) {
+            $this->db->limit($data ["limit"], $data ["skip"]);
+        }
+        elseif (isset($data ["limit"])) {
+            $this->db->limit($data ["limit"]);
+        }
+        
+        if (isset($data ["groupBy"])) {
+            $this->db->group_by($data ["groupBy"]);
+        }
+
+         if (isset($data ["having"])) {
+            $this->db->having($data ["having"]);
+        }
+        
+        if ($array) {
+            $result = $this->db->get()->result_array();
+        }
+        else {
+            $result = $this->db->get();
+            lq();
+        }
+       
+        return $result;
+    }
+
     public function insertRecord($data)
     {
         $result = false;
