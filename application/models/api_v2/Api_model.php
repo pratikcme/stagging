@@ -2890,7 +2890,9 @@ class Api_model extends My_model {
         }
         public function isUserFeedbackExists($postdata) {
             $user_id = $postdata['user_id'];
+            $vendor_id = $postdata['vendor_id'];
             $data['table'] = 'feedback';
+            $data['where']['vendor_id'] = $vendor_id;
             $data['where']['user_id'] = $user_id;
             $res = $this->selectRecords($data);
             dd($res);
