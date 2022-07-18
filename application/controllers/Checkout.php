@@ -536,6 +536,7 @@ public function prepareData($amount,$razorpayOrderId,$publish_key){
   public function OtpVerification(){
     if($this->input->post()){
       $res = $this->this_model->OtpVerification($this->input->post());
+      dd($res);
       if($res > 0){
         $this->utility->setFlashMessage('success','Otp verified successfully');
         $response = '1';
