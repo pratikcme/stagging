@@ -2900,6 +2900,7 @@ class Api_model extends My_model {
                 $date = DATE_TIME;
                 $data['table'] = 'feedback';
                 $data['where']['user_id'] = $user_id;
+                $data['where']['vendor_id'] = $vendor_id;
                 $data['update']['like_dislike'] = $postdata['islike'];
                 $data['update']['dt_updated'] = $date;
                 $res = $this->updateRecords($data);
