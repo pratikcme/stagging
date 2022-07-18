@@ -222,10 +222,15 @@
                        FAQ
                       </a>   
                      </li>
-                     
-                       <li>
-                      <a  id="logout">
+                    <li>
+                      <a  id="delete_account">
                         <span><i class="fas fa-power-off"></i></span>
+                       Delete Account
+                      </a>   
+                     </li>
+                      <li>
+                      <a  id="logout">
+                        <span><i class="fas fa-minus"></i></span>
                        logout
                       </a>   
                      </li>
