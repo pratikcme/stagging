@@ -81,7 +81,7 @@
                                             <td><?=$value->fname . ' ' .$value->lname?></td>
                                             <td><?=$value->country_code . ' ' .$value->phone?></td>
                                             <td><?=($value->like_dislike == '1') ? "Like" : "Dislike"?></td>
-                                            <td><?=$value->dt_created)?></td>
+                                            <td><?=$value->dt_created?></td>
                                             <td><?=$value->dt_updated?></td>
                                         </tr>
                                          <?php } ?>
