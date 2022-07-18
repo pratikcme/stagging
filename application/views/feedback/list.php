@@ -62,6 +62,16 @@
                                             aria-label="Platform(s): activate to sort column ascending"
                                             style="width: 200px;">LikeDislike
                                         </th>
+                                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
+                                            rowspan="1" colspan="1"
+                                            aria-label="Platform(s): activate to sort column ascending"
+                                            style="width: 200px;">Created date
+                                        </th>
+                                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example"
+                                            rowspan="1" colspan="1"
+                                            aria-label="Platform(s): activate to sort column ascending"
+                                            style="width: 200px;">Updated date
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -71,6 +81,8 @@
                                             <td><?=$value->fname . ' ' .$value->lname?></td>
                                             <td><?=$value->country_code . ' ' .$value->phone?></td>
                                             <td><?=($value->like_dislike == '1') ? "Like" : "Dislike"?></td>
+                                            <td><?=$value->dt_created)?></td>
+                                            <td><?=$value->dt_updated?></td>
                                         </tr>
                                          <?php } ?>
                                     </tbody>
