@@ -1442,7 +1442,7 @@ class Api_model extends My_model {
             unset($data);
             $data['update'] = ['is_reserved'=>'0'];
             $data['where'] = ['product_weight_id'=>$value->product_variant_id,'user_id'=>$value->user_id,'dt_updated'=>strtotime(DATE_TIME)];
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart as mc';
             $this->updateRecords($data);
         }
        return true;
@@ -1461,16 +1461,16 @@ class Api_model extends My_model {
         
             $data['select'] = ['*'];
             $data['where'] = ['id'=>$value->product_variant_id];
-            $data['table'] = "product_weight";
+            $data['table'] = "product_weight as pw";
 
             $get_variant = $this->selectRecord($data);
-            lq();
+     
             $quantity = (int) $get_variant[0]->quantity;
             $updatedQTY = $quantity + $value->quantity;
             unset($data);
             $data['update'] = ['quantity'=>$updatedQTY];
             $data['where'] = ['id'=>$value->product_variant_id];
-            $data['table'] = 'product_weight';
+            $data['table'] = 'product_weight as pw';
             $this->updateRecords($data);
             unset($data);
             $data['where'] = ['id'=>$value->id];
