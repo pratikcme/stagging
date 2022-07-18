@@ -1942,7 +1942,8 @@ class Api_model extends My_model {
     }
 
     function checkout($postdata){
-        
+        error_reporting(E_ALL);
+            ini_set('display_errors', 1);
         $user_id = $_POST['user_id'];
         $postdata['user_id'] = $user_id;
         if (isset($_POST['user_address_id'])) {
@@ -1969,7 +1970,6 @@ class Api_model extends My_model {
         }
         if (isset($_POST['payment_type']) && isset($_POST['branch_id']) && isset($_POST['time_slot_id'])) {
             if (isset($_POST['user_id'])) {
-        echo '4';die;
 
                 $this->db->query('LOCK TABLES my_cart as mc WRITE,`order` WRITE,`order_details` WRITE,product_weight as pw WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE,`order_log` WRITE,`promocode` WRITE,`order_promocode` WRITE;');
                 
