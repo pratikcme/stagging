@@ -286,7 +286,7 @@ Class Checkout_model extends My_model{
     }
 
     public function updatePhoneNumber($postdata){
-        // print_r($postdata);die;
+        print_r($postdata);die;
         $user_id = $this->session->userdata('user_id');
         $mobile = $postdata['phoneNumber'];
         $country_code = $postdata['country_code'];
@@ -296,13 +296,24 @@ Class Checkout_model extends My_model{
 
         $userData['select'] = ['*'];
         $userData['table'] = 'user';
+        $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'status !=' =>'9','vendor_id'=>$this->vendor_id];
+        $checkUniq = $this->selectRecords($userData);
+        if(!empty($checkUniq)){
+            $response["success"] = 0;
+            $response["message"] = "This mobile number is linked with another account";
+            return $response;   
+        }
+        unset($userData);
+        $userData['select'] = ['*'];
+        $userData['table'] = 'user';
         $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'id' => $user_id,'status !=' =>'9','vendor_id'=>$this->vendor_id];
         $userDetail = $this->selectRecords($userData);
+
         // dd($userDetail);
         if($userDetail[0]->is_verify != '1'){
 
-            if($_SERVER['SERVER_NAME']=='ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
-                $this->load->model('api_model');
+            if($_SERVER['SERVER_NAME'] == 'ori.launchestore.com' || $_SERVER['SERVER_NAME'] == 'ugiftonline.com' || $_SERVER['SERVER_NAME'] == 'www.ugiftonline.com'){
+                $this->load->model('api_v2/api_model');
                 $this->api_model->send_otp_int($mobile_number,$otp);
             }else{
                 // echo '1';die;
