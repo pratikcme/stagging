@@ -61,7 +61,7 @@ class Api_model extends My_model {
 
         if(empty($getUser)){
             $checkAlreadyRegisterWithEmail = $this->check_register($postData['email'],$postData['vendor_id']);
-            // dd($checkAlreadyRegisterWithEmail);  
+            dd($checkAlreadyRegisterWithEmail);  
 
             $token = md5($this->utility->encode($postData['email']));
            
