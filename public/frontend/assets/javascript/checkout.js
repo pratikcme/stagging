@@ -444,7 +444,7 @@ var CHECKOUT = function(){
                     // console.log("orderAmount ====" ,orderAmount ,  parseFloat(shipping_charge) ,  parseFloat(response.data))
                     if( $('#totalSaving').length ){
                         var amount = response.data;
-                        if(response.status == 1){
+                        if(response.success == 1){
                             var promocodeDiscount = parseFloat(response.withoutPromo) + parseFloat(amount);   
                         }else{
                             var promocodeDiscount = parseFloat(response.withoutPromo);   
