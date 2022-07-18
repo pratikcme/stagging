@@ -101,7 +101,8 @@ class My_model extends CI_Model
             $result = $this->db->get()->result_array();
         }
         else {
-            $result = $this->db->get()->result();
+            $result = $this->db->get();
+            lq();
         }
        
         return $result;

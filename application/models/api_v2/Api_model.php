@@ -1456,13 +1456,14 @@ class Api_model extends My_model {
         $data['table'] = 'order_reservation';
         $select = $this->selectRecords($data);
         foreach ($select as $key => $value) {
-            dd($value);
+            // dd($value);
             unset($data);
 
             $data['select'] = ['*'];
             $data['where'] = ['id'=>$value->product_variant_id];
             $data['table'] = 'product_weight';
             $get_variant = $this->selectRecords($data);
+            lq();
             $quantity = (int) $get_variant[0]->quantity;
             $updatedQTY = $quantity + $value->quantity;
             unset($data);
