@@ -442,7 +442,8 @@ var CHECKOUT = function(){
                     finalAmount = (orderAmount + ( shipping_charge === "" ?  0  : parseFloat(shipping_charge) )- parseFloat(response.data)).toFixed(2)
                     // console.log("orderAmount ====" ,orderAmount ,  parseFloat(shipping_charge) ,  parseFloat(response.data))
                     if( $('#totalSaving').length ){
-                       var promocodeDiscount = totalSaving + (response.data).toFixed(2);   
+                       var promocodeDiscount = (totalSaving + response.data).toFixed(2);   
+                
                     }else{
                         var promocodeDiscount = (response.data).toFixed(2);
                     }
