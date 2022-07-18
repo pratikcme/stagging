@@ -85,6 +85,7 @@ class Vendors extends User_Controller {
 		}
 		$this->load->model('vendor_model','vendor');
 		$branch = $this->vendor->getVendorName($vendor_id);
+		lq();
 		$branch_id = $branch[0]->id; 
 		$branch_name = $branch[0]->name; 
 

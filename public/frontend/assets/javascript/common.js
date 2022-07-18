@@ -289,7 +289,7 @@ $(document).on('click','.remove_item',function(){
 						            data:{vendor_id:vendor_id},
 						            method: 'post',
 						            success:function(output){
-						                window.location.href = output;
+						                // window.location.href = output;
 						            }
 			        })			
 					  } else {
@@ -302,7 +302,7 @@ $(document).on('click','.remove_item',function(){
 						data:{vendor_id:vendor_id},
 						method: 'post',
 						success:function(output){
-						 window.location.href = output;
+						 // window.location.href = output;
 						}
 			        })			
 			}
@@ -313,7 +313,7 @@ $(document).on('click','.remove_item',function(){
 		            data:{vendor_id:vendor_id},
 		            method: 'post',
 		            success:function(output){
-		                window.location.href = output;
+		                // window.location.href = output;
 		            }
 		        })	
 		}
@@ -323,7 +323,7 @@ $(document).on('click','.remove_item',function(){
 		            data:{vendor_id:vendor_id},
 		            method: 'post',
 		            success:function(output){
-		                window.location.href = output;
+		                // window.location.href = output;
 		            }
 		        })		
 	}
