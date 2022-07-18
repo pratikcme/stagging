@@ -2893,14 +2893,16 @@ class Api_model extends My_model {
             $data['table'] = 'feedback';
             $data['where']['user_id'] = $user_id;
             $res = $this->selectRecords($data);
+            dd($res);
             if (!empty($res)) {
                 unset($data);
                 $date = DATE_TIME;
                 $data['table'] = 'feedback';
                 $data['where']['user_id'] = $user_id;
-                $data['update']['like_dislike'] = $postdata['isLike'];
+                $data['update']['like_dislike'] = $postdata['islike'];
                 $data['update']['dt_updated'] = $date;
                 $res = $this->updateRecords($data);
+
                 if ($res) {
                     $response = array();
                     $response["success"] = 1;
