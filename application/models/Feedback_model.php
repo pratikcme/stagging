@@ -10,7 +10,7 @@ Class Feedback_model extends My_model{
 		$data['select'] = ['f.*','u.fname','u.lname','u.country_code','u.phone'];
         $data['join'] = ['user as u '=>['u.id=f.user_id','LEFT']];
         $data['where'] = ['f.vendor_id'=> $this->vendor_admin_id ]; 
-        $data['orderBy'] = 'f.id DESC';
+        $data['orderBy'] = 'dt_updated DESC';
         return $this->selectFromJoin($data);
 	}
 
