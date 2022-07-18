@@ -2025,7 +2025,7 @@ class Api_model extends My_model {
                         $var_id = $my_order->product_weight_id;
                         $qnt = $my_order->quantity;
                         $updatedQTY = $this->check_udpate_quantity($var_id,$qnt,$user_id);
-                        dd($updatedQTY);
+                        lq();
                         if(!$updatedQTY){
                             continue;
                         }
