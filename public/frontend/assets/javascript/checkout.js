@@ -446,7 +446,7 @@ var CHECKOUT = function(){
                     }else{
                         var promocodeDiscount = response.data;
                     }
-                    $('#promoAmount').html((promocodeDiscount).toFixed(2));
+                    $('#promoAmount').html(promocodeDiscount.toFixed(2));
 
                     $('#checkout_final').html(finalAmount)                        
                     
