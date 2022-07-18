@@ -1458,7 +1458,7 @@ class Api_model extends My_model {
         foreach ($select as $key => $value) {
             // dd($value);
             unset($data);
-            $data = $this->db->query('SELECT * FROM `product_weight`');
+            $data = $this->db->query('SELECT * FROM `order_reservation`');
               dd($data);  
             die;
             $data['select'] = ['*'];
