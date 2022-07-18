@@ -286,7 +286,6 @@ Class Checkout_model extends My_model{
     }
 
     public function updatePhoneNumber($postdata){
-        print_r($postdata);die;
         $user_id = $this->session->userdata('user_id');
         $mobile = $postdata['phoneNumber'];
         $country_code = $postdata['country_code'];
@@ -298,11 +297,13 @@ Class Checkout_model extends My_model{
         $userData['table'] = 'user';
         $userData['where'] = ['country_code' => $country_code,'phone'=>$mobile,'status !=' =>'9','vendor_id'=>$this->vendor_id];
         $checkUniq = $this->selectRecords($userData);
+        lq();
         if(!empty($checkUniq)){
             $response["success"] = 0;
             $response["message"] = "This mobile number is linked with another account";
             return $response;   
         }
+
         unset($userData);
         $userData['select'] = ['*'];
         $userData['table'] = 'user';
