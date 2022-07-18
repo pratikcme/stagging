@@ -1455,7 +1455,6 @@ class Api_model extends My_model {
         $data['where'] = ['user_id'=>$user_id];
         $data['table'] = 'order_reservation';
         $select = $this->selectRecords($data);
-        // print_r($select);die;
         foreach ($select as $key => $value) {
             unset($data);
 
@@ -1463,7 +1462,7 @@ class Api_model extends My_model {
             $data['where'] = ['id'=>$value->product_variant_id];
             $data['table'] = 'product_weight';
             $get_variant = $this->selectRecords($data);
-            $quantity = (int)$get_variant[0]->quantity;
+            $quantity = (int) $get_variant[0]->quantity;
             $updatedQTY = $quantity + $value->quantity;
             unset($data);
             $data['update'] = ['quantity'=>$updatedQTY];
