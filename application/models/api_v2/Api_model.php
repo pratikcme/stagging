@@ -1458,12 +1458,10 @@ class Api_model extends My_model {
         foreach ($select as $key => $value) {
             // dd($value);
             unset($data);
-            $data = $this->db->query('SELECT * FROM `order_reservation`');
-              dd($data);  
-            die;
+        
             $data['select'] = ['*'];
-            //$data['where'] = ['id'=>$value->product_variant_id];
-            $data['table'] = 'product_weight';
+            $data['where'] = ['id'=>$value->product_variant_id];
+            $data['table'] = "product_weight";
 
             $get_variant = $this->selectRecord($data);
             lq();
