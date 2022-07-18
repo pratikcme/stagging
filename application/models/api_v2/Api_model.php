@@ -3763,7 +3763,7 @@ class Api_model extends My_model {
         $data['table'] = TABLE_MY_CART;
         $this->deleteRecords($data);
         unset($data);
-        $data['where'] = ['user_id'=>$user_id];
+        $data['where'] = ['user_id'=>$postData['user_id']];
         $data['table'] = 'device';
         $this->deleteRecords($data);
         unset($data);
