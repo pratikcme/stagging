@@ -692,7 +692,7 @@ class Api_model extends My_model {
     //check register
     function check_register($email,$vendor_id) {
         $data['select'] = ['*'];
-        $data['where'] = ['email' => $email,'vendor_id' => $vendor_id];
+        $data['where'] = ['email' => $email,'vendor_id' => $vendor_id,'status !='=> '9'];
         $data['table'] = 'user';
         $result = $this->selectRecords($data);
         if (count($result) > 0) {
