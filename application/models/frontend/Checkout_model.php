@@ -417,7 +417,7 @@ Class Checkout_model extends My_model{
             $response["success"] = 0;
             $response["message"] = "No Promocode Found"; 
             $response["orderAmount"] = $total_price;
-            $response["withoutPromo"] = '0.00';
+            $response["withoutPromo"] = totalSaving();
             return $response;
         }
 
@@ -425,7 +425,7 @@ Class Checkout_model extends My_model{
             $response["success"] = 0;
             $response["message"] = "Promocode is not started yet";  
             $response["orderAmount"] = $total_price;  
-            $response["withoutPromo"] = '0.00';
+            $response["withoutPromo"] = totalSaving();
             return $response;
         }
 
@@ -433,7 +433,7 @@ Class Checkout_model extends My_model{
             $response["success"] = 0;
             $response["message"] = "Promocode is expiered"; 
             $response["orderAmount"] = $total_price;  
-            $response["withoutPromo"] = '0.00'; 
+            $response["withoutPromo"] = totalSaving(); 
             return $response;
         }
 
@@ -446,7 +446,7 @@ Class Checkout_model extends My_model{
             $response["success"] = 0;
             $response["message"] = "Minimum ".$promocode[0]->min_cart.' amount is required';
             $response["orderAmount"] = $total_price; 
-            $response["withoutPromo"] = '0.00';    
+            $response["withoutPromo"] = totalSaving();     
             return $response;
         }
 
@@ -454,7 +454,7 @@ Class Checkout_model extends My_model{
             $response["success"] = 0;
             $response["message"] = "Maximum ".$promocode[0]->max_cart.' Cart amount is required'; 
             $response["orderAmount"] = $total_price;   
-            $response["withoutPromo"] = '0.00';
+            $response["withoutPromo"] = totalSaving();
             return $response;
         }
 
@@ -468,7 +468,7 @@ Class Checkout_model extends My_model{
             $response["success"] = 0;
             $response["message"] = "Promocode is reached limit";   
             $response["orderAmount"] = $total_price;  
-            $response["withoutPromo"] = '0.00'; 
+            $response["withoutPromo"] = totalSaving(); 
             return $response;
         }
 
