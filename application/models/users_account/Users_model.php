@@ -445,6 +445,7 @@ class Users_model extends My_model {
         $data['table'] = TABLE_ORDER;
         $checkOrder = $this->selectRecords($data);
         dd($checkOrder);
+        
         if(!empty($checkOrder)){
             $this->utility->setFlashMessage('danger',"Please wait for deliver current order or cancle ongoing order");
             $response["success"] = 0;
