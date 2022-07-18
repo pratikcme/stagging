@@ -56,6 +56,7 @@ class Api_model extends My_model {
         $data['where']['status !='] = '9';
         $data['table'] = 'user';
         $getUser = $this->selectRecords($data);
+        dd($getUser);
     
 
         if(empty($getUser)){
