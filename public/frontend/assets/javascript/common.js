@@ -100,7 +100,6 @@ $(document).on('click','#delete_account',function() {
 						var title = 'Removed'; 
 					}else{
 						var title = 'Not Removed';
-
 					}
 					var message = output[0].message;
 					swal({
