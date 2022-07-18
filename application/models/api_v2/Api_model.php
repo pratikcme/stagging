@@ -2022,8 +2022,6 @@ class Api_model extends My_model {
 
                 unset($data);
                $my_order_result = $this->getCart($user_id);
-               error_reporting(E_ALL);
-            ini_set('display_errors', 1);
                 if (!empty($my_order_result)) {
                     foreach ($my_order_result as $my_order) {
                         $var_id = $my_order->product_weight_id;
