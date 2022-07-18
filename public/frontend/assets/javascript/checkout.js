@@ -414,6 +414,7 @@ var CHECKOUT = function(){
 
     $("#checkPromocode").click(function(){
         var totalSaving = $('#totalSaving').data('saving');
+        var siteCurrency = $('#siteCurrency').val();
         var promocode = $("#promocode").val();
         $("#applied_promo").val('');
         $('#promoAmount').html('0');                        
@@ -444,9 +445,8 @@ var CHECKOUT = function(){
                     if( $('#totalSaving').length ){
                         var amount = (response.data);
                         var promocodeDiscount = parseInt(totalSaving) + parseInt(amount);   
-                        $('#totalSaving').html(promocodeDiscount.toFixed(2));
+                        $('#totalSaving').html(siteCurrency +' '+ promocodeDiscount.toFixed(2));
                     }
-                    alert(promocodeDiscount);
                     $('#promoAmount').html((response.data).toFixed(2));
 
                     $('#checkout_final').html(finalAmount)                        
