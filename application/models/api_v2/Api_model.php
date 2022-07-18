@@ -2026,13 +2026,13 @@ class Api_model extends My_model {
                     foreach ($my_order_result as $my_order) {
                         $var_id = $my_order->product_weight_id;
                         $qnt = $my_order->quantity;
-                        $updatedQTY = $this->check_udpate_quantity($var_id,$qnt,$user_id);
+                        // $updatedQTY = $this->check_udpate_quantity($var_id,$qnt,$user_id);
                         lq();
-                        if(!$updatedQTY){
-                            continue;
-                        }
+                        // if(!$updatedQTY){
+                        //     continue;
+                        // }
                     }
-                   
+                   echo '6'; die;
                     /*Order*/
                      $data['insert'] = [
                             'order_from' => '1', 
