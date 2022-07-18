@@ -445,7 +445,7 @@ var CHECKOUT = function(){
                     if( $('#totalSaving').length ){
                         var amount = (response.data);
                         var promocodeDiscount = parseFloat(totalSaving) + parseFloat(amount);   
-                        $('#totalSaving').html(siteCurrency +' '+ promocodeDiscount);
+                        $('#totalSaving').html(siteCurrency +' '+ promocodeDiscount.toFixed(2));
                     }
                     $('#promoAmount').html((response.data).toFixed(2));
 
