@@ -442,7 +442,7 @@ class Users_model extends My_model {
         dd($_SESSION);die;
         $user_id = $this->session->userdata('user_id');
         $data['select'] = ['*'];
-        $data['where'] = ['order_status <'=>'8','user_id'=>$user_id,'branch_id' =>$this->session->userdata('id')];
+        $data['where'] = ['order_status <'=>'8','user_id'=>$user_id,'branch_id' =>$this->session->userdata('branch_id')];
         $data['table'] = TABLE_ORDER;
         $checkOrder = $this->selectRecords($data);
         dd($checkOrder);
