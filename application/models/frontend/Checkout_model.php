@@ -299,12 +299,8 @@ Class Checkout_model extends My_model{
         $checkUniq = $this->selectRecords($userData);
         
         if(!empty($checkUniq)){
-            return false;
-            // $response["success"] = 0;
-            // $response["message"] = "This mobile number is linked with another account";
-            // return $response;   
+            return false; 
         }
-        die;
         unset($userData);
         $userData['select'] = ['*'];
         $userData['table'] = 'user';

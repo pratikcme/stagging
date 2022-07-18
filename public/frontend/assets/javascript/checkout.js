@@ -488,7 +488,7 @@ var CHECKOUT = function(){
                             $('#Otp').modal({ backdrop: 'static', keyboard: false });
                         }else{
                             $('.mobile_verfication').html('This mobile number is linked with another account');
-                            $('.mobile_verfication').attr('display','');
+                            $('.mobile_verfication').attr('display','block');
                         }
                     }            
                 });
