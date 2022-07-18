@@ -1967,6 +1967,7 @@ class Api_model extends My_model {
         if ($get_persentage > 0) {
             $profit_per = $get_persentage;
         }
+        echo '2';die;
         if (isset($_POST['payment_type']) && isset($_POST['branch_id']) && isset($_POST['time_slot_id'])) {
             if (isset($_POST['user_id'])) {
 
