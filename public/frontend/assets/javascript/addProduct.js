@@ -140,7 +140,7 @@ var ADDPRODUCT = function(){
         var varient_id =  checkNotNull('product_varient_id');
         var product_id =  checkNotNull('product_id');
       $.ajax({
-          url: url+'products/addtocart',
+          url: url+'products/addProducToCart',
           method:'post',
           dataType:'json',
           data: {quantity:quantity,varient_id:varient_id,product_id:product_id},
