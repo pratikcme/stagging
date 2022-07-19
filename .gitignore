@@ -2,3 +2,4 @@ application/config/config.php
 .htaccess
 application/config/database.php
 public/images/*
+public/uploads/*
