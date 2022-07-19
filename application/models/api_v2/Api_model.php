@@ -2185,7 +2185,7 @@ class Api_model extends My_model {
             }
         }
         function get_product_list($postdata) {
-            // print_r($postdata);die;
+            print_r($postdata);die;
             $user_id = $_POST['user_id'];
 
             if(isset($postdata['defualt_product'])){

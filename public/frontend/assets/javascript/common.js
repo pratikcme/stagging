@@ -97,7 +97,7 @@ $(document).on('click','#delete_account',function() {
 				dataType : "json",
 				data : {hello : '1' },
 				success:function(output){
-					if(output.status == 1){
+					if(output.status){
 						var title = 'Removed'; 
 					}else{
 						var title = 'Not Removed';
