@@ -477,7 +477,7 @@ class Users_model extends My_model {
         $response["success"] = 1;
         $response["message"] = "User Account is permanant deleted";  
         return $response;
-        return true;
+        // return true;
         // redirect(base_url().'home');
     }
 }
