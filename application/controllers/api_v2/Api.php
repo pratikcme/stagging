@@ -1583,7 +1583,7 @@ class Api extends Apiuser_Controller {
         $this->this_model->my_cart($this->input->post());
     }
     ## Delete My Cart Item ##
-    public function delete_my_cart_item() {
+    public function delete_my_cart_item() { 
         if (isset($_POST['product_id']) && isset($_POST['product_weight_id']) && isset($_POST['branch_id'])) {
             $this->this_model->delete_cart($this->input->post());
             $this->send_cart_response($this->input->post());
