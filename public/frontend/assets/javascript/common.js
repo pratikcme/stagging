@@ -109,7 +109,7 @@ $(document).on('click','#delete_account',function() {
 						type: "success",
 						timer: 5000
 					}).then(function() {
-							// window.location.href = url+'home';
+							window.location.href = url+'home';
 					});
 
 				}
