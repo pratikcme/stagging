@@ -12,7 +12,7 @@ define('TABLE_PRODUCT_WEIGHT', 'product_weight');
 define('TABLE_WEIGHT', 'weight');
 define('TABLE_BRAND', 'brand');
 define('TABLE_CATEGORY', 'category');
-define('TABLE_MY_CART', ' my_cart');
+define('TABLE_MY_CART', ' my_cart_old');
 define('TABLE_SUBCATEGORY', ' subcategory');
 define('TABLE_ORDER', ' order');
 define('TABLE_ORDER_DETAILS', ' order_details');

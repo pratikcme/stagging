@@ -965,7 +965,7 @@ class Api_admin_model extends My_model {
 
         unset($data);
         $data['where'] = ['product_id'=>$id];
-        $data['table'] = 'my_cart';
+        $data['table'] = 'my_cart_old';
         $this->deleteRecords($data);
         return $return;
     }
@@ -1126,7 +1126,7 @@ class Api_admin_model extends My_model {
 
         unset($data);
         $data['where'] = ['product_weight_id'=>$id];
-        $data['table'] = 'my_cart';
+        $data['table'] = 'my_cart_old';
         $this->deleteRecords($data);
         
         return $return;

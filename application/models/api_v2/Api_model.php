@@ -141,7 +141,7 @@ class Api_model extends My_model {
 
         $data['select'] = ['COUNT(*) as total'];
         $data['where'] = [" (mc.user_id= '".$user_id."' OR mc.device_id= '".$device_id."') AND mc.vendor_id = '".$vendor_id."' AND mc.status != " => '9'];
-        $data['table'] = 'my_cart as mc';
+        $data['table'] = 'my_cart_old as mc';
         $data['order'] = 'mc.id DESC';
         $cartData = $this->selectRecords($data);
 
@@ -493,7 +493,7 @@ class Api_model extends My_model {
     public function countCartItem($user_id){
         $data['select'] = ['*'];
         $data['where'] = ['user_id'=>$user_id];
-        $data['table'] = 'my_cart';
+        $data['table'] = 'my_cart_old';
         return $this->countRecords($data);
     }
 
@@ -781,7 +781,7 @@ class Api_model extends My_model {
                 $data['where']['vendor_id'] = $postdata['vendor_id'];
          }
 
-        $data['table'] = 'my_cart';
+        $data['table'] = 'my_cart_old';
         // $data['where'] = ['vendor_id'=>$postdata['vendor_id']];
         $result = $this->selectRecords($data);
         return $result;
@@ -807,7 +807,7 @@ class Api_model extends My_model {
          }elseif(isset($postdata['vendor_id']) && $postdata['vendor_id'] != ''){
             $data['where']['vendor_id'] = $postdata['vendor_id'];
          }
-        $data['table'] = 'my_cart';
+        $data['table'] = 'my_cart_old';
         $result = $this->selectRecords($data);
         $gettotal = 0;
         foreach ($result as $key => $value) {
@@ -821,7 +821,7 @@ class Api_model extends My_model {
     public function gstCalculation($postData) {
         $user_id = $postData['user_id'];
         $device_id = $postData['device_id'];
-        $data['table'] = 'my_cart';
+        $data['table'] = 'my_cart_old';
         $data['select'] = ['*'];
 
         if(isset($postData['user_id'])){
@@ -1079,21 +1079,21 @@ class Api_model extends My_model {
                         $data['where'] = ['product_id' => $product_id, 'product_weight_id' => $product_weight_id, ];
                         $data['where_or'] = ['user_id' => $user_id, 'device_id' => $device_id];
                     }
-                    $data['table'] = 'my_cart';
-                    $my_cart_result = $this->selectRecords($data, true);
+                    $data['table'] = 'my_cart_old';
+                    $my_cart_old_result = $this->selectRecords($data, true);
                     // if($product_id=='29'){
 
                     // echo $this->db->last_query();die;
                     // }
-                    if (count($my_cart_result) <= 0) {
-                        $my_cart_result = array();
-                        $my_cart_quantity = '0';
+                    if (count($my_cart_old_result) <= 0) {
+                        $my_cart_old_result = array();
+                        $my_cart_old_quantity = '0';
                     } else {
-                        $my_cart_quantity = $my_cart_result[0]['quantity'];
+                        $my_cart_old_quantity = $my_cart_old_result[0]['quantity'];
                     }
                     $product_image_result[0]->image = str_replace(' ', '%20',$product_image_result[0]->image);
 
-                    $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => $pro_weight->weight_no . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image,);
+                    $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => $pro_weight->weight_no . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_old_quantity' => $my_cart_old_quantity, 'variant_image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image,);
                     array_push($new_array_product_weight, $data);
                 }
                 $product_weight_array = $new_array_product_weight;
@@ -1170,7 +1170,7 @@ class Api_model extends My_model {
         $data['where']['branch_id'] = $branch_id;
         $data['where']['product_weight_id'] = $product_weight_id;
         $data['where']['weight_id'] = $weight_id;
-        $data['table'] = 'my_cart';
+        $data['table'] = 'my_cart_old';
         $pro_available_query = $this->selectRecords($data);
         // ECHO $this->db->last_query();exit;
         unset($data);
@@ -1202,12 +1202,12 @@ class Api_model extends My_model {
                 $data['where']['device_id'] = $device_id;
                 $data['where']['user_id'] = 0;
             }
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $updatecart = $this->updateRecords($data);
         } else {
             $insertion = array('branch_id' => $branch_id,'vendor_id'=>$vendor_id,'device_id' => $device_id, 'product_weight_id' => $product_weight_id, 'user_id' => $user_id, 'product_id' => $product_id, 'weight_id' => $weight_id, 'quantity' => $quantity, 'actual_price' => $actual_price, 'actual_quantity' => $actual_quantity, 'discount_per' => $discount_per, 'discount_price' => $discount_price, 'calculation_price' => $calculation_price, 'status' => '1', 'dt_added' => strtotime(DATE_TIME), 'dt_updated' => strtotime(DATE_TIME),);
             $data['insert'] = $insertion;
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $insertcart = $this->insertRecord($data);
         }
         unset($data);
@@ -1231,7 +1231,7 @@ class Api_model extends My_model {
         }
         return $package_name;
     }
-    function update_my_cart($arr,$default_qty=false) {
+    function update_my_cart_old($arr,$default_qty=false) {
         foreach ($arr as $row) {
             //            print_r($row);exit;
             $id = $row->id;
@@ -1248,12 +1248,12 @@ class Api_model extends My_model {
                 if($avail_quantity <= 0 || $quantity <= 0 ){
                     unset($data);
                     // $data['where'] = ['product_weight_id'=>$p_id,'is_reserved'=>'0'];
-                    // $data['table'] = 'my_cart';
+                    // $data['table'] = 'my_cart_old';
                     // $this->deleteRecords($data);
 
                     // unset($data);
                     // $data['where'] = ['user_id'=>$row->user_id];
-                    // $data['table'] = 'my_cart';
+                    // $data['table'] = 'my_cart_old';
                     // $this->deleteRecords($data);
 
                     unset($data);
@@ -1274,7 +1274,7 @@ class Api_model extends My_model {
             $data['update']['discount_price'] = $discount_price;
             $data['update']['calculation_price'] = $calculation_price;
             $data['where'] = ['id' => $id];
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $this->updateRecords($data);
                        // echo $this->db->last_query();die;
             //            exit;
@@ -1310,7 +1310,7 @@ class Api_model extends My_model {
             // if($updatedQTY <= 0){
             //     unset($data);
             //     $data['where'] = ['product_weight_id'=>$variant_id,'is_reserved'=>'0'];
-            //     $data['table'] = 'my_cart';
+            //     $data['table'] = 'my_cart_old';
             //     $this->deleteRecords($data);
             // }
             unset($data);
@@ -1324,13 +1324,13 @@ class Api_model extends My_model {
         return false;        
     }
     function set_reserve_quantity($user_id){
-    	$this->db->query('LOCK TABLES `my_cart` WRITE,`order` WRITE,`order_details` WRITE,`product_weight` WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE;');
+    	$this->db->query('LOCK TABLES `my_cart_old` WRITE,`order` WRITE,`order_details` WRITE,`product_weight` WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE;');
         $postdata['user_id'] = $user_id;
         $this->unreserve_product_userwise($user_id);
     	sleep(0.751);
         $data['select'] = ['*'];
         $data['where'] = ['status !=' => '9','user_id'=>$user_id];
-        $data['table'] = 'my_cart';
+        $data['table'] = 'my_cart_old';
         $my_order_result = $this->selectRecords($data);
         if(empty($my_order_result)){
             $response = array();
@@ -1385,13 +1385,13 @@ class Api_model extends My_model {
          	unset($data);
             $data['update'] = ['is_reserved'=>'1','dt_updated' => strtotime(DATE_TIME)];
             $data['where'] = ['id'=>$my_order->id];
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $this->updateRecords($data);
 
             if($updatedQTY <= 0){
                 // unset($data);
                 // $data['where'] = ['product_weight_id'=>$variant_id,'user_id !='=>$user_id,'is_reserved'=>'0'];
-                // $data['table'] = 'my_cart';
+                // $data['table'] = 'my_cart_old';
                 // $this->deleteRecords($data);
             }
             unset($data);
@@ -1451,7 +1451,7 @@ class Api_model extends My_model {
             unset($data);
             $data['update'] = ['is_reserved'=>'0'];
             $data['where'] = ['product_weight_id'=>$value->product_variant_id,'user_id'=>$value->user_id];
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $this->updateRecords($data);
         }
        return true;
@@ -1488,7 +1488,7 @@ class Api_model extends My_model {
             unset($data);
             $data['update'] = ['is_reserved'=>'0'];
             $data['where'] = ['product_weight_id'=>$value->product_variant_id,'user_id'=>$value->user_id];
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $this->updateRecords($data);
         }
         // die;
@@ -1496,13 +1496,13 @@ class Api_model extends My_model {
     }
     function deleteUserCart($user_id) {
 		$data['where'] = ['user_id'=>$user_id];
-        $data['table'] = 'my_cart';
+        $data['table'] = 'my_cart_old';
         $this->deleteRecords($data);
         return true;
     }
 
     //user cart
-    function my_cart($postdata) {
+    function my_cart_old($postdata) {
         
      	$response['show_qty_alert'] = false;
         $i = 0;
@@ -1529,12 +1529,12 @@ class Api_model extends My_model {
                 $data['where']['vendor_id'] = $postdata['vendor_id'];
             }
 
-            $data['table'] = 'my_cart';
-            $my_cart_result = $this->selectRecords($data);
+            $data['table'] = 'my_cart_old';
+            $my_cart_old_result = $this->selectRecords($data);
             // echo $this->db->last_query();
-            // print_r($my_cart_result);die;   
+            // print_r($my_cart_old_result);die;   
             if ($i == 0) {
-                foreach ($my_cart_result as $row) {
+                foreach ($my_cart_old_result as $row) {
                 	$p_id = $row->product_weight_id;
 		            $quantity = $row->quantity;
 		            $data['select'] = ['price', 'discount_price', 'discount_per','quantity'];
@@ -1550,20 +1550,20 @@ class Api_model extends My_model {
 	                }
 		          
                 }
-                $this->update_my_cart($my_cart_result,true);
+                $this->update_my_cart_old($my_cart_old_result,true);
             }
 
             $i++;
             if ($i == 1) {
                 goto hd;
             }
-            //        print_r($my_cart_result);exit;
+            //        print_r($my_cart_old_result);exit;
             // print_r($postdata);
             // echo $this->db->last_query();exit;
             $counter = 0;
             $total_gst = 0;
-            if (count($my_cart_result) > 0) {
-                foreach ($my_cart_result as $row) {
+            if (count($my_cart_old_result) > 0) {
+                foreach ($my_cart_old_result as $row) {
                     $product_weight_id = $row->product_weight_id;
                     $product_id = $row->product_id;
                     $weight_id = $row->weight_id;
@@ -1633,7 +1633,7 @@ class Api_model extends My_model {
                 if ($getactual === null || $getactual == "<null>") {
                     $getactual = 0.0;
                 }
-                // $this->update_my_cart($my_cart_result,true);
+                // $this->update_my_cart_old($my_cart_old_result,true);
                 $response['success'] = "1";
                 $response['message'] = "My cart item list";
                 $response["count"] = $gettotal[0]->cart_items;
@@ -1667,29 +1667,29 @@ class Api_model extends My_model {
             $vendor_id = $postdata['vendor_id'];
             $data['select'] = ['branch_id'];
             $data['where'] = ['user_id' => $user_id,'vendor_id'=>$vendor_id];
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $get_cart_user = $this->selectRecords($data);
             //delete when user add from different vendor
             $data['select'] = ['branch_id'];
             $data['where'] = ['device_id' => $device_id, 'user_id' => 0,'vendor_id'=>$vendor_id];
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $get_cart_device = $this->selectRecords($data);
             if (count($get_cart_device) > 0 && count($get_cart_user) > 0) {
                 if ($get_cart_device[0]->branch_id != $get_cart_user[0]->branch_id) {
                     unset($data);
                     $data['where'] = ['user_id' => $user_id];
-                    $data['table'] = 'my_cart';
+                    $data['table'] = 'my_cart_old';
                     $this->deleteRecords($data);
                 }
             }
             unset($data);
             $data['update'] = ['user_id' => $user_id];
             $data['where'] = ['device_id' => $device_id, 'user_id' => 0,'vendor_id'=>$vendor_id];
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $result = $this->updateRecords($data);
             $data['select'] = ['*'];
             $data['where'] = ['user_id' => $user_id];
-            $data['table'] = 'my_cart';
+            $data['table'] = 'my_cart_old';
             $select = $this->selectRecords($data);
             foreach ($select as $key => $value) {
                 $set = array($value->id, $value->product_weight_id, $value->quantity,);
@@ -1706,18 +1706,18 @@ class Api_model extends My_model {
                         unset($data);
                         $data['select'] = ['count(quantity) AS total', 'id', 'sum(calculation_price) AS calculation_price', 'count(discount_price) AS discount_price'];
                         $data['where'] = ['user_id' => $user_id, 'product_weight_id' => $duplicate];
-                        $data['table'] = 'my_cart';
+                        $data['table'] = 'my_cart_old';
                         $gettotal = $this->selectRecords($data);
                         $gettotalqu = $gettotal[0]->total;
                         $updateid = $gettotal[0]->id;
                         unset($data);
                         $data['update'] = ['quantity' => $gettotalqu, 'calculation_price' => $gettotal[0]->calculation_price, ];
                         $data['where'] = ['id' => $updateid, 'user_id' => $user_id];
-                        $data['table'] = 'my_cart';
+                        $data['table'] = 'my_cart_old';
                         $result = $this->updateRecords($data);
                         unset($data);
                         $data['where'] = ['user_id' => $user_id, 'product_weight_id' => $duplicate, 'id !=' => $updateid];
-                        $data['table'] = 'my_cart';
+                        $data['table'] = 'my_cart_old';
                         $this->deleteRecords($data);
                     }
                 }
@@ -1858,15 +1858,15 @@ class Api_model extends My_model {
             if (isset($user_id) && $user_id != '') {
                 $data['where']['user_id'] = $user_id;
                 $data['where']['product_weight_id'] = $product_weight_id;
-                $data['table'] = 'my_cart';
-                $my_cart_result = $this->deleteRecords($data);
+                $data['table'] = 'my_cart_old';
+                $my_cart_old_result = $this->deleteRecords($data);
             }
             if ((!isset($user_id) || $user_id == '') && isset($device_id)) {
                 $data['where']['device_id'] = $device_id;
                 $data['where']['user_id'] = 0;
                 $data['where']['product_weight_id'] = $product_weight_id;
-                $data['table'] = 'my_cart';
-                $my_cart_result = $this->deleteRecords($data);
+                $data['table'] = 'my_cart_old';
+                $my_cart_old_result = $this->deleteRecords($data);
             }
             return true;
         }
@@ -2285,15 +2285,15 @@ class Api_model extends My_model {
                                     $data['where']['user_id'] = 0;
                                 }
                             }
-                            $data['table'] = 'my_cart';
+                            $data['table'] = 'my_cart_old';
                             $result_cart = $this->selectRecords($data);
                             if (count($result_cart) > 0) {
-                                $my_cart_quantity = $result_cart[0]->quantity;
+                                $my_cart_old_quantity = $result_cart[0]->quantity;
                             } else {
-                                $my_cart_quantity = '0';
+                                $my_cart_old_quantity = '0';
                             }
                             $weight_name = $product_query[$r]->weighname;
-                            $data = array('id' => $product_variant->id, 'product_id' => $product_variant->product_id, 'weight_id' => $product_variant->weight_id, 'unit' => ($product_variant->weight_no) . ' ' . $weight_name, 'actual_price' => $product_variant->price, 'quantity' => $product_variant->quantity, 'discount_per' => $product_variant->discount_per, 'discount_price' => $product_variant->discount_price, 'package_name' => $package_name, 'my_cart_quantity' => $my_cart_quantity, 'variant_image' => $image,);
+                            $data = array('id' => $product_variant->id, 'product_id' => $product_variant->product_id, 'weight_id' => $product_variant->weight_id, 'unit' => ($product_variant->weight_no) . ' ' . $weight_name, 'actual_price' => $product_variant->price, 'quantity' => $product_variant->quantity, 'discount_per' => $product_variant->discount_per, 'discount_price' => $product_variant->discount_price, 'package_name' => $package_name, 'my_cart_old_quantity' => $my_cart_old_quantity, 'variant_image' => $image,);
                             $getdata[] = $data;
                         }
                         $product_weight_array = $getdata;
@@ -2372,7 +2372,7 @@ class Api_model extends My_model {
             $result = $this->selectRecords($data);
             $result[0]->mobile_verify = $result[0]->is_verify;
 
-            $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart as mc WHERE  mc.user_id= '$user_id' AND mc.status != '9' ORDER BY mc.id DESC");
+            $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart_old as mc WHERE  mc.user_id= '$user_id' AND mc.status != '9' ORDER BY mc.id DESC");
             $row_count = $result_count->result();
             // echo $this->db->last_query();die;
             $total_count = $row_count[0]->total;

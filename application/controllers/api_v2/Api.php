@@ -106,7 +106,7 @@ class Api extends Apiuser_Controller {
 
             $user_id = $post['user_id'];
             $device_id = $post['device_id'];
-            $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart as mc WHERE  mc.user_id= '$user_id' AND mc.status != '9' ORDER BY mc.id DESC");
+            $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart_old as mc WHERE  mc.user_id= '$user_id' AND mc.status != '9' ORDER BY mc.id DESC");
 
             $row_count = $result_count->result();
             // echo $this->db->last_query();die;
@@ -631,7 +631,7 @@ class Api extends Apiuser_Controller {
 
         $user_id = $login_check_result['id'];
 
-        $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart as mc WHERE ( mc.user_id= '$user_id' OR mc.device_id= '$device_id') AND mc.status != '9' AND vendor_id = '$vendor_id' ORDER BY mc.id DESC");
+        $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart_old as mc WHERE ( mc.user_id= '$user_id' OR mc.device_id= '$device_id') AND mc.status != '9' AND vendor_id = '$vendor_id' ORDER BY mc.id DESC");
         $row_count = $result_count->result();
 
         $total_count = $row_count[0]->total;
@@ -818,14 +818,14 @@ class Api extends Apiuser_Controller {
             $user_address_query = $this->db->query("SELECT * FROM user_address WHERE user_id = '$user_id' AND status != '9' ORDER BY id DESC");
             $user_address_result = $user_address_query->result();
             $address_array = '';
-            $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart as mc WHERE mc.status != '9' AND mc.user_id = '$user_id' ORDER BY mc.id DESC");
+            $result_count = $this->db->query("SELECT COUNT(*) as total  FROM my_cart_old as mc WHERE mc.status != '9' AND mc.user_id = '$user_id' ORDER BY mc.id DESC");
             $row_count = $result_count->result();
             $total_count = $row_count[0]->total;
-            $my_cart_query = $this->db->query("SELECT mc.*  FROM my_cart as mc WHERE mc.status != '9' AND (mc.user_id = '$user_id' ) ORDER BY mc.id DESC");
-            $my_cart_result = $my_cart_query->result();
-            $my_cart_price_query = $this->db->query("SELECT SUM(calculation_price) as total_price from my_cart WHERE status != '9' AND user_id = '$user_id'");
-            $my_cart_price_result = $my_cart_price_query->row_array();
-            $vendorId = $my_cart_result[0]->branch_id;
+            $my_cart_old_query = $this->db->query("SELECT mc.*  FROM my_cart_old as mc WHERE mc.status != '9' AND (mc.user_id = '$user_id' ) ORDER BY mc.id DESC");
+            $my_cart_old_result = $my_cart_old_query->result();
+            $my_cart_old_price_query = $this->db->query("SELECT SUM(calculation_price) as total_price from my_cart_old WHERE status != '9' AND user_id = '$user_id'");
+            $my_cart_old_price_result = $my_cart_old_price_query->row_array();
+            $vendorId = $my_cart_old_result[0]->branch_id;
 
             $vendor_query = $this->db->query("SELECT * FROM branch WHERE id ='$vendorId'");
             $vendor_result = $vendor_query->result();
@@ -851,15 +851,15 @@ class Api extends Apiuser_Controller {
             $vendorData['publish_key'] = ($p_method[0]->publish_key == null) ? '' : $cryptor->encrypt($p_method[0]->publish_key, $password);
             $vendorData['paymentMethod'] = ($p_method[0]->publish_key == null) ? '' : $p_method[0]->payment_opt;
             $cart_response["data"] = array();
-            if ($my_cart_query->num_rows() > 0) {
+            if ($my_cart_old_query->num_rows() > 0) {
                 $cart_response['success'] = "1";
                 $cart_response['message'] = "My cart item list";
                 $cart_response["count"] = $total_count;
-                $cart_response["total_price"] = number_format((float)$my_cart_price_result['total_price'], 2, '.', '');;
+                $cart_response["total_price"] = number_format((float)$my_cart_old_price_result['total_price'], 2, '.', '');;
                 $counter = 0;
-                $branch_id = $my_cart_result[0]->branch_id;
+                $branch_id = $my_cart_old_result[0]->branch_id;
                 $total_gst = 0;
-                foreach ($my_cart_result as $row) {
+                foreach ($my_cart_old_result as $row) {
                     $product_weight_id = $row->product_weight_id;
                     $product_id = $row->product_id;
                     $weight_id = $row->weight_id;
@@ -924,7 +924,7 @@ class Api extends Apiuser_Controller {
                 } else {
                     $address_array = array();
                 }
-                // print_r($my_cart_price_result);die;
+                // print_r($my_cart_old_price_result);die;
                 $data_user = array(
                     'id' => $result['id'], 
                     'fname' => $result['fname'], 
@@ -1072,27 +1072,27 @@ class Api extends Apiuser_Controller {
                         $weight_result = $weight_query->row_array();
                         $weight_name = $weight_result['name'];
                         if (isset($_POST['user_id']) && $_POST['user_id'] != '') {
-                            $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_id = '$product_id'AND product_weight_id = '$product_weight_id' AND branch_id = '$branch_id' AND user_id = '$user_id'");
-                            $my_cart_result = $my_cart_query->row_array();
+                            $my_cart_old_query = $this->db->query("SELECT quantity FROM my_cart_old WHERE product_id = '$product_id'AND product_weight_id = '$product_weight_id' AND branch_id = '$branch_id' AND user_id = '$user_id'");
+                            $my_cart_old_result = $my_cart_old_query->row_array();
                         } else {
                             if (isset($_POST['device_id'])) {
-                                $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_id = '$product_id' AND product_weight_id = '$product_weight_id' AND branch_id = '$branch_id' AND (user_id = '0' AND device_id = '$device_id')");
-                                $my_cart_result = $my_cart_query->row_array();
+                                $my_cart_old_query = $this->db->query("SELECT quantity FROM my_cart_old WHERE product_id = '$product_id' AND product_weight_id = '$product_weight_id' AND branch_id = '$branch_id' AND (user_id = '0' AND device_id = '$device_id')");
+                                $my_cart_old_result = $my_cart_old_query->row_array();
                             } else {
-                                $my_cart_result = array();
+                                $my_cart_old_result = array();
                             }
                         }
-                        if (empty($my_cart_result)) {
-                            $my_cart_quantity = '0';
+                        if (empty($my_cart_old_result)) {
+                            $my_cart_old_quantity = '0';
                         } else {
-                            $my_cart_quantity = $my_cart_result['quantity'];
+                            $my_cart_old_quantity = $my_cart_old_result['quantity'];
                         }
                         $img = [];
                         foreach ($product_image_result as $pro_image) {
                             $pro_image->image = str_replace(' ', '%20', $pro_image->image);
                             $img[] = array('id' => $pro_image->id, 'product_id' => $pro_image->product_id, 'weight_id' => $pro_weight->weight_id, 'image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $pro_image->image, 'thumb_image' => base_url() . 'public/images/'.$this->folder.'product_image_thumb/' . $pro_image->image,);
                         }
-                        $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => ($pro_weight->weight_no) . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'avail_quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_images' => $img,'whatsappShareUrl'=>$whatsappShareUrl);
+                        $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => ($pro_weight->weight_no) . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'avail_quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_old_quantity' => $my_cart_old_quantity, 'variant_images' => $img,'whatsappShareUrl'=>$whatsappShareUrl);
                         array_push($new_array_product_weight, $data);
                     }
                     $product_weight_array = $new_array_product_weight;
@@ -1452,12 +1452,12 @@ class Api extends Apiuser_Controller {
         if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
             $user_id = $postdata['user_id'];
             $device_id = $postdata['device_id'];
-            $check = $this->db->query("SELECT * FROM my_cart WHERE user_id = '$user_id' AND vendor_id = '$vendor_id'");
+            $check = $this->db->query("SELECT * FROM my_cart_old WHERE user_id = '$user_id' AND vendor_id = '$vendor_id'");
         } else {
             if (isset($postdata['device_id'])) {
                 $device_id = $postdata['device_id'];
                 $u = 0;
-                $check = $this->db->query("SELECT * FROM my_cart WHERE device_id = '$device_id' AND user_id = '0' AND vendor_id = '$vendor_id'");
+                $check = $this->db->query("SELECT * FROM my_cart_old WHERE device_id = '$device_id' AND user_id = '0' AND vendor_id = '$vendor_id'");
             }
         }
         // echo $this->db->last_query();exit;
@@ -1526,7 +1526,7 @@ class Api extends Apiuser_Controller {
     public function delete_cart_item() {
         if (isset($_POST['cart_id']) && $_POST['cart_id'] != '') {
             $cart_id = $_POST['cart_id'];
-            $this->db->query("DELETE FROM my_cart WHERE id = '$cart_id'");
+            $this->db->query("DELETE FROM my_cart_old WHERE id = '$cart_id'");
             $response = array();
             $response["success"] = 1;
             $response["message"] = "Cart deleted";
@@ -1544,7 +1544,7 @@ class Api extends Apiuser_Controller {
         $error = 1;
         if (isset($_POST['user_id']) && $_POST['user_id'] != '') {
             $user_id = $_POST['user_id'];
-            $this->db->query("DELETE FROM my_cart WHERE user_id = '$user_id'");
+            $this->db->query("DELETE FROM my_cart_old WHERE user_id = '$user_id'");
             // echo $this->db->last_query();exit;
             $response = array();
             $response["success"] = 1;
@@ -1556,7 +1556,7 @@ class Api extends Apiuser_Controller {
             if (isset($_POST['device_id']) && $_POST['device_id'] != '') {
                 $device_id = $_POST['device_id'];
                 $vendor_id = $_POST['vendor_id'];
-                $this->db->query("DELETE FROM my_cart WHERE device_id = '$device_id' AND vendor_id = '$vendor_id' AND user_id = '0'");
+                $this->db->query("DELETE FROM my_cart_old WHERE device_id = '$device_id' AND vendor_id = '$vendor_id' AND user_id = '0'");
                 // echo $this->db->last_query();exit;
                 $response = array();
                 $response["success"] = 1;
@@ -1576,14 +1576,14 @@ class Api extends Apiuser_Controller {
         echo $responce;
     }
     ## My Cart List ##
-    public function my_cart() {
+    public function my_cart_old() {
         $post = $this->input->post();
         $req = array('vendor_id','device_id');
         $response = $this->checkRequiredField($post, $req);
-        $this->this_model->my_cart($this->input->post());
+        $this->this_model->my_cart_old($this->input->post());
     }
     ## Delete My Cart Item ##
-    public function delete_my_cart_item() {
+    public function delete_my_cart_old_item() {
         if (isset($_POST['product_id']) && isset($_POST['product_weight_id']) && isset($_POST['branch_id'])) {
             $this->this_model->delete_cart($this->input->post());
             $this->send_cart_response($this->input->post());
@@ -1638,7 +1638,7 @@ class Api extends Apiuser_Controller {
         }
         if (isset($_POST['payment_type']) && isset($_POST['branch_id']) && isset($_POST['time_slot_id'])) {
             if (isset($_POST['user_id'])) {
-            	$this->db->query('LOCK TABLES `my_cart` WRITE,`order` WRITE,`order_details` WRITE,`product_weight` WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE,`order_log` WRITE;');
+            	$this->db->query('LOCK TABLES `my_cart_old` WRITE,`order` WRITE,`order_details` WRITE,`product_weight` WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE,`order_log` WRITE;');
 		    	
     			sleep(0.751);
 
@@ -1646,12 +1646,12 @@ class Api extends Apiuser_Controller {
                 $delivery_charge_query = $this->db->query("SELECT price FROM setting WHERE title = 'delivery_charge'");
                 $delivery_charge_result = $delivery_charge_query->row_array();
 
-                $my_cart_query = $this->db->query("SELECT SUM(calculation_price) as sub_total, SUM((actual_price - discount_price) * quantity) as total_savings, COUNT(*) as total_item FROM my_cart WHERE status != '9' AND user_id = '$user_id' ");
-                $my_cart_result = $my_cart_query->row_array();
+                $my_cart_old_query = $this->db->query("SELECT SUM(calculation_price) as sub_total, SUM((actual_price - discount_price) * quantity) as total_savings, COUNT(*) as total_item FROM my_cart_old WHERE status != '9' AND user_id = '$user_id' ");
+                $my_cart_old_result = $my_cart_old_query->row_array();
 
-                $sub_total = number_format((float)$my_cart_result['sub_total'], 2, '.', '');
-                $total_savings = number_format((float)$my_cart_result['total_savings'], 2, '.', '');
-                $total_item = $my_cart_result['total_item'];
+                $sub_total = number_format((float)$my_cart_old_result['sub_total'], 2, '.', '');
+                $total_savings = number_format((float)$my_cart_old_result['total_savings'], 2, '.', '');
+                $total_item = $my_cart_old_result['total_item'];
                 $total_price = number_format((float)$sub_total, 2, '.', '');
                 if (isset($_POST['user_address_id']) && $_POST['user_address_id'] != '') {
                     $userDetails = $this->this_model->getUserAddressDetails($_POST['user_address_id']);
@@ -1672,7 +1672,7 @@ class Api extends Apiuser_Controller {
                 $on = random_orderNo(15);
                 $iOrderNo = $od . $on;
                 /*Order Details*/
-                $my_order_query = $this->db->query("SELECT * FROM my_cart WHERE status != '9' AND user_id = '$user_id'");
+                $my_order_query = $this->db->query("SELECT * FROM my_cart_old WHERE status != '9' AND user_id = '$user_id'");
                 $my_order_result = $my_order_query->result();
                 if (!empty($my_order_result)) {
                     foreach ($my_order_result as $my_order) {
@@ -2205,20 +2205,20 @@ class Api extends Apiuser_Controller {
                         $weight_result = $weight_query->row_array();
                         $weight_name = $weight_result['name'];
                         if (isset($_POST['user_id'])) {
-                            $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_weight_id = '$variant_id' AND user_id = '$user_id'");
-                            $my_cart_result = $my_cart_query->row_array();
+                            $my_cart_old_query = $this->db->query("SELECT quantity FROM my_cart_old WHERE product_weight_id = '$variant_id' AND user_id = '$user_id'");
+                            $my_cart_old_result = $my_cart_old_query->row_array();
                         } elseif (isset($_POST['device_id']) && (!isset($_POST['user_id']) || $_POST['user_id'] == '')) {
-                            $my_cart_query = $this->db->query("SELECT quantity FROM my_cart WHERE product_weight_id = '$variant_id' AND  device_id = '$device_id'");
-                            $my_cart_result = $my_cart_query->row_array();
+                            $my_cart_old_query = $this->db->query("SELECT quantity FROM my_cart_old WHERE product_weight_id = '$variant_id' AND  device_id = '$device_id'");
+                            $my_cart_old_result = $my_cart_old_query->row_array();
                         } else {
-                            $my_cart_result = array();
+                            $my_cart_old_result = array();
                         }
-                        if (empty($my_cart_result)) {
-                            $my_cart_quantity = '0';
+                        if (empty($my_cart_old_result)) {
+                            $my_cart_old_quantity = '0';
                         } else {
-                            $my_cart_quantity = $my_cart_result['quantity'];
+                            $my_cart_old_quantity = $my_cart_old_result['quantity'];
                         }
-                        $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => floor($pro_weight->weight_no) . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity);
+                        $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => floor($pro_weight->weight_no) . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_old_quantity' => $my_cart_old_quantity);
                         array_push($new_array_product_weight, $data);
                     }
                     $product_weight_array = $new_array_product_weight;
