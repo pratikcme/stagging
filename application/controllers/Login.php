@@ -5,7 +5,6 @@ class Login extends User_Controller {
 
 	function __construct(){
 		parent::__construct();
-		// dd($_SESSION);die;
 		$this->controller = $this->myvalues->loginFrontEnd['controller'];
 		$this->load->model($this->myvalues->loginFrontEnd['model'],'this_model');
 		$user_id = $this->session->userdata('user_id');
