@@ -380,6 +380,7 @@ class Products extends User_Controller {
 			$image = $this->this_model->getVarientImage($result[0]->id);
 	 	}
 	 	// print_r($result);die;
+	 	
 	 	// for check save cart quantity of user
 	 	$product_id = $result[0]->product_id;
 
