@@ -1,0 +1,1 @@
+59 19 * * * curl --silent http://localhost/stagging/cron/test/crone/connect >> /var/www/html/stagging/cronlog.log 2>&1
