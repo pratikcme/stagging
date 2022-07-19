@@ -2,9 +2,10 @@
 // if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
 //     window.location.reload();
 // }
-// $(document).ready(function(){
-//     $('.alert').fadeOut(5000);
-// });
+$(document).ready(function(){
+    $('.alert').show();
+    $('.alert').fadeOut(10000);
+});
 
 //Logout 
 var siteCurrency = $('#siteCurrency').val();

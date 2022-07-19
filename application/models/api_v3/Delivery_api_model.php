@@ -175,7 +175,7 @@ class Delivery_api_model extends My_model
                     $key = "AAAAIhCnTt0:APA91bEAjiw53KeCGPM4Ns6lfvvBlihTd5FTrWo3_yW9ozu0iM8vs1MBErm1g0hOel4UXdk9zCtsX2l0YCa99XCystgrOsjyQ2lvZWcimH0FcNgNqBsKWWPEiniN9M2z5dBIhwaIizPH";
                 
                 
-                    $this->load->model('api_v2/api_model');
+                    $this->load->model('api_v3/api_model');
                     $result = $this->api_model->getNotificationKey($branch_id);
                     // dd($result);
                     $this->utility_apiv2->sendNotification($dataArray, $notification_type,$result,NULL,$this->key);
@@ -310,7 +310,7 @@ class Delivery_api_model extends My_model
         return$res;
     }
     public function accept_reject($postdata){
-        $this->load->model('api_v2/api_model');
+        $this->load->model('api_v3/api_model');
         $user_id = $postdata['user_id'];
         $order_id = $postdata['order_id'];
         $status = $postdata['status'];
@@ -403,8 +403,8 @@ class Delivery_api_model extends My_model
         $data['table'] = 'order';
         $res = $this->updateRecords($data);
         unset($data);
-        $this->load->model('api_v2/staff_api_model');
-        $this->load->model('api_v2/api_model');
+        $this->load->model('api_v3/staff_api_model');
+        $this->load->model('api_v3/api_model');
         $this->staff_api_model->send_notificaion($order_id);
         unset($data);
             $data['select'] = ['branch_id','order_no'];
@@ -437,8 +437,8 @@ class Delivery_api_model extends My_model
         $logs = ['branch_id'=>$order_data[0]->branch_id,'order_id'=>$order_id,'status'=>'Order is delivered','dt_created'=>DATE_TIME];
         $this->order_logs($logs);
         /*end order_delieverd logs*/
-        $this->load->model('api_v2/api_model','api_v2_model');
-        $this->api_v2_model->pushAdminNotification($branchNotification);
+        $this->load->model('api_v3/api_model','api_v3_model');
+        $this->api_v3_model->pushAdminNotification($branchNotification);
 
         return true;
 
@@ -529,7 +529,7 @@ class Delivery_api_model extends My_model
             'type' => 'delivery',
             'dt_created' => DATE_TIME
         ];
-        $this->load->model('api_v2/common_model','v2_common_model');
+        $this->load->model('api_v3/common_model','v2_common_model');
         $this->v2_common_model->user_login_logout_logs($login_logs);
         
         return true;

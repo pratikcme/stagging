@@ -40,7 +40,7 @@ function sendMail($data) {
 
 function getMycartSubtotal(){
   $CI = &get_instance();
-  $CI->load->model('api_v2/common_model','co_model');
+  $CI->load->model('api_v3/common_model','co_model');
   $isShow = $CI->co_model->checkpPriceShowWithGstOrwithoutGst($CI->session->userdata('vendor_id'));
 
 
@@ -117,7 +117,7 @@ function cartItemCount(){
 function NavbarDropdown(){
   $html = '';
   $CI = &get_instance();
-  $CI->load->model('api_v2/common_model','co_model');
+  $CI->load->model('api_v3/common_model','co_model');
   $isShow = $CI->co_model->checkpPriceShowWithGstOrwithoutGst($CI->session->userdata('vendor_id'));
   
   $CI->load->model('common_model');

@@ -5,7 +5,7 @@ header("HTTP/1.1 200 OK");
 class Staff_api extends Staff_Controller {
     function __construct() {
         parent::__construct();
-        $this->load->model('api_v2/staff_api_model', 'this_model');
+        $this->load->model('api_v3/staff_api_model', 'this_model');
     }
     public function login() {
         $postdata = $this->input->post();

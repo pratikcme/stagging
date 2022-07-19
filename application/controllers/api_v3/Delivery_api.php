@@ -13,7 +13,7 @@ class Delivery_api extends CI_Controller
         parent::__construct();
 
 
-        $this->load->model('api_v2/delivery_api_model', 'this_model');
+        $this->load->model('api_v3/delivery_api_model', 'this_model');
     }
 
     public function login()

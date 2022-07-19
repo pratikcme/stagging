@@ -16,22 +16,22 @@ class MY_Controller extends CI_Controller
             }
 
             
-            if( strpos($_SERVER['REQUEST_URI'], 'api_v2')  === false && 
+            if( strpos($_SERVER['REQUEST_URI'], 'api_v3')  === false && 
                 strpos($_SERVER['REQUEST_URI'], '/api/')  !== false ) 
             { 
 
                 require_once APPPATH . 'config/old_tablenames_constants.php';
 
-                $this->load->model('common_model');
+                $this->load->model('Common_model','common_model');
                 $siteDetail = $this->common_model->getLogovone();
                 $this->folder = $siteDetail['folder'];
             }else{
 
             require_once APPPATH . 'config/tablenames_constants.php';  
-                $this->load->model('api_v2/common_model');
+                $this->load->model('api_v3/common_model','common_model');
 
             $siteDetail = $this->common_model->getLogo();
-            // lq();
+            
             if(isset($siteDetail['id'])){
                 $this->session->set_userdata('vendor_id',$siteDetail['id']);
             }
@@ -146,7 +146,6 @@ class Vendor_Controller extends MY_Controller
                                     'vendor_id'=>$data['branch'][0]->vendor_id
                                     );
 
-                
                     $this->session->set_userdata($branch);
             
                     if($this->session->userdata('branch_id') !== $branch_id){
@@ -155,10 +154,10 @@ class Vendor_Controller extends MY_Controller
                     }
             
                    
+                }else{
+                     $branch = array('vendor_id'=>$data['branch'][0]->vendor_id);
+                     $this->session->set_userdata($branch);
                 }
-
-
-
             }
         }
 
@@ -198,7 +197,7 @@ class Vendor_Controller extends MY_Controller
                 $my_cart = $this->product_model->getMyCart();
                 $default_product_image = $this->common_model->default_product_image();
 
-                $this->load->model('api_v2/common_model','co_model');
+                $this->load->model('api_v3/common_model','co_model');
                 $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
 
                 foreach ($my_cart as $key => $value) {
@@ -238,9 +237,9 @@ class Staff_Controller extends MY_Controller{
     function __construct()
     {
         parent::__construct();
-        if(strpos($_SERVER['REQUEST_URI'], 'api_v2')  !== false ) {                 
+        if(strpos($_SERVER['REQUEST_URI'], 'api_v3')  !== false ) {                 
                 
-                 $this->load->model('api_v2/staff_api_model','this_model');              
+                 $this->load->model('api_v3/staff_api_model','this_model');              
             }else{                
                  $this->load->model('staff_api_model','this_model');   
             }
@@ -311,8 +310,8 @@ class Api_Controller extends MY_Controller{
     {
         parent::__construct();
 
-        if(strpos($_SERVER['REQUEST_URI'], 'api_v2')  !== false ) {                
-                $this->load->model('api_v2/api_admin_model','this_model');   
+        if(strpos($_SERVER['REQUEST_URI'], 'api_v3')  !== false ) {                
+                $this->load->model('api_v3/api_admin_model','this_model');   
             }else{
                 $this->load->model('api_admin_model','this_model');   
             }

@@ -324,7 +324,7 @@ class Admin extends CI_Controller
                     'type' => 'branch',
                     'dt_created' => DATE_TIME
                 ];
-                $this->load->model('api_v2/common_model','v2_common_model');
+                $this->load->model('api_v3/common_model','v2_common_model');
                 $this->v2_common_model->user_login_logout_logs($login_logs);
 
                 $this->session->set_userdata($login_data);
@@ -384,7 +384,7 @@ class Admin extends CI_Controller
                     'type' => 'vendorimage',
                     'dt_created' => DATE_TIME
                 ];
-                $this->load->model('api_v2/common_model','v2_common_model');
+                $this->load->model('api_v3/common_model','v2_common_model');
                 $this->v2_common_model->user_login_logout_logs($login_logs);
 
                 $this->session->set_userdata($login_data);
@@ -503,7 +503,7 @@ class Admin extends CI_Controller
             'type' => $type,
             'dt_created' => DATE_TIME
         ];
-        $this->load->model('api_v2/common_model','v2_common_model');
+        $this->load->model('api_v3/common_model','v2_common_model');
         $this->v2_common_model->user_login_logout_logs($login_logs);
 
 

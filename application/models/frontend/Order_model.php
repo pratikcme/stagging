@@ -51,7 +51,7 @@ Class Order_model extends My_model{
 
 
     public function makeOrder($fromStripe = ''){
-      $this->load->model('api_v2/api_model','api_v2_model');
+      $this->load->model('api_v3/Api_model','api_v3_model');
       $user_id = $this->session->userdata('user_id');
       $branch_id = $this->session->userdata('branch_id');
       $vendor_id = $this->session->userdata('vendor_id');
@@ -66,8 +66,8 @@ Class Order_model extends My_model{
       $paymentMethod = '';
       if(isset($_SESSION['isSelfPickup']) && $_SESSION['isSelfPickup'] == '1'){
         $address = 'self pick';
-        $this->load->model('api_v2/api_model','api_v2_model');
-        $user = $this->api_v2_model->getUserDetails($user_id);
+        $this->load->model('api_v3/api_model','api_v3_model');
+        $user = $this->api_v3_model->getUserDetails($user_id);
     }else{
         $userDetails = $this->getAddress();
         $address = $userDetails[0]->address.' '.$userDetails[0]->city.' '.$userDetails[0]->state.' '.$userDetails[0]->country;
@@ -249,13 +249,13 @@ Class Order_model extends My_model{
                 $otpForSelfPickup = '';
                 // if(isset($_SESSION['isSelfPickup']) && $_SESSION['isSelfPickup'] == '1'){
                     $otpForSelfPickup = rand(1000,9999);
-                    $this->load->model('api_v2/api_model','api_v2_model');
-                    $this->api_v2_model->selfPickUp_otp($last_insert_id,$user_id,$otpForSelfPickup);
+                    $this->load->model('api_v3/api_model','api_v3_model');
+                    $this->api_v3_model->selfPickUp_otp($last_insert_id,$user_id,$otpForSelfPickup);
                 // }
 
-                $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
+                $this->load->model('api_v3/api_admin_model','api_v3_api_admin_model');
                 $order_log_data = array('order_id' => $last_insert_id,'branch_id'=>$branch_id,'status'=>'1');
-                $this->api_v2_api_admin_model->order_logs($order_log_data);
+                $this->api_v3_api_admin_model->order_logs($order_log_data);
 
             foreach ($my_order_result as $my_order){
                  
@@ -332,15 +332,15 @@ Class Order_model extends My_model{
             'dt_created'       => DATE_TIME,
             'dt_updated'       => DATE_TIME
         );
-        $this->api_v2_model->pushAdminNotification($branchNotification);
+        $this->api_v3_model->pushAdminNotification($branchNotification);
         $response = array();
         $response ["success"] = 1;
         $response ["message"] = "Thank you for your order";
         $response ["order_number"] = $iOrderNo;
         $output = json_encode(array('responsedata' => $response));
         
-        $this->api_v2_model->send_staff_notification($branch_id,"New Order In Your store");
-        $this->api_v2_model->emailTemplate($user_id,$branch_id,$last_insert_id);
+        $this->api_v3_model->send_staff_notification($branch_id,"New Order In Your store");
+        $this->api_v3_model->emailTemplate($user_id,$branch_id,$last_insert_id);
         
         $this->session->unset_userdata('isSelfPickup');
         $this->session->unset_userdata('My_cart');
@@ -543,8 +543,8 @@ Class Order_model extends My_model{
                 'dt_created'       => DATE_TIME,
                 'dt_updated'       => DATE_TIME
             );
-            $this->load->model('api_v2/api_model','api_v2_model');
-            $this->api_v2_model->pushAdminNotification($branchNotification);    
+            $this->load->model('api_v3/api_model','api_v3_model');
+            $this->api_v3_model->pushAdminNotification($branchNotification);    
             $this->cancle_order_quntity_reset($order_id);
             unset($data);
             $date = strtotime(DATE_TIME);

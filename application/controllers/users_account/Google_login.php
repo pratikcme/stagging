@@ -85,7 +85,7 @@ class Google_login extends MY_Controller {
                     'type' => 'user',
                     'dt_created' => DATE_TIME
                 ];
-                $this->load->model('api_v2/common_model','v2_common_model');
+                $this->load->model('api_v3/common_model','v2_common_model');
                 $this->v2_common_model->user_login_logout_logs($login_logs);
 
                 $this->session->set_userdata($login_data);

@@ -6,8 +6,8 @@ header("HTTP/1.1 200 OK");
 class Api extends Apiuser_Controller {
     function __construct() {
         parent::__construct();
-        $this->load->model('api_v2/api_model', 'this_model');
-        $this->load->model('api_v2/common_model');
+        $this->load->model('api_v3/api_model', 'this_model');
+        $this->load->model('api_v3/common_model');
         if(!isset($_POST['vendor_id']) && isset($_POST['branch_id'])){
             $getVendor =  $this->common_model->getVendorIdFromBranch();
             $_POST['vendor_id'] = $getVendor[0]->vendor_id;
@@ -83,7 +83,7 @@ class Api extends Apiuser_Controller {
     }
 
     public function testNotification(){
-        $this->load->model('api_v2/delivery_api_model');
+        $this->load->model('api_v3/delivery_api_model');
         $this->delivery_api_model->send_notification(140);
     }
 
@@ -250,7 +250,7 @@ class Api extends Apiuser_Controller {
     }
 
     function emailTemplate_testing(){
-        $this->this_model->emailTemplate(9,2,12);
+        $this->this_model->emailTemplate(235,2,5);
     }
     ## User Register ##
    
@@ -691,7 +691,7 @@ class Api extends Apiuser_Controller {
     }
 
     public function product_detail() {
-        $this->load->model('api_v2/common_model','co_model');
+        $this->load->model('api_v3/common_model','co_model');
             $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($_POST['vendor_id']);
      
         if (isset($_POST['product_id']) && isset($_POST['branch_id'])) {
@@ -1461,7 +1461,7 @@ class Api extends Apiuser_Controller {
     public function my_order_details() {
 
         if (isset($_POST['user_id']) && isset($_POST['order_id'])) {
-            $this->load->model('api_v2/common_model','co_model');
+            $this->load->model('api_v3/common_model','co_model');
             $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
             $limit = '10';
             $user_id = $_POST['user_id'];
@@ -1689,7 +1689,7 @@ class Api extends Apiuser_Controller {
         $postdata = $this->input->post();
         if (isset($postdata['order_id'])) {
             $cancle = $this->this_model->cancle_order($postdata);
-            $this->load->model('api_v2/api_admin_model');
+            $this->load->model('api_v3/api_admin_model');
             $order_log_data = array('order_id' =>$postdata['order_id'],'status'=>'9');
             $this->api_admin_model->order_logs($order_log_data);
             if(!$cancle){
@@ -1700,7 +1700,7 @@ class Api extends Apiuser_Controller {
             }
 
            
-            $this->load->model('api_v2/staff_api_model');
+            $this->load->model('api_v3/staff_api_model');
             $order_id = $postdata['order_id'];
             $this->staff_api_model->send_notificaion($order_id);
             $response["success"] = 1;
@@ -1716,7 +1716,7 @@ class Api extends Apiuser_Controller {
 
     ## Product Search ##
     public function product_search() {
-        $this->load->model('api_v2/common_model','co_model');
+        $this->load->model('api_v3/common_model','co_model');
         $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($_POST['vendor_id']);
 
         $product_name = $_POST['product_name'];

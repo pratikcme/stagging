@@ -124,7 +124,7 @@ class Products extends User_Controller {
 	}
 
 	public function productDetails($id=''){
-		$this->load->model('api_v2/common_model','co_model');
+		$this->load->model('api_v3/common_model','co_model');
         $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
 
 		if(!isset($_SESSION['branch_id'])){
@@ -372,7 +372,7 @@ class Products extends User_Controller {
 
 	public function getDataProductWeight(){
 		
-		$this->load->model('api_v2/common_model','co_model');
+		$this->load->model('api_v3/common_model','co_model');
         $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
 
 		if($this->input->post()){
@@ -448,7 +448,7 @@ class Products extends User_Controller {
 	}
 
 	public function cart_item(){
-		$this->load->model('api_v2/common_model','co_model');
+		$this->load->model('api_v3/common_model','co_model');
         $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
 		$my_cart = $this->this_model->getMyCart();
 		// dd($my_cart);

@@ -18,7 +18,12 @@
     display: none;
   }
 </style>
-<?php echo $this->session->flashdata('myMessage')?>
+<?php 
+if($this->session->flashdata('myMessage') != ''){
+    echo $this->session->flashdata('myMessage');
+    // die;
+}  
+?>
 <!-- =================Dynamic page================= -->
 
 	<?php $this->load->view($page);?>

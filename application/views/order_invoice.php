@@ -129,6 +129,10 @@
                     echo ' Between ('.$order_detail_result[0]->start_time.' - '.$order_detail_result[0]->end_time.')';
                           }; ?></span></div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-6"><b>Gst Number : </b> </div>
+                  <div class="col-sm-6 email"><span><?php echo $user->user_gst_number; ?></span></div>
+                </div>
               </div>
           </div>
           <div class="col-sm-6">

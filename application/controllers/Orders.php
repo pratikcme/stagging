@@ -171,18 +171,18 @@ class Orders extends User_Controller {
         if (isset($postdata['order_id'])) {
             $cancle = $this->this_model->cancle_order($postdata);
             
-            $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
+            $this->load->model('api_v3/api_admin_model','api_v3_api_admin_model');
             $order_log_data = array('order_id' =>$postdata['order_id'],'status'=>'9');
-            $this->api_v2_api_admin_model->order_logs($order_log_data);
+            $this->api_v3_api_admin_model->order_logs($order_log_data);
 
             if(!$cancle){
             	$this->utility->setFlashMessage('danger','Order can not cancle');
                 redirect(base_url().'/users_account/users/account?name=order');
                 die;
             }
-            $this->load->model('api_v2/staff_api_model','api_v2_staff_api_model');
+            $this->load->model('api_v3/staff_api_model','api_v3_staff_api_model');
             $order_id = $postdata['order_id'];
-            $this->api_v2_staff_api_model->send_notificaion($order_id);
+            $this->api_v3_staff_api_model->send_notificaion($order_id);
             $this->utility->setFlashMessage('success','Order is cancelled');
             redirect(base_url().'/users_account/users/account?name=order');
             die;

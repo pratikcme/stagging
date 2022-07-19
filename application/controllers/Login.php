@@ -5,7 +5,7 @@ class Login extends User_Controller {
 
 	function __construct(){
 		parent::__construct();
-
+		// dd($_SESSION);die;
 		$this->controller = $this->myvalues->loginFrontEnd['controller'];
 		$this->load->model($this->myvalues->loginFrontEnd['model'],'this_model');
 		$user_id = $this->session->userdata('user_id');
@@ -23,7 +23,7 @@ class Login extends User_Controller {
 			$this->cartCount = count($my_cart);
 		}
 		$this->load->model('frontend/product_model');
-		$this->load->model('common_model');
+		$this->load->model('common_model','common_model');
 		$my_cart = $this->product_model->getMyCart();
 		
 		$default_product_image = $this->common_model->default_product_image();
@@ -281,7 +281,7 @@ class Login extends User_Controller {
 		$this->loadView(USER_LAYOUT,$data);	
 	}
 	public function sendOtpLogin(){
-		$this->load->model('api_v2/api_model','api_model');
+		$this->load->model('api_v3/api_model','api_model');
      	$post = $this->input->post();
       $response = $this->this_model->sendOtpLogin($post);   
       echo json_encode($response);die;       
@@ -391,7 +391,7 @@ class Login extends User_Controller {
                     'type' => 'user',
                     'dt_created' => DATE_TIME
                 ];
-                $this->load->model('api_v2/common_model','v2_common_model');
+                $this->load->model('api_v3/common_model','v2_common_model');
                 $this->v2_common_model->user_login_logout_logs($login_logs);
 
 				$this->session->set_userdata($login_data);

@@ -210,8 +210,8 @@ class Order_model extends My_model
             'dt_created'       => DATE_TIME,
             'dt_updated'       => DATE_TIME
         );
-           $this->load->model('api_v2/api_model','api_v2_model');
-           $this->api_v2_model->pushAdminNotification($branchNotification);    
+           $this->load->model('api_v3/api_model','api_v3_model');
+           $this->api_v3_model->pushAdminNotification($branchNotification);    
        }
 
 
@@ -278,8 +278,8 @@ class Order_model extends My_model
         if ($order_status == '3') {
             
             $send_status = 'Ready For Deliver';
-            $this->load->model('api_v2/delivery_api_model','api_v2_delivery');
-            $this->api_v2_delivery->send_notification($order_id);
+            $this->load->model('api_v3/delivery_api_model','api_v3_delivery');
+            $this->api_v3_delivery->send_notification($order_id);
         }
         if ($order_status == '4') {
             $send_status = 'Pick Up';
@@ -310,8 +310,8 @@ class Order_model extends My_model
                     'message' => $message,
                 );
 
-                  $this->load->model('api_v2/api_model','api_v2_model');
-                $result = $this->api_v2_model->getNotificationKey($branch_id);
+                  $this->load->model('api_v3/api_model','api_v3_model');
+                $result = $this->api_v3_model->getNotificationKey($branch_id);
                 $this->utility->sendNotification($dataArray, $notification_type,$result);
             }
         }
@@ -364,7 +364,7 @@ class Order_model extends My_model
             $data['table'] = 'order';
             $re = $this->updateRecords($data);
 
-            $this->load->model('api_v2/api_admin_model');
+            $this->load->model('api_v3/api_admin_model');
             $order_log_data = array('order_id' => $id, 'status'=> '5');
             $this->api_admin_model->order_logs($order_log_data);
             // return 1
@@ -403,9 +403,9 @@ class Order_model extends My_model
             unset($data);
 
             if($status == '8'){
-                $this->load->model('api_v2/api_admin_model','api_v2_api_admin_model');
+                $this->load->model('api_v3/api_admin_model','api_v3_api_admin_model');
                 $order_log_data = array('order_id' => $order_id, 'status'=> $status);
-                $this->api_v2_api_admin_model->order_logs($order_log_data);
+                $this->api_v3_api_admin_model->order_logs($order_log_data);
             }
             $data['update']['status'] = '1';
             $data['where'] = ['order_id' => $order_id];
@@ -587,8 +587,8 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
 
         $config = $this->getPaymentCredential($order_id);
         // print_r($config);die;
-        $this->load->model('api_v2/api_model','api_v2_model');
-        $response = $this->api_v2_model->refundPaytm($config);
+        $this->load->model('api_v3/api_model','api_v3_model');
+        $response = $this->api_v3_model->refundPaytm($config);
         $response = json_decode($response);
         // print_r($response);die;
         $response_code = $response->body->resultInfo->resultCode; 
@@ -634,8 +634,8 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
          // error_reporting(E_ALL);    
          //    ini_set('display_errors', 1);
         $config = $this->getPaymentCredential($order_id);
-           $this->load->model('api_v2/api_model','api_v2_model');
-            $response = $this->api_v2_model->refundPaymentRazar($config);
+           $this->load->model('api_v3/api_model','api_v3_model');
+            $response = $this->api_v3_model->refundPaymentRazar($config);
             $response = json_decode($response);
             // dd($response);die;
             // $status = $response->status;
@@ -668,8 +668,8 @@ public  $order_column_order = array("o.order_no","o.dt_added","u.fname","u.lname
     public function refundPaymentStripe($order_id){
 
             $config = $this->getPaymentCredential($order_id);
-           $this->load->model('api_v2/api_model','api_v2_model');
-            $response = $this->api_v2_model->refundPaymentStripe($config);
+           $this->load->model('api_v3/api_model','api_v3_model');
+            $response = $this->api_v3_model->refundPaymentStripe($config);
             // $response = json_decode($response);
             // dd($response);die;
             // $status = $response->status;

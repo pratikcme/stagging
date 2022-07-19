@@ -14,12 +14,12 @@ class Checkout extends User_Controller {
     $this->load->model($this->myvalues->checkoutFrontEnd['model'],'this_model');
     if($this->session->userdata('user_id') == ''){
        $this->session->set_userdata('redirect_page',base_url().'checkout');
-      redirect(base_url().'login');
+       redirect(base_url().'login');
     }
   }
 
   public function check(){
-    echo '1';die;
+     echo '1';die;
      $this->load->model('api_model');
      $this->api_model->emailTemplate_testing(5,1,11);
   }
@@ -31,15 +31,15 @@ class Checkout extends User_Controller {
 
 
   public function index(){
-    $this->load->model('api_v2/common_model','co_model');
+    $this->load->model('api_v3/common_model','co_model');
     $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($this->session->userdata('vendor_id'));
     $data['isShow'] = $isShow;
 
 
-    $this->load->model('api_model');
+    $this->load->model('api_v3/api_model');
     if(empty($_SESSION['My_cart']) && $this->cartCount == 0){
       $this->utility->setFlashMessage('danger','Your cart is empty');
-      redirect($_SERVER['HTTP_REFERER']);
+      redirect(base_url().'home');
     }
     $defaultCartValue = $this->this_model->getCartValue();
     

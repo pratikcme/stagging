@@ -442,7 +442,7 @@ class Login_model extends My_model{
 					'type' => 'user',
 					'dt_created' => DATE_TIME
 		];
-		$this->load->model('api_v2/common_model','v2_common_model');
+		$this->load->model('api_v3/common_model','v2_common_model');
 		$this->v2_common_model->user_login_logout_logs($login_logs);
 	}
 		return $return;

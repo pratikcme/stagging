@@ -30,7 +30,7 @@ class staff_api_model extends my_model {
                     $datas['message'] = $this->load->view('emailTemplate/registration_mail', $datas, true);
                     $datas['subject'] = 'Verify user email address';
                     $datas["to"] = $result[0]->email;
-                    $this->load->model('api_v2/api_admin_model');
+                    $this->load->model('api_v3/api_admin_model');
                     $this->api_admin_model->sendMailSMTP($datas);
                     $response = array('status' => '0', 'message' => 'Please verify your registered email',);
                 }
@@ -223,7 +223,7 @@ class staff_api_model extends my_model {
             $this->updateRecords($data);
             unset($data);
             
-            $this->load->model('api_v2/api_admin_model');
+            $this->load->model('api_v3/api_admin_model');
             $order_log_data = array('order_id' => $order_id ,'status'=>'3');
             $this->api_admin_model->order_logs($order_log_data);
 
@@ -236,7 +236,7 @@ class staff_api_model extends my_model {
             $del = $del[0]['delivery_by'];
             $this->send_notificaion($order_id);
             if ($del == '1') {
-                $this->load->model('api_v2/delivery_api_model');
+                $this->load->model('api_v3/delivery_api_model');
                 unset($data);
                 $data['select'] = ['*'];
                 $data['where'] = ['order_id' => $order_id];
@@ -257,7 +257,7 @@ class staff_api_model extends my_model {
             $data['table'] = 'order';
             $this->updateRecords($data);
             
-            $this->load->model('api_v2/api_admin_model');
+            $this->load->model('api_v3/api_admin_model');
             $order_log_data = array('order_id' => $order_id ,'status'=>'2');
             $this->api_admin_model->order_logs($order_log_data);
 
@@ -300,10 +300,10 @@ class staff_api_model extends my_model {
             'dt_created'       => DATE_TIME,
             'dt_updated'       => DATE_TIME
         );
-        $this->load->model('api_v2/api_model','api_v2_model');
-        $this->api_v2_model->pushAdminNotification($branchNotification);    
+        $this->load->model('api_v3/api_model','api_v3_model');
+        $this->api_v3_model->pushAdminNotification($branchNotification);    
 
-        $this->load->model('api_v2/api_admin_model');
+        $this->load->model('api_v3/api_admin_model');
         $order_log_data = array('order_id' => $order_id , 'status'=> '8');
         $this->api_admin_model->order_logs($order_log_data);
 
@@ -355,7 +355,7 @@ class staff_api_model extends my_model {
         unset($data);
         if ($send) {
             if ($send[0]->notification_status == '1') {
-                $this->load->model('api_v2/api_model');
+                $this->load->model('api_v3/api_model');
                 $result = $this->api_model->getNotificationKey($branch_id);
                 // print_r($result);die;
                 $dataArray = array('device_id' => $send[0]->token, 'type' => $send[0]->type, 'message' => $message,);
@@ -514,7 +514,7 @@ class staff_api_model extends my_model {
             'type' => 'staff',
             'dt_created' => DATE_TIME
         ];
-        $this->load->model('api_v2/common_model','v2_common_model');
+        $this->load->model('api_v3/common_model','v2_common_model');
         $this->v2_common_model->user_login_logout_logs($login_logs);
 
         return $response;

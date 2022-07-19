@@ -183,7 +183,7 @@ class Api_model extends My_model {
             'type' => 'user',
             'dt_created' => DATE_TIME
         ];
-        $this->load->model('api_v2/common_model','v2_common_model');
+        $this->load->model('api_v3/common_model','v2_common_model');
         $this->v2_common_model->user_login_logout_logs($login_logs);
 
 
@@ -865,7 +865,7 @@ class Api_model extends My_model {
     }
     function filter($postdata) {
 
-        $this->load->model('api_v2/common_model','co_model');
+        $this->load->model('api_v3/common_model','co_model');
         $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
 
         $branch_id = $postdata['branch_id'];
@@ -1496,7 +1496,7 @@ class Api_model extends My_model {
 
     //user cart
     function my_cart($postdata) {
-         $this->load->model('api_v2/common_model','co_model');
+         $this->load->model('api_v3/common_model','co_model');
             $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
 
             $response['show_qty_alert'] = false;
@@ -2071,7 +2071,7 @@ class Api_model extends My_model {
                         $this->selfPickUp_otp($last_insert_id, $user_id, $otpForSelfPickup);
                     // }
 
-                    $this->load->model('api_v2/api_admin_model');
+                    $this->load->model('api_v3/api_admin_model');
                     $order_log_data = array('order_id' => $last_insert_id, 'status'=>'1' );
                     $this->api_admin_model->order_logs($order_log_data);
 
@@ -2468,7 +2468,7 @@ class Api_model extends My_model {
                 'type' => 'user',
                 'dt_created' => DATE_TIME
             ];
-            $this->load->model('api_v2/common_model','v2_common_model');
+            $this->load->model('api_v3/common_model','v2_common_model');
             $this->v2_common_model->user_login_logout_logs($login_logs);
 
             return true;
@@ -2587,7 +2587,7 @@ class Api_model extends My_model {
             }
         }
         function get_product_list($postdata) {
-            $this->load->model('api_v2/common_model','co_model');
+            $this->load->model('api_v3/common_model','co_model');
             $isShow = $this->co_model->checkpPriceShowWithGstOrwithoutGst($postdata['vendor_id']);
 
             if(isset($postdata['defualt_product'])){
@@ -3247,6 +3247,7 @@ class Api_model extends My_model {
             return $this->selectRecords($data);
         }
         public function emailTemplate($user_id, $branch_id, $o_id) {
+            // echo '1';die;
             $data['table'] = TABLE_ORDER;
             $data['select'] = ['id', 'branch_id', 'user_id', 'user_address_id', 'order_no', 'isSelfPickup', 'delivery_date', 'payment_transaction_id', 'name', 'mobile', 'delivered_address', 'delivery_charge', 'total', 'dt_added', 'delivery_charge', 'order_no', 'delivery_date','total_item','total_saving','payable_amount','user_gst_number','promocode_used'];
             // $data['join'] = [TABLE_ORDER_DETAILS .' as od'=>['o.id=od.order_id','LEFT']];
@@ -3261,7 +3262,6 @@ class Api_model extends My_model {
             }
             $re[0]->promocode_discount = $instance_discount;
             $order_id = $re[0]->id;
-            $user_gst_number = $re[0]->user_gst_number;
             unset($data);
             $data['table'] = TABLE_ORDER_DETAILS . ' as od';
             $data['select'] = ['od.id', 'od.product_id', 'od.product_weight_id', 'od.quantity', 'od.actual_price', 'od.discount_price', 'od.calculation_price', 'p.name'];
@@ -3280,6 +3280,11 @@ class Api_model extends My_model {
             $re[0]->TotalGstAmount = number_format((float)$total_gst, 2, '.', '');
             unset($data);
             $user_email = $this->getUserEmail($user_id);
+           
+            if($re[0]->user_gst_number == ''){
+              $user_gst_number = $user_email[0]->user_gst_number;
+            }
+
             $u_email = $user_email[0]->email;
             $u_name = $user_email[0]->fname;
             $vendor = $this->getVendoremail($re[0]->branch_id);
@@ -3416,7 +3421,7 @@ class Api_model extends My_model {
         public function getUserEmail($user_id) {
             // echo $user_id;die;
             $data['table'] = TABLE_USER;
-            $data['select'] = ['fname', 'email'];
+            $data['select'] = ['fname', 'email','user_gst_number'];
             $data['where'] = ['id' => $user_id];
             return $this->selectRecords($data);
         }

@@ -487,7 +487,7 @@ public function Product_add_update(){
 
 
     public function update_without_gst(){
-        $this->load->model('api_v2/api_model','s');
+        $this->load->model('api_v3/api_model','s');
         $data['table'] = TABLE_PRODUCT_WEIGHT;
         $data['select'] = ['*'];
         $re = $this->selectRecords($data);
@@ -524,7 +524,7 @@ public function Product_add_update(){
 
         $product_id = $_POST['product_id'];
 
-        $this->load->model('api_v2/api_model');
+        $this->load->model('api_v3/api_model');
         $gst_percent = $this->api_model->getProductGst($product_id);
 
         $weight_id = $_POST['weight_id'];

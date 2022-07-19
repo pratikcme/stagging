@@ -15,6 +15,8 @@ class Users extends User_Controller {
 	}
 
 	public function account(){	
+		// echo '11';die;
+
 		$data['action_name'] = $this->input->get('name');
 		if(isset($_GET['name'])){
 			$uri_segment = $_GET['name'];
@@ -30,11 +32,14 @@ class Users extends User_Controller {
 		// dd($data['order']);
 		$orderDetais = [];
 		$this->load->model('api_admin_model');
-		$this->load->model('api_v2/api_model','api_v2_model');
+
+		$this->load->model('api_v3/api_model','api_v3_model');
+		
+		$data['getVedorDetails'] = [];
 		foreach ($data['order'] as $key => $value) {
 
 			if($value->promocode_used == 1){
-				$order_promocode_amount = $this->api_v2_model->get_order_promocode_discount($value->id); 
+				$order_promocode_amount = $this->api_v3_model->get_order_promocode_discount($value->id); 
 				$instance_discount = number_format((float)$order_promocode_amount[0]->amount,'2','.','');
 			}else{
 					$amount = 0;
@@ -44,7 +49,6 @@ class Users extends User_Controller {
 
 			$getBranchDetails = $this->this_model->getBranchDetails($value->branch_id);
 			$data['getVedorDetails'] = $this->this_model->getVedorDetails($value->branch_id);
-
 			$gst_amount = $this->api_admin_model->getGstAmount($value->id);
 			$data['order'][$key]->TotalGstAmount = number_format((float)$gst_amount,'2','.','') ;
 			$data['order'][$key]->AmountWithoutGst =  number_format((float)($value->total - $gst_amount),'2','.','');
@@ -240,7 +244,7 @@ class Users extends User_Controller {
 	}
 
 public function sendOtpAccount(){
-		$this->load->model('api_v2/api_model','api_model');
+		$this->load->model('api_v3/api_model','api_model');
      	$post = $this->input->post();
       $response = $this->this_model->sendOtpAccount($post);   
       echo json_encode($response);die;       

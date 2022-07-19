@@ -35,7 +35,7 @@
        <h6 style="color: #000;font-weight: bold;font-size: 16px;margin: 0px;text-transform: capitalize;"> <?=$user_address[0]->name;?></h6>
        
        <?php if($for_vendor == 'user' && $user_gst_number != ''){ ?>  
-        <h6 style="color: #000;font-weight: bold;font-size: 16px;margin: 0px;text-transform: capitalize;"> GST No. <span><?=$user_gst_number?></span></h6>
+        <h6 style="color: #000;font-weight: bold;font-size: 16px;margin: 0px;text-transform: capitalize;"> GST Number : <span><?=$user_gst_number?></span></h6>
        <?php } ?>
        
   <?php if($order_details[0]->isSelfPickup =='1'){ ?>

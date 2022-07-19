@@ -40,7 +40,7 @@ class Api_admin_model extends My_model {
                         'type' => 'branch app',
                         'dt_created' => DATE_TIME
                     ];
-                    $this->load->model('api_v2/common_model','v2_common_model');
+                    $this->load->model('api_v3/common_model','v2_common_model');
                     $this->v2_common_model->user_login_logout_logs($login_logs);
                     $res = ['status' => 1, 'message' => 'Data get success', 'data' => $login_data];
                 } else {
@@ -1333,7 +1333,7 @@ class Api_admin_model extends My_model {
         $result = $this->selectRecords($data);
         $total_gst = 0;
         foreach ($result as $key => $value) {
-            $this->load->model('api_v2/api_model');
+            $this->load->model('api_v3/api_model');
             $gst = $this->api_model->getProductGst($value->product_id);
             $gst_amount = ($value->discount_price * $gst) / 100;
             $total_gst+= $gst_amount * $value->quantity;
@@ -1379,8 +1379,8 @@ class Api_admin_model extends My_model {
             'dt_created'       => DATE_TIME,
             'dt_updated'       => DATE_TIME
         );
-           $this->load->model('api_v2/api_model','api_v2_model');
-           $this->api_v2_model->pushAdminNotification($branchNotification);    
+           $this->load->model('api_v3/api_model','api_v3_model');
+           $this->api_v3_model->pushAdminNotification($branchNotification);    
        }
 
         $date = strtotime(DATE_TIME);
@@ -1432,7 +1432,7 @@ class Api_admin_model extends My_model {
         }
         if ($order_status == '3') {
             $send_status = 'Ready For Deliver';
-            $this->load->model('api_v2/delivery_api_model');
+            $this->load->model('api_v3/delivery_api_model');
             $this->delivery_api_model->send_notification($order_id);
         }
         if ($order_status == '4') {
@@ -1456,7 +1456,7 @@ class Api_admin_model extends My_model {
         if ($send) {
             if ($send[0]->notification_status == '1') {
                 $dataArray = array('device_id' => $send[0]->token, 'type' => $send[0]->type, 'message' => $message,);
-                $this->load->model('api_v2/api_model');
+                $this->load->model('api_v3/api_model');
                 $result = $this->api_model->getNotificationKey($branch_id);
                 $this->utility_apiv2->sendNotification($dataArray, $notification_type,$result);
             }

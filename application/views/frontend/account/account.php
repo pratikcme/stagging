@@ -46,7 +46,7 @@
                <span><i class="fas fa-shopping-bag"></i></span>My order</a>
                <a class="nav-link <?=($action_name == 'wishlist') ? 'active' : ''?> " id="v-pills-whislist-tab" data-toggle="pill" href="#v-pills-whislist" role="tab" aria-controls="v-pills-whislist" aria-selected="<?=($action_name == 'wishlist') ? 'true' : 'false'?>" style="display: none;"> <span><i class="fas fa-heart"></i></span>My Wishlist</a>
                <a class="nav-link <?=($action_name == 'my_address') ? 'active' : ''?> " id="v-pills-address-tab" data-toggle="pill" href="#v-pills-address" role="tab" aria-controls="v-pills-address" aria-selected="<?=($action_name == 'my_address') ? 'true' : 'Your Wishlist'?>"><span><i class="fas fa-address-book"></i></span>My address</a>
-               <?php if($getVedorDetails[0]->login_type == '0') { ?>
+               <?php if(!empty($getVedorDetails) && $getVedorDetails[0]->login_type == '0') { ?>
                <a class="nav-link <?=($action_name == 'change') ? 'active' : ''?> " id="v-pills-change-tab" data-toggle="pill" href="#v-pills-change" role="tab" aria-controls="v-pills-change" aria-selected="<?=($action_name == 'change') ? 'true' : 'false'?>"><span><i class="fas fa-lock"></i></span>Change Password</a>
                <?php } ?>
                <a style="display: none;" class="nav-link <?=($action_name == 'faq') ? 'active' : ''?> " id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="<?=($action_name == 'faq') ? 'true' : 'false'?>"><span><i class="fas fa-info-circle"></i></span>FAQ</a>

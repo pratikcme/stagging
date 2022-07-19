@@ -181,7 +181,7 @@ class Api_model extends My_model {
             'type' => 'user',
             'dt_created' => DATE_TIME
         ];
-        $this->load->model('api_v2/common_model','v2_common_model');
+        $this->load->model('api_v3/common_model','v2_common_model');
         $this->v2_common_model->user_login_logout_logs($login_logs);
 
 
@@ -1965,7 +1965,7 @@ class Api_model extends My_model {
                         $this->selfPickUp_otp($last_insert_id, $user_id, $otpForSelfPickup);
                     }
 
-                    $this->load->model('api_v2/api_admin_model');
+                    $this->load->model('api_v3/api_admin_model');
                     $order_log_data = array('order_id' => $last_insert_id, 'status'=>'1' );
                     $this->api_admin_model->order_logs($order_log_data);
 
@@ -2293,7 +2293,7 @@ class Api_model extends My_model {
                 'type' => 'user',
                 'dt_created' => DATE_TIME
             ];
-            $this->load->model('api_v2/common_model','v2_common_model');
+            $this->load->model('api_v3/common_model','v2_common_model');
             $this->v2_common_model->user_login_logout_logs($login_logs);
 
             return true;
