@@ -1943,9 +1943,25 @@ class Api_model extends My_model {
         return $this->selectFromJoin($data,true);
     }
 
+    // public function checkUserNotDelete($user_id){
+    //     $data['table'] = TABLE_USER;
+    //     $data['select'] = ['*'];
+    //     $data['where'] = ['id'=>$user_id];
+    //     return $this->selectRecords($data);
+    // }
+
     function checkout($postdata){
      
         $user_id = $_POST['user_id'];
+        // $isUserExist = $this->checkUserNotDelete($user_id);
+        // if(!empty($isUserExist) && $isUserExist[0]->status == '9'){
+        //     $response = array();
+        //     $response["success"] = 0;
+        //     $response["message"] = "User is not found";
+        //     $output = json_encode(array('responsedata' => $response));
+        //     echo $output;
+        //     die;
+        // }
         $postdata['user_id'] = $user_id;
         if (isset($_POST['user_address_id'])) {
             $user_address_id = $_POST['user_address_id'];
