@@ -1087,13 +1087,13 @@ class Api_model extends My_model {
                     // }
                     if (count($my_cart_old_result) <= 0) {
                         $my_cart_old_result = array();
-                        $my_cart_old_quantity = '0';
+                        $my_cart_quantity = '0';
                     } else {
-                        $my_cart_old_quantity = $my_cart_old_result[0]['quantity'];
+                        $my_cart_quantity = $my_cart_old_result[0]['quantity'];
                     }
                     $product_image_result[0]->image = str_replace(' ', '%20',$product_image_result[0]->image);
 
-                    $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => $pro_weight->weight_no . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_old_quantity' => $my_cart_old_quantity, 'variant_image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image,);
+                    $data = array('id' => $pro_weight->id, 'product_id' => $pro_weight->product_id, 'weight_id' => $pro_weight->weight_id, 'unit' => $pro_weight->weight_no . ' ' . $weight_name, 'actual_price' => $pro_weight->price, 'quantity' => $pro_weight->quantity, 'package_name' => $package_name, 'discount_per' => $pro_weight->discount_per, 'discount_price' => $pro_weight->discount_price, 'my_cart_quantity' => $my_cart_quantity, 'variant_image' => base_url() . 'public/images/'.$this->folder.'product_image/' . $product_image_result[0]->image,);
                     array_push($new_array_product_weight, $data);
                 }
                 $product_weight_array = $new_array_product_weight;
@@ -1231,7 +1231,7 @@ class Api_model extends My_model {
         }
         return $package_name;
     }
-    function update_my_cart_old($arr,$default_qty=false) {
+    function update_my_cart($arr,$default_qty=false) {
         foreach ($arr as $row) {
             //            print_r($row);exit;
             $id = $row->id;
@@ -1502,7 +1502,7 @@ class Api_model extends My_model {
     }
 
     //user cart
-    function my_cart_old($postdata) {
+    function my_cart($postdata) {
         
      	$response['show_qty_alert'] = false;
         $i = 0;
@@ -1550,7 +1550,7 @@ class Api_model extends My_model {
 	                }
 		          
                 }
-                $this->update_my_cart_old($my_cart_old_result,true);
+                $this->update_my_cart($my_cart_old_result,true);
             }
 
             $i++;
@@ -1633,7 +1633,7 @@ class Api_model extends My_model {
                 if ($getactual === null || $getactual == "<null>") {
                     $getactual = 0.0;
                 }
-                // $this->update_my_cart_old($my_cart_old_result,true);
+                // $this->update_my_cart($my_cart_old_result,true);
                 $response['success'] = "1";
                 $response['message'] = "My cart item list";
                 $response["count"] = $gettotal[0]->cart_items;
@@ -2288,12 +2288,12 @@ class Api_model extends My_model {
                             $data['table'] = 'my_cart_old';
                             $result_cart = $this->selectRecords($data);
                             if (count($result_cart) > 0) {
-                                $my_cart_old_quantity = $result_cart[0]->quantity;
+                                $my_cart_quantity = $result_cart[0]->quantity;
                             } else {
-                                $my_cart_old_quantity = '0';
+                                $my_cart_quantity = '0';
                             }
                             $weight_name = $product_query[$r]->weighname;
-                            $data = array('id' => $product_variant->id, 'product_id' => $product_variant->product_id, 'weight_id' => $product_variant->weight_id, 'unit' => ($product_variant->weight_no) . ' ' . $weight_name, 'actual_price' => $product_variant->price, 'quantity' => $product_variant->quantity, 'discount_per' => $product_variant->discount_per, 'discount_price' => $product_variant->discount_price, 'package_name' => $package_name, 'my_cart_old_quantity' => $my_cart_old_quantity, 'variant_image' => $image,);
+                            $data = array('id' => $product_variant->id, 'product_id' => $product_variant->product_id, 'weight_id' => $product_variant->weight_id, 'unit' => ($product_variant->weight_no) . ' ' . $weight_name, 'actual_price' => $product_variant->price, 'quantity' => $product_variant->quantity, 'discount_per' => $product_variant->discount_per, 'discount_price' => $product_variant->discount_price, 'package_name' => $package_name, 'my_cart_quantity' => $my_cart_quantity, 'variant_image' => $image,);
                             $getdata[] = $data;
                         }
                         $product_weight_array = $getdata;
