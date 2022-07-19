@@ -16,38 +16,56 @@ class MY_Controller extends CI_Controller
             }
 
             
-            if( strpos($_SERVER['REQUEST_URI'], 'api_v3')  === false && 
-                strpos($_SERVER['REQUEST_URI'], '/api/')  !== false ) 
+           if( strpos($_SERVER['REQUEST_URI'], 'api_v2')  === TRUE )  
             { 
 
-                require_once APPPATH . 'config/old_tablenames_constants.php';
+                require_once APPPATH . 'config/tablenames_constants.php';  
+                $this->load->model('api_v2/common_model','common_model');
 
-                $this->load->model('Common_model','common_model');
-                $siteDetail = $this->common_model->getLogovone();
+                $siteDetail = $this->common_model->getLogo();
+                
+                if(isset($siteDetail['id'])){
+                    $this->session->set_userdata('vendor_id',$siteDetail['id']);
+                }
+                $this->siteLogo = $siteDetail['logo']; 
+                $this->siteTitle = $siteDetail['webTitle'];
+                $this->siteFevicon = $siteDetail['favicon_image']; 
                 $this->folder = $siteDetail['folder'];
+                $this->siteCurrency = $this->common_model->getDefaultCurrency();
+            
+                $this->countCategory = $this->common_model->CountCategory();
+                $this->CountSubcategory = $this->common_model->CountSubCategory();
+                $common_keys = $this->common_model->getCommonKeysAndLink();
+                if(!empty($common_keys)){
+                    $this->common_keys = $common_keys;
+                }
+                $this->adminNotification = $this->common_model->getAdminNotification();
+
+
+
             }else{
 
-            require_once APPPATH . 'config/tablenames_constants.php';  
-                $this->load->model('api_v3/common_model','common_model');
+                require_once APPPATH . 'config/tablenames_constants.php';  
+                    $this->load->model('api_v3/common_model','common_model');
 
-            $siteDetail = $this->common_model->getLogo();
+                $siteDetail = $this->common_model->getLogo();
+                
+                if(isset($siteDetail['id'])){
+                    $this->session->set_userdata('vendor_id',$siteDetail['id']);
+                }
+                $this->siteLogo = $siteDetail['logo']; 
+                $this->siteTitle = $siteDetail['webTitle'];
+                $this->siteFevicon = $siteDetail['favicon_image']; 
+                $this->folder = $siteDetail['folder'];
+                $this->siteCurrency = $this->common_model->getDefaultCurrency();
             
-            if(isset($siteDetail['id'])){
-                $this->session->set_userdata('vendor_id',$siteDetail['id']);
-            }
-            $this->siteLogo = $siteDetail['logo']; 
-            $this->siteTitle = $siteDetail['webTitle'];
-            $this->siteFevicon = $siteDetail['favicon_image']; 
-            $this->folder = $siteDetail['folder'];
-            $this->siteCurrency = $this->common_model->getDefaultCurrency();
-        
-            $this->countCategory = $this->common_model->CountCategory();
-            $this->CountSubcategory = $this->common_model->CountSubCategory();
-            $common_keys = $this->common_model->getCommonKeysAndLink();
-            if(!empty($common_keys)){
-                $this->common_keys = $common_keys;
-            }
-            $this->adminNotification = $this->common_model->getAdminNotification();
+                $this->countCategory = $this->common_model->CountCategory();
+                $this->CountSubcategory = $this->common_model->CountSubCategory();
+                $common_keys = $this->common_model->getCommonKeysAndLink();
+                if(!empty($common_keys)){
+                    $this->common_keys = $common_keys;
+                }
+                $this->adminNotification = $this->common_model->getAdminNotification();
             }
            
           
@@ -237,11 +255,15 @@ class Staff_Controller extends MY_Controller{
     function __construct()
     {
         parent::__construct();
-        if(strpos($_SERVER['REQUEST_URI'], 'api_v3')  !== false ) {                 
-                
+
+
+          if( strpos($_SERVER['REQUEST_URI'], 'api_v2')  === TRUE )  
+            { 
+                $this->load->model('api_v2/staff_api_model','this_model');   
+
+            } else{                
                  $this->load->model('api_v3/staff_api_model','this_model');              
-            }else{                
-                 $this->load->model('staff_api_model','this_model');   
+                    
             }
        
         ini_set('max_execution_time', '0'); // for infinite time of execution 
@@ -309,12 +331,14 @@ class Api_Controller extends MY_Controller{
     function __construct()
     {
         parent::__construct();
+        if( strpos($_SERVER['REQUEST_URI'], 'api_v2')  === TRUE )  
+        {
+            $this->load->model('api_v2/api_admin_model','this_model');   
+        }else{
+            $this->load->model('api_v3/api_admin_model','this_model');   
 
-        if(strpos($_SERVER['REQUEST_URI'], 'api_v3')  !== false ) {                
-                $this->load->model('api_v3/api_admin_model','this_model');   
-            }else{
-                $this->load->model('api_admin_model','this_model');   
-            }
+        }
+       
 
             
         ini_set('max_execution_time', '0'); // for infinite time of execution 
