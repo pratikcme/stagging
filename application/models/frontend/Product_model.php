@@ -811,7 +811,7 @@ Class Product_model extends My_model{
     	// $proId = $this->utility->safe_b64decode($postdata['pro_id']);
     	
 		$data['table'] = TABLE_PRODUCT_WEIGHT ;
-		$data['select'] = ['id','price','quantity','weight_no','discount_per','discount_price','product_id'];
+		$data['select'] = ['id','price','quantity','weight_no','discount_per','discount_price','product_id','without_gst_price'];
 		$data['where'] = [
 						  'status!='=>'9',
 						  'id'=> $this->utility->safe_b64decode($postdata['product_varient_id']),

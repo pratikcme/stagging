@@ -380,7 +380,7 @@ class Products extends User_Controller {
 			$image = $this->this_model->getVarientImage($result[0]->id);
 	 	}
 	 	// print_r($result);die;
-	 	
+
 	 	// for check save cart quantity of user
 	 	$product_id = $result[0]->product_id;
 
@@ -431,6 +431,7 @@ class Products extends User_Controller {
 	 	if(!empty($isShow) && $isShow[0]->display_price_with_gst == '1'){
         	$result[0]->discount_price =  $result[0]->without_gst_price;
         }
+        // echo $result[0]->discount_price;die;
 	 	$response = [
 	 				'product_weight_id'=>$result[0]->id,
 	 				'product_price'=>number_format((float)$result[0]->price, 2, '.', ''),
@@ -447,6 +448,7 @@ class Products extends User_Controller {
 	 	echo json_encode($response);
 
 	}
+
 
 	public function cart_item(){
 		$this->load->model('api_v3/common_model','co_model');
