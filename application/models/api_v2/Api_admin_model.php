@@ -1,4 +1,4 @@
-<?php
+<?php 
 class Api_admin_model extends My_model {
 
     public function check_login($postData) {
