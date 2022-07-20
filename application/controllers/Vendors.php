@@ -44,7 +44,7 @@ class Vendors extends User_Controller {
 				$result = $this->this_model->MyCartRemove();	
 				$this->session->unset_userdata('My_cart');
 			}
-	
+		echo 'veno';die;
 			redirect(base_url().'home');
 		}
 
