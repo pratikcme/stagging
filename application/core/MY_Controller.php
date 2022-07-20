@@ -126,6 +126,7 @@ class Vendor_Controller extends MY_Controller
 
         function __construct()
         { 
+            echo 'yuser';die;
             parent::__construct();
            
              if(isset($_SESSION['My_cart']) && count($_SESSION['My_cart']) == 0 ){
