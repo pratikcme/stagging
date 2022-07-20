@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends User_Controller {
 
 	function __construct(){
+		echo 'home';die;
 		parent::__construct();
 		$this->controller = $this->myvalues->homeFrontEnd['controller'];
 		$this->load->model($this->myvalues->homeFrontEnd['model'],'this_model');
