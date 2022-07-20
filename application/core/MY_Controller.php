@@ -18,7 +18,7 @@ class MY_Controller extends CI_Controller
             
            if( strpos($_SERVER['REQUEST_URI'], 'api_v2')  === TRUE )  
             { 
-
+                
                 require_once APPPATH . 'config/tablenames_constants.php';  
                 $this->load->model('api_v2/common_model','common_model');
 

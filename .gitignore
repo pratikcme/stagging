@@ -3,3 +3,4 @@ application/config/config.php
 application/config/database.php
 public/images/*
 public/uploads/*
+application/config/database.php
