@@ -42,7 +42,7 @@
             $d_none = '';
             $d_show = 'd-none';
             if(!empty($item_weight_id)){
-              if(in_array($value->pw_id,$item_weight_id)){
+              if(in_array($value->product_varient_id,$item_weight_id)){
                 $d_show = '';
                 $d_none = 'd-none';
               }
