@@ -7,7 +7,8 @@ class vendor_model extends My_model{
     }
 
        public function new_vendor_register(){
-        
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
         if(isset($_POST['submit1'])){
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
