@@ -58,7 +58,7 @@
 
   </div>
 </div>
-<section class="p-100 bg-light-blue">
+<!-- <section class="p-100 bg-light-blue">
   <div class="container">
     <div class="section-title-wrapper">
       <div class="row align-items-center">
@@ -75,53 +75,25 @@
       </div>
        
     </div>
-<!--     <div class="row offer-wrapper">
+     <div class="row offer-wrapper">
 
-      <?php // foreach ($offer_list as $key => $value): ?>
+      <?php  //foreach ($offer_list as $key => $value): ?>
         
         <div class="col-lg-4 col-md-6">
           <div class="offers">
           <a href="#">
             <h6>Up to <?=$value->offer_percent?>% off | <?=$value->offer_title?></h6>
             <div class="offer-img">
-              <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
+              <img src="<?=$value->image?>">
             </div>
           </a>
           </div>
         </div>
-      <?php  // endforeach ?>
-    
-        <div class="col-lg-4 col-md-6">
-          <div class="offers">
-          <a href="#">
-            <h6>Up to 50% off | Electronics & Accessories</h6>
-            <div class="offer-img">
-              <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
-            </div>
-          </a>
-          </div>
-        </div>
-    
-
-        <div class="col-lg-4 col-md-6">
-          <div class="offers">
-          <a href="#">
-            <h6>Automotive essentials | Up to 60% off</h6>
-            <div class="offer-img">
-              <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
-            </div>
-          </a>
-          </div>
-        </div>
-    
-        
-       
-    
-    </div> -->
-  
+      <?php   //endforeach ?>
+      </div>
     <div class="mobile-see-all"> <a href="<?=base_url().'products'?>">see all</a> </div>
   </div>
-</section>
+</section> -->
 <!-- =================CATEGORY SECTION================= -->
 <?php if(count($category) > 5){ ?> 
 <section class="p-100 bg-light-blue">
