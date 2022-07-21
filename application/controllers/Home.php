@@ -151,7 +151,7 @@ class Home extends User_Controller {
 		foreach ($data['offer_varient_list'] as $key => $value) {
 			$addQuantity = $this->product_model->findProductAddQuantity($value->product_id,$value->product_varient_id);
   			$value->my_cart_quantity = $addQuantity;
-		}		
+		}			
 		$this->loadView(USER_LAYOUT,$data);
 	}
 
