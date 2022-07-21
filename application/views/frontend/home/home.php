@@ -77,16 +77,19 @@
     </div>
     <div class="row offer-wrapper">
 
+      <?php foreach ($offer_list as $key => $value): ?>
+        
         <div class="col-lg-4 col-md-6">
           <div class="offers">
           <a href="#">
-            <h6>Up to 50% off | Electronics & Accessories</h6>
+            <h6>Up to <?=$value->offer_percent?>% off | $value->offer_title</h6>
             <div class="offer-img">
               <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
             </div>
           </a>
           </div>
         </div>
+      <?php endforeach ?>
     
         <div class="col-lg-4 col-md-6">
           <div class="offers">
