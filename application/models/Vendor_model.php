@@ -83,7 +83,7 @@ class vendor_model extends My_model{
                     $image ='';
                     if(isset($_FILES['image'])){
                         $upload_path = "./public/images/".$this->folder."vendor_shop";
-                        $uploadResponse = upload_single_image_ByName($_FILES,'image',$upload_path);
+                        // $uploadResponse = upload_single_image_ByName($_FILES,'image',$upload_path);
                         // print_r($uploadResponse);exit;
                         $image = $uploadResponse['data']['file_name'];
                     }
@@ -93,6 +93,7 @@ class vendor_model extends My_model{
                         $uploadLogoImage = upload_single_image_ByName($_FILES,'logo_image',$logo_upload_path);
                         $logo = $uploadLogoImage['data']['file_name'];
                     }
+                    dd($logo);
                     $data['table'] = 'branch';
                     $data['where'] = ['vendor_id'=>$this->session->userdata('vendor_admin_id')];
                     $data['select'] = ['*'];
@@ -119,9 +120,9 @@ class vendor_model extends My_model{
                         'dt_added' => date('Y-m-d H:i:s'),
                         'dt_updated' => date('Y-m-d H:i:s'),
                     );
-                    echo "<pre>";
+                    // echo "<pre>";
                     // print_r($_POST);die;
-                    print_r($data);die;
+                    // print_r($data);die;
                     $this->db->insert('branch', $data);
                     $lastId = $this->db->insert_id();
                     if($lastId != '' && $count == 0){
