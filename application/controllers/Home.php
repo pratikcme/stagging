@@ -125,7 +125,6 @@ class Home extends User_Controller {
 	}
 
 	public function get_offer_product_listing($offer_id){
-		$data['item_weight_id'] = $item_weight_id ;
 		$offer_id = $this->utility->safe_b64decode($offer_id);
 		$data['page'] = 'frontend/offer_product_list';
 		$data['js'] = array('add_to_cart.js');	
@@ -146,6 +145,7 @@ class Home extends User_Controller {
 			}
 
 		}
+		$data['item_weight_id'] = $item_weight_id ;
 		// dd($data['offer_varient_list']);
 		$this->loadView(USER_LAYOUT,$data);
 	}
