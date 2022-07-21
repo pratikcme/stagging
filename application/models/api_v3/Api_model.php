@@ -3650,6 +3650,7 @@ class Api_model extends My_model {
        $data['where']['phone'] = $postData['phone'];
        $data['where']['country_code'] = $postData['country_code'];
        $data['where']['vendor_id'] = $postData['vendor_id'];
+       $data['where']['status !='] = '9';
        $re = $this->selectRecords($data,true);
        unset($data);
        if(empty($re)){
@@ -3691,6 +3692,8 @@ class Api_model extends My_model {
         $data['where']['vendor_id'] = $postData['vendor_id'];
         $data['where']['country_code'] = $postData['country_code'];
         $data['where']['phone'] = $postData['phone'];
+        $data['where']['status !='] = '9';
+
         $re = $this->selectRecords($data,true);
         unset($data);
         if(!empty($re)){
