@@ -148,10 +148,11 @@ class Home extends User_Controller {
 		$postData = ['offer_id'=>$offer_id,'user_id' => $this->session->userdata('user_id')];
 		$data['offer_varient_list'] = $this->this_model->get_offer_varient_listing($postData);
 		dd($_SESSION);
-		foreach ($variable as $key => $value) {
-			
+		foreach ($data['offer_varient_list'] as $key => $value) {
+			$addQuantity = $this->product_model->findProductAddQuantity($value->id,$value->product_weight_id);
+  			$value->my_cart_quantity = $addQuantity;
 		}
-		// dd($data['offer_varient_list']);	
+		dd($data['offer_varient_list']);	
 		$this->loadView(USER_LAYOUT,$data);
 	}
 
