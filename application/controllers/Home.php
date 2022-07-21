@@ -125,11 +125,27 @@ class Home extends User_Controller {
 	}
 
 	public function get_offer_product_listing($offer_id){
+		$data['item_weight_id'] = $item_weight_id ;
 		$offer_id = $this->utility->safe_b64decode($offer_id);
 		$data['page'] = 'frontend/offer_product_list';
-		$data['js'] = array('add_to_cart.js');
+		$data['js'] = array('add_to_cart.js');	
 		$postData = ['offer_id'=>$offer_id,'user_id'=>$this->session->userdata('user_id')];
 		$data['offer_varient_list'] = $this->this_model->get_offer_varient_listing($postData);
+		
+		$item_weight_id = [];
+		if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != '' ){
+			$this->load->model('frontend/product_model');
+			$res = $this->product_model->UsersCartData();
+			foreach ($res as $key => $value) {
+				array_push($item_weight_id, $value->product_weight_id);
+			}
+			// print_r($item_weight_id);die;
+		}else{
+			if(isset($_SESSION["My_cart"])){
+			 	$item_weight_id = array_column($_SESSION["My_cart"], "product_weight_id");
+			}
+
+		}
 		// dd($data['offer_varient_list']);
 		$this->loadView(USER_LAYOUT,$data);
 	}

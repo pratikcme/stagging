@@ -38,14 +38,24 @@
             <h6><span><?=$this->siteCurrency?></span> <?=number_format((float)$value->discount_price, 2, '.', '')?></h6>
             <p><?=($value->available_quantity >= 25 ) ? 'Available (in stock)' : 'limited stock' ?></p>
           </div>
+          <?php 
+            $d_none = '';
+            $d_show = 'd-none';
+            if(!empty($item_weight_id)){
+              if(in_array($value->pw_id,$item_weight_id)){
+                $d_show = '';
+                $d_none = 'd-none';
+              }
+            }
 
+          ?>
           <div class="feature-bottom-wrap ">
             <div class="cart addcartbutton d-none" data-product_id="<?=$this->utility->safe_b64encode($value->product_id)?>"> <i class="fas fa-shopping-basket"></i>
             </div>
-            <div class="new_add_to_cart" >
-                  <button class="btn addcartbutton" data-product_id="<?=$this->utility->safe_b64encode($value->product_id)?>" data-varient_id="<?=$this->utility->safe_b64encode($value->product_varient_id)?>">Add To Cart</button>
+            <div class="new_add_to_cart  <?=$d_none?>" >
+                  <button class="btn addcartbutton " data-product_id="<?=$this->utility->safe_b64encode($value->product_id)?>" data-varient_id="<?=$this->utility->safe_b64encode($value->product_varient_id)?>">Add To Cart</button>
             </div>
-            <div class="quantity-wrap">
+            <div class="quantity-wrap <?=$d_show?>">
               <button class="dec cart-qty-minus" data-product_weight_id="<?=$value->product_varient_id?>"><span class="minus"><i class="fa fa-minus"></i></span></button>
               <input class="qty" type="text" name="" value="<?=($value->my_cart_quantity != '0') ? $value->my_cart_quantity : 1 ?>" data-product_id="<?=$value->product_id?>" data-weight_id="<?=$value->weight_id?>" readonly>
               <button class="inc cart-qty-plus" data-product_weight_id="<?=$value->product_varient_id?>"><span><i class="fa fa-plus"></i></span></button>
