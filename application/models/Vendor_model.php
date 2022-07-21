@@ -7,8 +7,8 @@ class vendor_model extends My_model{
     }
 
        public function new_vendor_register(){
-            error_reporting(E_ALL);
-            ini_set('display_errors', 1);
+            // error_reporting(E_ALL);
+            // ini_set('display_errors', 1);
         if(isset($_POST['submit1'])){
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
@@ -83,18 +83,17 @@ class vendor_model extends My_model{
                     $image ='';
                     if(isset($_FILES['image'])){
                         $upload_path = "./public/images/".$this->folder."vendor_shop";
-                        // $uploadResponse = upload_single_image_ByName($_FILES,'image',$upload_path);
+                        $uploadResponse = upload_single_image_ByName($_FILES,'image',$upload_path);
                         // print_r($uploadResponse);exit;
-                        // $image = $uploadResponse['data']['file_name'];
+                        $image = $uploadResponse['data']['file_name'];
                     }
                     $logo = '';
-                    dd($_FILES);
                     if(isset($_FILES['logo_image']) && $_FILES['logo_image']['error'] == 0){
                         $logo_upload_path = "./public/images/".$this->folder."vendor_logo_image";
                         $uploadLogoImage = upload_single_image_ByName($_FILES,'logo_image',$logo_upload_path);
                         $logo = $uploadLogoImage['data']['file_name'];
                     }
-                    dd($logo);
+                    
                     $data['table'] = 'branch';
                     $data['where'] = ['vendor_id'=>$this->session->userdata('vendor_admin_id')];
                     $data['select'] = ['*'];
