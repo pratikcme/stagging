@@ -7,8 +7,7 @@ class vendor_model extends My_model{
     }
 
        public function new_vendor_register(){
-            // error_reporting(E_ALL);
-            // ini_set('display_errors', 1);
+        
         if(isset($_POST['submit1'])){
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
@@ -93,7 +92,7 @@ class vendor_model extends My_model{
                         $uploadLogoImage = upload_single_image_ByName($_FILES,'logo_image',$logo_upload_path);
                         $logo = $uploadLogoImage['data']['file_name'];
                     }
-                    
+
                     $data['table'] = 'branch';
                     $data['where'] = ['vendor_id'=>$this->session->userdata('vendor_admin_id')];
                     $data['select'] = ['*'];
