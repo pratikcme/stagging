@@ -255,10 +255,7 @@ elseif($_SERVER['SERVER_NAME']=='ogworld.launchestore.com'){
     $loginBtnborder = "#0f8b1f";
     $logoWidth = "150px";
     $hvrClr = "#0c65c5";
-}
-
-
-elseif($_SERVER['SERVER_NAME']=='unibest.launchestore.com' ){
+}elseif($_SERVER['SERVER_NAME']=='unibest.in' || $_SERVER['SERVER_NAME'] == 'www.unibest.in'){
 
     $primaryColor= "#C41E49";
     $secondaryColor= "#000";
@@ -276,6 +273,7 @@ elseif($_SERVER['SERVER_NAME']=='unibest.launchestore.com' ){
     $loginBtnborder = "#C41E49";
     $logoWidth = "100px";
     $hvrClr = "#294695";
+    $cartpopColor = "#000";
 }
 
 elseif($_SERVER['SERVER_NAME']=='iwingzy.launchestore.com'){
