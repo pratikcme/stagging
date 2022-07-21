@@ -45,7 +45,7 @@
             <div class="new_add_to_cart" >
                   <button class="btn addcartbutton" data-product_id="<?=$this->utility->safe_b64encode($value->product_id)?>" data-varient_id="<?=$this->utility->safe_b64encode($value->product_varient_id)?>">Add To Cart</button>
             </div>
-            <div class="quantity-wrap <?=$d_show?>">
+            <div class="quantity-wrap">
               <button class="dec cart-qty-minus" data-product_weight_id="<?=$value->product_varient_id?>"><span class="minus"><i class="fa fa-minus"></i></span></button>
               <input class="qty" type="text" name="" value="<?=($value->my_cart_quantity != '0') ? $value->my_cart_quantity : 1 ?>" data-product_id="<?=$value->product_id?>" data-weight_id="<?=$value->weight_id?>" readonly>
               <button class="inc cart-qty-plus" data-product_weight_id="<?=$value->product_varient_id?>"><span><i class="fa fa-plus"></i></span></button>
