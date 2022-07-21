@@ -2351,7 +2351,7 @@ class Api_model extends My_model {
         $generator = "135792468";
         $otp = rand(1111,9999);
         if($mobile == '9875105843'){
-            $otp = '1234';
+            $otp = '1234'; 
         }
         
         $data = array('otp' => $otp, 'dt_updated' => strtotime(DATE_TIME));
