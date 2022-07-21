@@ -85,7 +85,7 @@ class vendor_model extends My_model{
                         $upload_path = "./public/images/".$this->folder."vendor_shop";
                         // $uploadResponse = upload_single_image_ByName($_FILES,'image',$upload_path);
                         // print_r($uploadResponse);exit;
-                        $image = $uploadResponse['data']['file_name'];
+                        // $image = $uploadResponse['data']['file_name'];
                     }
                     $logo = '';
                     if(isset($_FILES['logo_image'])){
