@@ -58,7 +58,7 @@
 
   </div>
 </div>
-<section class="p-100 bg-light-blue">
+<!-- <section class="p-100 bg-light-blue">
   <div class="container">
     <div class="section-title-wrapper">
       <div class="row align-items-center">
@@ -77,7 +77,7 @@
     </div>
      <div class="row offer-wrapper">
 
-      <?php  foreach ($offer_list as $key => $value): ?>
+      <?php  //foreach ($offer_list as $key => $value): ?>
         
         <div class="col-lg-4 col-md-6">
           <div class="offers">
@@ -89,11 +89,11 @@
           </a>
           </div>
         </div>
-      <?php   endforeach ?>
+      <?php   //endforeach ?>
       </div>
     <div class="mobile-see-all"> <a href="<?=base_url().'products'?>">see all</a> </div>
   </div>
-</section>
+</section> -->
 <!-- =================CATEGORY SECTION================= -->
 <?php if(count($category) > 5){ ?> 
 <section class="p-100 bg-light-blue">
