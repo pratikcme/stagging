@@ -1706,7 +1706,7 @@ header .navbrand a img {
 
 .category-wrapper{
     width: 210px;
-    height: 240px;
+    height: 240px   ;
     background-color: #fff;
     text-align: center;
     display: flex;
