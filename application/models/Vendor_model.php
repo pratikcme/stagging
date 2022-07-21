@@ -12,7 +12,7 @@ class vendor_model extends My_model{
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
 
-                if(isset($_POST['id']) && $_POST['id']!=''){
+                if(isset($_POST['id']) && $_POST['id'] !=''){
 
                     $id = $_POST['id'];
                     $files = $_FILES;                  
@@ -87,11 +87,12 @@ class vendor_model extends My_model{
                         $image = $uploadResponse['data']['file_name'];
                     }
                     $logo = '';
-                    if(isset($_FILES['logo_image'])){
+                    if(isset($_FILES['logo_image']) && $_FILES['logo_image']['error'] == 0){
                         $logo_upload_path = "./public/images/".$this->folder."vendor_logo_image";
                         $uploadLogoImage = upload_single_image_ByName($_FILES,'logo_image',$logo_upload_path);
                         $logo = $uploadLogoImage['data']['file_name'];
                     }
+
                     $data['table'] = 'branch';
                     $data['where'] = ['vendor_id'=>$this->session->userdata('vendor_admin_id')];
                     $data['select'] = ['*'];
