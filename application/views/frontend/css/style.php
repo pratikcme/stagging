@@ -49,7 +49,8 @@ elseif($_SERVER['SERVER_NAME']=='development.launchestore.com'){
 elseif($_SERVER['SERVER_NAME']=='anandgarden.com' || $_SERVER['SERVER_NAME']=='www.anandgarden.com' ){
   
     $primaryColor= "#507b14";
-    $secondaryColor= "#507b14";
+    // $secondaryColor= "#507b14";
+    $secondaryColor= "#000";
     $lightColor= "#fff";
     $borderColor= "#35520c";
     $darkHeaderBackground = "#fff";
