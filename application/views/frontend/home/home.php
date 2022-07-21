@@ -58,7 +58,67 @@
 
   </div>
 </div>
+<section class="p-100 bg-light-blue">
+  <div class="container">
+    <div class="section-title-wrapper">
+      <div class="row align-items-center">
+        <div class="col-md-8 col-sm-8 col-12">
+          <div class="section-title">
+            <h1>shop by offers</h1> </div>
+        </div>
+       
+        <div class="col-md-4 col-sm-4 col-12">
+          <div class="see-all-wrap"> <a href="<?=base_url().'products'?>">see all</a> </div>
+        </div>
 
+     
+      </div>
+       
+    </div>
+    <div class="row offer-wrapper">
+
+        <div class="col-lg-4 col-md-6">
+          <div class="offers">
+          <a href="#">
+            <h6>Up to 50% off | Electronics & Accessories</h6>
+            <div class="offer-img">
+              <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
+            </div>
+          </a>
+          </div>
+        </div>
+    
+        <div class="col-lg-4 col-md-6">
+          <div class="offers">
+          <a href="#">
+            <h6>Up to 50% off | Electronics & Accessories</h6>
+            <div class="offer-img">
+              <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
+            </div>
+          </a>
+          </div>
+        </div>
+    
+
+        <div class="col-lg-4 col-md-6">
+          <div class="offers">
+          <a href="#">
+            <h6>Automotive essentials | Up to 60% off</h6>
+            <div class="offer-img">
+              <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
+            </div>
+          </a>
+          </div>
+        </div>
+    
+        
+       
+    
+    </div>
+  
+    <div class="mobile-see-all"> <a href="<?=base_url().'products'?>">see all</a> </div>
+  </div>
+</section>
 <!-- =================CATEGORY SECTION================= -->
 <?php if(count($category) > 5){ ?> 
 <section class="p-100 bg-light-blue">
