@@ -75,9 +75,9 @@
       </div>
        
     </div>
-    <div class="row offer-wrapper">
+<!--     <div class="row offer-wrapper">
 
-      <?php foreach ($offer_list as $key => $value): ?>
+      <?php // foreach ($offer_list as $key => $value): ?>
         
         <div class="col-lg-4 col-md-6">
           <div class="offers">
@@ -89,7 +89,7 @@
           </a>
           </div>
         </div>
-      <?php endforeach ?>
+      <?php  // endforeach ?>
     
         <div class="col-lg-4 col-md-6">
           <div class="offers">
@@ -117,7 +117,7 @@
         
        
     
-    </div>
+    </div> -->
   
     <div class="mobile-see-all"> <a href="<?=base_url().'products'?>">see all</a> </div>
   </div>
