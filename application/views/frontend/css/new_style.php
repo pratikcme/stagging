@@ -1146,7 +1146,7 @@ cursor: pointer;
 
 .category-wrapper{
     width: 210px;
-    height: 100%;
+    height: 240px;
     background-color: #fff;
     text-align: center;
     display: flex;
