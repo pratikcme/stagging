@@ -12,7 +12,7 @@ class vendor_model extends My_model{
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
 
-                if(isset($_POST['id']) && $_POST['id']!=''){
+                if(isset($_POST['id']) && $_POST['id'] !=''){
 
                     $id = $_POST['id'];
                     $files = $_FILES;                  
@@ -118,9 +118,9 @@ class vendor_model extends My_model{
                         'dt_added' => date('Y-m-d H:i:s'),
                         'dt_updated' => date('Y-m-d H:i:s'),
                     );
-                    // echo "<pre>";
-                    // print_r($_POST);die;
-                    // print_r($data);die;
+                    echo "<pre>";
+                    print_r($_POST);die;
+                    print_r($data);die;
                     $this->db->insert('branch', $data);
                     $lastId = $this->db->insert_id();
                     if($lastId != '' && $count == 0){
