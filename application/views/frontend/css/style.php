@@ -50,7 +50,7 @@ elseif($_SERVER['SERVER_NAME']=='anandgarden.com' || $_SERVER['SERVER_NAME']=='w
   
     $primaryColor= "#507b14";
     // $secondaryColor= "#507b14";
-    $secondaryColor= "#000";
+    $secondaryColor= "#BFD8A2";
     $lightColor= "#fff";
     $borderColor= "#35520c";
     $darkHeaderBackground = "#fff";
