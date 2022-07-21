@@ -84,7 +84,7 @@
           <a href="#">
             <h6>Up to <?=$value->offer_percent?>% off | <?=$value->offer_title?></h6>
             <div class="offer-img">
-              <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
+              <img src="<?=$value->image?>">
             </div>
           </a>
           </div>
