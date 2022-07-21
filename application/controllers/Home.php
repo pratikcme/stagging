@@ -124,8 +124,12 @@ class Home extends User_Controller {
 	
 	}
 
-	public function get_offer_product_listing(){
+	public function get_offer_product_listing($offer_id){
+		$offer_id = $this->utility->safe_b64decode($offer_id);
 		$data['page'] = 'frontend/offer_product_list';
+		$postData = ['offer_id'=>$offer_id,'user_id'=>$this->session->userdata('user_id')];
+		$data['offer_varient_list'] = $this->this_model->get_offer_varient_listing($postData);
+		dd($data['offer_varient_list']);
 		$this->loadView(USER_LAYOUT,$data);
 	}
 
