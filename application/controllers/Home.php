@@ -118,6 +118,10 @@ class Home extends User_Controller {
 
 		
 		$data['item_weight_id'] = $item_weight_id ;
+		$this->load->model('api_v3/api_model','api_model_v3');
+		$data['offer_list'] = $this->api_model_v3->get_offer($this->session->userdata('vendor_id'));
+		lq();
+		dd($data['offer_list']);
 		$this->loadView(USER_LAYOUT,$data);
 	
 	}
