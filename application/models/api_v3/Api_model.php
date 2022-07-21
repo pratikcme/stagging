@@ -14,7 +14,8 @@ class Api_model extends My_model {
     public function user_login($postData){
         $data['where']['email'] = $postData['email'];  
         $data['where']['vendor_id'] = $postData['vendor_id'];
-        $data['where']['password']= md5($postData['password']);
+        $data['where']['password']  = md5($postData['password']);
+        $data['where']['status !=']  = '9';
         $data['table'] = 'user';
         $getUser = $this->selectRecords($data,true);
         if(empty($getUser)){
@@ -53,7 +54,7 @@ class Api_model extends My_model {
         }
 
         $data['where']['vendor_id'] = $postData['vendor_id'];
-        $data['where']['status !='] = '9';   
+        $data['where']['status !='] = '9';
         $data['table'] = 'user';
         $getUser = $this->selectRecords($data);  
     
@@ -358,7 +359,7 @@ class Api_model extends My_model {
             $response['cart_item'] = ($this->countCartItem($user_id) != 0 ) ? (string)$this->countCartItem($user_id) : "" ;
             $response["data"] = $result;
             if($_POST['user_id'] != ''){
-            $response['userupdate_data'] = $this->userInfo($_POST);	
+            $response['userupdate_data'] = $this->userInfo($_POST); 
             }
         } else {
             $response['success'] = 0;
@@ -471,7 +472,7 @@ class Api_model extends My_model {
                 $response['subcategoryCount'] = $this->subcategoryCount($branch_id);
                 $response['cart_item'] = ($this->countCartItem($user_id) != 0 ) ? (string)$this->countCartItem($user_id) : "" ;
                 if($_POST['user_id'] != ''){
-                	$response["userupdate_data"] = $this->userInfo($postdata);
+                    $response["userupdate_data"] = $this->userInfo($postdata);
                 }
                 
             } else {
@@ -644,7 +645,7 @@ class Api_model extends My_model {
                 $response['categoryCount'] = (int)$this->categoryCount($branch_id);
                 $response['subcategoryCount'] = (int)$this->subcategoryCount($branch_id);
                 if (isset($postdata['user_id'])&&$postdata['user_id'] != '') {
-                	$response["userupdate_data"] = $this->userInfo($postdata);
+                    $response["userupdate_data"] = $this->userInfo($postdata);
                 }
 
 
@@ -1274,7 +1275,7 @@ class Api_model extends My_model {
     }
 
     function check_udpate_quantity($variant_id,$cart_qty,$user_id){
-    	sleep(0.951);
+        sleep(0.951);
         // file_put_contents("/cartcheck.txt","cartIn ".$user_id);
         $this->unreserve_product_userwise($user_id);
         
@@ -1315,10 +1316,10 @@ class Api_model extends My_model {
         return false;        
     }
     function set_reserve_quantity($user_id){
-    	$this->db->query('LOCK TABLES `my_cart` WRITE,`order` WRITE,`order_details` WRITE,`product_weight` WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE;');
+        $this->db->query('LOCK TABLES `my_cart` WRITE,`order` WRITE,`order_details` WRITE,product_weight as pw WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE;');
         $postdata['user_id'] = $user_id;
         $this->unreserve_product_userwise($user_id);
-    	sleep(0.751);
+        sleep(0.751);
         $data['select'] = ['*'];
         $data['where'] = ['status !=' => '9','user_id'=>$user_id];
         $data['table'] = 'my_cart';
@@ -1340,7 +1341,7 @@ class Api_model extends My_model {
             unset($data);
             $data['select'] = ['*'];
             $data['where'] = ['id'=>$variant_id];
-            $data['table'] = 'product_weight';
+            $data['table'] = 'product_weight as pw';
             $get_variant = $this->selectRecords($data);           
             if(count($get_variant) > 0){
                 $quantity = (int)$get_variant[0]->quantity;
@@ -1370,10 +1371,10 @@ class Api_model extends My_model {
             unset($data);
             $data['update'] = ['quantity'=>$updatedQTY,'dt_updated' => strtotime(DATE_TIME)];
             $data['where'] = ['id'=>$variant_id];
-            $data['table'] = 'product_weight';
+            $data['table'] = 'product_weight as pw';
             $this->updateRecords($data);
 
-         	unset($data);
+            unset($data);
             $data['update'] = ['is_reserved'=>'1','dt_updated' => strtotime(DATE_TIME)];
             $data['where'] = ['id'=>$my_order->id];
             $data['table'] = 'my_cart';
@@ -1450,7 +1451,7 @@ class Api_model extends My_model {
 
 
     function unreserve_product_userwise($user_id){
-    	sleep(0.751);
+        sleep(0.751);
         $data['select'] = ['*'];
         $data['where'] = ['user_id'=>$user_id];
         $data['table'] = 'order_reservation';
@@ -1488,7 +1489,7 @@ class Api_model extends My_model {
        return true;
     }
     function deleteUserCart($user_id) {
-		$data['where'] = ['user_id'=>$user_id];
+        $data['where'] = ['user_id'=>$user_id];
         $data['table'] = 'my_cart';
         $this->deleteRecords($data);
         return true;
@@ -1943,9 +1944,25 @@ class Api_model extends My_model {
         return $this->selectFromJoin($data,true);
     }
 
+    // public function checkUserNotDelete($user_id){
+    //     $data['table'] = TABLE_USER;
+    //     $data['select'] = ['*'];
+    //     $data['where'] = ['id'=>$user_id];
+    //     return $this->selectRecords($data);
+    // }
+
     function checkout($postdata){
      
         $user_id = $_POST['user_id'];
+        // $isUserExist = $this->checkUserNotDelete($user_id);
+        // if(!empty($isUserExist) && $isUserExist[0]->status == '9'){
+        //     $response = array();
+        //     $response["success"] = 0;
+        //     $response["message"] = "User is not found";
+        //     $output = json_encode(array('responsedata' => $response));
+        //     echo $output;
+        //     die;
+        // }
         $postdata['user_id'] = $user_id;
         if (isset($_POST['user_address_id'])) {
             $user_address_id = $_POST['user_address_id'];
@@ -2760,7 +2777,7 @@ class Api_model extends My_model {
                     $response['subcategoryCount'] = (int)$this->subcategoryCount();
                     $response['cart_item'] = (isset($postdata['user_id']) && $postdata['user_id']!='') ? (string)$this->countCartItem($postdata['user_id']) : "" ;
                     if (isset($postdata['user_id']) && $postdata['user_id'] != '') {
-                    	$response["userupdate_data"] = $this->userInfo($postdata);
+                        $response["userupdate_data"] = $this->userInfo($postdata);
                     }
                      echo $output = json_encode(array('responsedata' => $response));
                 } else {
