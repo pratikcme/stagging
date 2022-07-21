@@ -614,7 +614,7 @@ class Admin extends CI_Controller
                     }  
                 }
 
-                if(isset($_FILES) && ($_FILES['webLogo']['name'] != '')){
+                if($_FILES['webLogo']['name'] != '' && $_FILES['webLogo']['error'] == 0){
                     $path = 'public/client_logo';
                     $files = $_FILES;
                     $result = upload_single_image_ByName($_FILES,'webLogo',$path);
@@ -626,7 +626,7 @@ class Admin extends CI_Controller
                     $webLogo =  $this->input->post('old_webLogo');
                 }
 
-                if(isset($_FILES) && ($_FILES['favicon_image']['name'] != '')){
+                if($_FILES['favicon_image']['name'] != '' && $_FILES['favicon_image']['error'] == 0 ){
                     $path = 'public/client_logo'; 
                     $result = upload_single_image_ByName($_FILES,'favicon_image',$path);
                     $favicon_image = $result['data']['file_name'];
