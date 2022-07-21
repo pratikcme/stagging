@@ -327,22 +327,37 @@ elseif($_SERVER['SERVER_NAME']=='www.iwingzy.in' || $_SERVER['SERVER_NAME']=='iw
 
 }
 
-elseif($_SERVER['SERVER_NAME']=='www.dpdecor.launchestore.com'){
+elseif($_SERVER['SERVER_NAME']=='eshopdp.com' || $_SERVER['SERVER_NAME'] == 'www.eshopdp.com'){
+    // $primaryColor= "#16aa9c";
+    // $secondaryColor= "#000";
+    // $lightPrimary= "#ff774b";
+    // $lightColor= "#fff";
+    // $borderColor= "#c73d00";
+    // $borderColor2= "#004846";
+    // $darkHeaderBackground = "#f3f3f3";
+    // $navbarColor = "#818181";
+    // $cartBtnBackground = "#16aa9c";
+    // $cartBtnColor = "#fff";
+    // $loginBtnBackground = "#16aa9c";
+    // $loginBtnColor = "#fff";
+    // $loginBtnborder = "#ed1c24";
+    // $logoWidth = "150px";
+    // $hvrClr = "#ed1c24";
     $primaryColor= "#16aa9c";
-    $secondaryColor= "#000";
+    $secondaryColor= "#16aa9c";
     $lightPrimary= "#ff774b";
     $lightColor= "#fff";
-    $borderColor= "#c73d00";
-    $borderColor2= "#004846";
-    $darkHeaderBackground = "#f3f3f3";
+    $borderColor= "#16aa9c";
+    $borderColor2= "#16aa9c";
+    $darkHeaderBackground = "#000";
     $navbarColor = "#818181";
     $cartBtnBackground = "#16aa9c";
     $cartBtnColor = "#fff";
     $loginBtnBackground = "#16aa9c";
     $loginBtnColor = "#fff";
-    $loginBtnborder = "#ed1c24";
-    $logoWidth = "150px";
-    $hvrClr = "#ed1c24";
+    $loginBtnborder = "#16aa9c";
+    $logoWidth = "70px";
+    $hvrClr = "#16aa9c";
 
 }
 
