@@ -119,7 +119,7 @@ class vendor_model extends My_model{
                         'dt_updated' => date('Y-m-d H:i:s'),
                     );
                     echo "<pre>";
-                    print_r($_POST);die;
+                    // print_r($_POST);die;
                     print_r($data);die;
                     $this->db->insert('branch', $data);
                     $lastId = $this->db->insert_id();
