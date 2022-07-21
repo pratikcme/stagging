@@ -147,8 +147,11 @@ class Home extends User_Controller {
 		$data['js'] = array('add_to_cart.js');	
 		$postData = ['offer_id'=>$offer_id,'user_id' => $this->session->userdata('user_id')];
 		$data['offer_varient_list'] = $this->this_model->get_offer_varient_listing($postData);
-		
-		// dd($data['offer_varient_list']);
+		dd($_SESSION);
+		foreach ($variable as $key => $value) {
+			
+		}
+		// dd($data['offer_varient_list']);	
 		$this->loadView(USER_LAYOUT,$data);
 	}
 
