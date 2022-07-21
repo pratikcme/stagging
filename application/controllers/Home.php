@@ -146,7 +146,7 @@ class Home extends User_Controller {
 		$data['page'] = 'frontend/offer_product_list';
 		$data['js'] = array('add_to_cart.js');	
 		$postData = ['offer_id'=>$offer_id,'user_id' => $this->session->userdata('user_id')];
-		dd($postData);
+		dd($_SESSION);
 		$data['offer_varient_list'] = $this->this_model->get_offer_varient_listing($postData);
 		
 		dd($data['offer_varient_list']);
