@@ -124,6 +124,11 @@ class Home extends User_Controller {
 	
 	}
 
+	public function get_offer_product_listing(){
+		$data['page'] = 'frontend/offer_product_list';
+		$this->loadView(USER_LAYOUT,$data);
+	}
+
 	public function get_notification(){
 		$this->load->model('common_model');
 		$res = $this->common_model->userNotify();
