@@ -1316,7 +1316,7 @@ class Api_model extends My_model {
         return false;        
     }
     function set_reserve_quantity($user_id){
-    	$this->db->query('LOCK TABLES `my_cart` WRITE,`order` WRITE,`order_details` WRITE,`product_weight` WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE;');
+    	$this->db->query('LOCK TABLES `my_cart` WRITE,`order` WRITE,`order_details` WRITE,product_weight as pw WRITE,`order_reservation` WRITE,`setting` WRITE,`user` WRITE,`selfPickup_otp` WRITE,`profit` WRITE,`user_address` WRITE;');
         $postdata['user_id'] = $user_id;
         $this->unreserve_product_userwise($user_id);
     	sleep(0.751);
@@ -1341,7 +1341,7 @@ class Api_model extends My_model {
             unset($data);
             $data['select'] = ['*'];
             $data['where'] = ['id'=>$variant_id];
-            $data['table'] = 'product_weight';
+            $data['table'] = 'product_weight as pw';
             $get_variant = $this->selectRecords($data);           
             if(count($get_variant) > 0){
                 $quantity = (int)$get_variant[0]->quantity;
@@ -1371,7 +1371,7 @@ class Api_model extends My_model {
             unset($data);
             $data['update'] = ['quantity'=>$updatedQTY,'dt_updated' => strtotime(DATE_TIME)];
             $data['where'] = ['id'=>$variant_id];
-            $data['table'] = 'product_weight';
+            $data['table'] = 'product_weight as pw';
             $this->updateRecords($data);
 
          	unset($data);
