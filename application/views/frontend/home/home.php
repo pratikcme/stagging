@@ -94,6 +94,7 @@
     <div class="mobile-see-all"> <a href="<?=base_url().'products'?>">see all</a> </div>
   </div>
 </section> -->
+
 <!-- =================CATEGORY SECTION================= -->
 <?php if(count($category) > 5){ ?> 
 <section class="p-100 bg-light-blue">
