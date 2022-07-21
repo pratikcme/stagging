@@ -243,6 +243,45 @@ class Home_model extends My_model{
         return $subcategory_data;
     }
 
+ 	//Developer : Shahid Abdul Rahman  
+ 	
+      public function get_offer($vendor_id =''){
+        $today = date('Y-m-d');
+        $time = date('H:i:00');
+
+
+        $data['table'] = TABLE_OFFER .' as o';
+        $data['join'] = [TABLE_OFFER_DETAIL . ' as od'=>['o.id=od.offer_id','LEFT']];
+        $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image','start_date','end_date','start_time','end_time'];
+        $data['where'] = ['o.vendor_id'=>$vendor_id,'start_date <='=>$today,'end_date >='=>$today];
+        $data['having'] = ['start_time <= '=>$time];
+        $data['groupBy'] = 'o.id';
+        $result = $this->selectFromJoin($data);
+        unset($data);
+        foreach ($result as $k => $v) {
+            if($v->end_date == $today && $v->end_time <= $time){
+                unset($result[$k]);
+                continue;
+            }
+            
+            $v->image = base_url() . 'public/images/'.$this->folder.'offer_image/' . $v->image;
+            $data['select'] = ['c.name as category_name','p.category_id','pw.product_id'];
+            $data['table'] = TABLE_PRODUCT_WEIGHT . ' as pw';
+            $data['join'] = [
+                TABLE_PRODUCT .' as p'=>['p.id=pw.product_id','LEFT'],
+                TABLE_CATEGORY . ' as c'=>['c.id = p.category_id','LEFT']
+            ];
+            $data['where'] = ['pw.id'=>$v->product_varient_id,'pw.status !='=> '9'];
+            $res = $this->selectFromJoin($data);
+            $v->category_id = $res[0]->category_id;
+            $v->category_name = $res[0]->category_name;
+            $v->product_id = $res[0]->product_id;
+        }
+        // dd($result);
+        return $result;
+
+    }
+
 
 
 }

@@ -120,6 +120,8 @@ class Home extends User_Controller {
 
 		
 		$data['item_weight_id'] = $item_weight_id ;
+		$data['offer_list'] = $this->this_model->get_offer($this->session->userdata('vendor_id'));
+		// dd($data['offer_list']);
 		$this->loadView(USER_LAYOUT,$data);
 	
 	}
