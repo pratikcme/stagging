@@ -146,7 +146,7 @@ class Home extends User_Controller {
 
 		}
 		$data['item_weight_id'] = $item_weight_id ;
-		// dd($data['offer_varient_list']);
+		dd($data['offer_varient_list']);
 		$this->loadView(USER_LAYOUT,$data);
 	}
 
