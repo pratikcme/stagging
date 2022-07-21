@@ -88,7 +88,7 @@ class vendor_model extends My_model{
                         // $image = $uploadResponse['data']['file_name'];
                     }
                     $logo = '';
-                    dd($_FILES['image']);
+                    dd($_FILES);
                     if(isset($_FILES['logo_image']) && $_FILES['logo_image']['error'] == 0){
                         $logo_upload_path = "./public/images/".$this->folder."vendor_logo_image";
                         $uploadLogoImage = upload_single_image_ByName($_FILES,'logo_image',$logo_upload_path);
