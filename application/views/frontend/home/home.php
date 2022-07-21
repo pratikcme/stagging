@@ -83,7 +83,7 @@
         
         <div class="col-lg-4 col-md-6">
           <div class="offers">
-          <a href="<?=base_url().'home/get_offer_product_listing/'.$this->->utility->safe_b64encode($value->id)?>">
+          <a href="<?=base_url().'home/get_offer_product_listing/'.$this->utility->safe_b64encode($value->id)?>">
             <h6>Up to <?=$value->offer_percent?>% off | <?=$value->offer_title?></h6>
             <div class="offer-img">
               <img src="<?=$value->image?>">
