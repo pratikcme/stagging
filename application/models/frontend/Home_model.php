@@ -329,6 +329,14 @@ class Home_model extends My_model{
 
     }
 
+    public function getVarient_image($varient_id){
+        $data['table'] = TABLE_PRODUCT_IMAGE;
+        $data['where'] = ['product_variant_id'=>$varient_id];
+        $data['select'] = ['*'];
+        return $this->selectRecords($data);
+
+     }
+
 
 
 }
