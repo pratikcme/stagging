@@ -536,8 +536,8 @@ class Admin extends CI_Controller
     ## Profile Update  ##
     public function update_profile()
     {   
-        // error_reporting(E_ALL);
-       dd($_FILES);
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
         if(isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Update'){
 
             $branch_id = $this->session->userdata['id'];
@@ -655,7 +655,7 @@ class Admin extends CI_Controller
             }
 
             
-          
+          dd($data);
             $branch_id = $this->session->userdata['id'];
             if($branch_id == 0){
 
