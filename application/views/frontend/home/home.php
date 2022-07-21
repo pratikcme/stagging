@@ -58,6 +58,8 @@
 
   </div>
 </div>
+<?php if(!empty($offer_list)){ ?>
+
  <section class="p-100 bg-light-blue">
   <div class="container">
     <div class="section-title-wrapper">
@@ -95,6 +97,7 @@
   </div>
 </section> 
 
+<?php } ?>
 <!-- =================CATEGORY SECTION================= -->
 <?php if(count($category) > 5){ ?> 
 <section class="p-100 bg-light-blue">
