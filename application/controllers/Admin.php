@@ -163,8 +163,8 @@ class Admin extends CI_Controller
         $vendor_id = $this->session->userdata['vendor_admin_id'];
         $data['currency'] = $this->vendor_model->getCurrency();
         $data['app_result'] = $this->vendor_model->vendorByIdEmail($email); 
-        lq();
-        dd($data['app_result']);
+        // lq();
+        // dd($data['app_result']);
         $this->load->view('profile',$data);
     }
 
