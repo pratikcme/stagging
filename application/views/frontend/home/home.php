@@ -90,35 +90,7 @@
           </div>
         </div>
       <?php   endforeach ?>
-    
-        <div class="col-lg-4 col-md-6">
-          <div class="offers">
-          <a href="#">
-            <h6>Up to 50% off | Electronics & Accessories</h6>
-            <div class="offer-img">
-              <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
-            </div>
-          </a>
-          </div>
-        </div>
-    
-
-        <div class="col-lg-4 col-md-6">
-          <div class="offers">
-          <a href="#">
-            <h6>Automotive essentials | Up to 60% off</h6>
-            <div class="offer-img">
-              <img src="https://dosawala.launchestore.com/public/images/Dosawala/category/image_edit_1649313105.png">
-            </div>
-          </a>
-          </div>
-        </div>
-    
-        
-       
-    
-    </div>
-  
+      </div>
     <div class="mobile-see-all"> <a href="<?=base_url().'products'?>">see all</a> </div>
   </div>
 </section>
