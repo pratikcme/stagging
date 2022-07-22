@@ -6,3 +6,4 @@ public/uploads/*
 application/config/database.php
 public/images/*
 public/uploads/*
+cronlog.log
