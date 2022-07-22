@@ -58,7 +58,9 @@
 
   </div>
 </div>
-<!-- <section class="p-100 bg-light-blue">
+<?php if(!empty($offer_list)){ ?>
+
+ <section class="p-100 bg-light-blue">
   <div class="container">
     <div class="section-title-wrapper">
       <div class="row align-items-center">
@@ -77,11 +79,11 @@
     </div>
      <div class="row offer-wrapper">
 
-      <?php  //foreach ($offer_list as $key => $value): ?>
+      <?php  foreach ($offer_list as $key => $value): ?>
         
         <div class="col-lg-4 col-md-6">
           <div class="offers">
-          <a href="#">
+          <a href="<?=base_url().'home/get_offer_product_listing/'.$this->utility->safe_b64encode($value->id)?>">
             <h6>Up to <?=$value->offer_percent?>% off | <?=$value->offer_title?></h6>
             <div class="offer-img">
               <img src="<?=$value->image?>">
@@ -89,12 +91,13 @@
           </a>
           </div>
         </div>
-      <?php   //endforeach ?>
+      <?php   endforeach ?>
       </div>
     <div class="mobile-see-all"> <a href="<?=base_url().'products'?>">see all</a> </div>
   </div>
-</section> -->
+</section> 
 
+<?php } ?>
 <!-- =================CATEGORY SECTION================= -->
 <?php if(count($category) > 5){ ?> 
 <section class="p-100 bg-light-blue">

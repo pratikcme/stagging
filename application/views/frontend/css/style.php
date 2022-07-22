@@ -6581,5 +6581,33 @@ width: 374px;
     border-radius: 50%;
 }
 
+/*==============================*/
+     /*----- OFFERS -----*/
+/*==============================*/
+.offer-wrapper div.col-lg-4{
+      margin-bottom: 25px;  
+}
+.offers{
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 25px;
+}
+.offers h6 {
+    color: var(--primary-color);
+    font-size: 20px;
+    line-height: 26px;
+    font-family: 'OpenSans-SemiBold';
+    min-height: 50px;
+}
+.offers .offer-img{
+    height: 200px;
+}
+.offers .offer-img img  {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
 
 </style>
