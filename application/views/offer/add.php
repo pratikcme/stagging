@@ -108,14 +108,14 @@ input[type="text"]:focus{
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="start_date"> Start date</label>
-                                  <input type="text" id="start_date" name="start_date" class="form-control datetime" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <input type="text" id="start_date" name="start_date" class="form-control datetime" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> autocomplete="off" >
                                   <label for="start_date" style="color: red" class="error"><?php echo @form_error('start_date'); ?></label>
                                </div>
                             </div>
                             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
                                <div class="form-group">
                                   <label for="end_date">End date</label>
-                                  <input type="text" id="end_date" name="end_date" class="form-control datetime_end" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?>>
+                                  <input type="text" id="end_date" name="end_date" class="form-control datetime_end" <?=($this->uri->segment(3) =='' ) ? 'disabled' : '' ?> autocomplete="off">
                                   <label for="end_date" style="color: red" class="error"><?php echo @form_error('end_date'); ?></label>
                                </div>
                             </div>
