@@ -138,7 +138,7 @@ $supply_result = $supply_query->result();
                                             </select>
                                         </div>
                                         <?php //print_r($supplier_result); ?>
-                                      <div class="form-group" id="get_subCategory" style="display: none;">
+                                      <!-- <div class="form-group" id="get_subCategory" style="display: none;">
                                             <label for="brand_id" class="margin_top_label">Supplier<span class="required" aria-required="true"> * </span></label>
                                             <select class="form-control margin_top_input" id="supplier_id" name="supplier_id">
                                                 <option value="" selected disabled>Select Supplier</option>
@@ -149,7 +149,7 @@ $supply_result = $supply_query->result();
                                                     ><?php echo $supplier->name; ?></option>
                                                 <?php } ?>
                                             </select>
-                                        </div>
+                                        </div> -->
                                     
                                        
                                   
