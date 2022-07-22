@@ -91,6 +91,7 @@
     <div class="mobile-see-all"> <a href="<?=base_url().'products'?>">see all</a> </div>
   </div>
 </section> 
+<?php } ?>
 <!-- =================ABOUT SECTION================= -->
 <?php foreach ($home_content as $key => $value): ?>
   <?php if($key%2 == 0){ ?>  
