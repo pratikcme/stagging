@@ -1729,41 +1729,44 @@ class Api extends Apiuser_Controller {
 
             if(isset($branch_id) && $branch_id != ''){
                 $result_count = $this->db->query("SELECT p.* FROM `product` as p 
+                    LEFT JOIN product_search as ps ON ps.product_id = p.id
                     LEFT JOIN product_weight as w ON w.product_id = p.id
                     LEFT JOIN branch as br ON br.id = p.branch_id
-                    WHERE p.status != '9'  AND p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND (p.name LIKE '%$product_name%' OR p.name LIKE '%$product_name%') GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
+                    WHERE p.status != '9'  AND p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND (p.name LIKE '%$product_name%' OR ps.name LIKE '%$product_name%') GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
                 $row_count_ = $result_count->result();
                 $total_count = count(array_keys($row_count_));
 
                 $query = $this->db->query("SELECT p.*,c.name as category_name,sb.name as subcat_name,b.name as brand_name FROM `product` as p 
+                    LEFT JOIN product_search as ps ON ps.product_id = p.id
                     LEFT JOIN product_weight as w ON w.product_id = p.id
                     LEFT JOIN category as c ON c.id = p.category_id
                     LEFT JOIN subcategory as sb ON sb.id = p.subcategory_id
                     LEFT JOIN brand as b ON b.id = p.brand_id
                     LEFT JOIN branch as br ON br.id = p.branch_id
-
-                    WHERE p.status != '9' AND p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND ( p.name LIKE '%$product_name%' OR c.name LIKE '%$product_name%' OR sb.name LIKE '%$product_name%' OR b.name LIKE '%$product_name%' OR p.name LIKE '%$product_name%')
+                    WHERE p.status != '9' AND p.branch_id = '$branch_id' AND w.discount_price != '' AND w.status != '9' AND ( p.name LIKE '%$product_name%' OR c.name LIKE '%$product_name%' OR sb.name LIKE '%$product_name%' OR b.name LIKE '%$product_name%' OR ps.name LIKE '%$product_name%')
                     GROUP BY p.id,c.id,sb.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2)) ASC ");
                 $result = $query->result();
             }else            
             if (isset($_POST['vendor_id']) && $_POST['vendor_id'] != '') {
                 $vendor_id = $_POST['vendor_id'];
-                $result_count = $this->db->query("SELECT p.* FROM `product` as p 
+                $result_count = $this->db->query("SELECT p.* FROM `product` as p
+                    LEFT JOIN product_search as ps ON ps.product_id = p.id 
                     LEFT JOIN product_weight as w ON w.product_id = p.id
                     LEFT JOIN branch as br ON br.id = p.branch_id
-                    WHERE p.status != '9'  AND br.vendor_id = '$vendor_id' AND w.discount_price != '' AND w.status != '9' AND (p.name LIKE '%$product_name%' OR p.name LIKE '%$product_name%') GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
+                    WHERE p.status != '9'  AND br.vendor_id = '$vendor_id' AND w.discount_price != '' AND w.status != '9' AND (p.name LIKE '%$product_name%' OR ps.name LIKE '%$product_name%') GROUP BY p.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2))");
                 $row_count_ = $result_count->result();
                 $total_count = count(array_keys($row_count_));
                 
 
                 $query = $this->db->query("SELECT p.*,c.name as category_name,sb.name as subcat_name,b.name as brand_name FROM `product` as p 
+                    LEFT JOIN product_search as ps ON ps.product_id = p.id
                     LEFT JOIN product_weight as w ON w.product_id = p.id
                     LEFT JOIN category as c ON c.id = p.category_id
                     LEFT JOIN subcategory as sb ON sb.id = p.subcategory_id
                     LEFT JOIN brand as b ON b.id = p.brand_id
                     LEFT JOIN branch as br ON br.id = p.branch_id
 
-                    WHERE p.status != '9' AND br.vendor_id = '$vendor_id' AND w.discount_price != '' AND w.status != '9' AND ( p.name LIKE '%$product_name%' OR c.name LIKE '%$product_name%' OR sb.name LIKE '%$product_name%' OR b.name LIKE '%$product_name%' OR p.name LIKE '%$product_name%')
+                    WHERE p.status != '9' AND br.vendor_id = '$vendor_id' AND w.discount_price != '' AND w.status != '9' AND ( p.name LIKE '%$product_name%' OR c.name LIKE '%$product_name%' OR sb.name LIKE '%$product_name%' OR b.name LIKE '%$product_name%' OR ps.name LIKE '%$product_name%')
                     GROUP BY p.id,c.id,sb.id ORDER BY CAST(w.discount_price AS DECIMAL(10,2)) ASC ");
                 $result = $query->result();
                 

@@ -35,7 +35,38 @@ class Product extends Vendor_Controller
 
     public function product_profile()
     { 
-        $this->load->view('product_profile');
+        $data['category_result'] = $this->this_model->getCategory();
+        $data['brand_results'] = $this->this_model->getBrand();
+        $data['subcategory_result'] = $this->this_model->getSubcategory();
+        $id = '';
+        $tags = '';
+        $category_id = 0;
+        if(isset($_GET['id'])){
+            $id = $this->utility->decode($_GET['id']); //id = product_id
+            $data['result'] = $this->this_model->getGetProductById($id);
+            $category_id = $data['result']['category_id'];
+            $brand_id = $data['result']['brand_id'];
+            $subid = $data['result']['subcategory_id'];
+
+            $data['cat_result'] = $this->this_model->getCategory($category_id);
+            $data['bra_result'] = $this->this_model->getBrand($brand_id);
+
+            $data['brand_results'] = $this->this_model->getBrandByCategoryId($category_id);
+            $data['subcate_result'] = $this->this_model->getSubcategory($subid);
+            $data['subcategory_result'] = $this->this_model->getSubcategoryOfCategoryId($category_id);
+            $search_results = $this->this_model->searchProductByTag($id);
+            // dd($search_results);
+            if($search_results){
+                foreach($search_results as $val){
+                    $tags .= $val->name.','; 
+                }
+            }
+        }
+
+        $data['id'] = $id;
+        $data['category_id'] = $category_id;
+        $data['tags'] = $tags;
+        $this->load->view('product_profile',$data);
     }
     
     public function product_add_update(){
