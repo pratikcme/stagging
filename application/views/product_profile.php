@@ -1,5 +1,4 @@
 <?php
-
 include('header.php');
 $id = $this->utility->decode($_GET['id']);
 $branch_id = $this->session->userdata['id'];
@@ -135,35 +134,7 @@ $supply_result = $supply_query->result();
                                                     ><?php echo $subcate->name; ?></option>
                                                 <?php } ?>
                                             </select>
-                                        </div>
-                                        <?php //print_r($supplier_result); ?>
-                                      <div class="form-group" id="get_subCategory" style="display: none;">
-                                            <label for="brand_id" class="margin_top_label">Supplier<span class="required" aria-required="true"> * </span></label>
-                                            <select class="form-control margin_top_input" id="supplier_id" name="supplier_id">
-                                                <option value="" selected disabled>Select Supplier</option>
-                                                <?php 
-                                                foreach ($supply_result as $supplier){ ?>
-                                                    <option value="<?php echo $supplier->id; ?>" 
-                                                    <?php if($id != '' && $supid == $supplier->id){ echo  "selected";  } ?>
-                                                    ><?php echo $supplier->name; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    
-                                       
-                                  
-                                   <!--  <div class="form-group">
-                                        <label for="name" class="margin_top_label">Image</label>
-                                         <?php //if($result['image'] != ''){ ?>
-                                        <input type="file" class="form-control margin_top_input" id="image" name="image_edit" placeholder="Select Image" value="">
-
-                                       
-                                            <img src="<?php //echo base_url().'public/images/product/'.$result['image']; ?>" height="100" width="100" style="margin-top: 10px;">
-                                        <?php// }else{ ?>
-                                             <input type="file" class="form-control margin_top_input" id="image" name="image" placeholder="Select Image" value="">
-                                        <?php// } ?>
-
-                                    </div> -->
+                                        </div> 
                                 </div>
                                
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
