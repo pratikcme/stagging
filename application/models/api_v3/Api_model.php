@@ -58,7 +58,7 @@ class Api_model extends My_model {
         $data['table'] = 'user';
         $getUser = $this->selectRecords($data);  
         
-        if(!isset($postData['country_code'])) {
+        if(!isset($postData['country_code']) || $postData['country_code']=='') {
             $postData['country_code'] = '+91';
         }
 
