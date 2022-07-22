@@ -1,7 +1,5 @@
 <?php 
 date_default_timezone_set('Asia/Kolkata');
-	error_reporting(E_ALL);
-			ini_set('display_errors', 1);
 // echo 1; die;
 /**
 
@@ -58,7 +56,7 @@ date_default_timezone_set('Asia/Kolkata');
  *
  * NOTE: If you change these, also change the error_reporting() code below 
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
 /*
  *---------------------------------------------------------------
