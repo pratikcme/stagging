@@ -24,6 +24,8 @@ class Home extends User_Controller {
 		$data['subcategory'] = count($subcategory);
 
 		if($this->countCategory == 1 && count($subcategory) == '1'){
+			$data['item_weight_id'] = $item_weight_id ;
+			$data['offer_list'] = $this->this_model->get_offer($this->session->userdata('branch_id'));
 			$data['page'] = 'frontend/home/shukan';
 			$this->load->model('home_content_model');
 			$data['home_content'] = $this->home_content_model->getAboutSectionTwo(); 
