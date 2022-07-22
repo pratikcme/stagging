@@ -245,7 +245,7 @@ class Home_model extends My_model{
 
  	//Developer : Shahid Abdul Rahman  
  	
-      public function get_offer($vendor_id =''){
+      public function get_offer($branch_id =''){
         $today = date('Y-m-d');
         $time = date('H:i:00');
 
@@ -253,7 +253,7 @@ class Home_model extends My_model{
         $data['table'] = TABLE_OFFER .' as o';
         $data['join'] = [TABLE_OFFER_DETAIL . ' as od'=>['o.id=od.offer_id','LEFT']];
         $data['select'] = ['o.id','o.branch_id','o.offer_title','o.offer_percent','od.product_varient_id','o.image','start_date','end_date','start_time','end_time'];
-        $data['where'] = ['o.vendor_id'=>$vendor_id,'start_date <='=>$today,'end_date >='=>$today];
+        $data['where'] = ['o.branch_id'=>$branch_id,'start_date <='=>$today,'end_date >='=>$today];
         $data['having'] = ['start_time <= '=>$time];
         $data['groupBy'] = 'o.id';
         $result = $this->selectFromJoin($data);
